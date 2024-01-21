@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { hash } from 'bcrypt';
 import { NextResponse } from "next/server";
 
 // model UserDetail {
@@ -16,8 +17,8 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const timestamp = new Date().toISOString;
-        const { username, email, userphone, password, confirmpw } = body;
+        const confirmpw;
+        const { username, email, userphone, password } = body;
 
         // check if email, username, password
         const existingUserByEmail = await db.userDetail.findUnique({
@@ -41,19 +42,25 @@ export async function POST(req: Request) {
             return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
         }
 
+        if (password != confirmpw) {
+            return NextResponse.json({ user: null, message: "Your password is not match" }, { status: 409 })
+        }
+
+
+        const hashedPassword = await hash(password, 10)
         const newUser = await db.userDetail.create({
             data: {
                 username,
                 email,
                 userphone,
-                password,
-                confirmpw,
+                password: hashedPassword,
             }
-        })
+        });
+        const { password: newUserPassword, ...rest } = newUser;
 
-        return NextResponse.json(body);
+        return NextResponse.json({ user: rest, message: "User created successfully" }, { status: 201 });
     } catch (error) {
-
+        return NextResponse.json({ message: "User created fail" }, { status: 500 });
     }
 }
 
