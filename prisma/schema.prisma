@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserDetail {
+  UserID         Int             @id @default(autoincrement())
+  UserName       String          @db.VarChar(128)
+  UserEmail      String          @db.VarChar(128)
+  UserPhone      String?         @db.VarChar(25)
+  UserPassword   String          @db.VarChar(60)
+  // Motify from @db.Timestamptz(6) to @default(now())
+  UserJoinedDate DateTime        @db.Timestamptz(6)
+  // change to text
+  UserPictureURL String          @db.VarChar(256)
+  // Motify from @db.Timestamptz(6) to @updateAt
+  UserLastLogin  DateTime        @db.Timestamptz(6)
+  WebsiteDetail  WebsiteDetail[]
+}
+
+model UserVerifyBox {
+  UserVerifyID       Int            @id @default(autoincrement())
+  WebsiteURL         String         @db.VarChar(256)
+  WebsiteMetaTitle   String?
+  WebsiteMetaDesc    String?
+  WebsiteMetaKeyword String?
+  WebsiteStatus      Boolean
+  Verification       Verification[]
+}
+
+model Verification {
+  VerificationID      Int              @id @default(autoincrement())
+  WebsiteID           Int              @default(autoincrement())
+  WhitelistID         Int              @default(autoincrement())
+  UserVerifyID        Int              @default(autoincrement())
+  CGamblingPercentage Int
+  CScamPercentage     Int
+  CFakePercentage     Int
+  COtherPercentage    Int
+  CVerifyDate         DateTime         @db.Timestamptz(6)
+  MGamblingPercentage Int
+  MScamPercentage     Int
+  MFakePercentage     Int
+  MOtherPercentage    Int
+  MVerifyDate         DateTime         @db.Timestamptz(6)
+  UserVerifyBox       UserVerifyBox    @relation(fields: [UserVerifyID], references: [UserVerifyID], onDelete: NoAction, onUpdate: NoAction, map: "UserVerifyID")
+  WebsiteDetail       WebsiteDetail    @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
+  WhitelistWebsite    WhitelistWebsite @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
+}
+
+model WebsiteCategory {
+  WebCategoryID   Int             @id @default(autoincrement())
+  WebCategoryName String          @db.VarChar(128)
+  WebsiteDetail   WebsiteDetail[]
+}
+
+model WebsiteDetail {
+  WebsiteID           Int                @id @default(autoincrement())
+  UserID              Int                @default(autoincrement())
+  WebCategoryID       Int                @default(autoincrement())
+  WebsiteURL          String             @db.VarChar(256)
+  WebsiteMetaTitle    String?
+  WebsiteMetaDesc     String?
+  WebsiteMetaKeyword  String?
+  WebsiteText         String?
+  WebsiteStatus       Boolean
+  // Motify from @db.Timestamptz(6) to @default(now())
+  WebsiteReportedDate DateTime           @default(now())
+  BankAccountName     String?            @db.VarChar(128)
+  BankAccountOwner    String?            @db.VarChar(128)
+  BankAccountNumber   String?            @db.VarChar(50)
+  Verification        Verification[]
+  UserDetail          UserDetail         @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
+  WebsiteCategory     WebsiteCategory    @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
+  WhitelistWebsite    WhitelistWebsite[]
+}
+
+model WhitelistWebsite {
+  WhitelistID          Int            @id @default(autoincrement())
+  WebsiteID            Int            @default(autoincrement())
+  WhitelistURL         String         @db.VarChar(256)
+  WhitelistMetaTitle   String?
+  WhitelistMetaDesc    String?
+  WhistlistMetaKeyword String?
+  WhitelistText        String?
+  Verification         Verification[]
+  WebsiteDetail        WebsiteDetail  @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
+}
