@@ -13,22 +13,22 @@ export default function LocaleLayout({
   const currentLocale = useCurrentLocale();
 
   return (
-    <html lang="en">
+    <html lang='en'>
       <I18nProviderClient locale={currentLocale}>
-        <body>
+        <body className="overflow-auto" >
           <NavBar />
           <div
             style={{
               backgroundImage: `url(${backgroundImage.src})`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              height: "100vh",
-              display: "flex",
-              justifyContent: "center",
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              height: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
-            <div className="pt-9">{children}</div>
+            <div className='pt-9'>{children}</div>
           </div>
         </body>
       </I18nProviderClient>

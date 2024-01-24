@@ -92,6 +92,21 @@ export default {
     "gmail": "Gmail",
     "phonenum": "เบอร์ติดต่อ (ทางเลือก)",
     "password": "รหัสผ่าน",
-  }
+  },
 
+  "verificationpage": {
+    "title": "Start Checking Website Links For Your Safety",
+    "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
+    "url-detection-title": "URL Detection"
+  },
+
+  "moredetailpage": {
+    "title": "Read More Website Details Here",
+    "trust-score": "Trust Score:",
+    "measurement": "Trust Score Measurement Criteria",
+    "websiteinsight-title": "Website Insights",
+    "API-title": "Compare API With Other Cheat Checking Websites",
+    "API-website-col": "Cheating Web Checking Websites", 
+    "API-inspection-result-col": "Inspection Results"
+  },
 }
