@@ -26,8 +26,8 @@ export default {
     "signup": "ลงทะเบียน",
     "username": "ชื่อผู้ใช้",
     "usertext": "ใส่ชื่อผู้ใช้ของคุณ",
-    "gmail": "Gmail",
-    "gmtext": "ใส่ gmail ของคุณ",
+    "email": "Gmail",
+    "emtext": "ใส่ gmail ของคุณ",
     "phonenum": "เบอร์ติดต่อ (ทางเลือก)",
     "phntext": "ใส่เบอร์ติดต่อของคุณ",
     "password": "รหัสผ่าน",
@@ -38,7 +38,14 @@ export default {
     "termofuse": "Terms of Use",
     "and": "และ",
     "privacypolicy": "Privacy Policy",
-    "consent2": "เพื่ออนุญาตให้เราเก็บข้อมูลของคุณ"
+    "consent2": "เพื่ออนุญาตให้เราเก็บข้อมูลของคุณ",
+    "errconfirmpass": "รหัสผ่าน และ รหัสยืนยันควรเหมือนกัน",
+    "successmsg": "ตรวจสอบข้อมูลสำเร็จ",
+    "erremail": "รูปแบบของอีเมล์ผิด",
+    "errpw1": "รหัสผ่านต้องการอย่างน้อย 8 ตัวอักษร",
+    "errpw2": "รหัสผ่านต้องการตัวเลขอย่างน้อย 1 ตัวอักษร",
+    "errphone": "โปรดใส่หมายเลขโทรศัพท์ให้ถูกต้อง",
+    "errconsent": "โปรดอ่านและยอมรับข้อกำหนด",
   },
 
   "termofusepage": {

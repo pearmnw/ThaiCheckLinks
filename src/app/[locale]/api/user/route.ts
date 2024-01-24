@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { hash } from 'bcrypt';
+import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
 
 // model UserDetail {
@@ -17,50 +17,44 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const confirmpw;
-        const { username, email, userphone, password } = body;
+        console.log(body);
+        const { UserName, UserEmail, UserPhone, UserPassword } = body;
+
+        const existingUserByUserName = await db.userDetail.findUnique({
+            where: { UserName: UserName }
+        });
+        if (existingUserByUserName) {
+            return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
+        }
 
         // check if email, username, password
         const existingUserByEmail = await db.userDetail.findUnique({
-            where: { UserEmail: email }
+            where: { UserEmail: UserEmail }
         });
         if (existingUserByEmail) {
             return NextResponse.json({ user: null, message: "User with this email already exists" }, { status: 409 })
         }
 
-        const existingUserByUserName = await db.userDetail.findUnique({
-            where: { UserName: username }
-        });
-        if (existingUserByUserName) {
-            return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
-        }
-
         const existingUserByPhone = await db.userDetail.findUnique({
-            where: { UserPhone: username }
+            where: { UserPhone: UserPhone }
         });
         if (existingUserByUserName) {
             return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
         }
 
-        if (password != confirmpw) {
-            return NextResponse.json({ user: null, message: "Your password is not match" }, { status: 409 })
-        }
-
-
-        const hashedPassword = await hash(password, 10)
+        const hashedPassword = await hash(UserPassword, 10)
         const newUser = await db.userDetail.create({
             data: {
-                username,
-                email,
-                userphone,
-                password: hashedPassword,
+                UserName,
+                UserEmail,
+                UserPhone,
+                UserPassword: hashedPassword
             }
         });
-        const { password: newUserPassword, ...rest } = newUser;
 
-        return NextResponse.json({ user: rest, message: "User created successfully" }, { status: 201 });
+        return NextResponse.json({ UserDetail: newUser, message: "User created successfully" }, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ message: "User created fail" }, { status: 500 });
+        return NextResponse.json({ message: error }, { status: 500 });
     }
 }
 

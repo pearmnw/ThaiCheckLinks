@@ -9,16 +9,13 @@ datasource db {
 
 model UserDetail {
   UserID         Int             @id @default(autoincrement())
-  UserName       String          @db.VarChar(128)
-  UserEmail      String          @db.VarChar(128)
-  UserPhone      String?         @db.VarChar(25)
+  UserName       String          @unique
+  UserEmail      String          @unique
+  UserPhone      String?         @unique
   UserPassword   String          @db.VarChar(60)
-  // Motify from @db.Timestamptz(6) to @default(now())
-  UserJoinedDate DateTime        @db.Timestamptz(6)
-  // change to text
-  UserPictureURL String          @db.VarChar(256)
-  // Motify from @db.Timestamptz(6) to @updateAt
-  UserLastLogin  DateTime        @db.Timestamptz(6)
+  UserJoinedDate DateTime        @default(now())
+  UserPictureURL String?         @unique
+  UserLastLogin  DateTime        @updatedAt
   WebsiteDetail  WebsiteDetail[]
 }
 
@@ -68,7 +65,6 @@ model WebsiteDetail {
   WebsiteMetaKeyword  String?
   WebsiteText         String?
   WebsiteStatus       Boolean
-  // Motify from @db.Timestamptz(6) to @default(now())
   WebsiteReportedDate DateTime           @default(now())
   BankAccountName     String?            @db.VarChar(128)
   BankAccountOwner    String?            @db.VarChar(128)
