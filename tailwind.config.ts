@@ -10,13 +10,17 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'main-pattern': "url('/public/Swirl.png'))"
+        'main-pattern': "url('/public/Swirl.png'))",
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        'custom-black': '#121b2a',
+        'custom-bg-moredetail': '#f7f8fa',
+      },
     },
   },
   plugins: [],
-}
+};
 export default config
