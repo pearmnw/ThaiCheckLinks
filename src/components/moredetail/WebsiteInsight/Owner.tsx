@@ -1,7 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
-const Owner: React.FC = () => {
+interface OwnerProps {
+  owner: any
+}
+
+const Owner: React.FC<OwnerProps> = ({ owner }) => {
+  const t = useScopedI18n('moredetailpage');
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,13 +47,13 @@ const Owner: React.FC = () => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Organization: 
+              Organization: <span className="font-medium">{ owner.organization ? owner.organization : t('No Result') }</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              CA:
+              CA: <span className="font-medium">{ owner.ca ? owner.ca : t('No Result') }</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Country: 
+              Country: <span className="font-medium">{ owner.country ? owner.country : t('No Result')}</span>
             </p>
           </div>
         </div>

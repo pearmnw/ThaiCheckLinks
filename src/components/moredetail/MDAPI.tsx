@@ -15,8 +15,8 @@ const makeRequest = (url: any): string => {
 const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
-  const [checkIPQuality, setCheckIPQuality] = useState<any>('');
-  const [checkURLHaus, setCheckURLHaus] = useState<any>('');
+  const [checkIPQuality, setCheckIPQuality] = useState<any>(t('No Result'));
+  const [checkURLHaus, setCheckURLHaus] = useState<any>(t('No Result'));
 
   const data = [
     { name: 'IPQuality', status: checkIPQuality },
@@ -25,7 +25,6 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
 
   const handleCheckUrl = async () => {
     try {
-
       const response_ip_quality = await fetch(
         `/${currentLocale}/api/proxy?url=${url}`
       );
@@ -44,12 +43,12 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
           data.phishing === true ||
           data.suspicious === true
         ) {
-          setCheckIPQuality('FOUND');
+          setCheckIPQuality(t('FOUND'));
         } else {
-          setCheckIPQuality('NOT FOUND');
+          setCheckIPQuality(t('NOT FOUND'));
         }
       } else {
-        setCheckIPQuality('NOT FOUND');
+        setCheckIPQuality(t('NOT FOUND'));
       }
       
       // URLHause
@@ -59,9 +58,9 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
       const data = await response_url_haus.json();
       
       if (data.query_status == "ok") {
-        setCheckURLHaus('FOUND');
+        setCheckURLHaus(t('FOUND'));
       } else {
-        setCheckURLHaus('NOT FOUND');
+        setCheckURLHaus(t('NOT FOUND'));
       }
       
     } catch (error: any) {
@@ -108,15 +107,22 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
                   <td className='px-6 py-4 whitespace-nowrap text-2xl font-medium text-gray-900 text-start border-r-4 border-custom-black'>
                     {item.name}
                   </td>
-                  <td
-                    className={`px-6 py-4 whitespace-nowrap text-3xl ${
-                      item.status === 'FOUND'
-                        ? 'text-green-600'
-                        : 'text-red-600'
-                    }`}
-                  >
-                    {item.status}
-                  </td>
+                  {checkIPQuality !== 'No Result' &&
+                  checkURLHaus !== 'No Result' ? (
+                    <td
+                      className={`px-6 py-4 whitespace-nowrap text-3xl ${
+                        item.status === 'FOUND'
+                          ? 'text-green-600'
+                          : 'text-red-600'
+                      }`}
+                    >
+                      {item.status}
+                    </td>
+                  ) : (
+                    <td className='px-6 py-4 whitespace-nowrap text-3xl text-custom-black'>
+                      {item.status}
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

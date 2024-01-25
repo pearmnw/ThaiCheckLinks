@@ -1,7 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
-const CompanyData: React.FC = () => {
+interface CompanyDataProps {
+  company: any
+}
+
+const CompanyData: React.FC<CompanyDataProps> = ({ company }) => {
+  const t = useScopedI18n('moredetailpage');
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,19 +47,22 @@ const CompanyData: React.FC = () => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Organization: 
+              Organization:{' '}
+              <span className='font-medium'>{company.organization ? company.organization : t('No Result')}</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Owner: 
+              Owner: <span className='font-medium'>{company.owner? company.owner : t('No Result')}</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Address:
+              Address:{' '}
+              <span className='font-medium'>{company.address ? company.address : t('No Result')}</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Country: 
+              Country:{' '}
+              <span className='font-medium'>{company.country ? company.country : t('No Result')}</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Email: 
+              Email: <span className='font-medium'>{company.email ? company.email : t('No Result')}</span>
             </p>
           </div>
         </div>
