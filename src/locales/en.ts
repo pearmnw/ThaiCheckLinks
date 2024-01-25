@@ -22,8 +22,8 @@ export default {
     "signup": "Sign Up",
     "username": "Username",
     "usertext": "Enter your username",
-    "gmail": "Gmail",
-    "gmtext": "Enter your gmail",
+    "email": "Email",
+    "emtext": "Enter your gmail",
     "phonenum": "Phone number (Optional)",
     "phntext": "Enter your phone number",
     "password": "Password",
@@ -34,7 +34,14 @@ export default {
     "termofuse": "Terms of Use",
     "and": "and",
     "privacypolicy": "Privacy Policy",
-    "consent2": "to allow us to collect your data"
+    "consent2": "to allow us to collect your data.",
+    "errconfirmpass": "Password and confirm password should be the same.",
+    "successmsg": "Information Validation Success.",
+    "erremail": "Wrong Email Format.",
+    "errpw1": "password must be at least 8 characters long.",
+    "errpw2": "password must contain at least one number.",
+    "errphone": "please enter a correct phone number.",
+    "errconsent": "Please read and consent to the terms.",
   },
 
 
