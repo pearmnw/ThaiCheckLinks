@@ -57,7 +57,7 @@ const MDTrustscore: React.FC<MDTrustscoreProps> = ({ url }) => {
   return (
     <div className='text-custom-black bg-custom-bg-moredetail w-auto flex flex-center items-start flex-col rounded-xl py-8 px-20'>
       <div className='flex flex-row flex-start items-center gap-5'>
-        {t('trust-score')}
+        {t('risk-score')}
         <span className='text-red-600 font-bold'>{identifyRisk}</span>
       </div>
       <div className='flex flex-col justify-center items-start w-full'>

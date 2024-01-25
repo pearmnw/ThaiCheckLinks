@@ -102,7 +102,7 @@ export default {
 
   "moredetailpage": {
     "title": "Read More Website Details Here",
-    "trust-score": "Trust Score:",
+    "risk-score": "Risk Score:",
     "measurement": "Trust Score Measurement Criteria",
     "websiteinsight-title": "Website Insights",
     "API-title": "Compare API With Other Cheat Checking Websites",
