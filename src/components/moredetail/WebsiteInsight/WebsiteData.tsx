@@ -1,7 +1,14 @@
 'use client';
 import React, { useState } from 'react';
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
-const WebsiteData: React.FC = () => {
+interface WebsiteDataProps {
+  websitedata: any;
+  rank: string;
+}
+
+const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
+  const t = useScopedI18n('moredetailpage');
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -40,29 +47,80 @@ const WebsiteData: React.FC = () => {
           aria-labelledby='options-menu'
         >
           <div className='py-1' role='none'>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>Alexa rank:</p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>Meta title:</p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Meta description:
-            </p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>IP address:</p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Status code:
-            </p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>Domain age:</p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>SSL valid:</p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>SSL type:</p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>
-              WHOIS register date:
+              Alexa rank: <span className='font-medium'>{rank ? rank : t('No Result')}</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              WHOIS last update date:
+              Meta title:{' '}
+              <span className='font-medium'>
+                {websitedata.title ? websitedata.title : t('No Result')}
+              </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              WHOIS renew date:
+              Meta description:{' '}
+              <span className='font-medium'>
+                {websitedata.desciption
+                  ? websitedata.desciption
+                  : t('No Result')}
+              </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Redirected domain:
+              IP address:{' '}
+              <span className='font-medium'>
+                {websitedata.ip ? websitedata.ip : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              Status code:{' '}
+              <span className='font-medium'>
+                {websitedata.status_code
+                  ? websitedata.status_code
+                  : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              Domain age:{' '}
+              <span className='font-medium'>
+                {websitedata.domain_age
+                  ? websitedata.domain_age
+                  : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              SSL valid:{' '}
+              <span className='font-medium'>
+                {websitedata.ssl_valid ? websitedata.ssl_valid : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              SSL type:{' '}
+              <span className='font-medium'>
+                {websitedata.ssl_type ? websitedata.ssl_type : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              WHOIS register date:{' '}
+              <span className='font-medium'>
+                {websitedata.whois_register_date
+                  ? websitedata.whois_register_date
+                  : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              WHOIS last update date:{' '}
+              <span className='font-medium'>
+                {websitedata.whois_last_update_date
+                  ? websitedata.whois_last_update_date
+                  : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              WHOIS renew date:{' '}
+              <span className='font-medium'>
+                {websitedata.whois_renew_date
+                  ? websitedata.whois_renew_date
+                  : t('No Result')}
+              </span>
             </p>
           </div>
         </div>

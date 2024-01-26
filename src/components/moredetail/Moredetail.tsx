@@ -21,7 +21,7 @@ const Moredetail: React.FC<MoredetailProps> = ({ url }) => {
       <div className='flex justify-center flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg py-14 px-8 gap-6'>
         <MDHeader />
         <div className='flex justify-center flex-col item-center mx-12 gap-6'>
-          <MDTrustscore />
+          <MDTrustscore url={url}/>
           <MDMeasurement />
           <MDWebsiteInsight url={url}/>
           <MDAPI url={url}/>

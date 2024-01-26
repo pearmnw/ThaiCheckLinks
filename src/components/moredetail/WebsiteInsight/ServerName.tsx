@@ -1,7 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
-const ServerName: React.FC = () => {
+interface ServerNameProps {
+  server: any
+}
+
+const ServerName: React.FC<ServerNameProps> = ({ server }) => {
+  const t = useScopedI18n('moredetailpage');
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,7 +47,7 @@ const ServerName: React.FC = () => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Server:
+              Server: <span className="font-medium">{server.name ? server.name : t('No Result')}</span>
             </p>
           </div>
         </div>

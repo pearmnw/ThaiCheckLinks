@@ -1,7 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
-const Registrar: React.FC = () => {
+interface RegistrarProps {
+  registrar: any
+}
+
+const Registrar: React.FC<RegistrarProps> = ({ registrar }) => {
+  const t = useScopedI18n('moredetailpage');
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,10 +47,10 @@ const Registrar: React.FC = () => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Registrar: 
+              Registrar: <span className="font-medium">{registrar.domain ? registrar.domain : t('No Result')}</span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              IANA ID:
+              IANA ID: <span className="font-medium">{registrar.iana_id ? registrar.iana_id : t('No Result')}</span>
             </p>
           </div>
         </div>

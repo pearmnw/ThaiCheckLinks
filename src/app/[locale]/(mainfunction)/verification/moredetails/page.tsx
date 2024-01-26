@@ -5,7 +5,9 @@ import Url from "@/components/url/Url";
 
 export default async function verification() {
   const t = await getScopedI18n("verificationpage");
-  const url = 'http://182.116.37.95:50487/i';
+  const url = 'www.google.com';
+  // const url = 'br-icloud.com.br';
+
   return (
     <>
       <div className='text-center text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3] '>

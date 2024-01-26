@@ -3,7 +3,6 @@ import { getScopedI18n } from "../../locales/server";
 
 export default async function Home() {
   const t = await getScopedI18n("homepage");
-  const url = "";
   return (
     <>
       {/* TODO: Catagory selection, Search function, Details list component */}

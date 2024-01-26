@@ -119,11 +119,18 @@ export default {
 
   "moredetailpage": {
     "title": "Read More Website Details Here",
-    "trust-score": "Trust Score:",
+    "risk-score": "Risk Score:",
     "measurement": "Trust Score Measurement Criteria",
     "websiteinsight-title": "Website Insights",
     "API-title": "Compare API With Other Cheat Checking Websites",
     "API-website-col": "Cheating Web Checking Websites",
-    "API-inspection-result-col": "Inspection Results"
+    "API-inspection-result-col": "Inspection Results",
+    "low": "Low",
+    "quite-low": "Quite Low",
+    "quite-high": "Quite High",
+    "high": "High",
+    "FOUND": "FOUND",
+    "NOT FOUND": "NOT FOUND",
+    "No Result": "No Result"
   },
 }
