@@ -1,11 +1,11 @@
 'use client';
 
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import MDHeader from './MDHeader';
-import MDTrustscore from './MDTrustscore';
-import MDMeasurement from './MDMeasurement';
-import MDWebsiteInsight from './MDWebsiteInsight';
-import MDAPI from './MDAPI';
+import MDHeader from './Header';
+import MDTrustscore from './Trustscore';
+import MDMeasurement from './Measurement';
+import MDWebsiteInsight from './WebsiteInsight';
+import MDAPI from './API';
 
 
 interface MoredetailProps {

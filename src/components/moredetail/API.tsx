@@ -111,7 +111,7 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
                   checkURLHaus !== 'No Result' ? (
                     <td
                       className={`px-6 py-4 whitespace-nowrap text-3xl ${
-                        item.status === 'FOUND'
+                        item.status === ('FOUND' || 'ค้นพบ')
                           ? 'text-green-600'
                           : 'text-red-600'
                       }`}
