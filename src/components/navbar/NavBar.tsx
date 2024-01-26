@@ -1,13 +1,14 @@
 "use client";
 
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NavBar = () => {
+  const { data: session, status } = useSession();
   const t = useScopedI18n("navbar");
-  const currentLocale = useCurrentLocale();
   const [header, setHeader] = useState(false);
   const scrollHeader = () => {
     if (window.scrollY >= 20) {
@@ -59,21 +60,42 @@ const NavBar = () => {
           </div>
           <div className="flex items-center md:order-2 space-x-3 md:space-x-3 rtl:space-x-reverse">
             <LocaleSwitcher />
-            <div>
-              <Link
-                href="/signin"
-                className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
-              >
-                {t("signin")}
-                {" | "}
-              </Link>
-              <Link
-                href="/signup"
-                className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
-              >
-                {t("signup")}
-              </Link>
-            </div>
+
+            {session?.user ? (
+              <div className="flex">
+                <Link href="/profile">
+                  <img
+                    className="w-[3rem] h-[3rem] rounded-full"
+                    src="/apichaya.jpg"
+                    alt="Rounded avatar"
+                  ></img>
+                </Link>
+                <button
+                  onClick={() => signOut()}
+                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                >
+                  &nbsp;
+                  {" | "}
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div>
+                <Link
+                  href="/signin"
+                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                >
+                  {t("signin")}
+                  {" | "}
+                </Link>
+                <Link
+                  href="/signup"
+                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                >
+                  {t("signup")}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>

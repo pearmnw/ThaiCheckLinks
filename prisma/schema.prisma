@@ -9,13 +9,13 @@ datasource db {
 
 model UserDetail {
   UserID         Int             @id @default(autoincrement())
-  UserName       String          @unique
-  UserEmail      String          @unique
-  UserPhone      String?         @unique
+  UserName       String          @db.VarChar(128)
+  UserEmail      String          @db.VarChar(128)
+  UserPhone      String?         @db.VarChar(25)
   UserPassword   String          @db.VarChar(60)
-  UserJoinedDate DateTime        @default(now())
-  UserPictureURL String?         @unique
-  UserLastLogin  DateTime        @updatedAt
+  UserJoinedDate DateTime        @default(now()) @db.Timestamptz(6)
+  UserPictureURL String?
+  UserLastLogin  DateTime        @default(now()) @updatedAt @db.Timestamptz(6)
   WebsiteDetail  WebsiteDetail[]
 }
 
@@ -43,7 +43,7 @@ model Verification {
   MScamPercentage     Int
   MFakePercentage     Int
   MOtherPercentage    Int
-  MVerifyDate         DateTime         @db.Timestamptz(6)
+  MVerifyDate         DateTime         @default(now()) @db.Timestamptz(6)
   UserVerifyBox       UserVerifyBox    @relation(fields: [UserVerifyID], references: [UserVerifyID], onDelete: NoAction, onUpdate: NoAction, map: "UserVerifyID")
   WebsiteDetail       WebsiteDetail    @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
   WhitelistWebsite    WhitelistWebsite @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
@@ -59,13 +59,13 @@ model WebsiteDetail {
   WebsiteID           Int                @id @default(autoincrement())
   UserID              Int                @default(autoincrement())
   WebCategoryID       Int                @default(autoincrement())
-  WebsiteURL          String             @db.VarChar(256)
+  WebsiteURL          String
   WebsiteMetaTitle    String?
   WebsiteMetaDesc     String?
   WebsiteMetaKeyword  String?
   WebsiteText         String?
   WebsiteStatus       Boolean
-  WebsiteReportedDate DateTime           @default(now())
+  WebsiteReportedDate DateTime           @default(now()) @db.Timestamptz(6)
   BankAccountName     String?            @db.VarChar(128)
   BankAccountOwner    String?            @db.VarChar(128)
   BankAccountNumber   String?            @db.VarChar(50)
@@ -78,7 +78,7 @@ model WebsiteDetail {
 model WhitelistWebsite {
   WhitelistID          Int            @id @default(autoincrement())
   WebsiteID            Int            @default(autoincrement())
-  WhitelistURL         String         @db.VarChar(256)
+  WhitelistURL         String
   WhitelistMetaTitle   String?
   WhitelistMetaDesc    String?
   WhistlistMetaKeyword String?
