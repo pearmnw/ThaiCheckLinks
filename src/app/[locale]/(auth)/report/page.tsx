@@ -1,12 +1,13 @@
-import ChangeInfoForm from "@/components/form/changeinfoform";
+import ReportForm from "@/components/reportpage/reportform";
 import UnAuth from "@/components/reportpage/unauth";
 import { getServerSession } from "next-auth";
 import { getScopedI18n } from "../../../../locales/server";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 
-export default async function Profile() {
+export default async function report() {
+  const t = await getScopedI18n("report");
   const session = await getServerSession(authOptions);
-  const t = await getScopedI18n("profilepage");
+  console.log("welcome to report page");
   if (session?.user) {
     return (
       <>
@@ -15,7 +16,7 @@ export default async function Profile() {
             {t("title")}
           </span>
         </div>
-        <ChangeInfoForm />
+        <ReportForm />
       </>
     );
   }

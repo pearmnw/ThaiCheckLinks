@@ -24,15 +24,21 @@ const SignInForm = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    const signInData = await signIn("credentials", {
-      username: formInput.username,
-      password: formInput.password,
-    });
-    console.log(signInData);
-    if (signInData?.error) {
-      console.log(signInData.error);
-    } else {
-      router.push("/profile");
+    // console.log(formInput);
+    try {
+      const signInData = await signIn("credentials", {
+        username: formInput.username,
+        password: formInput.password,
+        redirect: false,
+      });
+      console.log(signInData);
+      if (signInData?.error) {
+        console.log(signInData.error);
+        return;
+      }
+      router.push("/report");
+    } catch (error) {
+      console.log(error);
     }
   };
 

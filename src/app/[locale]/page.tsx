@@ -1,6 +1,6 @@
 import SearchBarMain from "@/components/searchbar/searchbarmain";
 import { getScopedI18n } from "../../locales/server";
-
+import WebsiteTable from '@/components/homepage/homepagetable';
 export default async function Home() {
   const t = await getScopedI18n("homepage");
   return (
@@ -12,6 +12,7 @@ export default async function Home() {
           {t("caption")}
         </div>
         <SearchBarMain />
+        <WebsiteTable />
       </div>
     </>
   );

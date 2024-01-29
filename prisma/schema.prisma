@@ -12,7 +12,7 @@ model UserDetail {
   UserName       String          @db.VarChar(128)
   UserEmail      String          @db.VarChar(128)
   UserPhone      String?         @db.VarChar(25)
-  UserPassword   String          @db.VarChar(60)
+  UserPassword   String
   UserJoinedDate DateTime        @default(now()) @db.Timestamptz(6)
   UserPictureURL String?
   UserLastLogin  DateTime        @default(now()) @updatedAt @db.Timestamptz(6)
