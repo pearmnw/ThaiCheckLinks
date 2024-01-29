@@ -13,7 +13,6 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       throw new Error(`API responded with status code: ${apiResponse.status}`);
     }
     const data = await apiResponse.json();
-
     return NextResponse.json(data);
   } catch (error: any) {
     return NextResponse.json({ message: error.message });

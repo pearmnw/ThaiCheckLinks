@@ -115,19 +115,29 @@ export default {
 
   "verificationpage": {
     "title": "เริ่มต้นตรวจสอบลิงค์เว็บไซต์ เพื่อความปลอดภัยของคุณ",
-    "caption": "ใส่ลิงค์ของคุณในช่องตรวจสอบ เพื่อตรวจสอบเว็บไซต์ที่คุณใช้ และเพื่อเช็คเปอร์เซ็นความเป็นเว็บไซต์มิจฉาชีพเทียบกับฐานข้อมูลประวัติอาชญากรรม",
-    "defaultinfo": "ผลการตรวจสอบ",
-    "url-detection-title": "URL Detection"
+    "caption": "ใส่ลิงค์ของคุณในช่องตรวจสอบ เพื่อตรวจสอบเว็บไซต์ที่คุณใช้และเพื่อเช็คเปอร์เซ็นความเป็นเว็บไซต์มิจฉาชีพเทียบกับฐานข้อมูลประวัติอาชญากรรม",
+    "url-detection-title": "ตรวจสอบ URL",
+    "analysis-title": "AI ตรวจสอบเปอร์เซ็นความเสี่ยง",
+    "analysis-subtitle": "ค่าเปอร์เซ็นมากสุดที่เคยวิเคราะห์ได้",
+    'update': "อัพเดทปัจจุบัน",
+    'readmore': "อ่านรายละเอียดเว็บไซต์เพิ่มเติมที่นี่",
+    'malicious-url': "Malicious URL Detection"
   },
 
   "moredetailpage": {
-    "title": "Read More Website Details Here",
-    "trust-score": "Trust Score:",
-    "measurement": "Trust Score Measurement Criteria",
-    "websiteinsight-title": "Website Insights",
-    "API-title": "Compare API With Other Cheat Checking Websites",
-    "API-website-col": "Cheating Web Checking Websites",
-    "API-inspection-result-col": "Inspection Results"
+    "title": "รายละเอียด URL เพิ่มเติม",
+    "risk-score": "เปอร์เซ็นความเสี่ยง:",
+    "measurement": "เกณฑ์การวัดความน่าเชื่อถือ",
+    "websiteinsight-title": "ข้อมูลเชิงลึกของเว็บไซต์",
+    "API-title": "เปรียบเทียบ API กับเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
+    "API-website-col": "เว็บไซต์ตรวจสอบเว็บโกง", 
+    "API-inspection-result-col": "ผลการตรวจสอบ",
+    "low": "ต่ำ",
+    "quite-low": "ค่อนข้างต่ำ",
+    "quite-high": "ค่อนข้างสูง",
+    "high": "สูง",
+    "FOUND": "ค้นพบ",
+    "NOT FOUND": "ไม่พบ",
+    "No Result": "ไม่มีผลลัพธ์ดังกล่าว"
   },
-
 }

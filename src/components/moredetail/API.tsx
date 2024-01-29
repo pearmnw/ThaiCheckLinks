@@ -1,7 +1,7 @@
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 import { useState } from 'react';
 
-interface MDAPIProps {
+interface APIProps {
   url: string;
 }
 
@@ -12,7 +12,7 @@ const makeRequest = (url: any): string => {
   return url;
 }
 
-const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
+const APIProps: React.FC<APIProps> = ({ url }) => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
   const [checkIPQuality, setCheckIPQuality] = useState<any>(t('No Result'));
@@ -29,11 +29,11 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
         `/${currentLocale}/api/proxy?url=${url}`
       );
 
-      let url_http = makeRequest(url)
+      let url_http = makeRequest(url);
       const response_url_haus = await fetch(
         `/${currentLocale}/api/urlhaus?url=${url_http}`
       );
-      
+
       // IPQuality
       if (response_ip_quality.ok) {
         const data = await response_ip_quality.json();
@@ -50,19 +50,20 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
       } else {
         setCheckIPQuality(t('NOT FOUND'));
       }
-      
+
       // URLHause
       if (!response_url_haus.ok) {
         throw new Error(`HTTP error! status: ${response_url_haus.status}`);
       }
       const data = await response_url_haus.json();
-      
-      if (data.query_status == "ok") {
+
+      if (data.query_status == 'ok') {
         setCheckURLHaus(t('FOUND'));
       } else {
         setCheckURLHaus(t('NOT FOUND'));
       }
-      
+
+      console.log(data)
     } catch (error: any) {
       console.error(`An error occurred: ${error.message}`);
     }
@@ -111,7 +112,7 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
                   checkURLHaus !== 'No Result' ? (
                     <td
                       className={`px-6 py-4 whitespace-nowrap text-3xl ${
-                        item.status === 'FOUND'
+                        item.status === ('FOUND' || 'ค้นพบ')
                           ? 'text-green-600'
                           : 'text-red-600'
                       }`}
@@ -133,4 +134,4 @@ const MDAPI: React.FC<MDAPIProps> = ({ url }) => {
   );
 };
 
-export default MDAPI;
+export default APIProps;

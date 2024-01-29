@@ -1,11 +1,10 @@
 import { getScopedI18n } from "../../../../../locales/server";
 import SearchBarMain from "@/components/searchbar/searchbarmain";
 import Moredetail from "@/components/moredetail/Moredetail";
-import Url from "@/components/url/Url";
 
 export default async function verification() {
-  const t = await getScopedI18n("verificationpage");
-  const url = 'www.google.com';
+  const t = await getScopedI18n('verificationpage');
+  const url = 'https://www.google.com';
   // const url = 'br-icloud.com.br';
 
   return (
@@ -16,7 +15,6 @@ export default async function verification() {
           {t('caption')}
         </div>
         <SearchBarMain />
-        {/* <Url /> */}
         <Moredetail url={url} />
       </div>
     </>

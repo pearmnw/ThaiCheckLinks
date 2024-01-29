@@ -2,7 +2,7 @@
 
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
-const MDMeasurement = () => {
+const Measurement = () => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
 
@@ -14,4 +14,4 @@ const MDMeasurement = () => {
   );
 };
 
-export default MDMeasurement;
+export default Measurement;

@@ -16,7 +16,7 @@ export default function LocaleLayout({
   return (
     <html lang="en">
       <I18nProviderClient locale={currentLocale}>
-        <body className="overflow-auto">
+        <body className="overflow-auto" style={{height:"1000rem"}}>
           <NextAuthProvider>
             <NavBar />
             <div

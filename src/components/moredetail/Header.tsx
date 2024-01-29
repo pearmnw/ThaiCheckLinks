@@ -3,7 +3,7 @@
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 import Link from 'next/link';
 
-const MDHeader = () => {
+const Header = () => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
 
@@ -20,4 +20,4 @@ const MDHeader = () => {
   );
 };
 
-export default MDHeader;
+export default Header;

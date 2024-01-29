@@ -4,7 +4,7 @@ import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 
 interface WebsiteDataProps {
   websitedata: any;
-  rank: string;
+  rank: string
 }
 
 const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
@@ -48,7 +48,10 @@ const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Alexa rank: <span className='font-medium'>{rank ? rank : t('No Result')}</span>
+              Alexa rank:{' '}
+              <span className='font-medium'>
+                {rank ? rank : t('No Result')}
+              </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
               Meta title:{' '}

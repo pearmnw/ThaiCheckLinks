@@ -109,14 +109,19 @@ export default {
     "phonenum": "Phone number (Optional)",
     "password": "Password",
   },
-
+  
   "verificationpage": {
     "title": "Start Checking Website Links For Your Safety",
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
-    "defaultinfo": "Verification Result",
-    "url-detection-title": "URL Detection"
+    "url-detection-title": "URL Detection",
+    "No Result": "No Result",
+    "analysis-title": "AI Analyzes Risk Percent",
+    "analysis-subtitle": "Highest Percentage Ever Examined",
+    'update': "Current update",
+    'readmore': "Read More Website Details Here",
+    'malicious-url': "Malicious URL Detection"
   },
-
+  
   "moredetailpage": {
     "title": "Read More Website Details Here",
     "risk-score": "Risk Score:",
