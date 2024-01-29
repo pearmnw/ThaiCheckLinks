@@ -24,8 +24,13 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         console.log(body);
-        // const {} = body;
+        const { WebsiteURL, WebsiteText, BankAccountName, BankAccountOwner, BankAccountNumber, WebsiteCategory } = body;
 
+        // const newReport = await db.websiteDetail.findUnique({
+        //     where: {
+        //         WebsiteURL: WebsiteURL
+        //     }
+        // });
 
         // const newReport = await db.websiteDetail.create({
         //     data: {

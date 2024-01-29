@@ -14,25 +14,6 @@ import { NextResponse } from "next/server";
 //     WebsiteDetail  WebsiteDetail[]
 //   }
 
-export async function GET(req: Request) {
-    try {
-        const body = await req.json();
-        console.log(body);
-        const { UserName } = body;
-
-        const userinfo = await db.userDetail.findUnique(
-            {
-                where: { UserName: UserName }
-            });
-        if (userinfo) {
-            return NextResponse.json({ user: userinfo, message: "User with this username is exists" })
-        }
-
-    } catch (error) {
-        return NextResponse.json({ user: null, message: "Something went wrong!!" }, { status: 409 })
-    }
-}
-
 export async function POST(req: Request) {
     try {
         const body = await req.json();

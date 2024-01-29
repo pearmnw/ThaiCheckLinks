@@ -27,6 +27,27 @@ async function signin(credentials) {
             }
             return existingUserName;
         }
+        // else if (phonenumpattern.test(credentials.username)) {
+        //     const existingUserPhone = await db.userDetail.findUnique({
+        //         where: { UserPhone: credentials.username },
+        //     })
+        //     if (!existingUserPhone) throw new Error("Wrong Credentials")
+        //     const passwordMatch = await compare(credentials.password, existingUserPhone?.UserPassword);
+        //     if (!passwordMatch) throw new Error("Wrong password");
+        //     return existingUserPhone;
+        // }
+        // else if (emailpattern.test(credentials.username)) {
+        //     const existingUserEmail = await db.userDetail.findUnique({
+        //         where: { UserPhone: credentials.username },
+        //     })
+        //     if (!existingUserEmail) throw new Error("Wrong Credentials")
+        //     const passwordMatch = await compare(credentials.password, existingUserEmail?.UserPassword);
+        //     if (!passwordMatch) throw new Error("Wrong password");
+        //     return existingUserEmail;
+        // }
+        // else {
+        //     throw new Error("Wrong Credentials")
+        // }
     } catch (error) {
         console.log(error);
         console.log("error while logging in.");
@@ -53,13 +74,20 @@ export const authOptions: NextAuthOptions = {
                     console.log({ credentials })
                     console.log(user);
                     // return user;
-                    return {
-                        id: `${user?.UserID}`,
-                        name: user?.UserName,
-                        email: user?.UserEmail
+                    if (user) {
+                        return {
+                            id: `${user?.UserID}`,
+                            name: user?.UserName,
+                            email: user?.UserEmail
+                        }
+                    }
+                    else {
+                        throw new Error("Somethings Wrong!!")
                     }
 
+
                 } catch (error) {
+                    console.log(error);
                     throw new Error("Failed to signin.");
                 }
             },

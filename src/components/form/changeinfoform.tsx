@@ -1,5 +1,6 @@
 "use client";
 
+import { db } from "@/lib/db";
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -8,6 +9,12 @@ const ChangeInfoForm = () => {
   const t = useScopedI18n("signuppage");
   const { data: session, status } = useSession();
   console.log(session?.user?.name);
+  interface User {
+    username: String;
+    email: String;
+    phonenumber: String | null;
+    password: String;
+  }
   // const router = useRouter();
   const [formInput, setFormInput] = useState({
     username: "",
@@ -16,6 +23,13 @@ const ChangeInfoForm = () => {
     password: "",
     confirmpassword: "",
     successMsg: "",
+  });
+
+  const [currentUser, setCurrentUSer] = useState({
+    username: "",
+    email: "",
+    phonenumber: "" ?? {},
+    password: "",
   });
 
   const [formError, setFormError] = useState({
@@ -35,20 +49,19 @@ const ChangeInfoForm = () => {
 
   const getCurrentUser = async () => {
     try {
-      const res = await fetch("api/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          UserName: session?.user?.name,
-          //     UserEmail: formInput.email,
-          //     UserPhone: formInput.phonenumber,
-          //     UserPassword: formInput.password,
-        }),
+      const res = await db.userDetail.findUnique({
+        where: { UserName: session?.user?.name ?? "" },
       });
-      if (res.ok) {
-        console.log(res.body);
+
+      if (res) {
+        console.log(res);
+        setCurrentUSer({
+          ...currentUser,
+          username: res.UserName,
+          email: res.UserEmail,
+          phonenumber: res.UserPhone!,
+          password: res.UserPassword,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -143,11 +156,11 @@ const ChangeInfoForm = () => {
       ...prevState,
       successMsg: t("successmsg"),
     }));
+    // getCurrentUser();
     onSubmit();
   };
 
   const onSubmit = async () => {
-    getCurrentUser();
     // const res = await fetch("api/editprofile", {
     //   method: "POST",
     //   headers: {
@@ -199,7 +212,8 @@ const ChangeInfoForm = () => {
               }}
               name="username"
               type="username"
-              placeholder={t("usertext")}
+              placeholder={session?.user?.name ?? ""}
+              // {t("usertext")}
               required
               className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
@@ -229,7 +243,8 @@ const ChangeInfoForm = () => {
               }}
               name="email"
               type="text"
-              placeholder={t("emtext")}
+              placeholder={session?.user?.email ?? ""}
+              // {t("emtext")}
               required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
