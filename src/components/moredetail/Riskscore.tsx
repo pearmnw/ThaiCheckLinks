@@ -3,14 +3,15 @@ import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 import ScoreIndicator from './TrustScore/ScoreIndicator';
 import { useState, useEffect } from 'react';
 
-interface MDTrustscoreProps {
-  url: string
+interface RiskscoreProps {
+  url: string;
 }
 
-const MDTrustscore: React.FC<MDTrustscoreProps> = ({ url }) => {
+const Riskscore: React.FC<RiskscoreProps> = ({ url }) => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
   const [score, setScore] = useState(0);
+  const [checked, setChecked] = useState(false)
   const [identifyRisk, setIdentifyRisk] = useState('');
   const maxScore = 100;
 
@@ -31,7 +32,7 @@ const MDTrustscore: React.FC<MDTrustscoreProps> = ({ url }) => {
   useEffect(() => {
     const riskLevel = identifyRiskFromScore(score);
     setIdentifyRisk(riskLevel);
-  }, [score, t]); 
+  }, [score, t]);
 
   const fetchTrustScore = async () => {
     try {
@@ -46,6 +47,8 @@ const MDTrustscore: React.FC<MDTrustscoreProps> = ({ url }) => {
         } else {
           setScore(0);
         }
+        setChecked(true);
+        console.log(data)
       } else {
         setScore(0);
       }
@@ -58,7 +61,7 @@ const MDTrustscore: React.FC<MDTrustscoreProps> = ({ url }) => {
     <div className='text-custom-black bg-custom-bg-moredetail w-auto flex flex-center items-start flex-col rounded-xl py-8 px-20'>
       <div className='flex flex-row flex-start items-center gap-5'>
         {t('risk-score')}
-        <span className='text-red-600 font-bold'>{identifyRisk}</span>
+        <span className='text-red-600 font-bold'>{checked ? identifyRisk : t('No Result')}</span>
       </div>
       <div className='flex flex-col justify-center items-start w-full'>
         <button
@@ -77,4 +80,4 @@ const MDTrustscore: React.FC<MDTrustscoreProps> = ({ url }) => {
   );
 };
 
-export default MDTrustscore;
+export default Riskscore;

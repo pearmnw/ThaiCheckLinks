@@ -4,7 +4,7 @@ import Moredetail from "@/components/moredetail/Moredetail";
 
 export default async function verification() {
   const t = await getScopedI18n('verificationpage');
-  const url = 'www.google.com';
+  const url = 'https://www.google.com';
   // const url = 'br-icloud.com.br';
 
   return (

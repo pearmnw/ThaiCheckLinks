@@ -4,7 +4,10 @@ import Verification from "@/components/verification/Verification";
 
 export default async function verification() {
   const t = await getScopedI18n('verificationpage');
-  const url = 'https://www.google.com/';
+  // const url = 'https://www.google.com/'; // Normal Web
+  const url = 'https://www.boergoats.com/'; // Gambing Web
+  // const url = 'https://crystalshopth.com/'; // Scam Web
+  // const url = 'https://u6388008.github.io/fakewebsitesample/saveweb2zip-com-www-bot-or-th/' // Fake Web
 
   return (
     <>

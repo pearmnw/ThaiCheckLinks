@@ -25,9 +25,14 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
     scam: 0,
     fake: 0,
   });
+  const [urlPercent, setUrlPercent] = useState({
+    benign_proba: 0,
+    malicious_proba: 0
+  });
 
   const formData = new FormData();
   formData.append('url', url);
+  formData.append('path', "verification")
 
   const updateCurrentPercent = (newData: any) => {
     setCurrentPercent((prevCurrentPercent) => ({
@@ -43,6 +48,13 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
     }));
   };
 
+  const updateUrlPercent = (newData: any) => {
+    setUrlPercent((prevUrlPercent) => ({
+      ...prevUrlPercent,
+      ...newData,
+    }));
+  };
+
   const predictBtn = async () => {
     try {
       axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -51,12 +63,15 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
       await axios
         .post('http://127.0.0.1:8000/', formData)
         .then((resp) => {
-          // console.log(resp.data);
+          console.log(resp.data);
           if (resp.data) {
             updateCurrentPercent(resp.data.classify);
 
             // TODO: Update Max Percent with Database (UNDONE!!!)
             updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
+
+
+            updateUrlPercent(resp.data.url_detection);
           }
         })
         .catch((error) => {
@@ -69,7 +84,7 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
 
   return (
     <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
-      <Url url={url} />
+      <Url url={url} urlPercent={urlPercent} />
       <Classify
         onPredict={predictBtn}
         currentPercent={currentPercent}

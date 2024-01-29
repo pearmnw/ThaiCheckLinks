@@ -25,7 +25,6 @@ const ProgressDonut: React.FC<ProgressDonutProps> = ({ maxPercent, color }) => {
         viewBox='0 0 100 100'
         className='transform -rotate-90'
       >
-        {/* Background circle */}
         <circle
           className='text-gray-300'
           fill='transparent'
@@ -36,9 +35,8 @@ const ProgressDonut: React.FC<ProgressDonutProps> = ({ maxPercent, color }) => {
           cx='50'
           cy='50'
         />
-        {/* Foreground circle */}
         <circle
-          className={color} // Make sure this is a valid Tailwind CSS class
+          className={color} 
           fill='transparent'
           stroke='currentColor'
           strokeWidth={strokeWidth}

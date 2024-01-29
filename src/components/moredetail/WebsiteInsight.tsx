@@ -9,7 +9,7 @@ import ServerName from './WebsiteInsight/ServerName';
 import Registrar from './WebsiteInsight/Registrar';
 import axios from 'axios';
 
-interface MDWebsiteInsightProps {
+interface WebsiteInsightProps {
   url: string;
 }
 
@@ -48,7 +48,25 @@ const websiteNoneData = {
   },
 };
 
-const MDWebsiteInsight: React.FC<MDWebsiteInsightProps> = ({ url }) => {
+const getDomainName = (url: string) => {
+  try {
+    if (url.startsWith('https://')) {
+      url = url.replace(/^https?:\/\//, '');
+    } 
+    if (url.startsWith('http://')) {
+      url = url.replace(/^https?:\/\//, '');
+    }
+    if (url.startsWith('www.')) {
+      url = url.substring(4);
+    }
+  } catch (error) {
+    console.error('Invalid URL:', error);
+    return null; 
+  }
+  return url;
+};
+
+const WebsiteInsight: React.FC<WebsiteInsightProps> = ({ url }) => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
   const [isOpen, setIsOpen] = useState(false);
@@ -56,6 +74,7 @@ const MDWebsiteInsight: React.FC<MDWebsiteInsightProps> = ({ url }) => {
   const [rank, setRank] = useState('');
   const formData = new FormData();
   formData.append('url', url);
+  formData.append('path', "moredetail")
 
   const fetchWebsiteData = async () => {
     try {
@@ -65,20 +84,25 @@ const MDWebsiteInsight: React.FC<MDWebsiteInsightProps> = ({ url }) => {
       await axios
         .post('http://127.0.0.1:8000/', formData)
         .then((resp) => {
-          setWebsiteData(resp.data.website_insight);
+          console.log(resp.data)
+          if (resp.data) {
+            setWebsiteData(resp.data.website_insight);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
 
-      const response = await fetch(`/${currentLocale}/api/alexa?url=${url}`);
+      const response = await fetch(
+        `/${currentLocale}/api/alexa?url=${getDomainName(url)}`
+      );
 
       if (response.ok) {
         const data = await response.json();
         if (data.rank) {
           setRank(data.rank as string);
         } else {
-          setRank(t('No Result'))
+          setRank(t('No Result'));
         }
       } else {
         setRank(t('No Result'));
@@ -86,7 +110,6 @@ const MDWebsiteInsight: React.FC<MDWebsiteInsightProps> = ({ url }) => {
     } catch (error: any) {
       console.error(`An error occurred: ${error.message}`);
     }
-    
   };
 
   return (
@@ -112,4 +135,4 @@ const MDWebsiteInsight: React.FC<MDWebsiteInsightProps> = ({ url }) => {
   );
 };
 
-export default MDWebsiteInsight;
+export default WebsiteInsight;
