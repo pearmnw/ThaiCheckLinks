@@ -32,11 +32,20 @@ const SignInForm = () => {
         redirect: false,
       });
       console.log(signInData);
-      if (signInData?.error) {
-        console.log(signInData.error);
-        return;
+      if (signInData?.ok) {
+        router.refresh();
+        router.push("/report");
+        router.refresh();
+      } else {
       }
-      router.push("/report");
+      // if (signInData?.error) {
+      //   console.log(signInData.error);
+      //   return;
+      // } else {
+      //   router.refresh();
+      //   router.push("/report");
+      //   router.refresh();
+      // }
     } catch (error) {
       console.log(error);
     }

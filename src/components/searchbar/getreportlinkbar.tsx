@@ -2,7 +2,7 @@
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 
-const SearchLinkBar = () => {
+const ReportLinkBar = () => {
   const t = useScopedI18n("report");
   const currentLocale = useCurrentLocale();
 
@@ -56,4 +56,4 @@ const SearchLinkBar = () => {
   );
 };
 
-export default SearchLinkBar;
+export default ReportLinkBar;
