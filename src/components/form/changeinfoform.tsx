@@ -1,12 +1,14 @@
 "use client";
 
 import { useScopedI18n } from "@/locales/client";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 const ChangeInfoForm = () => {
   const t = useScopedI18n("signuppage");
-  const router = useRouter();
+  const { data: session, status } = useSession();
+  console.log(session?.user?.name);
+  // const router = useRouter();
   const [formInput, setFormInput] = useState({
     username: "",
     email: "",
@@ -22,7 +24,6 @@ const ChangeInfoForm = () => {
     phonenumber: "",
     password: "",
     confirmpassword: "",
-    consent: "",
   });
 
   const handleUserInput = (name: string, value: string) => {
@@ -32,13 +33,25 @@ const ChangeInfoForm = () => {
     });
   };
 
-  const [checkedValues, setValue] = useState({});
-
-  const handleChange = (event: { target: { value: any; checked: any } }) => {
-    const { value, checked } = event.target;
-
-    if (checked) {
-      setValue([value]);
+  const getCurrentUser = async () => {
+    try {
+      const res = await fetch("api/user", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          UserName: session?.user?.name,
+          //     UserEmail: formInput.email,
+          //     UserPhone: formInput.phonenumber,
+          //     UserPassword: formInput.password,
+        }),
+      });
+      if (res.ok) {
+        console.log(res.body);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -125,19 +138,6 @@ const ChangeInfoForm = () => {
       return;
     }
 
-    if (checkedValues != "consent") {
-      console.log("No consent");
-      setFormError({
-        ...inputError,
-        consent: t("errconsent"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
-    }
-
     setFormError(inputError);
     setFormInput((prevState) => ({
       ...prevState,
@@ -147,7 +147,8 @@ const ChangeInfoForm = () => {
   };
 
   const onSubmit = async () => {
-    // const res = await fetch("api/user", {
+    getCurrentUser();
+    // const res = await fetch("api/editprofile", {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",
@@ -160,21 +161,30 @@ const ChangeInfoForm = () => {
     //   }),
     // });
     // if (res.ok) {
-    //   router.push("/signin");
+    //   router.refresh();
     // } else {
-    //   console.error("registration failed");
+    //   console.error("Edit information failed");
     // }
   };
 
   return (
     <div className="m-0 mx-auto w-full">
       <form onSubmit={validateFormInput}>
-        <div className="flex justify-center pt-7 pb-5 items-center justify-center">
-          <img
-            className="w-[18rem] h-[18rem] rounded-full"
-            src="/apichaya.jpg"
-            alt="Rounded avatar"
-          ></img>
+        <div className="flex justify-center pt-7 pb-5 items-center">
+          <div className="relative w-[18rem] h-[18rem] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            <svg
+              className="absolute w-[20rem] h-[20rem] text-gray-400 -left-3"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </div>
         </div>
         <div className="pt-4">
           <label className="block text-sm font-semibold leading-6 text-gray-900">

@@ -4,6 +4,7 @@ import { useScopedI18n } from "@/locales/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SignUpForm = () => {
   const t = useScopedI18n("signuppage");
@@ -148,23 +149,33 @@ const SignUpForm = () => {
   };
 
   const onSubmit = async () => {
-    const res = await fetch("api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        UserName: formInput.username,
-        UserEmail: formInput.email,
-        UserPhone: formInput.phonenumber,
-        UserPassword: formInput.password,
-      }),
-    });
-
-    if (res.ok) {
-      router.push("/signin");
-    } else {
-      console.error("registration failed");
+    try {
+      const res = await fetch("api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          UserName: formInput.username,
+          UserEmail: formInput.email,
+          UserPhone: formInput.phonenumber,
+          UserPassword: formInput.password,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        router.push("/signin");
+      } else {
+        console.log("SignUp Failed");
+        toast.error(data.message);
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -196,6 +207,9 @@ const SignUpForm = () => {
               />
             </button>
           </div>
+          <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
+            {formError.username}
+          </p>
         </div>
 
         <div className="pt-3">
@@ -306,6 +320,7 @@ const SignUpForm = () => {
         <div className="pt-3 text-justify text-sm text-gray-500">
           <div className="flex flex-wrap justify-center">
             <input
+              title="consent"
               id="link-checkbox"
               type="checkbox"
               value="consent"

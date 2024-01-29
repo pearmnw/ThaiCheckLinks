@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { getScopedI18n } from "../../../../locales/server";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 
-export default async function report() {
+const report = async () => {
   const t = await getScopedI18n("report");
   const session = await getServerSession(authOptions);
   console.log("welcome to report page");
@@ -30,4 +30,6 @@ export default async function report() {
       <UnAuth />
     </>
   );
-}
+};
+
+export default report;
