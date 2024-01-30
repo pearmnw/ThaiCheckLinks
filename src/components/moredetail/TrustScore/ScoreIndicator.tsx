@@ -2,11 +2,7 @@
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 import ProgressBar from './ProgressBar';
 import React from 'react';
-
-interface ScoreIndicatorProps {
-  score: number; 
-  maxScore: number;
-}
+import { ScoreIndicatorProps } from '@/lib/interface/moredetail/interface';
 
 const ScoreIndicator: React.FC<ScoreIndicatorProps> = ({ score, maxScore }) => {
   const t = useScopedI18n('moredetailpage');

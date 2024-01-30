@@ -2,54 +2,33 @@
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 import React, { MouseEventHandler } from 'react';
 import Header from './Header';
-import Button from './Button';
 import Verify from './Verify';
-import Url from './Url';
+import { ClassifyProps } from '@/lib/interface/verification/interface';
 
-interface ContentProps {
-  onPredict: MouseEventHandler<HTMLButtonElement>;
-  currentPercent: {
-    normal: number;
-    gambling: number;
-    scam: number;
-    fake: number;
-  };
-  maxPercent: {
-    normal: number;
-    gambling: number;
-    scam: number;
-    fake: number;
-  };
-  url: string;
-}
+const Classify: React.FC<ClassifyProps> = ({ currentPercent, maxPercent }) => {
+  const t = useScopedI18n('verificationpage');
 
-const Classify: React.FC<ContentProps> = ({
-  onPredict,
-  currentPercent,
-  maxPercent,
-  url,
-}) => {
   const categories = [
     {
-      label: 'Gambling',
+      label: t('gambling'),
       currentPercent: currentPercent.gambling,
       maxPercent: maxPercent.gambling,
       color: 'text-red-600',
     },
     {
-      label: 'Scam',
+      label: t('scam'),
       currentPercent: currentPercent.scam,
       maxPercent: maxPercent.scam,
       color: 'text-orange-400',
     },
     {
-      label: 'Fake',
+      label: t('fake'),
       currentPercent: currentPercent.fake,
       maxPercent: maxPercent.fake,
       color: 'text-yellow-400',
     },
     {
-      label: 'Others',
+      label: t('other'),
       currentPercent: currentPercent.normal,
       maxPercent: maxPercent.normal,
       color: 'text-green-600',
@@ -59,7 +38,6 @@ const Classify: React.FC<ContentProps> = ({
   return (
     <div className='flex flex-col gap-3 justify-center items-start py-8 px-8'>
       <Header />
-      <Button onPredict={onPredict} />
       <Verify categories={categories} />
     </div>
   );

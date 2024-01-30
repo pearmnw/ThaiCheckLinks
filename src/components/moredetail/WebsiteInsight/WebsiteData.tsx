@@ -1,11 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface WebsiteDataProps {
-  websitedata: any;
-  rank: string
-}
+import { WebsiteDataProps } from '@/lib/interface/moredetail/interface';
 
 const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
   const t = useScopedI18n('moredetailpage');

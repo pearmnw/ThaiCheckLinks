@@ -1,16 +1,10 @@
 'use client';
 import React from 'react';
-import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface ProgressDonutProps {
-  maxPercent: number;
-  color: string;
-}
-
+import { useScopedI18n } from '@/locales/client';
+import { ProgressDonutProps } from '@/lib/interface/verification/interface';
 
 const ProgressDonut: React.FC<ProgressDonutProps> = ({ maxPercent, color }) => {
   const t = useScopedI18n('verificationpage');
-  const currentLocale = useCurrentLocale();
 
   const radius = 36;
   const strokeWidth = 10;
@@ -47,7 +41,6 @@ const ProgressDonut: React.FC<ProgressDonutProps> = ({ maxPercent, color }) => {
           cy='50'
         />
       </svg>
-      {/* Absolute positioned text */}
       <div className='absolute text-2xl font-semibold text-custom-black'>{maxPercent}%</div>
     </div>
   );

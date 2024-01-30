@@ -1,10 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface ServerNameProps {
-  server: any
-}
+import { ServerNameProps } from '@/lib/interface/moredetail/interface';
 
 const ServerName: React.FC<ServerNameProps> = ({ server }) => {
   const t = useScopedI18n('moredetailpage');

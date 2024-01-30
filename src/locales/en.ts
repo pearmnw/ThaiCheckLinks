@@ -119,7 +119,11 @@ export default {
     "analysis-subtitle": "Highest Percentage Ever Examined",
     'update': "Current update",
     'readmore': "Read More Website Details Here",
-    'malicious-url': "Malicious URL Detection"
+    'malicious-url': "Malicious URL Detection",
+    "gambling": "Gambing",
+    "scam": "Scam",
+    "fake": "Fake",
+    "other": "Other"
   },
   
   "moredetailpage": {

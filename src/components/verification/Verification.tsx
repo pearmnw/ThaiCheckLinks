@@ -1,18 +1,16 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import Classify from './textcontent/Classify';
+import React, { useState } from 'react';
+import { useScopedI18n } from '@/locales/client';
 import axios from 'axios';
-import Redirected from './Redirected';
-import Url from './textcontent/Url';
+import SearchBarMain from '../searchbar/searchbarmain';
+import Classification from './Classification';
+import Caption from './Caption';
 
-interface VerificationProps {
-  url: string;
-}
 
-const Verification: React.FC<VerificationProps> = ({ url }) => {
+const Verification = () => {
   const t = useScopedI18n('verificationpage');
-  const currentLocale = useCurrentLocale();
+  const [url, setUrl] = useState('');
+
   const [currentPercent, setCurrentPercent] = useState({
     normal: 0,
     gambling: 0,
@@ -27,12 +25,12 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
   });
   const [urlPercent, setUrlPercent] = useState({
     benign_proba: 0,
-    malicious_proba: 0
+    malicious_proba: 0,
   });
 
   const formData = new FormData();
   formData.append('url', url);
-  formData.append('path', "verification")
+  formData.append('path', 'verification');
 
   const updateCurrentPercent = (newData: any) => {
     setCurrentPercent((prevCurrentPercent) => ({
@@ -70,7 +68,6 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
             // TODO: Update Max Percent with Database (UNDONE!!!)
             updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
 
-
             updateUrlPercent(resp.data.url_detection);
           }
         })
@@ -82,16 +79,13 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
     }
   };
 
+
   return (
-    <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
-      <Url url={url} urlPercent={urlPercent} />
-      <Classify
-        onPredict={predictBtn}
-        currentPercent={currentPercent}
-        maxPercent={maxPercent}
-        url={url}
-      />
-      <Redirected />
+    <div className='text-center text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3]'>
+      {t('title')}
+      <Caption />
+      <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} />
+      <Classification urlPercent={urlPercent} currentPercent={currentPercent} maxPercent={maxPercent}/>
     </div>
   );
 };

@@ -1,10 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface RegistrarProps {
-  registrar: any
-}
+import { RegistrarProps } from '@/lib/interface/moredetail/interface';
 
 const Registrar: React.FC<RegistrarProps> = ({ registrar }) => {
   const t = useScopedI18n('moredetailpage');

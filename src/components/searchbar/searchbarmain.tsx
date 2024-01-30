@@ -1,24 +1,23 @@
 "use client";
-
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useState } from "react"; 
+import Verification from "../verification/Verification";
 
+interface SearchBarMainProps {
+  onPredict?: any;
+  url: any;
+  setUrl: any;
+}
 
-const SearchBarMain = () => {
+const SearchBarMain: React.FC<SearchBarMainProps> = ({ onPredict, url, setUrl }) => {
   const t = useScopedI18n('homepage');
   const currentLocale = useCurrentLocale();
   const [selected, setSelected] = useState('');
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState('')
-
 
   const handleInputChange = (e: any) => {
     setUrl(e.target.value);
   };
-
-  const handleClick = async () => {
-    console.log(url)
-  }
 
   return (
     <>
@@ -103,7 +102,7 @@ const SearchBarMain = () => {
             type='button'
             id='button-addon3'
             data-te-ripple-init
-            onClick={handleClick}
+            onClick={onPredict}
           >
             {t('verify')}
           </button>

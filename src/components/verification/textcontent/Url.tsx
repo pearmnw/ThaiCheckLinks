@@ -1,20 +1,10 @@
 'use client';
-import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import axios from 'axios';
-import { useState } from 'react';
+import { useScopedI18n } from '@/locales/client';
 import ScoreIndicator from '../../moredetail/TrustScore/ScoreIndicator';
+import { UrlProps } from '@/lib/interface/verification/interface';
 
-interface UrlProps {
-  url: string;
-  urlPercent: {
-    benign_proba: number;
-    malicious_proba: number;
-  };
-}
-
-const Url: React.FC<UrlProps> = ({ url, urlPercent }) => {
+const Url: React.FC<UrlProps> = ({ urlPercent }) => {
   const t = useScopedI18n('verificationpage');
-  const currentLocale = useCurrentLocale();
   const malicious_url = urlPercent.malicious_proba
 
   return (

@@ -1,5 +1,4 @@
 'use client';
-
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
 import Link from 'next/link';
 
