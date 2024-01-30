@@ -1,6 +1,5 @@
 "use client";
 
-import { db } from "@/lib/db";
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -47,26 +46,24 @@ const ChangeInfoForm = () => {
     });
   };
 
-  const getCurrentUser = async () => {
-    try {
-      const res = await db.userDetail.findUnique({
-        where: { UserName: session?.user?.name ?? "" },
-      });
+  // const getCurrentUser = async () => {
+  //   try {
+  //     const res = await getUserByUserName(session?.user?.name!)
 
-      if (res) {
-        console.log(res);
-        setCurrentUSer({
-          ...currentUser,
-          username: res.UserName,
-          email: res.UserEmail,
-          phonenumber: res.UserPhone!,
-          password: res.UserPassword,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (res) {
+  //       console.log(res);
+  //       setCurrentUSer({
+  //         ...currentUser,
+  //         username: res.UserName,
+  //         email: res.UserEmail,
+  //         phonenumber: res.UserPhone!,
+  //         password: res.UserPassword,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -161,23 +158,19 @@ const ChangeInfoForm = () => {
   };
 
   const onSubmit = async () => {
-    // const res = await fetch("api/editprofile", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     UserName: formInput.username,
-    //     UserEmail: formInput.email,
-    //     UserPhone: formInput.phonenumber,
-    //     UserPassword: formInput.password,
-    //   }),
-    // });
-    // if (res.ok) {
-    //   router.refresh();
-    // } else {
-    //   console.error("Edit information failed");
-    // }
+    const res = await fetch("api/editprofile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        UserName: formInput.username,
+        UserEmail: formInput.email,
+        UserPhone: formInput.phonenumber,
+        UserPassword: formInput.password,
+      }),
+    });
+    console.log(res);
   };
 
   return (
@@ -213,8 +206,6 @@ const ChangeInfoForm = () => {
               name="username"
               type="username"
               placeholder={session?.user?.name ?? ""}
-              // {t("usertext")}
-              required
               className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
             <button className="items-center">
@@ -244,8 +235,6 @@ const ChangeInfoForm = () => {
               name="email"
               type="text"
               placeholder={session?.user?.email ?? ""}
-              // {t("emtext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -270,9 +259,8 @@ const ChangeInfoForm = () => {
               }}
               name="phonenumber"
               type="phonenumber"
-              placeholder={t("phntext")}
+              placeholder={session?.user?.userphone ?? ""}
               autoComplete="phonenumber"
-              // required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>

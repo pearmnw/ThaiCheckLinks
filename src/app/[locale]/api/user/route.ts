@@ -23,6 +23,7 @@ export async function POST(req: Request) {
         const existingUserByUserName = await db.userDetail.findUnique({
             where: { UserName: UserName }
         });
+
         if (existingUserByUserName) {
             return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
         }

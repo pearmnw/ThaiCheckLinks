@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-async function signin(credentials) {
+async function signin(credentials: any) {
     try {
         const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         const usernamepattern = /^[a-zA-Z0-9]/;
@@ -74,11 +74,13 @@ export const authOptions: NextAuthOptions = {
                     console.log({ credentials })
                     console.log(user);
                     // return user;
+
                     if (user) {
                         return {
                             id: `${user?.UserID}`,
                             name: user?.UserName,
-                            email: user?.UserEmail
+                            email: user?.UserEmail,
+                            userphone: user?.UserPhone,
                         }
                     }
                     else {
@@ -94,10 +96,16 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
-        jwt: async ({ token, account, user }) => {
+        jwt: async ({ token, user }) => {
             // on login if a user is passed, we set that data to this token
             user && (token.user = user);
-            // console.log(token);
+            // if(user){
+            //     return{
+            //         ...token,
+            //         userphone: user.userphone
+            //     }
+            // }
+            console.log(token);
             return token;
         },
         session: async ({ session, token }) => {
