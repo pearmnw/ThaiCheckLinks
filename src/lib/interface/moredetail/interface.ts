@@ -79,3 +79,15 @@ export interface TableDatabaseBodyProps {
   checkURLHaus: string;
 }
 
+export interface MeasurementProps {
+  websiteData: any;
+}
+
+export interface CheckedProps {
+  shown: any;
+}
+
+export interface CrossProps {
+  shown: any;
+}
+

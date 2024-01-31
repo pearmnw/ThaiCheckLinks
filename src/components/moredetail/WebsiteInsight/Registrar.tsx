@@ -44,10 +44,22 @@ const Registrar: React.FC<RegistrarProps> = ({ registrar }) => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Registrar: <span className="font-medium">{registrar.domain ? registrar.domain : t('No Result')}</span>
+              Registrar:{' '}
+              <span className='font-medium'>
+                {registrar.domain ? registrar.domain : t('No Result')}
+              </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              IANA ID: <span className="font-medium">{registrar.iana_id ? registrar.iana_id : t('No Result')}</span>
+              IANA ID:{' '}
+              <span className='font-medium'>
+                {registrar.iana_id ? registrar.iana_id : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              Email:{' '}
+              <span className='font-medium'>
+                {registrar.email ? registrar.email : t('No Result')}
+              </span>
             </p>
           </div>
         </div>

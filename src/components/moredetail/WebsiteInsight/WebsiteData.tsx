@@ -50,6 +50,14 @@ const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
               </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
+              Tranco rank:{' '}
+              <span className='font-medium'>
+                {websitedata.tranco_rank
+                  ? websitedata.tranco_rank
+                  : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
               Meta title:{' '}
               <span className='font-medium'>
                 {websitedata.title ? websitedata.title : t('No Result')}
@@ -119,6 +127,12 @@ const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
                 {websitedata.whois_renew_date
                   ? websitedata.whois_renew_date
                   : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              WHOIS hidden:{' '}
+              <span className='font-medium'>
+                {websitedata.is_hidden ? websitedata.is_hidden : t('No Result')}
               </span>
             </p>
           </div>

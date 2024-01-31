@@ -14,38 +14,49 @@ import { makeRequest } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 const websiteNoneData = {
-  server: {
-    name: '',
-  },
-  company: {
-    organization: '',
-    owner: '',
-    address: '',
-    country: '',
-    email: '',
-  },
-  website_data: {
-    title: '',
-    desciption: '',
-    ip: '',
-    status_code: '',
-    domain_age: '',
-    ssl_valid: '',
-    ssl_type: '',
-    whois_register_date: '',
-    whois_last_update_date: '',
-    whois_renew_date: '',
-    redirect_domain: '',
-  },
-  owner: {
-    organization: '',
-    ca: '',
-    country: '',
-  },
-  registrar: {
-    domain: '',
-    iana_id: '',
-  },
+      'server': {
+        "name": ''
+      },
+      'company': {
+        'organization': '',
+        'owner': '',
+        'address': '',
+        'country': '',
+        'email': ''
+      },
+      'website_data': {
+        "tranco_rank": '',
+        'title': '',
+        'desciption': '',
+        'ip': '',
+        'status_code': '',
+        'domain_age': '',
+        'ssl_valid': '',
+        'ssl_type': '',
+        'whois_register_date': '',
+        'whois_last_update_date': '',
+        'whois_renew_date': '',
+        'redirect_domain': '',
+        'is_hidden': ''
+      },
+      'owner': {
+        'organization': '',
+        'ca': '',
+        'country': ''
+      },
+      'registrar': {
+        'domain': '',
+        'iana_id': '',
+        'email': ''
+      },
+      'measurement': {
+        'is_ssl_valid': '',
+        "is_whois_show": '',
+        "is_risk_country": '',
+        "is_free_email": '',
+        "is_age_more_seven_year": '',
+        "tranco_rank": ''
+      }
 };
 
 const Moredetail = () => {
@@ -74,13 +85,13 @@ const Moredetail = () => {
 
   const identifyRiskFromScore = (riskScore: number) => {
     if (riskScore >= 0 && riskScore <= 38) {
-      return 'low';
+      return t('low-score');
     } else if (riskScore >= 39 && riskScore <= 58) {
-      return t('quite-low');
+      return t('quite-low-score');
     } else if (riskScore >= 59 && riskScore <= 78) {
-      return t('quite-high');
+      return t('quite-high-score');
     } else if (riskScore >= 79 && riskScore <= 100) {
-      return t('high');
+      return t('high-score');
     } else {
       return t('No Result');
     }
@@ -207,7 +218,7 @@ const Moredetail = () => {
           <Header />
           <div className='flex justify-center flex-col item-center mx-12 gap-6'>
             <Riskscore checked={checked} identifyRisk={identifyRisk} score={score} maxScore={maxScore}/>
-            <Measurement />
+            <Measurement websiteData={websiteData}/>
             <WebsiteInsight url={url} rank={rank} websiteData={websiteData}/>
             <API data={data} checkIPQuality={checkIPQuality} checkURLHaus={checkURLHaus} />
           </div>

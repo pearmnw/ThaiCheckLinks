@@ -53,27 +53,31 @@ const Verification = () => {
     }));
   };
 
+  const getVerifyResult = async () => {
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
+
+    await axios
+      .post('http://127.0.0.1:8000/', formData)
+      .then((resp) => {
+        console.log(resp.data);
+        if (resp.data) {
+          updateCurrentPercent(resp.data.classify);
+
+          // TODO: Update Max Percent with Database (UNDONE!!!)
+          updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
+
+          updateUrlPercent(resp.data.url_detection);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   const predictBtn = async () => {
     try {
-      axios.defaults.headers.common['Content-Type'] = 'application/json';
-      axios.defaults.headers.common['Accept'] = 'application/json';
-
-      await axios
-        .post('http://127.0.0.1:8000/', formData)
-        .then((resp) => {
-          console.log(resp.data);
-          if (resp.data) {
-            updateCurrentPercent(resp.data.classify);
-
-            // TODO: Update Max Percent with Database (UNDONE!!!)
-            updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
-
-            updateUrlPercent(resp.data.url_detection);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      getVerifyResult();
     } catch (error: any) {
       console.error(`An error occured: ${error}`);
     }

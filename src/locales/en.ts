@@ -134,12 +134,32 @@ export default {
     "API-title": "Compare API With Other Cheat Checking Websites",
     "API-website-col": "Cheating Web Checking Websites",
     "API-inspection-result-col": "Inspection Results",
-    "low": "Low",
-    "quite-low": "Quite Low",
-    "quite-high": "Quite High",
-    "high": "High",
+    "low-score": "Low",
+    "quite-low-score": "Quite Low",
+    "quite-high-score": "Quite High",
+    "high-score": "High",
     "FOUND": "FOUND",
     "NOT FOUND": "NOT FOUND",
-    "No Result": "No Result"
+    "No Result": "No Result",
+    'positive': 'Positive',
+    'negative': 'Negative'
   },
+
+  "measurement": {
+    "measurement": "Trust Score Measurement Criteria",
+    'positive': 'Positive',
+    'negative': 'Negative',
+    'ssl-true': 'The SSL certificate is valid',
+    'ssl-false': 'The SSL certificate is invalid',
+    'whois-true': 'The website is show on WHOIS',
+    'whois-false': 'The website is hidden on WHOIS',
+    'tranco-true': 'The Tranco rank (how much traffic) is high',
+    'tranco-false': 'The Tranco rank (how much traffic) is rather low',
+    'email-true': 'Paid email address used for registrar',
+    'email-false': 'Free email address used for registrar',
+    'country-true': 'The website is located in a low-risk country',
+    'country-false': 'The website is located in a high-risk country',
+    'age-true': 'This website has existed for quite some years',
+    'age-false': 'This website is relatively new'
+  }
 }
