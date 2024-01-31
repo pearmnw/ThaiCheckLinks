@@ -71,8 +71,8 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 try {
                     const user = await signin(credentials);
-                    console.log({ credentials })
-                    console.log(user);
+                    // console.log({ credentials })
+                    // console.log(user);
                     // return user;
 
                     if (user) {
@@ -81,6 +81,7 @@ export const authOptions: NextAuthOptions = {
                             name: user?.UserName,
                             email: user?.UserEmail,
                             userphone: user?.UserPhone,
+                            password: user?.UserPassword
                         }
                     }
                     else {
@@ -105,7 +106,7 @@ export const authOptions: NextAuthOptions = {
             //         userphone: user.userphone
             //     }
             // }
-            console.log(token);
+            // console.log(token);
             return token;
         },
         session: async ({ session, token }) => {

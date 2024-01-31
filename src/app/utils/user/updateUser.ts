@@ -77,7 +77,6 @@ export const updateUserPhone = async (currentUser: any, userphone: any) => {
 
 export const updatePassword = async (currentUser: any, userpassword: any) => {
     try {
-        console.log("updatePassword2");
         const hashedPassword = await hash(userpassword, 10)
         const result = await db.userDetail.update({
             where: {

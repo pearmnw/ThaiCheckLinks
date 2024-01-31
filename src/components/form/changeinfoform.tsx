@@ -56,74 +56,80 @@ const ChangeInfoForm = () => {
       consent: "",
     };
 
-    const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (formInput.email) {
+      const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-    // Check if email match the pattern
-    if (!emailpattern.test(formInput.email)) {
-      console.log("wrong email");
-      setFormError({
-        ...inputError,
-        email: t("erremail"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+      // Check if email match the pattern
+      if (!emailpattern.test(formInput.email)) {
+        console.log("wrong email");
+        setFormError({
+          ...inputError,
+          email: t("erremail"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
-    // check if phone number is least than 10
-    if (formInput.phonenumber.length < 10) {
-      console.log("wrong phonenum");
-      setFormError({
-        ...inputError,
-        phonenumber: t("errphone"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+    if (formInput.phonenumber) {
+      // check if phone number is least than 10
+      if (formInput.phonenumber.length < 10) {
+        console.log("wrong phonenum");
+        setFormError({
+          ...inputError,
+          phonenumber: t("errphone"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
     // Check if the password is match the pattern
-    if (formInput.password.length < 8) {
-      console.log("wrong pw1");
-      setFormError({
-        ...inputError,
-        password: t("errpw1"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
-    }
-    if (!/\d/.test(formInput.password)) {
-      console.log("wrong pw2");
-      setFormError({
-        ...inputError,
-        password: t("errpw2"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
-    }
+    if (formInput.password) {
+      if (formInput.password.length < 8) {
+        console.log("wrong pw1");
+        setFormError({
+          ...inputError,
+          password: t("errpw1"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
+      if (!/\d/.test(formInput.password)) {
+        console.log("wrong pw2");
+        setFormError({
+          ...inputError,
+          password: t("errpw2"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
 
-    if (formInput.password !== formInput.confirmpassword) {
-      // Check if password and confirmpassword is match
-      console.log("wrong pw3");
-      setFormError({
-        ...inputError,
-        confirmpassword: t("errconfirmpass"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+      if (formInput.password !== formInput.confirmpassword) {
+        // Check if password and confirmpassword is match
+        console.log("wrong pw3");
+        setFormError({
+          ...inputError,
+          confirmpassword: t("errconfirmpass"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
     const updateuser = await onSubmit();
@@ -248,7 +254,11 @@ const ChangeInfoForm = () => {
               }}
               name="phonenumber"
               type="phonenumber"
-              placeholder={session?.user?.userphone ?? ""}
+              placeholder={
+                session?.user?.userphone ?? ""
+                  ? session?.user?.userphone ?? ""
+                  : t("phntext")
+              }
               autoComplete="phonenumber"
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />

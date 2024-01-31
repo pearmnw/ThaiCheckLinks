@@ -1,6 +1,9 @@
-import { updateUserAllInfo, updateUserEmail, updateUserName, updateUserPhone } from "@/app/utils/user/updateUser";
+import { updatePassword, updateUserAllInfo, updateUserEmail, updateUserName, updateUserPhone } from "@/app/utils/user/updateUser";
 import { db } from "@/lib/db";
+import { compare } from "bcrypt";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 // model UserDetail {
 //     UserID         Int             @id @default(autoincrement())
@@ -17,11 +20,12 @@ import { NextResponse } from "next/server";
 
 export async function PUT(req: Request) {
     try {
-
         const body = await req.json();
         console.log(body);
         const { CurrentUser, UserName, UserEmail, UserPhone, UserPassword } = body;
-
+        const session = getServerSession(authOptions);
+        const currUserSession = JSON.stringify(session);
+        console.log(currUserSession);
         if (UserName && UserEmail && UserPhone && UserPassword) {
             const existingUserByUserName = await db.userDetail.findUnique({
                 where: { UserName: UserName }
@@ -73,9 +77,15 @@ export async function PUT(req: Request) {
             }
 
             if (UserPassword) {
-                console.log("updatePassword1")
-                updateresult = await UserPassword(CurrentUser, UserPassword);
-                console.log(updateresult);
+                const checkWithOldPW = await compare(UserPassword, currUserSession);
+                if (checkWithOldPW) {
+                    return NextResponse.json({ user: null, message: "You can not change password with your old password" }, { status: 409 })
+                }
+                else {
+                    updateresult = await updatePassword(CurrentUser, UserPassword);
+                    console.log(updateresult);
+                }
+
                 // return updateresult;
             }
 
