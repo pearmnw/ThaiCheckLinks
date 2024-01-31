@@ -25,7 +25,7 @@
 //             // Extract unique values for WebsiteURL and WebCategoryID
 //             const WebsiteURL = websiteGroup.WebsiteURL[0];
 //             const WebCategoryID = websiteGroup.WebCategoryID[0];
-            
+
 //             // Fetch the WebCategoryName corresponding to the WebCategoryID
 //             const category = await prisma.websiteCategory.findUnique({
 //                 where: {
@@ -110,7 +110,7 @@
 //         }));
 
 //         res.json(formattedWebsites);
-        
+
 //     } catch (error) {
 //         console.error('Error fetching websites:', error);
 //         res.status(500).json({ error: 'An error occurred while fetching websites' });
@@ -166,7 +166,7 @@
 //             }));
 
 //             res.json(formattedWebsites);
-            
+
 //         } catch (error) {
 //             console.error('Error fetching websites:', error);
 //             res.status(500).json({ error: 'An error occurred while fetching websites' });
@@ -179,8 +179,9 @@
 
 //=====================================
 
-import express from 'express';
+import { GetWebsiteGroup } from '@/app/utils/website/getWebsite';
 import { PrismaClient } from '@prisma/client/edge';
+import express from 'express';
 
 const prisma = new PrismaClient();
 const app = express();
@@ -189,17 +190,18 @@ const PORT = process.env.PORT || 3001;
 app.get('/websites', async (req, res) => {
     try {
         // Query definition starts here
-        const websiteGroups = await prisma.websiteDetail.groupBy({
-            by: ['WebsiteURL', 'WebCategoryID'],
-            _count: {
-                WebsiteID: true
-            },
-            orderBy: {
-                _count: {
-                    WebsiteID: 'desc'
-                }
-            }
-        });
+        // const websiteGroups = await prisma.websiteDetail.groupBy({
+        //     by: ['WebsiteURL', 'WebCategoryID'],
+        //     _count: {
+        //         WebsiteID: true
+        //     },
+        //     orderBy: {
+        //         _count: {
+        //             WebsiteID: 'desc'
+        //         }
+        //     }
+        // });
+        const websiteGroups = await GetWebsiteGroup();
         // Query definition ends here
 
         let sequentialId = 1;
@@ -229,7 +231,7 @@ app.get('/websites', async (req, res) => {
         }));
 
         res.json(formattedWebsites);
-        
+
     } catch (error) {
         console.error('Error fetching websites:', error);
         res.status(500).json({ error: 'An error occurred while fetching websites' });
