@@ -2,12 +2,14 @@
 
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const ChangeInfoForm = () => {
   const t = useScopedI18n("signuppage");
   const { data: session, status } = useSession();
   console.log(session?.user?.name);
+  const router = useRouter();
   interface User {
     username: String;
     email: String;
@@ -24,19 +26,13 @@ const ChangeInfoForm = () => {
     successMsg: "",
   });
 
-  const [currentUser, setCurrentUSer] = useState({
-    username: "",
-    email: "",
-    phonenumber: "" ?? {},
-    password: "",
-  });
-
   const [formError, setFormError] = useState({
     username: "",
     email: "",
     phonenumber: "",
     password: "",
     confirmpassword: "",
+    errorMsg: "",
   });
 
   const handleUserInput = (name: string, value: string) => {
@@ -46,26 +42,7 @@ const ChangeInfoForm = () => {
     });
   };
 
-  // const getCurrentUser = async () => {
-  //   try {
-  //     const res = await getUserByUserName(session?.user?.name!)
-
-  //     if (res) {
-  //       console.log(res);
-  //       setCurrentUSer({
-  //         ...currentUser,
-  //         username: res.UserName,
-  //         email: res.UserEmail,
-  //         phonenumber: res.UserPhone!,
-  //         password: res.UserPassword,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  const validateFormInput = (event: { preventDefault: () => void }) => {
+  const validateFormInput = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     // Initialize an object to track input errors
@@ -75,6 +52,7 @@ const ChangeInfoForm = () => {
       phonenumber: "",
       password: "",
       confirmpassword: "",
+      errorMsg: "",
       consent: "",
     };
 
@@ -148,13 +126,22 @@ const ChangeInfoForm = () => {
       return;
     }
 
-    setFormError(inputError);
-    setFormInput((prevState) => ({
-      ...prevState,
-      successMsg: t("successmsg"),
-    }));
-    // getCurrentUser();
-    onSubmit();
+    const updateuser = await onSubmit();
+    if (updateuser) {
+      setFormError(inputError);
+      setFormInput((prevState) => ({
+        ...prevState,
+        successMsg: t("successmsg"),
+      }));
+      router.refresh();
+      console.log(session?.user.email);
+    } else {
+      console.log("wrong pw3");
+      setFormError({
+        ...inputError,
+        errorMsg: "Something Wrong with your information",
+      });
+    }
   };
 
   const onSubmit = async () => {
@@ -164,6 +151,7 @@ const ChangeInfoForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        CurrentUser: session?.user.name,
         UserName: formInput.username,
         UserEmail: formInput.email,
         UserPhone: formInput.phonenumber,
@@ -171,6 +159,7 @@ const ChangeInfoForm = () => {
       }),
     });
     console.log(res);
+    return res;
   };
 
   return (
@@ -286,7 +275,6 @@ const ChangeInfoForm = () => {
               name="password"
               type="password"
               placeholder={t("pwtext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -312,7 +300,6 @@ const ChangeInfoForm = () => {
               name="confirmpassword"
               type="password"
               placeholder={t("cftext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -328,6 +315,9 @@ const ChangeInfoForm = () => {
             Edit Information
           </button>
         </div>
+        <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
+          {formInput.successMsg}
+        </p>
       </form>
     </div>
   );

@@ -3,8 +3,8 @@ import { hash } from "bcrypt";
 
 export const updateUserAllInfo = async (currentUser: any, body: any) => {
     try {
-        console.log("Hi")
-        console.log(body);
+        // console.log("Hi")
+        // console.log(body);
         const { UserName, UserEmail, UserPhone, UserPassword } = body;
         const hashedPassword = await hash(UserPassword, 10)
         const result = await db.userDetail.update({
@@ -26,6 +26,7 @@ export const updateUserAllInfo = async (currentUser: any, body: any) => {
 
 export const updateUserName = async (currentUser: any, username: any) => {
     try {
+        console.log("updateUserName");
         const result = await db.userDetail.update({
             where: {
                 UserName: currentUser
@@ -42,6 +43,7 @@ export const updateUserName = async (currentUser: any, username: any) => {
 
 export const updateUserEmail = async (currentUser: any, useremail: any) => {
     try {
+        console.log("updateUserEmail");
         const result = await db.userDetail.update({
             where: {
                 UserName: currentUser
@@ -58,6 +60,7 @@ export const updateUserEmail = async (currentUser: any, useremail: any) => {
 
 export const updateUserPhone = async (currentUser: any, userphone: any) => {
     try {
+        console.log("updateUserPhone");
         const result = await db.userDetail.update({
             where: {
                 UserName: currentUser
@@ -73,8 +76,9 @@ export const updateUserPhone = async (currentUser: any, userphone: any) => {
 }
 
 export const updatePassword = async (currentUser: any, userpassword: any) => {
-    const hashedPassword = await hash(userpassword, 10)
     try {
+        console.log("updatePassword2");
+        const hashedPassword = await hash(userpassword, 10)
         const result = await db.userDetail.update({
             where: {
                 UserName: currentUser

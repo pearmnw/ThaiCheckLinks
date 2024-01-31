@@ -40,21 +40,8 @@ export async function PUT(req: Request) {
             return NextResponse.json({ user: null, message: "Require some information for update" }, { status: 409 })
         }
         else {
-            if (UserName) {
-                const existingUserByUserName = await db.userDetail.findUnique({
-                    where: { UserName: UserName }
-                });
-                if (existingUserByUserName) {
-                    return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
-                }
-                else {
-                    const updateresult = await updateUserName(CurrentUser, UserName);
-                    console.log(updateresult);
-                    return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
-                }
-            }
-
-            if (UserEmail && !UserName && !UserPhone && !UserPassword) {
+            let updateresult;
+            if (UserEmail) {
                 // check if email, username, password
                 const existingUserByEmail = await db.userDetail.findUnique({
                     where: { UserEmail: UserEmail }
@@ -63,13 +50,13 @@ export async function PUT(req: Request) {
                     return NextResponse.json({ user: null, message: "User with this email already exists" }, { status: 409 })
                 }
                 else {
-                    const updateresult = await updateUserEmail(CurrentUser, UserEmail);
+                    updateresult = await updateUserEmail(CurrentUser, UserEmail);
                     console.log(updateresult);
-                    return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
+                    // return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
                 }
             }
 
-            if (UserPhone && !UserEmail && !UserName && !UserPassword) {
+            if (UserPhone) {
                 const existingUserByPhone = await db.userDetail.findUnique({
                     where: { UserPhone: UserPhone }
                 });
@@ -78,18 +65,35 @@ export async function PUT(req: Request) {
 
                 }
                 else {
-                    const updateresult = await updateUserPhone(CurrentUser, UserPhone);
+                    updateresult = await updateUserPhone(CurrentUser, UserPhone);
                     console.log(updateresult);
-                    return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
+                    // return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
 
                 }
             }
 
             if (UserPassword) {
-                const updateresult = await UserPassword(CurrentUser, UserPassword);
+                console.log("updatePassword1")
+                updateresult = await UserPassword(CurrentUser, UserPassword);
                 console.log(updateresult);
-                return updateresult;
+                // return updateresult;
             }
+
+            if (UserName) {
+                const existingUserByUserName = await db.userDetail.findUnique({
+                    where: { UserName: UserName }
+                });
+                if (existingUserByUserName) {
+                    return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
+                }
+                else {
+                    updateresult = await updateUserName(CurrentUser, UserName);
+                    console.log(updateresult);
+                    // return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
+                }
+            }
+
+            return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
         }
 
         // console.log(updateUser);
