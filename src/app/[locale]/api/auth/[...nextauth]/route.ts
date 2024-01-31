@@ -5,14 +5,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-async function signin(credentials) {
+async function signin(credentials: any) {
     try {
         const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         const usernamepattern = /^[a-zA-Z0-9]/;
         const phonenumpattern = /^[0-9]/;
 
         if (usernamepattern.test(credentials.username)) {
-            const existingUserName = await db.userDetail.findUnique({
+            const existingUserName = await db.userDetail.findFirst({
+                // where: { UserName: credentials.username },
                 where: { UserName: credentials.username },
             })
             console.log(existingUserName);
