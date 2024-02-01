@@ -20,37 +20,65 @@ export async function POST(req: Request) {
         console.log(body);
         const { UserName, UserEmail, UserPhone, UserPassword } = body;
 
-        const existingUserByUserName = await db.userDetail.findUnique({
-            where: { UserName: UserName }
-        });
-        if (existingUserByUserName) {
-            return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
-        }
+        let newUser: any;
 
-        // check if email, username, password
-        const existingUserByEmail = await db.userDetail.findUnique({
-            where: { UserEmail: UserEmail }
-        });
-        if (existingUserByEmail) {
-            return NextResponse.json({ user: null, message: "User with this email already exists" }, { status: 409 })
-        }
-
-        const existingUserByPhone = await db.userDetail.findUnique({
-            where: { UserPhone: UserPhone }
-        });
-        if (existingUserByPhone) {
-            return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
-        }
-
-        const hashedPassword = await hash(UserPassword, 10)
-        const newUser = await db.userDetail.create({
-            data: {
-                UserName,
-                UserEmail,
-                UserPhone,
-                UserPassword: hashedPassword
+        if (UserPhone) {
+            const existingUserByUserName = await db.userDetail.findUnique({
+                where: { UserName: UserName }
+            });
+            if (existingUserByUserName) {
+                return NextResponse.json({ user: null, message: "User with this Username already exists" }, { status: 409 })
             }
-        });
+
+            // check if email, username, password
+            const existingUserByEmail = await db.userDetail.findUnique({
+                where: { UserEmail: UserEmail }
+            });
+            if (existingUserByEmail) {
+                return NextResponse.json({ user: null, message: "User with this Email already exists" }, { status: 409 })
+            }
+
+            const existingUserByPhone = await db.userDetail.findUnique({
+                where: { UserPhone: UserPhone }
+            });
+            if (existingUserByPhone) {
+                return NextResponse.json({ user: null, message: "User with this Phonenumber already exists" }, { status: 409 })
+            }
+
+            const hashedPassword = await hash(UserPassword, 10)
+            newUser = await db.userDetail.create({
+                data: {
+                    UserName,
+                    UserEmail,
+                    UserPhone,
+                    UserPassword: hashedPassword
+                }
+            });
+        } else {
+            const existingUserByUserName = await db.userDetail.findUnique({
+                where: { UserName: UserName }
+            });
+            if (existingUserByUserName) {
+                return NextResponse.json({ user: null, message: "User with this Username already exists" }, { status: 409 })
+            }
+
+            // check if email, username, password
+            const existingUserByEmail = await db.userDetail.findUnique({
+                where: { UserEmail: UserEmail }
+            });
+            if (existingUserByEmail) {
+                return NextResponse.json({ user: null, message: "User with this Email already exists" }, { status: 409 })
+            }
+
+            const hashedPassword = await hash(UserPassword, 10)
+            newUser = await db.userDetail.create({
+                data: {
+                    UserName,
+                    UserEmail,
+                    UserPassword: hashedPassword
+                }
+            });
+        }
 
         return NextResponse.json({ UserDetail: newUser, message: "User created successfully" }, { status: 201 });
     } catch (error) {
