@@ -9,7 +9,7 @@ const ReportForm = () => {
   const [formInput, setFormInput] = useState({
     userID: "",
     websiteurl: "",
-    WebsiteCategory: "",
+    websitecategory: "",
     websitedetail: "",
     bankaccname: "",
     bankaccowner: "",
@@ -20,12 +20,19 @@ const ReportForm = () => {
   const [formError, setFormError] = useState({
     userID: "",
     websiteurl: "",
-    WebsiteCategory: "",
+    websitecategory: "",
     websitedetail: "",
     bankaccname: "",
     bankaccowner: "",
     bankaccnumber: "",
   });
+
+  const handleUserInput = (name: string, value: string) => {
+    setFormInput({
+      ...formInput,
+      [name]: value,
+    });
+  };
 
   return (
     <>
@@ -42,6 +49,10 @@ const ReportForm = () => {
             <select
               title="webcatagory"
               id="webcatagory"
+              // onChange={({ target }) => {
+              //   handleUserInput(target.name, target.value);
+              // }}
+              // name="WebsiteCategory"
               defaultValue={t("typefield")}
               className="w-[280px] h-11 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500
               text-sm"
@@ -60,7 +71,12 @@ const ReportForm = () => {
           <div className="px-[1rem]">
             <textarea
               id="message"
+              name="websitedetail"
               rows={4}
+              value={formInput.websitedetail}
+              onChange={({ target }) => {
+                handleUserInput(target.name, target.value);
+              }}
               className="block w-[29rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder={t("details")}
             ></textarea>
@@ -72,6 +88,11 @@ const ReportForm = () => {
           <div className="px-[1rem]">
             <input
               id="message"
+              name="websitedetail"
+              value={formInput.bankaccnumber}
+              onChange={({ target }) => {
+                handleUserInput(target.name, target.value);
+              }}
               className="block w-[25rem] h-[3rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder={t("banktext")}
             ></input>
@@ -98,7 +119,7 @@ const ReportForm = () => {
             <input
               id="message"
               className="block w-[25rem] h-[3rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder={t("banktext")}
+              placeholder={t("banknum")}
             ></input>
           </div>
         </div>

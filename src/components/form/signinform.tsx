@@ -37,6 +37,8 @@ const SignInForm = () => {
         router.push("/report");
         router.refresh();
       } else {
+        console.log("SignIn Failed");
+        // toast.error(signInData?.error);
       }
       // if (signInData?.error) {
       //   console.log(signInData.error);

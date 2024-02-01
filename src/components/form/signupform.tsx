@@ -170,6 +170,7 @@ const SignUpForm = () => {
       });
       const data = await res.json();
       if (res.ok) {
+        toast.success(data.message);
         router.push("/signin");
       } else {
         console.log("SignUp Failed");

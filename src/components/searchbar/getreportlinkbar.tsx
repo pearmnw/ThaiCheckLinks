@@ -1,10 +1,20 @@
 "use client";
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useState } from "react";
 
 const ReportLinkBar = () => {
   const t = useScopedI18n("report");
   const currentLocale = useCurrentLocale();
+  const [url, setUrl] = useState("");
+
+  const handleInputChange = (e: any) => {
+    setUrl(e.target.value);
+  };
+
+  const handleClick = async () => {
+    console.log(url);
+  };
 
   function checkcurrlocale() {
     console.log(currentLocale);
@@ -35,6 +45,7 @@ const ReportLinkBar = () => {
           </div>
           <input
             type="search"
+            onChange={handleInputChange}
             className="ml-2 -mr-0.5 block min-w-0 flex-auto bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-[#FFFFFF] outline-none transition duration-200 ease-in-out focus:z-[3]"
             placeholder={t("placeholder")}
             aria-label="Search"
@@ -47,6 +58,7 @@ const ReportLinkBar = () => {
             type="button"
             id="button-addon3"
             data-te-ripple-init
+            onClick={handleClick}
           >
             {t("searchbutt")}
           </button>
