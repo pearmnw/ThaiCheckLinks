@@ -1,7 +1,6 @@
 "use client";
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import { MouseEventHandler, useState } from "react"; 
-import Verification from "../verification/Verification";
 
 interface SearchBarMainProps {
   onPredict?: any;
