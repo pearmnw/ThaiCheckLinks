@@ -92,7 +92,7 @@ export default {
     "moredetails": "More details*",
     "details": "Details",
     "bankacc": "Bank Account (Optional)",
-    "banktext": "Bank Account Name (Select 1 account if there are many)",
+    "banktext": "Bank Account Holder Name (Select 1 account if there are many)",
     "bankfield1": "Bank Account",
     "banknum": "Bank Account Number",
     "reportbutt": "Report",
@@ -100,6 +100,17 @@ export default {
     "scam": "Scam",
     "fake": "Fake",
     "others": "Others",
+    "bank": "Bank",
+    "scb": "Siam Commercial Bank",
+    "kbtg": "Kasikorn Bank",
+    "ktb": "Krungthai Bank",
+    "ttb": "TMBThanachart Bank",
+    "boa": "Bank of Ayudhya",
+    "lhb": "Land and Houses Bank",
+    "gsb": "Government Savings Bank",
+    "bankothers": "Others",
+    "webCatError": "Please select your website catagory!",
+    "moredetailError": "Please provide more details about this website!"
   },
 
   "profilepage": {
