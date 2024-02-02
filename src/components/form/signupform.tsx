@@ -169,6 +169,7 @@ const SignUpForm = () => {
         }),
       });
       const data = await res.json();
+      console.log(JSON.stringify(data));
       if (res.ok) {
         toast.success(data.message);
         router.push("/signin");

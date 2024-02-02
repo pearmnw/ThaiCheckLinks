@@ -2,18 +2,6 @@ import { db } from "@/lib/db";
 import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
 
-// model UserDetail {
-//     UserID         Int             @id @default(autoincrement())
-//     UserName       String          @db.VarChar(128)
-//     UserEmail      String          @db.VarChar(128)
-//     UserPhone      String?         @db.VarChar(25)
-//     UserPassword   String          @db.VarChar(60)
-//     UserJoinedDate DateTime        @db.Timestamptz(6)
-//     UserPictureURL String          @db.VarChar(256)
-//     UserLastLogin  DateTime        @db.Timestamptz(6)
-//     WebsiteDetail  WebsiteDetail[]
-//   }
-
 export async function POST(req: Request) {
     try {
         const body = await req.json();
@@ -23,7 +11,7 @@ export async function POST(req: Request) {
         let newUser: any;
 
         if (UserPhone) {
-            const existingUserByUserName = await db.userDetail.findFirst({
+            const existingUserByUserName = await db.userDetail.findUnique({
                 where: { UserName: UserName }
             });
 
@@ -39,7 +27,7 @@ export async function POST(req: Request) {
                 return NextResponse.json({ user: null, message: "User with this Email already exists" }, { status: 409 })
             }
 
-            const existingUserByPhone = await db.userDetail.findUnique({
+            const existingUserByPhone = await db.userDetail.findFirst({
                 where: { UserPhone: UserPhone }
             });
             if (existingUserByPhone) {
@@ -79,6 +67,7 @@ export async function POST(req: Request) {
                 data: {
                     UserName,
                     UserEmail,
+                    UserPhone,
                     UserPassword: hashedPassword
                 }
             });
