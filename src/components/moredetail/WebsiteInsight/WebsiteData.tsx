@@ -58,20 +58,6 @@ const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
               </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Meta title:{' '}
-              <span className='font-medium'>
-                {websitedata.title ? websitedata.title : t('No Result')}
-              </span>
-            </p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Meta description:{' '}
-              <span className='font-medium'>
-                {websitedata.desciption
-                  ? websitedata.desciption
-                  : t('No Result')}
-              </span>
-            </p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>
               IP address:{' '}
               <span className='font-medium'>
                 {websitedata.ip ? websitedata.ip : t('No Result')}

@@ -26,8 +26,6 @@ const websiteNoneData = {
       },
       'website_data': {
         "tranco_rank": '',
-        'title': '',
-        'desciption': '',
         'ip': '',
         'status_code': '',
         'domain_age': '',
