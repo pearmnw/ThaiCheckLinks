@@ -1,11 +1,11 @@
 "use client";
 
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
 import { useState } from "react";
 
 const ReportLinkBar = () => {
   const t = useScopedI18n("report");
-  const currentLocale = useCurrentLocale();
+  // const currentLocale = useCurrentLocale();
   const [url, setUrl] = useState("");
 
   const handleInputChange = (e: any) => {
@@ -14,11 +14,9 @@ const ReportLinkBar = () => {
 
   const handleClick = async () => {
     console.log(url);
+    localStorage.setItem("url", url);
+    console.log(localStorage.getItem("url"));
   };
-
-  function checkcurrlocale() {
-    console.log(currentLocale);
-  }
 
   return (
     <>

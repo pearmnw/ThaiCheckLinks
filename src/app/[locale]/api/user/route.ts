@@ -16,7 +16,7 @@ export async function POST(req: Request) {
             });
 
             if (existingUserByUserName) {
-                return NextResponse.json({ user: null, message: "User with this Username already exists" }, { status: 409 })
+                return NextResponse.json({ UserDetail: null, message: "User with this Username already exists" }, { status: 409 })
             }
 
             // check if email, username, password
@@ -24,14 +24,14 @@ export async function POST(req: Request) {
                 where: { UserEmail: UserEmail }
             });
             if (existingUserByEmail) {
-                return NextResponse.json({ user: null, message: "User with this Email already exists" }, { status: 409 })
+                return NextResponse.json({ UserDetail: null, message: "User with this Email already exists" }, { status: 409 })
             }
 
             const existingUserByPhone = await db.userDetail.findFirst({
                 where: { UserPhone: UserPhone }
             });
             if (existingUserByPhone) {
-                return NextResponse.json({ user: null, message: "User with this Phonenumber already exists" }, { status: 409 })
+                return NextResponse.json({ UserDetail: null, message: "User with this Phonenumber already exists" }, { status: 409 })
             }
 
             const hashedPassword = await hash(UserPassword, 10)
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
             });
 
             if (existingUserByUserName) {
-                return NextResponse.json({ user: null, message: "User with this Username already exists" }, { status: 409 })
+                return NextResponse.json({ UserDetail: null, message: "User with this Username already exists" }, { status: 409 })
             }
 
             // check if email, username, password
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
                 where: { UserEmail: UserEmail }
             });
             if (existingUserByEmail) {
-                return NextResponse.json({ user: null, message: "User with this Email already exists" }, { status: 409 })
+                return NextResponse.json({ UserDetail: null, message: "User with this Email already exists" }, { status: 409 })
             }
 
 

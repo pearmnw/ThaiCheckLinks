@@ -7,13 +7,23 @@ import ReportLinkBar from "../searchbar/getreportlinkbar";
 const ReportForm = () => {
   const t = useScopedI18n("report");
   const router = useRouter();
+  const websiteurl = localStorage.getItem("url");
 
-  const [formInput, setFormInput] = useState({
+  const [allData, setAllData] = useState({
     userID: "",
     websiteurl: "",
     websitecategory: "",
     websitedetail: "",
-    bankaccholdername: "",
+    bankaccountowner: "",
+    bank: "",
+    bankaccnumber: "",
+  });
+
+  const [formInput, setFormInput] = useState({
+    userID: "",
+    websitecategory: "",
+    websitedetail: "",
+    bankaccountowner: "",
     bank: "",
     bankaccnumber: "",
     successMsg: "",
@@ -21,11 +31,10 @@ const ReportForm = () => {
 
   const [formError, setFormError] = useState({
     userID: "",
-    websiteurl: "",
     websitecategory: "",
     websitedetail: "",
     bankaccname: "",
-    bankaccowner: "",
+    bankaccountowner: "",
     bankaccnumber: "",
   });
 
@@ -36,38 +45,62 @@ const ReportForm = () => {
     });
   };
 
+  const handleAllInput = () => {
+    setAllData({
+      ...allData,
+      userID: formInput.userID,
+      websiteurl: websiteurl!,
+      websitecategory: formInput.websitecategory,
+      websitedetail: formInput.websitedetail,
+      bankaccountowner: formInput.bankaccountowner,
+      bank: formInput.bank,
+      bankaccnumber: formInput.bankaccnumber,
+    });
+  };
+
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    // if (formInput.websitecategory && formInput.websitecategory == "Catagory") {
-    //   console.log("Not provide the catagory");
-    //   setFormError({
-    //     ...formError,
-    //     websitecategory: t("webCatError"),
-    //   });
-    //   setFormInput((prevState) => ({
-    //     ...prevState,
-    //     successMsg: "",
-    //   }));
-    // }
+    let hasErrors = false;
 
-    // if (!formInput.websitedetail) {
-    //   console.log("Not provide website details");
-    //   setFormError({
-    //     ...formError,
-    //     websitecategory: t("moredetailError"),
-    //   });
-    //   setFormInput((prevState) => ({
-    //     ...prevState,
-    //     successMsg: "",
-    //   }));
-    // }
-    onSubmit();
+    if (formInput.websitecategory === "default") {
+      setFormError({
+        ...formError,
+        websitecategory: t("webCatError"),
+      });
+      console.log("Category not provided");
+      hasErrors = true;
+    } else {
+      setFormError({
+        ...formError,
+        websitecategory: "",
+      });
+    }
+
+    if (!formInput.websitedetail) {
+      console.log("Website details not provided");
+      setFormError({
+        ...formError,
+        websitedetail: t("moredetailError"),
+      });
+      hasErrors = true;
+    } else {
+      setFormError({
+        ...formError,
+        websitedetail: "",
+      });
+    }
+
+    handleAllInput();
+
+    if (!hasErrors) {
+      onSubmit();
+    }
   };
 
   const onSubmit = async () => {
     try {
-      console.log(formInput);
-      // const res = await fetch("api/user", {
+      console.log(allData);
+      // const res = await fetch("api/linkreport", {
       //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",
@@ -77,9 +110,9 @@ const ReportForm = () => {
       // const data = await res.json();
       // if (res.ok) {
       //   toast.success(data.message);
-      //   router.push("/signin");
+      //   router.push("/success");
       // } else {
-      //   console.log("SignUp Failed");
+      //   console.log("Report Failed");
       //   toast.error(data.message);
       //   setFormInput((prevState) => ({
       //     ...prevState,
@@ -98,7 +131,6 @@ const ReportForm = () => {
         {t("caption2")}
       </div>
       <ReportLinkBar />
-      {/* <div> */}
       <form onSubmit={validateFormInput}>
         <div className="flex-row px-[17rem] justify-center items-center text-slate-700 text-xl font-semibold tracking-tight">
           <div className="flex pt-10 pb-3">
@@ -111,9 +143,9 @@ const ReportForm = () => {
                 name="websitecategory"
                 value={formInput.websitecategory}
                 onChange={({ target }) => {
+                  console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
                 }}
-                required
                 className="w-[280px] h-11 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500
               text-sm"
               >
@@ -124,10 +156,10 @@ const ReportForm = () => {
                 <option value="others">{t("others")}</option>
               </select>
             </div>
+            <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
+              {formError.websitecategory}
+            </p>
           </div>
-          <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
-            {formError.websitecategory}
-          </p>
 
           <div className="flex py-8">
             {t("moredetails")}&nbsp;
@@ -139,6 +171,7 @@ const ReportForm = () => {
                 rows={4}
                 value={formInput.websitedetail}
                 onChange={({ target }) => {
+                  console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
                 }}
                 required
@@ -158,8 +191,9 @@ const ReportForm = () => {
               <input
                 id="bankaccholdername"
                 name="bankaccholdername"
-                value={formInput.bankaccholdername}
+                value={formInput.bankaccountowner}
                 onChange={({ target }) => {
+                  console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
                 }}
                 className="block w-[25rem] h-[3rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -175,6 +209,7 @@ const ReportForm = () => {
               name="bank"
               value={formInput.bank}
               onChange={({ target }) => {
+                console.log("Selected value:", target.value);
                 handleUserInput(target.name, target.value);
               }}
               className="w-[10.5rem] h-11 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500
@@ -197,6 +232,7 @@ const ReportForm = () => {
                 name="bankaccnumber"
                 value={formInput.bankaccnumber}
                 onChange={({ target }) => {
+                  console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
                 }}
                 className="block w-[25rem] h-[3rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -205,7 +241,6 @@ const ReportForm = () => {
             </div>
           </div>
         </div>
-        {/* </div> */}
         <div className="text-center py-[2.5rem]">
           <button
             className="items-center justify-center text-[16px] mr-2 bg-[#9F9FA4] text-white w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"

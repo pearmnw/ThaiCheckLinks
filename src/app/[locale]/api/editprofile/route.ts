@@ -61,7 +61,7 @@ export async function PUT(req: Request) {
             }
 
             if (UserPhone) {
-                const existingUserByPhone = await db.userDetail.findUnique({
+                const existingUserByPhone = await db.userDetail.findFirst({
                     where: { UserPhone: UserPhone }
                 });
                 if (existingUserByPhone) {
@@ -105,7 +105,6 @@ export async function PUT(req: Request) {
 
             return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
         }
-
         // console.log(updateUser);
         // if (updateUser) {
         // }
