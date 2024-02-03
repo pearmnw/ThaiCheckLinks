@@ -9,7 +9,7 @@ datasource db {
 
 model UserDetail {
   UserID         Int             @id @default(autoincrement())
-  UserName       String          @db.VarChar(128)
+  UserName       String          @db.VarChar(128) 
   UserEmail      String          @db.VarChar(128)
   UserPhone      String?         @db.VarChar(25)
   UserPassword   String
@@ -17,6 +17,7 @@ model UserDetail {
   UserPictureURL String?
   UserLastLogin  DateTime        @default(now()) @updatedAt @db.Timestamptz(6)
   WebsiteDetail  WebsiteDetail[]
+
 }
 
 model UserVerifyBox {
@@ -66,12 +67,13 @@ model WebsiteDetail {
   WebsiteText         String?
   WebsiteStatus       Boolean
   WebsiteReportedDate DateTime           @default(now()) @db.Timestamptz(6)
-  BankAccountName     String?            @db.VarChar(128)
+  BankID              String?            @db.VarChar(128)
   BankAccountOwner    String?            @db.VarChar(128)
-  BankAccountNumber   String?            @db.VarChar(50)
+  BankNumber_         String?            @map("BankNumber ") @db.VarChar(50)
   Verification        Verification[]
-  UserDetail          UserDetail         @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
+  Bank                Bank?              @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
   WebsiteCategory     WebsiteCategory    @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
+  UserDetail          UserDetail         @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction)
   WhitelistWebsite    WhitelistWebsite[]
 }
 
@@ -85,4 +87,10 @@ model WhitelistWebsite {
   WhitelistText        String?
   Verification         Verification[]
   WebsiteDetail        WebsiteDetail  @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
+}
+
+model Bank {
+  BankID        String          @id @db.VarChar(128)
+  BankName      String?         @db.VarChar(256)
+  WebsiteDetail WebsiteDetail[]
 }

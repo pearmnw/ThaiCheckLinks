@@ -4,7 +4,7 @@ CREATE TABLE "UserDetail" (
     "UserName" VARCHAR(128) NOT NULL,
     "UserEmail" VARCHAR(128) NOT NULL,
     "UserPhone" VARCHAR(25),
-    "UserPassword" VARCHAR(60) NOT NULL,
+    "UserPassword" TEXT NOT NULL,
     "UserJoinedDate" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "UserPictureURL" TEXT,
     "UserLastLogin" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -64,9 +64,9 @@ CREATE TABLE "WebsiteDetail" (
     "WebsiteText" TEXT,
     "WebsiteStatus" BOOLEAN NOT NULL,
     "WebsiteReportedDate" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "BankAccountName" VARCHAR(128),
+    "BankID" VARCHAR(128),
     "BankAccountOwner" VARCHAR(128),
-    "BankAccountNumber" VARCHAR(50),
+    "BankNumber " VARCHAR(50),
 
     CONSTRAINT "WebsiteDetail_pkey" PRIMARY KEY ("WebsiteID")
 );
@@ -84,6 +84,14 @@ CREATE TABLE "WhitelistWebsite" (
     CONSTRAINT "WhitelistWebsite_pkey" PRIMARY KEY ("WhitelistID")
 );
 
+-- CreateTable
+CREATE TABLE "Bank" (
+    "BankID" VARCHAR(128) NOT NULL,
+    "BankName" VARCHAR(256),
+
+    CONSTRAINT "Bank_pkey" PRIMARY KEY ("BankID")
+);
+
 -- AddForeignKey
 ALTER TABLE "Verification" ADD CONSTRAINT "UserVerifyID" FOREIGN KEY ("UserVerifyID") REFERENCES "UserVerifyBox"("UserVerifyID") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -94,10 +102,13 @@ ALTER TABLE "Verification" ADD CONSTRAINT "WebsiteID" FOREIGN KEY ("WebsiteID") 
 ALTER TABLE "Verification" ADD CONSTRAINT "WhitelistID" FOREIGN KEY ("WhitelistID") REFERENCES "WhitelistWebsite"("WhitelistID") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "WebsiteDetail" ADD CONSTRAINT "UserID" FOREIGN KEY ("UserID") REFERENCES "UserDetail"("UserID") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "WebsiteDetail" ADD CONSTRAINT "BankID" FOREIGN KEY ("BankID") REFERENCES "Bank"("BankID") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "WebsiteDetail" ADD CONSTRAINT "WebCategoryID" FOREIGN KEY ("WebCategoryID") REFERENCES "WebsiteCategory"("WebCategoryID") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "WebsiteDetail" ADD CONSTRAINT "WebsiteDetail_UserID_fkey" FOREIGN KEY ("UserID") REFERENCES "UserDetail"("UserID") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "WhitelistWebsite" ADD CONSTRAINT "WebsiteID" FOREIGN KEY ("WebsiteID") REFERENCES "WebsiteDetail"("WebsiteID") ON DELETE NO ACTION ON UPDATE NO ACTION;

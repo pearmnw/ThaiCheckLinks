@@ -33,3 +33,11 @@ input[type='radio']:checked::before { /* Change inner circle background color wh
   border: 1px solid #121B2A; /* Border color */
   border-radius: 2px; /* Border radius */
 }
+
+.url-column {
+  max-width: 200px; /* Adjust the maximum width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+

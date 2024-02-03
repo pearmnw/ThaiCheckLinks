@@ -1,33 +1,62 @@
 "use client";
+import { Time } from 'aws-sdk/clients/cloudwatchlogs';
 import './styles.css'; 
 import { useState, useRef, useEffect} from 'react';
 
 // =========== Api connect part =========
 // import axios from 'axios';
 
-// interface Website {
-//     id: number; //-> sequentialId
-//     WebsiteURL: string; //-> WebsiteURL
-//     WebCategoryName: string; //-> WebCategoryName
-//     reports: string; //-> numReports
-// }
+interface Website {
+    id: number; //-> sequentialId
+    WebsiteURL: string; //-> WebsiteURL
+    WebCategoryName: string; //-> WebCategoryName
+    reports: string; //-> numReports
+    reporttime: Date;
+}
  // =========== ========= =========   
 
 const WebsiteTable = () => {
    
  // =========== Api connect part =========
      
-//     const [websites, setWebsites] = useState<Website[]>([]);  
+    const [websites, setWebsites] = useState<Website[]>([]);  
+    const [displayRange, setDisplayRange] = useState({ start: 0, end: 10 });
+    
+    // useEffect(() => {
+    //     axios.get('http://localhost:300/api/homefilter') //not sure api pointend 
+    //         .then(response => {
+    //             setWebsites(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
 
-//     useEffect(() => {
-//         axios.get('http://localhost:3001/websites') //not sure api pointend 
-//             .then(response => {
-//                 setWebsites(response.data);
-//             })
-//             .catch(error => {
-//                 console.error('Error fetching data:', error);
-//             });
-//     }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("api/homefilter", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                
+                const data = await response.json();
+                console.log(data); // Check if data is fetched properly
+                setWebsites(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+    
+
 
 //     console.log('Websites State:', websites); 
  // =========== ========= =========   
@@ -64,17 +93,51 @@ const WebsiteTable = () => {
                 };
             }
         });
+         // Reset displayed range to show default number of rows
+        setDisplayRange({ start: 0, end: 10 });
+        // Reset showMore state to false
+        setShowMore(false);
     };
     
     // See more see less function 
     const [showMore, setShowMore] = useState(false);
+   
     const toggleShowMore = () => {
-        setShowMore(!showMore);
-        if (!showMore) {
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top when showing more rows
-          }
-      };
-    // ========= 
+        setShowMore((prevShowMore) => !prevShowMore);
+    };
+
+    const handleShowMoreClick = () => {
+        setDisplayRange((prevRange) => ({
+            start: prevRange.start,
+            end: prevRange.end + 10, // Increase the end index by 10 to show more rows
+        }));
+    };
+
+    const handleShowLessClick = () => {
+        setDisplayRange({ start: 0, end: 10 }); // Reset display range to show less
+        setShowMore(false); // Also set showMore to false when showing less
+    };
+
+    const handleShowAllClick = () => {
+        setDisplayRange({ start: 0, end: websites.length }); // Show all rows
+        setShowMore(true); // Set showMore to true when showing all
+    };
+
+        const showMoreButton = !showMore && (
+            <button onClick={handleShowMoreClick}>See More</button>
+        );
+    
+        let showLessButton = null;
+        if (!showMore && displayRange.end > 10 && websites.length > 10) {
+          showLessButton = <button onClick={handleShowLessClick}>See Less</button>;
+        }
+        else if (showMore){
+          showLessButton = <button onClick={handleShowLessClick}>See Less</button>;
+        }
+
+        const showAllButton = !showMore && websites.length > displayRange.end && (
+            <button onClick={handleShowAllClick}>See All</button>
+        );
 
     // Overlay filter function 
     const [showFilterOverlay, setShowFilterOverlay] = useState(false);
@@ -82,11 +145,6 @@ const WebsiteTable = () => {
         setShowFilterOverlay(!showFilterOverlay);
     };
     // ========= 
-
-    // // =========== Api connect part =========  // Slice the first 10 items to display initially
-    // const displayedWebsites = showMore ? websites : websites.slice(0, 10);
-    // // ========= 
-
 
     const containerRef = useRef<HTMLDivElement>(null);
     const filterButtonRef = useRef<HTMLButtonElement>(null);
@@ -112,7 +170,6 @@ const WebsiteTable = () => {
     // ==========
     const [filterPosition, setFilterPosition] = useState({ top: 0, left: 0 });
 
-
     useEffect(() => {
         const updateFilterPosition = () => {
             if (filterButtonRef.current) {
@@ -133,52 +190,140 @@ const WebsiteTable = () => {
         };
     }, [showFilterOverlay]);
     
-    
     // =============== Demo mockup ================
+     
 
-    interface Website {
-        id: number;
-        websiteurl: string;
-        link: string;
-        webcategory: string;
-        reportnumber: string; 
-      }
-      
-      const allWebsites: Website[] = [
-        { id: 1, websiteurl: "Example Website 1", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 2, websiteurl: "Example Website 2", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 3, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 4, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 5, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 6, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 7, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
-        { id: 8, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 9, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 10, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 11, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 12, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 13, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 14, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 15, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 16, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 17, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 18, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 19, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
-        { id: 20, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" }
-        // Add more mock data as needed
-      ];
-       // Slice the first 10 items to display initially
-      const mockWebsites: Website[] = showMore ? allWebsites : allWebsites.slice(0, 10);
-    
-      // =============== =========== ================
-
-   
       //  ================ API filter ================
-    //   const filteredWebsites = websites.filter(website => {
-    //     if (selectedOptions.default === "") return true;
-    //     // Implement filtering logic based on selectedOptions
-    //     return false;
-    //   });
+    const [filteredWebsites, setFilteredWebsites] = useState<Website[]>([]);
+    const handleSortChange = (option: string) => {
+        if (option === "alldefaults") {
+            // Clear all selected sorting options
+            setSelectedOptions({
+                ...selectedOptions,
+                default: "alldefaults",
+                dateTime: "",
+                category: "",
+                report: ""
+            });
+        } else {
+            // Update the selected sorting option
+            setSelectedOptions({
+                ...selectedOptions,
+                default: "",
+                [option]: option
+            });
+        }
+    };
+
+//====================
+    useEffect(() => {
+        let filteredWebsites = [...websites]; // Create a copy of the original websites array
+
+        // Custom sorting function
+        const customSort = (a: Website, b: Website): number => {
+            // Sort by date if dateTime option is selected
+            if (selectedOptions.dateTime) {
+                const dateA = new Date(a.reporttime).getTime();
+                const dateB = new Date(b.reporttime).getTime();
+                if (selectedOptions.dateTime === "datenew") {
+                    return dateB - dateA; // Sort by date in descending order (newest first)
+                } else if (selectedOptions.dateTime === "dateold") {
+                    return dateA - dateB; // Sort by date in ascending order (oldest first)
+                }
+            }
+            
+            // Sort by report count if report option is selected
+            if (selectedOptions.report) {
+                const reportA = parseInt(a.reports);
+                const reportB = parseInt(b.reports);
+                if (selectedOptions.report === "highreport") {
+                    return reportB - reportA; // Sort by report count in descending order
+                } else if (selectedOptions.report === "lowreport") {
+                    return reportA - reportB; // Sort by report count in ascending order
+                }
+            }
+            
+            // Sort by category if category option is selected
+            if (selectedOptions.category) {
+                const categoryA = a.WebCategoryName;
+                const categoryB = b.WebCategoryName;
+                const sortingKey = selectedOptions.category === "categoryG" ? "Gambling" :
+                                selectedOptions.category === "categoryS" ? "Scam" :
+                                selectedOptions.category === "categoryF" ? "Fake" :
+                                selectedOptions.category === "categoryO" ? "Others" : "";
+                return categoryA === sortingKey ? -1 : categoryB === sortingKey ? 1 : 0;
+            }
+
+            return 0; // Default case: no sorting applied
+        };
+
+    // Apply custom sorting function
+    filteredWebsites.sort(customSort);
+
+        setFilteredWebsites(filteredWebsites);
+    }, [selectedOptions, websites]);
+
+// =========================
+    // useEffect(() => {
+    //     // Create a copy of the original websites array
+    //     let filteredWebsites = [...websites];
+
+    //     // Custom sorting function
+    //     const customSort = (a: Website, b: Website): number => {
+    //         if (selectedOptions.dateTime) {
+    //             const dateA = new Date(a.reporttime).getTime();
+    //             const dateB = new Date(b.reporttime).getTime();
+    //             if (selectedOptions.dateTime === "datenew") {
+    //                 return dateB - dateA; // Sort by date in descending order (newest first)
+    //             } else if (selectedOptions.dateTime === "dateold") {
+    //                 return dateA - dateB; // Sort by date in ascending order (oldest first)
+    //             }
+    //         }
+    //         if (selectedOptions.report) {
+    //             const reportA = parseInt(a.reports);
+    //             const reportB = parseInt(b.reports);
+    //             if (selectedOptions.report === "highreport") {
+    //                 return reportB - reportA; // Sort by report count in descending order
+    //             } else if (selectedOptions.report === "lowreport") {
+    //                 return reportA - reportB; // Sort by report count in ascending order
+    //             }
+    //         }
+    //         if (selectedOptions.category) {
+    //             // Category sorting logic
+    //             const sortingKey = {
+    //                 "categoryG": "Gambling",
+    //                 "categoryS": "Scam",
+    //                 "categoryF": "Fake",
+    //                 "categoryO": "Others"
+    //             };
+    //             const categoryA = sortingKey[selectedOptions.category as keyof typeof sortingKey];
+    //             const categoryB = sortingKey[selectedOptions.category as keyof typeof sortingKey];
+    //             console.log("Category A:", categoryA);
+    //             console.log("Category B:", categoryB);
+                
+    //             // Check if categoryA and categoryB are defined
+    //             if (categoryA && categoryB) {
+    //                 console.log("Comparing categories:", categoryA, categoryB);
+    //                 return categoryA.localeCompare(categoryB); // Sort by category
+    //             } else {
+    //                 console.log("One or both categories are undefined.");
+    //             }
+    //         }
+    //         return 0; // Default case: no sorting applied
+    //     };
+
+    //     // Apply custom sorting function
+    //     filteredWebsites.sort(customSort);
+
+    //     setFilteredWebsites(filteredWebsites);
+    // }, [selectedOptions, websites]);
+
+//=====================
+    const displayedWebsites = showMore
+        ? filteredWebsites  // Show all websites when showMore is true
+        : filteredWebsites.slice(0, displayRange.end); // Show a limited number of websites when showMore is false
+
+///==============
 
   return (
 
@@ -213,26 +358,53 @@ const WebsiteTable = () => {
             <tbody className="text-[#011E52]">
 
             {/* ============== Link Api ========== */}
-              {/* {displayedWebsites.map(website => (
+
+              {/* {filteredWebsites.map((website, index )=> ( */}
+              {displayedWebsites.map((website, index )=> (
                 <tr className="border-b-2 bg-[#CCD2DE] dark:border-white" key={website.id}>
                     <td className="whitespace-nowrap pl-5 py-4 font-medium">
                         <div className="flex justify-center items-center px-1 py-1 rounded-3xl w-6 h-6  bg-[#3E547C]  text-white ">
-                        {website.id}
+                        {index + 1}
                         </div>
                     </td>
-                    <td className="whitespace-nowrap py-4 ">{website.WebsiteURL}</td>
+                    <td className="whitespace-nowrap py-4 url-column">{website.WebsiteURL}</td>
                     <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center"><a href="#" className="underline" id="linkdetail">More details</a></div></td>
                     <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center">{website.WebCategoryName}</div></td>
                     <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center">{website.reports}</div></td>
                     <td className="whitespace-nowrap px-3 py-4 "></td>
                 </tr>
-              ))} */}
+              ))}
+              
+                {/* {filteredWebsites.map(() => (
+                displayedWebsites.map((website, index) => (
+                    <tr className="border-b-2 bg-[#CCD2DE] dark:border-white" key={website.id}>
+                    <td className="whitespace-nowrap pl-5 py-4 font-medium">
+                        <div className="flex justify-center items-center px-1 py-1 rounded-3xl w-6 h-6  bg-[#3E547C]  text-white ">
+                        {index + 1}
+                        </div>
+                    </td>
+                    <td className="whitespace-nowrap py-4 url-column">{website.WebsiteURL}</td>
+                    <td className="whitespace-nowrap px-6 py-4 ">
+                        <div className="flex justify-center items-center">
+                        <a href="#" className="underline" id="linkdetail">More details</a>
+                        </div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 ">
+                        <div className="flex justify-center items-center">{website.WebCategoryName}</div>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4 ">
+                        <div className="flex justify-center items-center">{website.reports}</div>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 "></td>
+                    </tr>
+                ))
+                ))} */}
             {/* ============ */}
 
             
 
             {/* ========== Demo mockup ========== */}
-            {mockWebsites.map(website => (
+            {/* {mockWebsites.map(website => (
                 <tr className="border-b-2 bg-[#CCD2DE] dark:border-white" key={website.id}>
                     <td className="whitespace-nowrap pl-5 py-4 font-medium">
                         <div className="flex justify-center items-center px-1 py-1 rounded-3xl w-6 h-6  bg-[#3E547C]  text-white ">
@@ -245,12 +417,12 @@ const WebsiteTable = () => {
                     <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center">{website.reportnumber}</div></td>
                     <td className="whitespace-nowrap px-3 py-4 "></td>
                 </tr>
-              ))}
+              ))} */}
            {/* ============ */}
 
 
         {/* ********* See More See Less on Table ********* */}
-            {!showMore && (
+            {/* {!showMore && (
                 <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
                 <td colSpan={6} className="whitespace-nowrap px-6 py-4">
                     <div className="flex justify-end pr-24 font-bold text-[#011E52] underline text-lg">
@@ -268,9 +440,22 @@ const WebsiteTable = () => {
                 </div>
                 </td>
             </tr>
-            )}
-        {/* ********* See More See Less on Table ********* */} 
-
+            )} */}
+            <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
+                <td colSpan={7} className="whitespace-nowrap px-6 py-4">
+                    <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg">
+                        {/* <button onClick={toggleShowMore}>
+                            {showMore ? 'Show Less' : 'See More'}
+                        </button> */}
+                         <div className="flex justify-center space-x-4"> {/* Center align the buttons and add spacing between them */}
+                         {showMoreButton}
+                         {showAllButton}
+                         {showLessButton}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        
             </tbody>
           </table>
         </div>

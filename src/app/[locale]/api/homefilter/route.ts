@@ -179,65 +179,134 @@
 
 //=====================================
 
+// import { GetWebsiteGroup } from '@/app/utils/website/getWebsite';
+// import { PrismaClient } from '@prisma/client/edge';
+// import express from 'express';
+
+// const prisma = new PrismaClient();
+// const app = express();
+// const PORT = process.env.PORT || 3001;
+
+// app.get('/websites', async (req, res) => {
+//     try {
+//         // Query definition starts here
+//         const websiteGroups = await prisma.websiteDetail.groupBy({
+//             by: ['WebsiteURL', 'WebCategoryID'],
+//             _count: {
+//                 WebsiteID: true
+//             },
+//             orderBy: {
+//                 _count: {
+//                     WebsiteID: 'desc'
+//                 }
+//             }
+//         });
+
+//         // const websiteGroups = await GetWebsiteGroup();
+//         // Query definition ends here
+
+//         let sequentialId = 1;
+//         const formattedWebsites = await Promise.all(websiteGroups.map(async (websiteGroup) => {
+//             const WebsiteURL = websiteGroup.WebsiteURL[0];
+//             const WebCategoryID: number = websiteGroup.WebCategoryID;
+
+//             const category = await prisma.websiteCategory.findUnique({
+//                 where: {
+//                     WebCategoryID
+//                 },
+//                 select: {
+//                     WebCategoryName: true
+//                 }
+//             });
+
+//             const numReports = Array.isArray(websiteGroup._count) ? websiteGroup._count.length : 0;
+
+//             const formattedWebsite = {
+//                 id: sequentialId++,
+//                 WebsiteURL,
+//                 WebCategoryName: category?.WebCategoryName ?? "Unknown",
+//                 reports: numReports
+//             };
+
+//             return formattedWebsite;
+//         }));
+
+//         res.json(formattedWebsites);
+
+//     } catch (error) {
+//         console.error('Error fetching websites:', error);
+//         res.status(500).json({ error: 'An error occurred while fetching websites' });
+//     }
+// });
+
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// });
+
+// ===================
+ 
+// import { db } from "@/lib/db";
+
+// export const getFormattedWebsites = async () => {
+//     const websiteGroups = await db.websiteDetail.groupBy({
+//         by: ['WebsiteURL', 'WebCategoryID'],
+//         _count: {
+//             WebsiteID: true
+//         },
+//         orderBy: {
+//             _count: {
+//                 WebsiteID: 'desc'
+//             }
+//         }
+//     });
+
+//     let sequentialId = 1;
+//     const formattedWebsites = await Promise.all(websiteGroups.map(async (websiteGroup) => {
+//         const WebsiteURL = websiteGroup.WebsiteURL[0];
+//         const WebCategoryID: number = websiteGroup.WebCategoryID;
+
+//         const category = await db.websiteCategory.findUnique({
+//             where: {
+//                 WebCategoryID
+//             },
+//             select: {
+//                 WebCategoryName: true
+//             }
+//         });
+
+//         const numReports = Array.isArray(websiteGroup._count) ? websiteGroup._count.length : 0;
+
+//         return {
+//             id: sequentialId++,
+//             WebsiteURL,
+//             WebCategoryName: category?.WebCategoryName ?? "Unknown",
+//             reports: numReports
+//         };
+//     }));
+
+//     return formattedWebsites;
+// };
+
+// ===================
+
+import { NextResponse } from "next/server";
 import { GetWebsiteGroup } from '@/app/utils/website/getWebsite';
-import { PrismaClient } from '@prisma/client/edge';
-import express from 'express';
 
-const prisma = new PrismaClient();
-const app = express();
-const PORT = process.env.PORT || 3001;
-
-app.get('/websites', async (req, res) => {
+export const GET = async (req: Request) => {
     try {
-        // Query definition starts here
-        // const websiteGroups = await prisma.websiteDetail.groupBy({
-        //     by: ['WebsiteURL', 'WebCategoryID'],
-        //     _count: {
-        //         WebsiteID: true
-        //     },
-        //     orderBy: {
-        //         _count: {
-        //             WebsiteID: 'desc'
-        //         }
-        //     }
-        // });
         const websiteGroups = await GetWebsiteGroup();
-        // Query definition ends here
+        console.log('Website Groups:', websiteGroups); // Log the result
 
-        let sequentialId = 1;
-        const formattedWebsites = await Promise.all(websiteGroups.map(async (websiteGroup) => {
-            const WebsiteURL = websiteGroup.WebsiteURL[0];
-            const WebCategoryID: number = websiteGroup.WebCategoryID;
+        if (!websiteGroups) {
+            return NextResponse.json(
+                { message: "Website groups not found" },
+                { status: 404 }
+            );
+        }
 
-            const category = await prisma.websiteCategory.findUnique({
-                where: {
-                    WebCategoryID
-                },
-                select: {
-                    WebCategoryName: true
-                }
-            });
-
-            const numReports = Array.isArray(websiteGroup._count) ? websiteGroup._count.length : 0;
-
-            const formattedWebsite = {
-                id: sequentialId++,
-                WebsiteURL,
-                WebCategoryName: category?.WebCategoryName ?? "Unknown",
-                reports: numReports
-            };
-
-            return formattedWebsite;
-        }));
-
-        res.json(formattedWebsites);
-
-    } catch (error) {
-        console.error('Error fetching websites:', error);
-        res.status(500).json({ error: 'An error occurred while fetching websites' });
+        return NextResponse.json(websiteGroups);
+    } catch (err) {
+        console.error('Error:', err); // Log any errors
+        return NextResponse.json({ message: "GET Error", err }, { status: 500 });
     }
-});
-
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+};
