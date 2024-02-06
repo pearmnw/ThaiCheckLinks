@@ -113,6 +113,13 @@ export default {
     "moredetailError": "Please provide more details about this website!"
   },
 
+  "reportsuccess": {
+    "title": "Successfully reported illegal website links",
+    "sub-title": "Thank you for reporting illegal links here.",
+    "sub-title2": "We will continue to use criminal web investigations to help the public.",
+    "successmess": "Successful report"
+  },
+
   "profilepage": {
     "title": "My Profile",
     "username": "Username",
