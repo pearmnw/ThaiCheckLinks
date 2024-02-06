@@ -6,7 +6,7 @@ import Riskscore from './Riskscore';
 import Measurement from './Measurement';
 import WebsiteInsight from './WebsiteInsight';
 import SearchBarMain from '../searchbar/searchbarmain';
-import API from './API';
+import API from '../verification/API';
 import Caption from '../verification/Caption';
 import axios from 'axios';
 import { getDomainName } from '@/lib/utils';
@@ -14,58 +14,58 @@ import { makeRequest } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 const websiteNoneData = {
-      'server': {
-        "name": ''
-      },
-      'company': {
-        'organization': '',
-        'owner': '',
-        'address': '',
-        'country': '',
-        'email': ''
-      },
-      'website_data': {
-        "tranco_rank": '',
-        'ip': '',
-        'status_code': '',
-        'domain_age': '',
-        'ssl_valid': '',
-        'ssl_type': '',
-        'whois_register_date': '',
-        'whois_last_update_date': '',
-        'whois_renew_date': '',
-        'redirect_domain': '',
-        'is_hidden': ''
-      },
-      'owner': {
-        'organization': '',
-        'ca': '',
-        'country': ''
-      },
-      'registrar': {
-        'domain': '',
-        'iana_id': '',
-        'email': ''
-      },
-      'measurement': {
-        'is_ssl_valid': '',
-        "is_whois_show": '',
-        "is_risk_country": '',
-        "is_free_email": '',
-        "is_age_more_seven_year": '',
-        "tranco_rank": ''
-      }
+  server: {
+    name: '',
+  },
+  company: {
+    organization: '',
+    owner: '',
+    address: '',
+    country: '',
+    email: '',
+  },
+  website_data: {
+    tranco_rank: '',
+    ip: '',
+    status_code: '',
+    domain_age: '',
+    ssl_valid: '',
+    ssl_type: '',
+    whois_register_date: '',
+    whois_last_update_date: '',
+    whois_renew_date: '',
+    redirect_domain: '',
+    is_hidden: '',
+  },
+  owner: {
+    organization: '',
+    ca: '',
+    country: '',
+  },
+  registrar: {
+    domain: '',
+    iana_id: '',
+    email: '',
+  },
+  measurement: {
+    is_ssl_valid: '',
+    is_whois_show: '',
+    is_risk_country: '',
+    is_free_email: '',
+    is_age_more_seven_year: '',
+    tranco_rank: '',
+  },
 };
 
 const Moredetail = () => {
   const t = useScopedI18n('moredetailpage');
   const currentLocale = useCurrentLocale();
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState('');
 
   const formData = new FormData();
   formData.append('url', url);
   formData.append('path', 'moredetail');
-  
+
   const [score, setScore] = useState(0);
   const [checked, setChecked] = useState(false);
   const [rank, setRank] = useState('');
@@ -81,24 +81,24 @@ const Moredetail = () => {
 
   const maxScore = 100;
 
-  const identifyRiskFromScore = (riskScore: number) => {
-    if (riskScore >= 0 && riskScore <= 38) {
-      return t('low-score');
-    } else if (riskScore >= 39 && riskScore <= 58) {
-      return t('quite-low-score');
-    } else if (riskScore >= 59 && riskScore <= 78) {
-      return t('quite-high-score');
-    } else if (riskScore >= 79 && riskScore <= 100) {
-      return t('high-score');
-    } else {
-      return t('No Result');
-    }
-  };
+  // const identifyRiskFromScore = (riskScore: number) => {
+  //   if (riskScore >= 0 && riskScore <= 38) {
+  //     return t('low-score');
+  //   } else if (riskScore >= 39 && riskScore <= 58) {
+  //     return t('quite-low-score');
+  //   } else if (riskScore >= 59 && riskScore <= 78) {
+  //     return t('quite-high-score');
+  //   } else if (riskScore >= 79 && riskScore <= 100) {
+  //     return t('high-score');
+  //   } else {
+  //     return t('No Result');
+  //   }
+  // };
 
-  useEffect(() => {
-    const riskLevel = identifyRiskFromScore(score);
-    setIdentifyRisk(riskLevel);
-  }, [score, t]);
+  // useEffect(() => {
+  //   const riskLevel = identifyRiskFromScore(score);
+  //   setIdentifyRisk(riskLevel);
+  // }, [score, t]);
 
   const getRiskScore = async () => {
     const response_ip_quality = await fetch(
@@ -117,7 +117,7 @@ const Moredetail = () => {
     } else {
       setScore(0);
     }
-  }
+  };
 
   const getWebsiteInsight = async () => {
     axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -148,7 +148,7 @@ const Moredetail = () => {
     } else {
       setRank(t('No Result'));
     }
-  }
+  };
 
   const getApi = async () => {
     try {
@@ -211,14 +211,23 @@ const Moredetail = () => {
       <div className='text-center text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3] '>
         {t('title')}
         <Caption />
-        <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl}/>
+        <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} />
         <div className='flex justify-center flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg py-14 px-8 gap-6'>
           <Header />
           <div className='flex justify-center flex-col item-center mx-12 gap-6'>
-            <Riskscore checked={checked} identifyRisk={identifyRisk} score={score} maxScore={maxScore}/>
-            <Measurement websiteData={websiteData}/>
-            <WebsiteInsight url={url} rank={rank} websiteData={websiteData}/>
-            <API data={data} checkIPQuality={checkIPQuality} checkURLHaus={checkURLHaus} />
+            <Riskscore
+              checked={checked}
+              identifyRisk={identifyRisk}
+              score={score}
+              maxScore={maxScore}
+            />
+            <Measurement websiteData={websiteData} />
+            <WebsiteInsight url={url} rank={rank} websiteData={websiteData} />
+            <API
+              data={data}
+              checkIPQuality={checkIPQuality}
+              checkURLHaus={checkURLHaus}
+            />
           </div>
         </div>
       </div>

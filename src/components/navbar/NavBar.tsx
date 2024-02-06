@@ -30,7 +30,7 @@ const NavBar = () => {
     <div
       className={
         header
-          ? "fixed w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
+          ? "w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
           : "bg-[transparent]"
       }
     >

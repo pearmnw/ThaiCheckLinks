@@ -9,7 +9,9 @@ const Url: React.FC<UrlProps> = ({ urlPercent }) => {
 
   return (
     <div className='flex justify-center flex-col gap-6 w-full py-14 px-12 border-b-2 border-custom-black'>
-      <div>{t('malicious-url')}</div>
+      <div className='flex flex-col justify-center items-start text-custom-black gap-5'>
+        <h2 className='text-3xl font-semibold'>{t('malicious-url')}</h2>
+      </div>
       <ScoreIndicator score={malicious_url} maxScore={100} />
     </div>
   );

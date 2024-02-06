@@ -1,18 +1,14 @@
 import React from 'react'
 import Classify from './textcontent/Classify';
-import Redirected from './Redirected';
 import Url from './textcontent/Url';
 import { ClassificationProps } from '@/lib/interface/verification/interface';
+import Report from './Report';
 
 const Classification: React.FC<ClassificationProps> = ({ urlPercent, currentPercent, maxPercent }) => {
   return (
-    <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
-      <Url urlPercent={urlPercent} />
-      <Classify
-        currentPercent={currentPercent}
-        maxPercent={maxPercent}
-      />
-      <Redirected />
+    <div className=' border-custom-black border-b-2 px-8 py-8' id="myAI">
+      {/* <Url urlPercent={urlPercent} /> */}
+      <Classify currentPercent={currentPercent} maxPercent={maxPercent} />
     </div>
   );
 }

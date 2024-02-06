@@ -65,3 +65,11 @@ export interface CategoryLabelProps {
   label: string;
   currentPercent: number;
 }
+
+export interface ProgressBarProps {
+  progress: number;
+}
+
+export interface CircularProgressBarProps {
+  score: number;
+}
