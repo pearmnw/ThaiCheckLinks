@@ -3,36 +3,35 @@
 import { useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NavBar = () => {
   const { data: session, status } = useSession();
   const t = useScopedI18n("navbar");
-  const [header, setHeader] = useState(false);
-  const scrollHeader = () => {
-    if (window.scrollY >= 20) {
-      setHeader(true);
-    } else {
-      setHeader(false);
-    }
-  };
+  // const [header, setHeader] = useState(false);
+  // const scrollHeader = () => {
+  //   if (window.scrollY >= 20) {
+  //     setHeader(true);
+  //   } else {
+  //     setHeader(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener("scroll", scrollHeader);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", scrollHeader);
 
-    return () => {
-      window.addEventListener("scroll", scrollHeader);
-    };
-  }, []);
+  //   return () => {
+  //     window.addEventListener("scroll", scrollHeader);
+  //   };
+  // }, []);
 
   return (
     <div
-      className={
-        header
-          ? "fixed w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
-          : "bg-[transparent]"
-      }
+    // className={
+    //   header
+    //     ? "fixed w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
+    //     : "bg-[transparent]"
+    // }
     >
       <nav className="bg-[#CCD2DE]">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
@@ -64,11 +63,25 @@ const NavBar = () => {
             {session?.user ? (
               <div className="flex">
                 <Link href="/profile">
-                  <img
+                  {/* <img
                     className="w-[3rem] h-[3rem] rounded-full"
-                    src="/apichaya.jpg"
+                    src="/defaultprofileimg.png"
                     alt="Rounded avatar"
-                  ></img>
+                  ></img> */}
+                  <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                    <svg
+                      className="absolute w-12 h-12 text-gray-400 -left-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
                 </Link>
                 <button
                   onClick={() => signOut()}

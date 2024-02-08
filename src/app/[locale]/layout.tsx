@@ -1,6 +1,7 @@
 "use client";
 import NavBar from "@/components/navbar/NavBar";
 // Layout that will show in every pages such as Header. Bg, footer(No have for now)
+import { Toaster } from "react-hot-toast";
 import backgroundImage from "../../../public/Swirl.png";
 import { I18nProviderClient, useCurrentLocale } from "../../locales/client";
 import NextAuthProvider from "../providers";
@@ -30,6 +31,7 @@ export default function LocaleLayout({
                 justifyContent: "center",
               }}
             >
+              <Toaster position="top-center" />
               <div className="pt-9">{children}</div>
             </div>
           </NextAuthProvider>

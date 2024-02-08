@@ -5,48 +5,49 @@ import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-async function signin(credentials) {
+async function signin(credentials: any) {
     try {
-        // const existingUserName = await db.userDetail.findUnique({
-        //     where: { UserName: credentials.username },
-        // })
-        // if (!existingUserName) throw new Error("Wrong Credentials")
-        // const passwordMatch = await compare(credentials.password, existingUserName?.UserPassword);
-        // if (!passwordMatch) throw new Error("Wrong password");
-        // return existingUserName;
-        const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        // const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         const usernamepattern = /^[a-zA-Z0-9]/;
-        const phonenumpattern = /^[0-9]/;
+        // const phonenumpattern = /^[0-9]/;
 
         if (usernamepattern.test(credentials.username)) {
             const existingUserName = await db.userDetail.findUnique({
                 where: { UserName: credentials.username },
             })
-            if (!existingUserName) throw new Error("This Username was not exits")
+            console.log(existingUserName);
+            if (!existingUserName) {
+                // return NextResponse.json({message: "This username not exists" }, { status: 409 })
+                throw new Error("Wrong username");
+            }
             const passwordMatch = await compare(credentials.password, existingUserName?.UserPassword);
-            if (!passwordMatch) throw new Error("Wrong password");
+            if (!passwordMatch) {
+                // return NextResponse.json({message: "Password not match" }, { status: 409 })
+                throw new Error("Wrong password");
+            }
             return existingUserName;
-        } else if (phonenumpattern.test(credentials.username)) {
-            const existingUserPhone = await db.userDetail.findUnique({
-                where: { UserPhone: credentials.username },
-            })
-            if (!existingUserPhone) throw new Error("Wrong Credentials")
-            const passwordMatch = await compare(credentials.password, existingUserPhone?.UserPassword);
-            if (!passwordMatch) throw new Error("Wrong password");
-            return existingUserPhone;
         }
-        else if (emailpattern.test(credentials.username)) {
-            const existingUserEmail = await db.userDetail.findUnique({
-                where: { UserPhone: credentials.username },
-            })
-            if (!existingUserEmail) throw new Error("Wrong Credentials")
-            const passwordMatch = await compare(credentials.password, existingUserEmail?.UserPassword);
-            if (!passwordMatch) throw new Error("Wrong password");
-            return existingUserEmail;
-        }
-        else {
-            throw new Error("Wrong Credentials")
-        }
+        // else if (phonenumpattern.test(credentials.username)) {
+        //     const existingUserPhone = await db.userDetail.findUnique({
+        //         where: { UserPhone: credentials.username },
+        //     })
+        //     if (!existingUserPhone) throw new Error("Wrong Credentials")
+        //     const passwordMatch = await compare(credentials.password, existingUserPhone?.UserPassword);
+        //     if (!passwordMatch) throw new Error("Wrong password");
+        //     return existingUserPhone;
+        // }
+        // else if (emailpattern.test(credentials.username)) {
+        //     const existingUserEmail = await db.userDetail.findUnique({
+        //         where: { UserPhone: credentials.username },
+        //     })
+        //     if (!existingUserEmail) throw new Error("Wrong Credentials")
+        //     const passwordMatch = await compare(credentials.password, existingUserEmail?.UserPassword);
+        //     if (!passwordMatch) throw new Error("Wrong password");
+        //     return existingUserEmail;
+        // }
+        // else {
+        //     throw new Error("Wrong Credentials")
+        // }
     } catch (error) {
         console.log(error);
         console.log("error while logging in.");
@@ -70,36 +71,50 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 try {
                     const user = await signin(credentials);
-                    console.log({ credentials })
-                    console.log(user);
+                    // console.log({ credentials })
+                    // console.log(user);
                     // return user;
-                    return {
-                        id: `${user?.UserID}`,
-                        name: user?.UserName,
-                        email: user?.UserEmail
+
+                    if (user) {
+                        return {
+                            id: `${user?.UserID}`,
+                            name: user?.UserName,
+                            email: user?.UserEmail,
+                            userphone: user?.UserPhone,
+                            password: user?.UserPassword
+                        }
+                    }
+                    else {
+                        throw new Error("Somethings Wrong!!")
                     }
 
+
                 } catch (error) {
+                    console.log(error);
                     throw new Error("Failed to signin.");
                 }
             },
         })
     ],
-    // callbacks: {
-    //     async jwt({ token }) {
-    //         console.log(token);
-    //         return token;
-    //     },
-    //     async session({ session, token }) {
-    //         return {
-    //             ...session,
-    //             user: {
-    //                 ...session.user,
-    //                 username: token.username
-    //             }
-    //         }
-    //     }
-    // }
+    callbacks: {
+        jwt: async ({ token, user }) => {
+            // on login if a user is passed, we set that data to this token
+            user && (token.user = user);
+            // if(user){
+            //     return{
+            //         ...token,
+            //         userphone: user.userphone
+            //     }
+            // }
+            // console.log(token);
+            return token;
+        },
+        session: async ({ session, token }) => {
+            session.user = token.user as any;
+            console.log(session)
+            return session;
+        },
+    }
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

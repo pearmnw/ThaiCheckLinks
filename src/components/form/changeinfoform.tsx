@@ -1,12 +1,22 @@
 "use client";
 
 import { useScopedI18n } from "@/locales/client";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const ChangeInfoForm = () => {
   const t = useScopedI18n("signuppage");
+  const { data: session, status } = useSession();
+  console.log(session?.user?.name);
   const router = useRouter();
+  interface User {
+    username: String;
+    email: String;
+    phonenumber: String | null;
+    password: String;
+  }
+  // const router = useRouter();
   const [formInput, setFormInput] = useState({
     username: "",
     email: "",
@@ -22,7 +32,7 @@ const ChangeInfoForm = () => {
     phonenumber: "",
     password: "",
     confirmpassword: "",
-    consent: "",
+    errorMsg: "",
   });
 
   const handleUserInput = (name: string, value: string) => {
@@ -32,17 +42,7 @@ const ChangeInfoForm = () => {
     });
   };
 
-  const [checkedValues, setValue] = useState({});
-
-  const handleChange = (event: { target: { value: any; checked: any } }) => {
-    const { value, checked } = event.target;
-
-    if (checked) {
-      setValue([value]);
-    }
-  };
-
-  const validateFormInput = (event: { preventDefault: () => void }) => {
+  const validateFormInput = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     // Initialize an object to track input errors
@@ -52,129 +52,140 @@ const ChangeInfoForm = () => {
       phonenumber: "",
       password: "",
       confirmpassword: "",
+      errorMsg: "",
       consent: "",
     };
 
-    const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (formInput.email) {
+      const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-    // Check if email match the pattern
-    if (!emailpattern.test(formInput.email)) {
-      console.log("wrong email");
-      setFormError({
-        ...inputError,
-        email: t("erremail"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+      // Check if email match the pattern
+      if (!emailpattern.test(formInput.email)) {
+        console.log("wrong email");
+        setFormError({
+          ...inputError,
+          email: t("erremail"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
-    // check if phone number is least than 10
-    if (formInput.phonenumber.length < 10) {
-      console.log("wrong phonenum");
-      setFormError({
-        ...inputError,
-        phonenumber: t("errphone"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+    if (formInput.phonenumber) {
+      // check if phone number is least than 10
+      if (formInput.phonenumber.length < 10) {
+        console.log("wrong phonenum");
+        setFormError({
+          ...inputError,
+          phonenumber: t("errphone"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
     // Check if the password is match the pattern
-    if (formInput.password.length < 8) {
-      console.log("wrong pw1");
-      setFormError({
-        ...inputError,
-        password: t("errpw1"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
-    }
-    if (!/\d/.test(formInput.password)) {
-      console.log("wrong pw2");
-      setFormError({
-        ...inputError,
-        password: t("errpw2"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+    if (formInput.password) {
+      if (formInput.password.length < 8) {
+        console.log("wrong pw1");
+        setFormError({
+          ...inputError,
+          password: t("errpw1"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
+      if (!/\d/.test(formInput.password)) {
+        console.log("wrong pw2");
+        setFormError({
+          ...inputError,
+          password: t("errpw2"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
+
+      if (formInput.password !== formInput.confirmpassword) {
+        // Check if password and confirmpassword is match
+        console.log("wrong pw3");
+        setFormError({
+          ...inputError,
+          confirmpassword: t("errconfirmpass"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
-    if (formInput.password !== formInput.confirmpassword) {
-      // Check if password and confirmpassword is match
+    const updateuser = await onSubmit();
+    if (updateuser) {
+      setFormError(inputError);
+      setFormInput((prevState) => ({
+        ...prevState,
+        successMsg: t("successmsg"),
+      }));
+      router.refresh();
+      console.log(session?.user.email);
+    } else {
       console.log("wrong pw3");
       setFormError({
         ...inputError,
-        confirmpassword: t("errconfirmpass"),
+        errorMsg: "Something Wrong with your information",
       });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
     }
-
-    if (checkedValues != "consent") {
-      console.log("No consent");
-      setFormError({
-        ...inputError,
-        consent: t("errconsent"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
-    }
-
-    setFormError(inputError);
-    setFormInput((prevState) => ({
-      ...prevState,
-      successMsg: t("successmsg"),
-    }));
-    onSubmit();
   };
 
   const onSubmit = async () => {
-    // const res = await fetch("api/user", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     UserName: formInput.username,
-    //     UserEmail: formInput.email,
-    //     UserPhone: formInput.phonenumber,
-    //     UserPassword: formInput.password,
-    //   }),
-    // });
-    // if (res.ok) {
-    //   router.push("/signin");
-    // } else {
-    //   console.error("registration failed");
-    // }
+    const res = await fetch("api/editprofile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        CurrentUser: session?.user.name,
+        UserName: formInput.username,
+        UserEmail: formInput.email,
+        UserPhone: formInput.phonenumber,
+        UserPassword: formInput.password,
+      }),
+    });
+    console.log(res);
+    return res;
   };
 
   return (
     <div className="m-0 mx-auto w-full">
       <form onSubmit={validateFormInput}>
-        <div className="flex justify-center pt-7 pb-5 items-center justify-center">
-          <img
-            className="w-[18rem] h-[18rem] rounded-full"
-            src="/apichaya.jpg"
-            alt="Rounded avatar"
-          ></img>
+        <div className="flex justify-center pt-7 pb-5 items-center">
+          <div className="relative w-[18rem] h-[18rem] overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+            <svg
+              className="absolute w-[20rem] h-[20rem] text-gray-400 -left-3"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </div>
         </div>
         <div className="pt-4">
           <label className="block text-sm font-semibold leading-6 text-gray-900">
@@ -189,8 +200,7 @@ const ChangeInfoForm = () => {
               }}
               name="username"
               type="username"
-              placeholder={t("usertext")}
-              required
+              placeholder={session?.user?.name ?? ""}
               className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
             <button className="items-center">
@@ -219,8 +229,7 @@ const ChangeInfoForm = () => {
               }}
               name="email"
               type="text"
-              placeholder={t("emtext")}
-              required
+              placeholder={session?.user?.email ?? ""}
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -245,9 +254,12 @@ const ChangeInfoForm = () => {
               }}
               name="phonenumber"
               type="phonenumber"
-              placeholder={t("phntext")}
+              placeholder={
+                session?.user?.userphone ?? ""
+                  ? session?.user?.userphone ?? ""
+                  : t("phntext")
+              }
               autoComplete="phonenumber"
-              // required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -273,7 +285,6 @@ const ChangeInfoForm = () => {
               name="password"
               type="password"
               placeholder={t("pwtext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -299,7 +310,6 @@ const ChangeInfoForm = () => {
               name="confirmpassword"
               type="password"
               placeholder={t("cftext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -315,6 +325,9 @@ const ChangeInfoForm = () => {
             Edit Information
           </button>
         </div>
+        <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
+          {formInput.successMsg}
+        </p>
       </form>
     </div>
   );
