@@ -92,20 +92,6 @@ const SignUpForm = () => {
         }));
         return;
       }
-    if (formInput.phonenumber) {
-      // check if phone number is least than 10
-      if (formInput.phonenumber.length < 10) {
-        console.log("wrong phonenum");
-        setFormError({
-          ...inputError,
-          phonenumber: t("errphone"),
-        });
-        setFormInput((prevState) => ({
-          ...prevState,
-          successMsg: "",
-        }));
-        return;
-      }
     }
 
     // Check if the password is match the pattern
@@ -135,19 +121,6 @@ const SignUpForm = () => {
         return;
       }
 
-      if (formInput.password !== formInput.confirmpassword) {
-        // Check if password and confirmpassword is match
-        console.log("wrong pw3");
-        setFormError({
-          ...inputError,
-          confirmpassword: t("errconfirmpass"),
-        });
-        setFormInput((prevState) => ({
-          ...prevState,
-          successMsg: "",
-        }));
-        return;
-      }
       if (formInput.password !== formInput.confirmpassword) {
         // Check if password and confirmpassword is match
         console.log("wrong pw3");
