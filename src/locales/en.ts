@@ -130,7 +130,7 @@ export default {
     "url-measure": "URL Risks Measured By URL Detection", 
     "found-other-database": "Found On The Other Website Checker",
     "seemore": "See More",
-    "click-here": "Click here for addional reports",
+    "click-here": "Click here for addtional reports",
 
     "analysis-title": "AI Analyzes Risk Percent",
     "analysis-subtitle": "Highest Percentage Ever Examined",

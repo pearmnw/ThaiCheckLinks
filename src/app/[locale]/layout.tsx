@@ -21,7 +21,7 @@ export default function LocaleLayout({
             <NavBar />
             <div
               style={{
-                backgroundImage: `url(${backgroundImage.src})`,
+                // backgroundImage: `url(${backgroundImage.src})`,
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
