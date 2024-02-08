@@ -1,0 +1,75 @@
+// interface Website {
+    //     id: number;
+    //     websiteurl: string;
+    //     link: string;
+    //     webcategory: string;
+    //     reportnumber: string; 
+    //   }
+      
+    //   const allWebsites: Website[] = [
+    //     { id: 1, websiteurl: "Example Website 1", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 2, websiteurl: "Example Website 2", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 3, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 4, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 5, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 6, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 7, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 8, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 9, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 10, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 11, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 12, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 13, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 14, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 15, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 16, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 17, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 18, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 19, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 20, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" }
+    //     // Add more mock data as needed
+    //   ];
+    //    // Slice the first 10 items to display initially
+    //   const mockWebsites: Website[] = showMore ? allWebsites : allWebsites.slice(0, 10);
+
+    //  ================ API filter ================
+    useEffect(() => {
+        const filteredWebsites = websites.filter((website: Website) => {
+            // Check if any specific sorting option is selected
+            if (selectedOptions.default === "alldefaults") {
+                // Set default sorting parameters
+                return true; // Show all
+            } else {
+                // Sort based on selected options
+                let sortingKey: keyof Website | undefined;
+                let sortOrder: "asc" | "desc" = "desc"; // Default sort order
+
+                switch (selectedOptions.default) {
+                    case "dateTime":
+                        sortingKey = "reporttime";
+                        sortOrder = selectedOptions.dateTime === "datenew" ? "desc" : "asc";
+                        break;
+                    case "category":
+                        sortingKey = "WebCategoryName";
+                        break;
+                    case "report":
+                        sortingKey = "reports";
+                        sortOrder = selectedOptions.report === "highreport" ? "desc" : "asc";
+                        break;
+                    default:
+                        break;
+                }
+
+                // Check if sortingKey is defined before accessing it
+                if (sortingKey && website.hasOwnProperty(sortingKey)) {
+                    // Sort websites based on sorting key and order
+                    // Adjust sorting logic according to sortingKey and sortOrder
+                    return true;
+                } else {
+                    // If sortingKey is not defined or website does not have that property, return false
+                    return false;
+                }
+            }
+        });
+        setFilteredWebsites(filteredWebsites);
+    }, [selectedOptions, websites]);

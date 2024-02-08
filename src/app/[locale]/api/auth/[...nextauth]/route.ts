@@ -12,7 +12,8 @@ async function signin(credentials: any) {
         // const phonenumpattern = /^[0-9]/;
 
         if (usernamepattern.test(credentials.username)) {
-            const existingUserName = await db.userDetail.findUnique({
+            const existingUserName = await db.userDetail.findFirst({
+                // where: { UserName: credentials.username },
                 where: { UserName: credentials.username },
             })
             console.log(existingUserName);
