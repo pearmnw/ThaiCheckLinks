@@ -21,16 +21,6 @@ const WebsiteTable = () => {
      
     const [websites, setWebsites] = useState<Website[]>([]);  
     const [displayRange, setDisplayRange] = useState({ start: 0, end: 10 });
-    
-    // useEffect(() => {
-    //     axios.get('http://localhost:300/api/homefilter') //not sure api pointend 
-    //         .then(response => {
-    //             setWebsites(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,6 +60,35 @@ const WebsiteTable = () => {
     });
     
     // Function to handle radio button changes
+    // const handleRadioChange = (category: string, value: string) => {
+    //     setSelectedOptions(prevState => {
+    //         // If the selected option is the default option,
+    //         // uncheck all other options
+    //         if (value === "alldefaults") {
+    //             return {
+    //                 ...prevState,
+    //                 [category]: value,
+    //                 dateTime: "",
+    //                 category: "",
+    //                 report: ""
+    //             };
+    //         } 
+    //         else {
+    //             // If the selected option is not the default option,
+    //             // uncheck the default option
+    //             return {
+    //                 ...prevState,
+    //                 default: "",
+    //                 [category]: value
+    //             };
+    //         }
+    //     });
+    //      // Reset displayed range to show default number of rows
+    //     setDisplayRange({ start: 0, end: 10 });
+    //     // Reset showMore state to false
+    //     setShowMore(false);
+    // };
+
     const handleRadioChange = (category: string, value: string) => {
         setSelectedOptions(prevState => {
             // If the selected option is the default option,
@@ -77,27 +96,30 @@ const WebsiteTable = () => {
             if (value === "alldefaults") {
                 return {
                     ...prevState,
-                    [category]: value,
                     dateTime: "",
                     category: "",
-                    report: ""
+                    report: "",
+                    [category]: value
                 };
-            } 
-            else {
+            } else {
                 // If the selected option is not the default option,
-                // uncheck the default option
+                // uncheck the default option and clear other fields
                 return {
                     ...prevState,
                     default: "",
-                    [category]: value
+                    dateTime: category === 'dateTime' ? value : "",
+                    category: category === 'category' ? value : "",
+                    report: category === 'report' ? value : ""
                 };
             }
         });
-         // Reset displayed range to show default number of rows
+    
+        // Reset displayed range to show default number of rows
         setDisplayRange({ start: 0, end: 10 });
         // Reset showMore state to false
         setShowMore(false);
     };
+    
     
     // See more see less function 
     const [showMore, setShowMore] = useState(false);
@@ -374,31 +396,6 @@ const WebsiteTable = () => {
                     <td className="whitespace-nowrap px-3 py-4 "></td>
                 </tr>
               ))}
-              
-                {/* {filteredWebsites.map(() => (
-                displayedWebsites.map((website, index) => (
-                    <tr className="border-b-2 bg-[#CCD2DE] dark:border-white" key={website.id}>
-                    <td className="whitespace-nowrap pl-5 py-4 font-medium">
-                        <div className="flex justify-center items-center px-1 py-1 rounded-3xl w-6 h-6  bg-[#3E547C]  text-white ">
-                        {index + 1}
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap py-4 url-column">{website.WebsiteURL}</td>
-                    <td className="whitespace-nowrap px-6 py-4 ">
-                        <div className="flex justify-center items-center">
-                        <a href="#" className="underline" id="linkdetail">More details</a>
-                        </div>
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 ">
-                        <div className="flex justify-center items-center">{website.WebCategoryName}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-6 py-4 ">
-                        <div className="flex justify-center items-center">{website.reports}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 "></td>
-                    </tr>
-                ))
-                ))} */}
             {/* ============ */}
 
             
@@ -422,25 +419,6 @@ const WebsiteTable = () => {
 
 
         {/* ********* See More See Less on Table ********* */}
-            {/* {!showMore && (
-                <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
-                <td colSpan={6} className="whitespace-nowrap px-6 py-4">
-                    <div className="flex justify-end pr-24 font-bold text-[#011E52] underline text-lg">
-                        <button onClick={toggleShowMore}>See More</button>
-                    </div>
-                </td>
-                </tr>
-            )}
-
-            {showMore && (
-            <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
-                <td colSpan={6} className="whitespace-nowrap px-6 py-4">
-                <div className="flex justify-end pr-24 font-bold text-[#011E52] underline text-lg">
-                    <button onClick={toggleShowMore}>Show Less</button>
-                </div>
-                </td>
-            </tr>
-            )} */}
             <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
                 <td colSpan={7} className="whitespace-nowrap px-6 py-4">
                     <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg">
@@ -488,12 +466,6 @@ const WebsiteTable = () => {
                    <div>
                         <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">Date/Time</h3>
                         <div>
-
-                        <label className="flex justify-start items-center mb-2 px-4">
-                            <input type="radio" className="form-radio w-6 h-6 text-slate-950 " name="dateTime" value="datedefault"  onChange={() => handleRadioChange("dateTime", "datedefault")}
-                        checked={selectedOptions.dateTime === "datedefault"}  />
-                            <span className="ml-2 text-xs text-slate-950 font-normal">Default</span>
-                        </label>
                         
                         <label className="flex justify-start items-center mb-2 px-4">
                             <input type="radio" className="form-radio w-6 h-6 text-slate-950 " name="dateTime"value="dateold" onChange={() => handleRadioChange("dateTime", "dateold")}
@@ -516,12 +488,6 @@ const WebsiteTable = () => {
                         <div>
 
                         <label className="flex justify-start items-center mb-2 px-4">
-                            <input type="radio" className="form-radio w-6 h-6 text-slate-950 " name="report" value="reportdefault" onChange={() => handleRadioChange("report", "reportdefault")}
-                        checked={selectedOptions.report === "reportdefault"} />
-                            <span className="ml-2 text-xs text-slate-950 font-normal">Default</span>
-                        </label>
-
-                        <label className="flex justify-start items-center mb-2 px-4">
                             <input type="radio" className="form-radio w-6 h-6 text-slate-950 " name="report" value="highreport" onChange={() => handleRadioChange("report", "highreport")}
                         checked={selectedOptions.report === "highreport"} />
                             <span className="ml-2 text-xs text-slate-950 font-normal">Highest Report</span>
@@ -540,12 +506,6 @@ const WebsiteTable = () => {
                     <div>
                         <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">Category</h3>
                         <div>
-
-                        <label className="flex justify-start items-center mb-2 px-4">
-                            <input type="radio" className="form-radio w-6 h-6 text-slate-950 " name="category" value="categorydefault" onChange={() => handleRadioChange("category", "categorydefault")}
-                        checked={selectedOptions.category === "categorydefault"} />
-                            <span className="ml-2 text-xs text-slate-950 font-normal">Default</span>
-                        </label>
 
                         <label className="flex justify-start items-center mb-2 px-4">
                             <input type="radio" className="form-radio w-6 h-6 text-slate-950 " name="category" value="categoryG" onChange={() => handleRadioChange("category", "categoryG")}
