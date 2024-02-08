@@ -3,12 +3,13 @@
 import { useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NavBar = () => {
   const { data: session, status } = useSession();
   const t = useScopedI18n("navbar");
-  // const [header, setHeader] = useState(false);
+  const [header, setHeader] = useState(false);
   // const scrollHeader = () => {
   //   if (window.scrollY >= 20) {
   //     setHeader(true);
