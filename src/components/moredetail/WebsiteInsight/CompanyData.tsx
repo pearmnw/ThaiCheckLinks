@@ -1,10 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface CompanyDataProps {
-  company: any
-}
+import { CompanyDataProps } from '@/lib/interface/moredetail/interface';
 
 const CompanyData: React.FC<CompanyDataProps> = ({ company }) => {
   const t = useScopedI18n('moredetailpage');

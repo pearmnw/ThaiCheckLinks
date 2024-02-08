@@ -1,25 +1,17 @@
 'use client';
-import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import axios from 'axios';
-import { useState } from 'react';
+import { useScopedI18n } from '@/locales/client';
 import ScoreIndicator from '../../moredetail/TrustScore/ScoreIndicator';
+import { UrlProps } from '@/lib/interface/verification/interface';
 
-interface UrlProps {
-  url: string;
-  urlPercent: {
-    benign_proba: number;
-    malicious_proba: number;
-  };
-}
-
-const Url: React.FC<UrlProps> = ({ url, urlPercent }) => {
+const Url: React.FC<UrlProps> = ({ urlPercent }) => {
   const t = useScopedI18n('verificationpage');
-  const currentLocale = useCurrentLocale();
   const malicious_url = urlPercent.malicious_proba
 
   return (
     <div className='flex justify-center flex-col gap-6 w-full py-14 px-12 border-b-2 border-custom-black'>
-      <div>{t('malicious-url')}</div>
+      <div className='flex flex-col justify-center items-start text-custom-black gap-5'>
+        <h2 className='text-3xl font-semibold'>{t('malicious-url')}</h2>
+      </div>
       <ScoreIndicator score={malicious_url} maxScore={100} />
     </div>
   );

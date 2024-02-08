@@ -1,10 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface OwnerProps {
-  owner: any
-}
+import { OwnerProps } from '@/lib/interface/moredetail/interface';
 
 const Owner: React.FC<OwnerProps> = ({ owner }) => {
   const t = useScopedI18n('moredetailpage');

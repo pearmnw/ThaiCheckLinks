@@ -27,11 +27,11 @@ const NavBar = () => {
 
   return (
     <div
-    // className={
-    //   header
-    //     ? "fixed w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
-    //     : "bg-[transparent]"
-    // }
+      className={
+        header
+          ? "w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
+          : "bg-[transparent]"
+      }
     >
       <nav className="bg-[#CCD2DE]">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">

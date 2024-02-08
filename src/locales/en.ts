@@ -133,11 +133,56 @@ export default {
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
     "url-detection-title": "URL Detection",
     "No Result": "No Result",
+
+    "overall-title": "Overview Of The Risks Of Becoming An Unlawful Website",
+    "overall-subtitle": "The Percentage Of Risk Of Being An Illgal Website Is Based On All Citeria",
+    "risk-value": "Risk value",
+    "sum-percentage": "Total percentage",
+    "low-score": "Low Risk",
+    "quite-low-score": "Quite Low Risk",
+    "quite-high-score": "Quite High Risk",
+    "high-score": "High Risk",
+    'risk-measurement-citeria': "Risk Measurement Criteria",
+    "found-thai-scam-link": "Found In History Illegal Website Data Thai.ScamLinks",
+    "found-ai": "Discover In AI Audit Risk Percentage", 
+    "url-measure": "URL Risks Measured By URL Detection", 
+    "found-other-database": "Found On The Other Website Checker",
+    "seemore": "See More",
+    "click-here": "Click here for addtional reports",
+
     "analysis-title": "AI Analyzes Risk Percent",
     "analysis-subtitle": "Highest Percentage Ever Examined",
+    "see-overview": "SEE THE OVERVIEW",
+
     'update': "Current update",
     'readmore': "Read More Website Details Here",
-    'malicious-url': "Malicious URL Detection"
+    'malicious-url': "Malicious URL Detection",
+
+    "gambling-label": "Gambing",
+    "scam-label": "Scam",
+    "fake-label": "Fake",
+    "other-label": "Other",
+
+    "report-title": "Verify The Database",
+    "report-subtitle": "Verify Against The User Reporting Database In Thai.ScamLinks",
+    "report-title-result": "Verification Result",
+    "risk-title-count": "Risk rate based on number of reports",
+    "low-risk-count": "Low risk with 0-5 reports",
+    "moderate-risk-count": "Moderate risk with 6-10 reports",
+    "quite-high-risk-count": "Quite high risk with 11-15 reports",
+    "serious-risk-count": "Serious risk with 16+ reports",
+
+    "low-count": "Low Risk",
+    "quite-low-count": "Quite Low Risk",
+    "quite-high-count": "Quite High Risk",
+    "high-count": "High Risk",
+
+    "API-title": "Compare API With Other Cheat Checking Websites",
+    "API-subtitle": "Check The Website Againt A Database Of Other Verified Websites",
+    "API-website-col": "Cheating Web Checking Websites",
+    "API-inspection-result-col": "Inspection Results",
+    "FOUND": "FOUND",
+    "NOT FOUND": "NOT FOUND",
   },
   
   "moredetailpage": {
@@ -148,12 +193,28 @@ export default {
     "API-title": "Compare API With Other Cheat Checking Websites",
     "API-website-col": "Cheating Web Checking Websites",
     "API-inspection-result-col": "Inspection Results",
-    "low": "Low",
-    "quite-low": "Quite Low",
-    "quite-high": "Quite High",
-    "high": "High",
     "FOUND": "FOUND",
     "NOT FOUND": "NOT FOUND",
-    "No Result": "No Result"
+    "No Result": "No Result",
+    'positive': 'Positive',
+    'negative': 'Negative'
   },
+
+  "measurement": {
+    "measurement": "Trust Score Measurement Criteria",
+    'positive': 'Positive',
+    'negative': 'Negative',
+    'ssl-true': 'The SSL certificate is valid',
+    'ssl-false': 'The SSL certificate is invalid',
+    'whois-true': 'The website is show on WHOIS',
+    'whois-false': 'The website is hidden on WHOIS',
+    'tranco-true': 'The Tranco rank (how much traffic) is high',
+    'tranco-false': 'The Tranco rank (how much traffic) is rather low',
+    'email-true': 'Paid email address used for registrar',
+    'email-false': 'Free email address used for registrar',
+    'country-true': 'The website is located in a low-risk country',
+    'country-false': 'The website is located in a high-risk country',
+    'age-true': 'This website has existed for quite some years',
+    'age-false': 'This website is relatively new'
+  }
 }

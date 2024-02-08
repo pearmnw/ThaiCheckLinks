@@ -1,18 +1,33 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import Classify from './textcontent/Classify';
+import React, { useState } from 'react';
+import { useScopedI18n, useCurrentLocale } from '@/locales/client';
 import axios from 'axios';
-import Redirected from './Redirected';
-import Url from './textcontent/Url';
+import SearchBarMain from '../searchbar/searchbarmain';
+import Classification from './Classification';
+import Caption from './Caption';
+import Loader from '../loading/Loader';
+import ProgressBar from '../loading/ProgressBar';
+import Report from './Report';
+import Title from './Title';
+import Overall from './Overall';
+import API from './API';
+import { makeRequest } from '@/lib/utils';
 
-interface VerificationProps {
-  url: string;
-}
 
-const Verification: React.FC<VerificationProps> = ({ url }) => {
+const Verification = () => {
   const t = useScopedI18n('verificationpage');
   const currentLocale = useCurrentLocale();
+  const [url, setUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [checkIPQuality, setCheckIPQuality] = useState<any>(t('No Result'));
+  const [checkURLHaus, setCheckURLHaus] = useState<any>(t('No Result'));
+
+  const data = [
+    { name: 'IPQuality', status: checkIPQuality },
+    { name: 'URLHaus', status: checkURLHaus },
+  ];
+
   const [currentPercent, setCurrentPercent] = useState({
     normal: 0,
     gambling: 0,
@@ -27,12 +42,12 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
   });
   const [urlPercent, setUrlPercent] = useState({
     benign_proba: 0,
-    malicious_proba: 0
+    malicious_proba: 0,
   });
 
   const formData = new FormData();
   formData.append('url', url);
-  formData.append('path', "verification")
+  formData.append('path', 'verification');
 
   const updateCurrentPercent = (newData: any) => {
     setCurrentPercent((prevCurrentPercent) => ({
@@ -55,43 +70,125 @@ const Verification: React.FC<VerificationProps> = ({ url }) => {
     }));
   };
 
-  const predictBtn = async () => {
+  const getVerifyResult = async () => {
+    setIsLoading(true); // Start Loading 
+    setProgress(0);
+
+    // const interval = setInterval(() => {
+    //   setProgress((oldProgress) => {
+    //     if (oldProgress === 100) {
+    //       clearInterval(interval);
+    //       setIsLoading(false);
+    //       return 100;
+    //     }
+    //     return Math.min(oldProgress + 10, 100);
+    //   });
+    // }, 1000);
+
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
+
+    await axios
+      .post('http://127.0.0.1:8000/', formData)
+      .then((resp) => {
+        console.log(resp.data);
+        if (resp.data) {
+          updateCurrentPercent(resp.data.classify);
+
+          // TODO: Update Max Percent with Database (UNDONE!!!)
+          updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
+
+          updateUrlPercent(resp.data.url_detection);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      }).finally(() => {
+        setIsLoading(false); // Stop Loading
+      })
+  }
+
+  const getApi = async () => {
     try {
-      axios.defaults.headers.common['Content-Type'] = 'application/json';
-      axios.defaults.headers.common['Accept'] = 'application/json';
+      const response_ip_quality = await fetch(
+        `/${currentLocale}/api/proxy?url=${url}`
+      );
 
-      await axios
-        .post('http://127.0.0.1:8000/', formData)
-        .then((resp) => {
-          console.log(resp.data);
-          if (resp.data) {
-            updateCurrentPercent(resp.data.classify);
+      let url_http = makeRequest(url);
+      const response_url_haus = await fetch(
+        `/${currentLocale}/api/urlhaus?url=${url_http}`
+      );
 
-            // TODO: Update Max Percent with Database (UNDONE!!!)
-            updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
+      // IPQuality
+      if (response_ip_quality.ok) {
+        const data = await response_ip_quality.json();
+        if (
+          data.spamming === true ||
+          data.malware === true ||
+          data.phishing === true ||
+          data.suspicious === true
+        ) {
+          setCheckIPQuality(t('FOUND'));
+        } else {
+          setCheckIPQuality(t('NOT FOUND'));
+        }
+      } else {
+        setCheckIPQuality(t('NOT FOUND'));
+      }
 
+      // URLHause
+      if (!response_url_haus.ok) {
+        throw new Error(`HTTP error! status: ${response_url_haus.status}`);
+      }
+      const data = await response_url_haus.json();
 
-            updateUrlPercent(resp.data.url_detection);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (data.query_status == 'ok') {
+        setCheckURLHaus(t('FOUND'));
+      } else {
+        setCheckURLHaus(t('NOT FOUND'));
+      }
+
+      console.log(data);
     } catch (error: any) {
-      console.error(`An error occured: ${error}`);
+      console.error(`An error occurred: ${error.message}`);
     }
   };
 
+  const predictBtn = async () => {
+    try {
+      getVerifyResult();
+      getApi()
+    } catch (error: any) {
+      console.error(`An error occured: ${error}`);
+    } 
+  };
+
+  
+
   return (
-    <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
-      <Url url={url} urlPercent={urlPercent} />
-      <Classify
-        onPredict={predictBtn}
-        currentPercent={currentPercent}
-        maxPercent={maxPercent}
-        url={url}
-      />
-      <Redirected />
+    <div>
+      {isLoading && (
+        <div className='fixed inset-0 flex flex-col gap-12 justify-center items-center'>
+          <Loader />
+          {/* <ProgressBar progress={progress} /> */}
+        </div>
+      )}
+
+      <div className={`${isLoading ? 'opacity-20' : ''}`}>
+        <Title />
+        <Caption />
+        <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} />
+        <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
+          <Overall />
+          <Report />
+          <Classification
+            urlPercent={urlPercent}
+            currentPercent={currentPercent}
+            maxPercent={maxPercent}
+          />
+          <API data={data} checkIPQuality={checkIPQuality} checkURLHaus={checkURLHaus} />
+        </div>
+      </div>
     </div>
   );
 };

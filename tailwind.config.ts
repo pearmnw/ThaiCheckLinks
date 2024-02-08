@@ -17,6 +17,7 @@ const config: Config = {
       },
       colors: {
         'custom-black': '#121b2a',
+        'custom-blue': '#233465',
         'custom-bg-moredetail': '#f7f8fa',
       },
     },
