@@ -2,25 +2,14 @@
 import { useScopedI18n } from "@/locales/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import ReportLinkBar from "../searchbar/getreportlinkbar";
 
-const ReportForm = () => {
+const ReportForm = ({ url }) => {
   const t = useScopedI18n("report");
   const router = useRouter();
-  const websiteurl = localStorage.getItem("url");
-
-  const [allData, setAllData] = useState({
-    userID: "",
-    websiteurl: "",
-    websitecategory: "",
-    websitedetail: "",
-    bankaccountowner: "",
-    bank: "",
-    bankaccnumber: "",
-  });
 
   const [formInput, setFormInput] = useState({
     userID: "",
+    websiteurl: url,
     websitecategory: "",
     websitedetail: "",
     bankaccountowner: "",
@@ -45,62 +34,55 @@ const ReportForm = () => {
     });
   };
 
-  const handleAllInput = () => {
-    setAllData({
-      ...allData,
-      userID: formInput.userID,
-      websiteurl: websiteurl!,
-      websitecategory: formInput.websitecategory,
-      websitedetail: formInput.websitedetail,
-      bankaccountowner: formInput.bankaccountowner,
-      bank: formInput.bank,
-      bankaccnumber: formInput.bankaccnumber,
-    });
-  };
-
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     let hasErrors = false;
+    // Initialize an object to track input errors
+    let inputError = {
+      userID: "",
+      websitecategory: "",
+      websitedetail: "",
+      bankaccname: "",
+      bankaccountowner: "",
+      bankaccnumber: "",
+    };
 
-    if (formInput.websitecategory === "default") {
+    if (!formInput.websitecategory || formInput.websitecategory == "default") {
       setFormError({
-        ...formError,
+        ...inputError,
         websitecategory: t("webCatError"),
       });
       console.log(formError.websitecategory);
       console.log("Category not provided");
       hasErrors = true;
-    } else {
-      setFormError({
-        ...formError,
-        websitecategory: "",
-      });
     }
 
     if (!formInput.websitedetail) {
       console.log("Website details not provided");
       setFormError({
-        ...formError,
+        ...inputError,
         websitedetail: t("moredetailError"),
       });
       hasErrors = true;
-    } else {
-      setFormError({
-        ...formError,
-        websitedetail: "",
-      });
     }
 
-    handleAllInput();
-
     if (!hasErrors) {
+      console.log("formInput:", formInput);
+      console.log("formError:", formError);
+      console.log(url);
+      setFormInput((prevState) => ({
+        ...prevState,
+        successMsg: "",
+      }));
+      // console.log("allData:", allData);
+      // handleAllInput();
       onSubmit();
     }
   };
 
   const onSubmit = async () => {
     try {
-      console.log(allData);
+      // console.log(allData);
       router.push("/report/success");
       // const res = await fetch("api/linkreport", {
       //   method: "POST",
@@ -129,13 +111,9 @@ const ReportForm = () => {
 
   return (
     <>
-      <div className="flex justify-center text-center text-[24px] font-light leading-normal text-transparent bg-clip-text bg-[#011E52] px-[10rem] pb-6 ">
-        {t("caption2")}
-      </div>
-      <ReportLinkBar />
       <form onSubmit={validateFormInput}>
         <div className="flex-row px-[17rem] justify-center items-center text-slate-700 text-xl font-semibold tracking-tight">
-          <div className="flex pt-10 pb-3">
+          <div className="flex pt-10 pb-1">
             {t("Catagory")}&nbsp;
             {":"}
             <div className="px-[1rem]">
@@ -145,8 +123,9 @@ const ReportForm = () => {
                 name="websitecategory"
                 value={formInput.websitecategory}
                 onChange={({ target }) => {
-                  console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
+                  console.log("Selected value:", target.value);
+                  console.log("category:", formInput.websitecategory);
                 }}
                 className="w-[280px] h-11 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500
               text-sm"
@@ -158,10 +137,10 @@ const ReportForm = () => {
                 <option value="others">{t("others")}</option>
               </select>
             </div>
-            <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
-              {formError.websitecategory}
-            </p>
           </div>
+          <p className="text-[12px] font-[500] ml-[16rem] text-red-600">
+            {formError.websitecategory}
+          </p>
 
           <div className="flex py-8">
             {t("moredetails")}&nbsp;
@@ -175,6 +154,7 @@ const ReportForm = () => {
                 onChange={({ target }) => {
                   console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
+                  console.log("details:", formInput.websitedetail);
                 }}
                 // required
                 className="block w-[29rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

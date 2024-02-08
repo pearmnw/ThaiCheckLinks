@@ -3,18 +3,20 @@
 import { useScopedI18n } from "@/locales/client";
 import { useState } from "react";
 
-const ReportLinkBar = () => {
+const ReportLinkBar = ({ onInputChange }) => {
   const t = useScopedI18n("report");
   // const currentLocale = useCurrentLocale();
   const [url, setUrl] = useState("");
 
-  const handleInputChange = (e: any) => {
-    setUrl(e.target.value);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setUrl(value);
+    onInputChange(value);
   };
 
   const handleClick = async () => {
     console.log(url);
-    localStorage.setItem("url", url);
+    // localStorage.setItem("url", url);
     console.log(localStorage.getItem("url"));
   };
 
