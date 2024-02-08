@@ -66,6 +66,10 @@ export interface ScoreIndicatorProps {
   score: number;
   maxScore: number;
 }
+export interface ProgressBarProps {
+  progress: number;
+  color: string;
+}
 
 export interface TableDatabaseProps {
   data: any;

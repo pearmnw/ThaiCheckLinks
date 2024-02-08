@@ -25,23 +25,27 @@ const ProgressDonut: React.FC<ProgressDonutProps> = ({ maxPercent, color }) => {
           stroke='currentColor'
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
+          strokeLinecap='round'
           r={radius}
           cx='50'
           cy='50'
         />
         <circle
-          className={color} 
+          className={color}
           fill='transparent'
           stroke='currentColor'
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={offset}
+          strokeLinecap='round'
           r={radius}
           cx='50'
           cy='50'
         />
       </svg>
-      <div className='absolute text-2xl font-semibold text-custom-black'>{maxPercent}%</div>
+      <div className='absolute text-2xl font-semibold text-custom-black'>
+        {maxPercent}%
+      </div>
     </div>
   );
 };

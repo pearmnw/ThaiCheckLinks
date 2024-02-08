@@ -6,10 +6,10 @@ import Report from './Report';
 
 const Classification: React.FC<ClassificationProps> = ({ urlPercent, currentPercent, maxPercent }) => {
   return (
-    <div className=' border-custom-black border-b-2 px-8 py-8' id="myAI">
+    <section className=' border-custom-black border-b-2 px-8 py-8' id="myAI">
       {/* <Url urlPercent={urlPercent} /> */}
       <Classify currentPercent={currentPercent} maxPercent={maxPercent} />
-    </div>
+    </section>
   );
 }
 

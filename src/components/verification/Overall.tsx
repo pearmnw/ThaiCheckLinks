@@ -1,7 +1,7 @@
 import { useScopedI18n } from '@/locales/client'
 import React, { useState } from 'react'
-import CircularProgressBar from './Overall/CircularProgressBar';
-import RiskMeasurement from './Overall/RiskMeasurement';
+import CircularProgressBar from './overall/CircularProgressBar';
+import RiskMeasurement from './overall/RiskMeasurement';
 import Link from 'next/link';
 
 const Overall = () => {

@@ -6,7 +6,7 @@ const RiskMeasurement = () => {
   const t = useScopedI18n('verificationpage')
 
   return (
-    <article>
+    <div>
       <div className='flex flex-col justify-center items-center gap-3 p-4'>
         <h4 className='text-xl font-semibold text-custom-black'>
           {t('risk-measurement-citeria')}
@@ -70,7 +70,7 @@ const RiskMeasurement = () => {
           </div>
         </div>
       </div>
-    </article>
+    </div>
   );
 }
 

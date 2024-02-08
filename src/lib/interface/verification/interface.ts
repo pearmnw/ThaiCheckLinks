@@ -73,3 +73,27 @@ export interface ProgressBarProps {
 export interface CircularProgressBarProps {
   score: number;
 }
+
+export interface IdentifyRiskProps {
+  checked: boolean;
+  riskLabel: string;
+  color: string;
+}
+
+export interface ScoreProps {
+  score: number;
+  maxScore: number;
+  color: string;
+}
+
+export interface ScoreIndicatorProps {
+  score: number;
+  maxScore: number;
+  color: string;
+}
+
+export interface ProgressBarScoreProps {
+  score: number;
+  maxScore: number;
+  color: string;
+}

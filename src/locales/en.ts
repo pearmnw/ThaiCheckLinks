@@ -153,11 +153,14 @@ export default {
     "moderate-risk-count": "Moderate risk with 6-10 reports",
     "quite-high-risk-count": "Quite high risk with 11-15 reports",
     "serious-risk-count": "Serious risk with 16+ reports",
-
     "low-count": "Low Risk",
     "quite-low-count": "Quite Low Risk",
     "quite-high-count": "Quite High Risk",
-    "high-count": "High Risk",
+    "high-count": "Serious Risk",
+
+    "measure-title": "Verify From URL Detection",
+    "measure-subtitle": "Check For Risks From URL Information",
+    "measure-risk-title": "Risk Score",
 
     "API-title": "Compare API With Other Cheat Checking Websites",
     "API-subtitle": "Check The Website Againt A Database Of Other Verified Websites",
