@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import Modal from "react-modal";
 import { generateUsername } from "unique-username-generator";
 
-Modal.setAppElement("#__next");
+// Modal.setAppElement("#__next");
 
 const SignUpForm = () => {
   const t = useScopedI18n("signuppage");

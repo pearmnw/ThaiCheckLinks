@@ -109,8 +109,8 @@ export default {
     "lhb": "Land and Houses Bank",
     "gsb": "Government Savings Bank",
     "bankothers": "Others",
-    "webCatError": "Please select your website catagory!",
-    "moredetailError": "Please provide more details about this website!"
+    "webCatError": "Please select your website catagory",
+    "moredetailError": "Please provide more details about this website"
   },
 
   "reportsuccess": {

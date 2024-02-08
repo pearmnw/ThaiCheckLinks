@@ -67,6 +67,7 @@ const ReportForm = () => {
         ...formError,
         websitecategory: t("webCatError"),
       });
+      console.log(formError.websitecategory);
       console.log("Category not provided");
       hasErrors = true;
     } else {
@@ -100,6 +101,7 @@ const ReportForm = () => {
   const onSubmit = async () => {
     try {
       console.log(allData);
+      router.push("/report/success");
       // const res = await fetch("api/linkreport", {
       //   method: "POST",
       //   headers: {
@@ -174,15 +176,15 @@ const ReportForm = () => {
                   console.log("Selected value:", target.value);
                   handleUserInput(target.name, target.value);
                 }}
-                required
+                // required
                 className="block w-[29rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder={t("details")}
               ></textarea>
+              <p className="text-[12px] font-[500] text-red-600">
+                {formError.websitedetail}
+              </p>
             </div>
           </div>
-          <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
-            {formError.websitedetail}
-          </p>
 
           <div className="flex">
             {t("bankacc")}&nbsp;
