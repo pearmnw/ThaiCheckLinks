@@ -9,10 +9,10 @@ datasource db {
 
 model UserDetail {
   UserID         Int             @id @default(autoincrement())
-  UserName       String          @db.VarChar(128)
-  UserEmail      String          @db.VarChar(128)
+  UserName       String          @unique @db.VarChar(128)
+  UserEmail      String          @unique @db.VarChar(128)
   UserPhone      String?         @db.VarChar(25)
-  UserPassword   String          @db.VarChar(60)
+  UserPassword   String
   UserJoinedDate DateTime        @default(now()) @db.Timestamptz(6)
   UserPictureURL String?
   UserLastLogin  DateTime        @default(now()) @updatedAt @db.Timestamptz(6)
@@ -53,36 +53,49 @@ model WebsiteCategory {
   WebCategoryID   Int             @id @default(autoincrement())
   WebCategoryName String          @db.VarChar(128)
   WebsiteDetail   WebsiteDetail[]
+  WebsiteMeta     WebsiteMeta[]
 }
 
 model WebsiteDetail {
-  WebsiteID           Int                @id @default(autoincrement())
-  UserID              Int                @default(autoincrement())
-  WebCategoryID       Int                @default(autoincrement())
-  WebsiteURL          String
-  WebsiteMetaTitle    String?
-  WebsiteMetaDesc     String?
-  WebsiteMetaKeyword  String?
-  WebsiteText         String?
-  WebsiteStatus       Boolean
-  WebsiteReportedDate DateTime           @default(now()) @db.Timestamptz(6)
-  BankAccountName     String?            @db.VarChar(128)
-  BankAccountOwner    String?            @db.VarChar(128)
-  BankAccountNumber   String?            @db.VarChar(50)
-  Verification        Verification[]
-  UserDetail          UserDetail         @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
-  WebsiteCategory     WebsiteCategory    @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
-  WhitelistWebsite    WhitelistWebsite[]
+  WebsiteID              Int             @id @default(autoincrement())
+  UserID                 Int             @default(autoincrement())
+  WebCategoryID          Int             @default(autoincrement())
+  WebsiteURL             String
+  WebsiteReportedDate    DateTime        @default(now()) @db.Timestamptz(6)
+  BankID                 String?         @db.VarChar(128)
+  BankAccountOwner       String?         @db.VarChar(128)
+  BankNumber_            String?         @map("BankNumber ") @db.VarChar(50)
+  WebsiteReportedDetails String
+  Verification           Verification[]
+  Bank                   Bank?           @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
+  UserDetail             UserDetail      @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
+  WebsiteCategory        WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
 }
 
 model WhitelistWebsite {
   WhitelistID          Int            @id @default(autoincrement())
-  WebsiteID            Int            @default(autoincrement())
   WhitelistURL         String
   WhitelistMetaTitle   String?
   WhitelistMetaDesc    String?
   WhistlistMetaKeyword String?
   WhitelistText        String?
   Verification         Verification[]
-  WebsiteDetail        WebsiteDetail  @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
+}
+
+model Bank {
+  BankID        String          @id @db.VarChar(128)
+  BankName      String?         @db.VarChar(256)
+  WebsiteDetail WebsiteDetail[]
+}
+
+model WebsiteMeta {
+  MetaWebsiteID      Int             @id @default(autoincrement())
+  WebCategoryID      Int             @default(autoincrement())
+  WebsiteURL         String?
+  WebsiteMetaTitle   String?
+  WebsiteMetaDesc    String?
+  WebsiteMetaKeyword String?
+  WebsiteText        String?
+  WebsiteStatus      Boolean?        @default(true)
+  WebsiteCategory    WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
 }
