@@ -4,24 +4,39 @@ import { useScopedI18n, useCurrentLocale } from '@/locales/client';
 import axios from 'axios';
 import SearchBarMain from '../searchbar/searchbarmain';
 import Classification from './Classification';
-import Caption from './Caption';
 import Loader from '../loading/Loader';
 import ProgressBar from '../loading/ProgressBar';
 import Report from './Report';
-import Title from './Title';
 import Overall from './Overall';
 import API from './API';
 import { makeRequest } from '@/lib/utils';
+import Measurement from './Measurement';
 
 
 const Verification = () => {
   const t = useScopedI18n('verificationpage');
   const currentLocale = useCurrentLocale();
-  const [url, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [checkIPQuality, setCheckIPQuality] = useState<any>(t('No Result'));
-  const [checkURLHaus, setCheckURLHaus] = useState<any>(t('No Result'));
+  
+  const [url, setUrl] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+
+  const [overviewScore, setOverviewScore] = useState({
+    "riskScore": 0, 
+    "maxCategoryReportCount": 0, 
+    "aiResultScore": 0, 
+    "isAnotherDatabase": false
+  });
+  const [reportCount, setReportCount] = useState<number>(0);
+  const [categoryCount, setCategoryCount] = useState<any>({
+    'gambling': 0,
+    'scam': 0,
+    'fake': 0,
+    'other': 0
+  });
+
+  const [checkIPQuality, setCheckIPQuality] = useState<string>(t('No Result'));
+  const [checkURLHaus, setCheckURLHaus] = useState<string>(t('No Result'));
 
   const data = [
     { name: 'IPQuality', status: checkIPQuality },
@@ -71,7 +86,6 @@ const Verification = () => {
   };
 
   const getVerifyResult = async () => {
-    setIsLoading(true); // Start Loading 
     setProgress(0);
 
     // const interval = setInterval(() => {
@@ -103,8 +117,6 @@ const Verification = () => {
       })
       .catch((error) => {
         console.log(error);
-      }).finally(() => {
-        setIsLoading(false); // Stop Loading
       })
   }
 
@@ -156,17 +168,20 @@ const Verification = () => {
 
   const predictBtn = async () => {
     try {
-      getVerifyResult();
-      getApi()
+      setIsLoading(true); // Start Loading
+      await getVerifyResult();
+      // await getApi();
     } catch (error: any) {
       console.error(`An error occured: ${error}`);
-    } 
+    } finally {
+      setIsLoading(false); // Stop Loading
+    }
   };
 
   
 
   return (
-    <div>
+    <section>
       {isLoading && (
         <div className='fixed inset-0 flex flex-col gap-12 justify-center items-center'>
           <Loader />
@@ -175,21 +190,32 @@ const Verification = () => {
       )}
 
       <div className={`${isLoading ? 'opacity-20' : ''}`}>
-        <Title />
-        <Caption />
+        <h1
+          className={`text-center text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3] relative`}
+        >
+          {t('title')}
+        </h1>
+        <h2 className='flex justify-center text-center text-[24px] font-light leading-normal text-transparent bg-clip-text bg-[#011E52] px-[10rem] pb-6 '>
+          {t('caption')}
+        </h2>
         <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} />
         <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
           <Overall />
-          <Report />
+          <Report categoryCount={categoryCount} />
           <Classification
             urlPercent={urlPercent}
             currentPercent={currentPercent}
             maxPercent={maxPercent}
           />
-          <API data={data} checkIPQuality={checkIPQuality} checkURLHaus={checkURLHaus} />
+          <Measurement />
+          <API
+            data={data}
+            checkIPQuality={checkIPQuality}
+            checkURLHaus={checkURLHaus}
+          />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

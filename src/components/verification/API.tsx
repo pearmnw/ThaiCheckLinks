@@ -14,7 +14,7 @@ const API: React.FC<APIProps> = ({
   const currentLocale = useCurrentLocale();
 
   return (
-    <div className='px-8 py-8 flex flex-col items-center gap-5' id="myAPI">
+    <section className='px-8 py-8 flex flex-col items-center gap-5' id="myAPI">
       <div className='flex flex-col justify-center items-start text-custom-black gap-5 w-full'>
         <div className='flex justify-between items-center w-full'>
           <h2 className='text-3xl font-bold'>{t('API-title')}</h2>
@@ -36,7 +36,7 @@ const API: React.FC<APIProps> = ({
           checkURLHaus={checkURLHaus}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

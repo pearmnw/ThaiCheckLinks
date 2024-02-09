@@ -179,6 +179,10 @@ export default {
     "quite-high-count": "ค่อนข้างอันตราย",
     "high-count": "อันตราย",
 
+    "measure-title": "ตรวจสอบจาก URL Detection",
+    "measure-subtitle": "ตรวจสอบความเสี่ยงของเว็บไซต์จาก URL",
+    "measure-risk-title": "ความเสี่ยง",
+
     "API-title": "เปรียบเทียบ API กับเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
     "API-subtitle": "ตรวจสอบเว็บไซต์กับฐานข้อมูลเว็บไซต์ตรวจสอบอื่นๆ",
     "API-website-col": "เว็บไซต์ตรวจสอบเว็บโกง",

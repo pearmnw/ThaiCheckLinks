@@ -1,6 +1,6 @@
-import { db } from "@/lib/db";
-import { hash } from "bcrypt";
-import { NextResponse } from "next/server";
+import { db } from '../../../../lib/db';
+import { hash } from 'bcrypt';
+import { NextResponse } from 'next/server';
 
 // model UserDetail {
 //     UserID         Int             @id @default(autoincrement())
@@ -15,10 +15,10 @@ import { NextResponse } from "next/server";
 //   }
 
 export async function POST(req: Request) {
-    try {
-        const body = await req.json();
-        console.log(body);
-        const { UserName, UserEmail, UserPhone, UserPassword } = body;
+  try {
+    const body = await req.json();
+    console.log(body);
+    const { UserName, UserEmail, UserPhone, UserPassword } = body;
 
         let newUser: any;
 
@@ -85,10 +85,13 @@ export async function POST(req: Request) {
             });
         }
 
-        return NextResponse.json({ UserDetail: newUser, message: "User created successfully" }, { status: 201 });
-    } catch (error) {
-        return NextResponse.json({ message: error }, { status: 500 });
-    }
+    return NextResponse.json(
+      { UserDetail: newUser, message: 'User created successfully' },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json({ message: error }, { status: 500 });
+  }
 }
 
 // export async function GET() {

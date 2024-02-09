@@ -1,7 +1,7 @@
 import { useScopedI18n } from '@/locales/client'
 import React, { useState } from 'react'
-import CircularProgressBar from './Overall/CircularProgressBar';
-import RiskMeasurement from './Overall/RiskMeasurement';
+import CircularProgressBar from './overall/CircularProgressBar';
+import RiskMeasurement from './overall/RiskMeasurement';
 import Link from 'next/link';
 
 const Overall = () => {
@@ -20,8 +20,9 @@ const Overall = () => {
       </div>
 
       <div className='flex flex-col justify-center items-center gap-1 w-full'>
+        
         {/* TODO: Calculate the Score */}
-        <CircularProgressBar score={80}/>
+        <CircularProgressBar score={25}/>
         <RiskMeasurement />
         <Link href="/report">
           <button className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold">

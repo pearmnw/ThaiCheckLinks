@@ -53,26 +53,27 @@ model WebsiteCategory {
   WebCategoryID   Int             @id @default(autoincrement())
   WebCategoryName String          @db.VarChar(128)
   WebsiteDetail   WebsiteDetail[]
+  WebsiteMeta     WebsiteMeta[]
 }
 
 model WebsiteDetail {
-  WebsiteID           Int             @id @default(autoincrement())
-  UserID              Int             @default(autoincrement())
-  WebCategoryID       Int             @default(autoincrement())
+  WebsiteID           Int                @id @default(autoincrement())
+  UserID              Int                @default(autoincrement())
+  WebCategoryID       Int                @default(autoincrement())
   WebsiteURL          String
   WebsiteMetaTitle    String?
   WebsiteMetaDesc     String?
   WebsiteMetaKeyword  String?
   WebsiteText         String?
   WebsiteStatus       Boolean
-  WebsiteReportedDate DateTime        @default(now()) @db.Timestamptz(6)
-  BankID              String?         @db.VarChar(128)
-  BankAccountOwner    String?         @db.VarChar(128)
-  BankNumber_         String?         @map("BankNumber ") @db.VarChar(50)
+  WebsiteReportedDate DateTime           @default(now()) @db.Timestamptz(6)
+  BankAccountName     String?            @db.VarChar(128)
+  BankAccountOwner    String?            @db.VarChar(128)
+  BankAccountNumber   String?            @db.VarChar(50)
   Verification        Verification[]
-  Bank                Bank?           @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
-  UserDetail          UserDetail      @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
-  WebsiteCategory     WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
+  UserDetail          UserDetail         @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
+  WebsiteCategory     WebsiteCategory    @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
+  WhitelistWebsite    WhitelistWebsite[]
 }
 
 model WhitelistWebsite {
@@ -83,10 +84,5 @@ model WhitelistWebsite {
   WhistlistMetaKeyword String?
   WhitelistText        String?
   Verification         Verification[]
-}
-
-model Bank {
-  BankID        String          @id @db.VarChar(128)
-  BankName      String?         @db.VarChar(256)
-  WebsiteDetail WebsiteDetail[]
+  WebsiteDetail        WebsiteDetail  @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
 }
