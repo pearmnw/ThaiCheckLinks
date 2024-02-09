@@ -3,8 +3,9 @@ import ReportHeader from './report/ReportHeader'
 import { useScopedI18n } from '@/locales/client'
 import ReportRisk from './report/ReportRisk'
 import ReportVisualization from './report/ReportVisualization'
+import { ReportProps } from '@/lib/interface/verification/interface'
 
-const Report = () => {
+const Report:React.FC<ReportProps> = ({ categoryCount }) => {
   const t = useScopedI18n('verificationpage')
 
   return (
@@ -12,7 +13,7 @@ const Report = () => {
       <ReportHeader />
       <div className='flex flex-col lg:flex-row justify-center items-center w-full'>
         <ReportRisk />
-        <ReportVisualization />
+        <ReportVisualization categoryCount={categoryCount} />
       </div>
     </div>
   );

@@ -16,11 +16,27 @@ import Measurement from './Measurement';
 const Verification = () => {
   const t = useScopedI18n('verificationpage');
   const currentLocale = useCurrentLocale();
-  const [url, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [checkIPQuality, setCheckIPQuality] = useState<any>(t('No Result'));
-  const [checkURLHaus, setCheckURLHaus] = useState<any>(t('No Result'));
+  
+  const [url, setUrl] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+
+  const [overviewScore, setOverviewScore] = useState({
+    "riskScore": 0, 
+    "maxCategoryReportCount": 0, 
+    "aiResultScore": 0, 
+    "isAnotherDatabase": false
+  });
+  const [reportCount, setReportCount] = useState<number>(0);
+  const [categoryCount, setCategoryCount] = useState<any>({
+    'gambling': 0,
+    'scam': 0,
+    'fake': 0,
+    'other': 0
+  });
+
+  const [checkIPQuality, setCheckIPQuality] = useState<string>(t('No Result'));
+  const [checkURLHaus, setCheckURLHaus] = useState<string>(t('No Result'));
 
   const data = [
     { name: 'IPQuality', status: checkIPQuality },
@@ -185,7 +201,7 @@ const Verification = () => {
         <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} />
         <div className='flex flex-col border-solid border-2 mx-28 my-8 border-slate-600 rounded-lg gap-8 py-4'>
           <Overall />
-          <Report />
+          <Report categoryCount={categoryCount} />
           <Classification
             urlPercent={urlPercent}
             currentPercent={currentPercent}

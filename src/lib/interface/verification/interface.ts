@@ -97,3 +97,11 @@ export interface ProgressBarScoreProps {
   maxScore: number;
   color: string;
 }
+
+export interface ReportProps {
+  categoryCount: any;
+}
+
+export interface ReportVisualizationProps {
+  categoryCount: any;
+}

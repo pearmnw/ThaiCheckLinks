@@ -20,8 +20,9 @@ const Overall = () => {
       </div>
 
       <div className='flex flex-col justify-center items-center gap-1 w-full'>
+        
         {/* TODO: Calculate the Score */}
-        <CircularProgressBar score={80}/>
+        <CircularProgressBar score={25}/>
         <RiskMeasurement />
         <Link href="/report">
           <button className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold">
