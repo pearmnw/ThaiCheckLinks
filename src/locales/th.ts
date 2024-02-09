@@ -137,7 +137,7 @@ export default {
     "url-detection-title": "ตรวจสอบ URL",
     "No Result": "ไม่มีผลลัพธ์ดังกล่าว",
 
-    "overall-title": "ภาพรวมความเสี่ยงที่จะเป็นเว็บไซต์ผิดกฎหมาย",
+    "overall-title": "ภาพรวมความเสี่ยงของเป็นเว็บไซต์",
     "overall-subtitle": "เปอร์เซ็นต์ความเสี่ยงที่จะเป็นเว็บไซต์ผิดกฎหมายอ้างอิงจากเกณฑ์ทั้งหมด",
     "risk-value": "ค่าความเสี่ยง",
     "sum-percentage": "เปอร์เซ็นต์ผลรวม",
@@ -147,8 +147,8 @@ export default {
     "high-score": "ความเสี่ยงสูง",
     'risk-measurement-citeria': "เกณฑ์การวัดความเสี่ยง",
     "found-thai-scam-link": "ค้นพบในประวัติเว็บไซต์ข้อมูลผิดกฎหมาย Thai.ScamLinks",
-    "found-ai": "ค้นพบ AI ตรวจสอบเปอร์เซ็นต์ความเสี่ยง", 
-    "url-measure": "ความเสี่ยงของ URL วัดจาก URL Detection", 
+    "found-ai": "ค้นพบ AI ตรวจสอบเปอร์เซ็นต์ความเสี่ยง",
+    "url-measure": "ความเสี่ยงของ URL วัดจาก URL Detection",
     "found-other-database": "ค้นภพในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
     "seemore": "ดูเพิ่มเติม",
     "click-here": "คลิกที่นี่หากต้องการรายงานเพิ่มเติม",
@@ -165,7 +165,7 @@ export default {
     "scam-label": "หลอกลงทุน",
     "fake-label": "ปลอมแปลง",
     "other-label": "อื่นๆ",
-    
+
     "report-title": "ตรวจสอบจากฐานข้อมูล",
     "report-subtitle": "ตรวจสอบเว็บไซต์กับฐานข้อมูลการรายงานผู้ใช้ใน Thai.ScamLinks",
     "report-title-result": "ผลการตรวจสอบ",
@@ -181,7 +181,7 @@ export default {
 
     "API-title": "เปรียบเทียบ API กับเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
     "API-subtitle": "ตรวจสอบเว็บไซต์กับฐานข้อมูลเว็บไซต์ตรวจสอบอื่นๆ",
-    "API-website-col": "เว็บไซต์ตรวจสอบเว็บโกง", 
+    "API-website-col": "เว็บไซต์ตรวจสอบเว็บโกง",
     "API-inspection-result-col": "ผลการตรวจสอบ",
     "FOUND": "ค้นพบ",
     "NOT FOUND": "ไม่พบ",
@@ -193,7 +193,7 @@ export default {
     "measurement": "เกณฑ์การวัดความน่าเชื่อถือ",
     "websiteinsight-title": "ข้อมูลเชิงลึกของเว็บไซต์",
     "API-title": "เปรียบเทียบ API กับเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
-    "API-website-col": "เว็บไซต์ตรวจสอบเว็บโกง", 
+    "API-website-col": "เว็บไซต์ตรวจสอบเว็บโกง",
     "API-inspection-result-col": "ผลการตรวจสอบ",
     "FOUND": "ค้นพบ",
     "NOT FOUND": "ไม่พบ",

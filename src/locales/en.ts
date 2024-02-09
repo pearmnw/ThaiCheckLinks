@@ -127,14 +127,14 @@ export default {
     "phonenum": "Phone number (Optional)",
     "password": "Password",
   },
-  
+
   "verificationpage": {
     "title": "Start Checking Website Links For Your Safety",
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
     "url-detection-title": "URL Detection",
     "No Result": "No Result",
 
-    "overall-title": "Overview Of The Risks Of Becoming An Unlawful Website",
+    "overall-title": "Overview Of The Risks Of Website",
     "overall-subtitle": "The Percentage Of Risk Of Being An Illgal Website Is Based On All Citeria",
     "risk-value": "Risk value",
     "sum-percentage": "Total percentage",
@@ -144,8 +144,8 @@ export default {
     "high-score": "High Risk",
     'risk-measurement-citeria': "Risk Measurement Criteria",
     "found-thai-scam-link": "Found In History Illegal Website Data Thai.ScamLinks",
-    "found-ai": "Discover In AI Audit Risk Percentage", 
-    "url-measure": "URL Risks Measured By URL Detection", 
+    "found-ai": "Discover In AI Audit Risk Percentage",
+    "url-measure": "URL Risks Measured By URL Detection",
     "found-other-database": "Found On The Other Website Checker",
     "seemore": "See More",
     "click-here": "Click here for addtional reports",
@@ -184,7 +184,7 @@ export default {
     "FOUND": "FOUND",
     "NOT FOUND": "NOT FOUND",
   },
-  
+
   "moredetailpage": {
     "title": "Read More Website Details Here",
     "risk-score": "Risk Score:",
