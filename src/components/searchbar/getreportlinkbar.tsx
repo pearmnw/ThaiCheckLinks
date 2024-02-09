@@ -1,21 +1,86 @@
 "use client";
 
 import { useScopedI18n } from "@/locales/client";
+import axios from "axios";
 import { useState } from "react";
 
 const ReportLinkBar = () => {
   const t = useScopedI18n("report");
   // const currentLocale = useCurrentLocale();
   const [url, setUrl] = useState("");
+  const [currentPercent, setCurrentPercent] = useState({
+    normal: 0,
+    gambling: 0,
+    scam: 0,
+    fake: 0,
+  });
+  const [maxPercent, setMaxPercent] = useState({
+    normal: 0,
+    gambling: 0,
+    scam: 0,
+    fake: 0,
+  });
+  const [metaWebsite, setMetaWebsite] = useState({
+    url: "",
+    title: "",
+    description: "",
+    keyword: "",
+    detail: "",
+    status: true,
+  });
+
+  const formData = new FormData();
+  formData.append("url", url);
+  formData.append("path", "report");
+
+  const updateCurrentPercent = (newData: any) => {
+    setCurrentPercent((prevCurrentPercent) => ({
+      ...prevCurrentPercent,
+      ...newData,
+    }));
+  };
+
+  const updateMaxPercent = (newData: any) => {
+    setMaxPercent((prevMaxPercent) => ({
+      ...prevMaxPercent,
+      ...newData,
+    }));
+  };
+
+  const updateMetaWebsite = (newData: any) => {
+    setMetaWebsite((prevMetaWebsite) => ({
+      ...prevMetaWebsite,
+      ...newData,
+    }));
+  };
 
   const handleInputChange = (e: any) => {
     setUrl(e.target.value);
   };
 
   const handleClick = async () => {
-    console.log(url);
-    localStorage.setItem("url", url);
-    console.log(localStorage.getItem("url"));
+    // console.log(url);
+    // localStorage.setItem("url", url);
+    // console.log(localStorage.getItem("url"));
+    axios.defaults.headers.common["Content-Type"] = "application/json";
+    axios.defaults.headers.common["Accept"] = "application/json";
+
+    await axios
+      .post("http://127.0.0.1:8000/", formData)
+      .then((resp) => {
+        console.log(resp.data);
+        if (resp.data) {
+          updateCurrentPercent(resp.data.classify);
+
+          // TODO: Update Max Percent with Database (UNDONE!!!)
+          updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
+
+          updateMetaWebsite(resp.data.meta_website[0]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
