@@ -1,3 +1,4 @@
+import { ReportVisualizationProps } from "@/lib/interface/verification/interface";
 import { useScopedI18n } from "@/locales/client";
 import { useEffect, useState } from "react";
 import {
@@ -7,16 +8,12 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
-import React, { useState, useEffect }  from 'react';
-import { ReportVisualizationProps } from '@/lib/interface/verification/interface';
+} from "recharts";
 
-
-const ReportVisualization:React.FC<ReportVisualizationProps> = ({ categoryCount }) => {
-  const t = useScopedI18n('verificationpage')
+const ReportVisualization: React.FC<ReportVisualizationProps> = ({
+  categoryCount,
+}) => {
+  const t = useScopedI18n("verificationpage");
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -28,10 +25,10 @@ const ReportVisualization:React.FC<ReportVisualizationProps> = ({ categoryCount 
   }
 
   const data = [
-    { name: 'Gambling', count: categoryCount.gambling },
-    { name: 'Scam', count: categoryCount.scam },
-    { name: 'Fake', count: categoryCount.fake },
-    { name: 'Others', count: categoryCount.other },
+    { name: "Gambling", count: categoryCount.gambling },
+    { name: "Scam", count: categoryCount.scam },
+    { name: "Fake", count: categoryCount.fake },
+    { name: "Others", count: categoryCount.other },
   ];
 
   return (
