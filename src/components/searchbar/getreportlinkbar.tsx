@@ -3,11 +3,13 @@
 import { useScopedI18n } from "@/locales/client";
 import axios from "axios";
 import { useState } from "react";
+import LoaderOnButt from "../loading/LoaderOnButt";
 
 const ReportLinkBar = ({ onInputChange }) => {
   const t = useScopedI18n("report");
   // const currentLocale = useCurrentLocale();
   const [url, setUrl] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentPercent, setCurrentPercent] = useState({
     normal: 0,
     gambling: 0,
@@ -60,10 +62,7 @@ const ReportLinkBar = ({ onInputChange }) => {
     onInputChange(value);
   };
 
-  const handleClick = async () => {
-    // console.log(url);
-    // localStorage.setItem("url", url);
-    // console.log(localStorage.getItem("url"));
+  const getVerifyResult = async () => {
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["Accept"] = "application/json";
 
@@ -77,12 +76,26 @@ const ReportLinkBar = ({ onInputChange }) => {
           // TODO: Update Max Percent with Database (UNDONE!!!)
           updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
 
-          updateMetaWebsite(resp.data.meta_website[0]);
+          updateMetaWebsite(resp.data.meta_website);
         }
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleClick = async () => {
+    try {
+      setIsLoading(true);
+      await getVerifyResult(); // Corrected this line
+      console.log(maxPercent);
+      console.log(metaWebsite);
+      console.log(currentPercent);
+    } catch (error: any) {
+      console.error(`An error occurred: ${error}`);
+    } finally {
+      setIsLoading(false); // Stop Loading
+    }
   };
 
   return (
@@ -124,8 +137,18 @@ const ReportLinkBar = ({ onInputChange }) => {
             id="button-addon3"
             data-te-ripple-init
             onClick={handleClick}
+            disabled={isLoading}
           >
-            {t("searchbutt")}
+            {isLoading ? (
+              <div>
+                <LoaderOnButt />
+                {/* <ProgressBar progress={progress} /> */}
+              </div>
+            ) : (
+              <div className="justify-center text-[16px] text-[#134BDE]">
+                {t("searchbutt")}
+              </div>
+            )}
           </button>
         </div>
       </div>

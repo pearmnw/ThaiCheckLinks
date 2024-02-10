@@ -20,6 +20,7 @@ const ReportForm = ({ url }) => {
 
   const [formError, setFormError] = useState({
     userID: "",
+    websiteurl: "",
     websitecategory: "",
     websitedetail: "",
     bankaccname: "",
@@ -40,12 +41,37 @@ const ReportForm = ({ url }) => {
     // Initialize an object to track input errors
     let inputError = {
       userID: "",
+      websiteurl: "",
       websitecategory: "",
       websitedetail: "",
       bankaccname: "",
       bankaccountowner: "",
       bankaccnumber: "",
     };
+
+    let inputData = {
+      userID: "",
+      websiteurl: url,
+      websitecategory: "",
+      websitedetail: "",
+      bankaccountowner: "",
+      bank: "",
+      bankaccnumber: "",
+      successMsg: "",
+    };
+
+    if (!url) {
+      setFormError({
+        ...inputError,
+        websiteurl: "Please provide the url",
+      });
+      hasErrors = true;
+    } else {
+      setFormInput({
+        ...inputData,
+        websiteurl: url,
+      });
+    }
 
     if (!formInput.websitecategory || formInput.websitecategory == "default") {
       setFormError({
@@ -74,15 +100,15 @@ const ReportForm = ({ url }) => {
         ...prevState,
         successMsg: "",
       }));
-      // console.log("allData:", allData);
-      // handleAllInput();
       onSubmit();
     }
   };
 
   const onSubmit = async () => {
     try {
-      // console.log(allData);
+      console.log("formInput:", formInput);
+      console.log("formError:", formError);
+      console.log(url);
       router.push("/report/success");
       // const res = await fetch("api/linkreport", {
       //   method: "POST",
@@ -111,6 +137,9 @@ const ReportForm = ({ url }) => {
 
   return (
     <>
+      <p className="text-[12px] font-[500] text-center text-red-600">
+        {formError.websiteurl}
+      </p>
       <form onSubmit={validateFormInput}>
         <div className="flex-row px-[17rem] justify-center items-center text-slate-700 text-xl font-semibold tracking-tight">
           <div className="flex pt-10 pb-1">
