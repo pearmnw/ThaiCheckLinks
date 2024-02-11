@@ -5,11 +5,17 @@ import axios from "axios";
 import { useState } from "react";
 import LoaderOnButt from "../loading/LoaderOnButt";
 
-const ReportLinkBar = ({ onInputChange }) => {
+const ReportLinkBar = ({
+  onInputChange,
+  getMetaWebsite,
+  getCurrentPercent,
+  getSuccess,
+}) => {
   const t = useScopedI18n("report");
   // const currentLocale = useCurrentLocale();
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [currentPercent, setCurrentPercent] = useState({
     normal: 0,
     gambling: 0,
@@ -29,6 +35,19 @@ const ReportLinkBar = ({ onInputChange }) => {
     keyword: "",
     detail: "",
     status: true,
+  });
+
+  const [verifyInfo, setVerifyInfo] = useState({
+    url: "",
+    title: "",
+    description: "",
+    keyword: "",
+    detail: "",
+    status: true,
+    normal: 0,
+    gambling: 0,
+    scam: 0,
+    fake: 0,
   });
 
   const formData = new FormData();
@@ -88,13 +107,27 @@ const ReportLinkBar = ({ onInputChange }) => {
     try {
       setIsLoading(true);
       await getVerifyResult(); // Corrected this line
-      console.log(maxPercent);
-      console.log(metaWebsite);
-      console.log(currentPercent);
     } catch (error: any) {
       console.error(`An error occurred: ${error}`);
     } finally {
       setIsLoading(false); // Stop Loading
+      setIsSuccess(true);
+      console.log(verifyInfo);
+    }
+  };
+
+  const handleVerifyInfo = async () => {
+    try {
+      console.log(maxPercent);
+      console.log(metaWebsite);
+      console.log(currentPercent);
+
+      getMetaWebsite(metaWebsite);
+      getCurrentPercent(currentPercent);
+      setIsSuccess(false);
+      getSuccess(true);
+    } catch (error: any) {
+      console.error(`An error occurred: ${error}`);
     }
   };
 
@@ -151,6 +184,26 @@ const ReportLinkBar = ({ onInputChange }) => {
             )}
           </button>
         </div>
+      </div>
+      <div className="flex justify-center mb-3">
+        <button
+          type="button"
+          id="button-addon3"
+          data-te-ripple-init
+          onClick={handleVerifyInfo}
+        >
+          {isSuccess && !isLoading ? (
+            <div
+              className="items-center justify-center text-[16px] mr-2 bg-[#9F9FA4] text-white w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
+              id="button-addon3"
+              data-te-ripple-init
+            >
+              {t("reportbutt")}
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </button>
       </div>
     </>
   );
