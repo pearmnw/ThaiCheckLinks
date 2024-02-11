@@ -21,7 +21,7 @@ model UserDetail {
   UserPassword   String
   UserJoinedDate DateTime        @default(now()) @db.Timestamptz(6)
   UserPictureURL String?
-  UserLastLogin  DateTime        @default(now()) @db.Timestamptz(6)
+  UserLastLogin  DateTime        @default(now()) @updatedAt @db.Timestamptz(6)
   WebsiteDetail  WebsiteDetail[]
 }
 
