@@ -1,10 +1,20 @@
+//     Model WebsiteDetails
 //     UserID              Int                @default(autoincrement())
 //     WebCategoryID       Int                @default(autoincrement())
 //     WebsiteURL          String
-//     WebsiteText         String?
 //     BankID              String?            @db.VarChar(128)
 //     BankAccountOwner    String?            @db.VarChar(128)
 //     BankNumber_         String?            @map("BankNumber ") @db.VarChar(50)
+//     WebsiteReportedDetails      String
+
+//   Model WebsiteMeta
+//   WebCategoryID      Int             @default(autoincrement())
+//   WebsiteURL         String?
+//   WebsiteMetaTitle   String?
+//   WebsiteMetaDesc    String?
+//   WebsiteMetaKeyword String?
+//   WebsiteText        String?
+//   WebsiteStatus      Boolean?
 
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
@@ -18,7 +28,7 @@ export async function POST(req: Request) {
         const session = getServerSession(authOptions);
         const currUserSession = JSON.stringify(session);
         console.log(currUserSession);
-        const { UserID, WebsiteURL, WebsiteCategory, WebsiteText, BankID, BankAccountOwner, BankNumber_ } = body;
+        const { UserID, WebsiteURL, WebsiteCategory, BankID, BankAccountOwner, BankNumber_, WebsiteReportedDetails } = body;
         const WebsiteStatus = true;
         let WebCategoryID;
         switch (WebsiteCategory) {
@@ -43,13 +53,12 @@ export async function POST(req: Request) {
         const newReport = await db.websiteDetail.create({
             data: {
                 UserID,
-                WebsiteURL,
                 WebCategoryID,
-                WebsiteText,
+                WebsiteURL,
                 BankID,
                 BankAccountOwner,
                 BankNumber_,
-                WebsiteStatus
+                WebsiteReportedDetails,
             }
         });
 

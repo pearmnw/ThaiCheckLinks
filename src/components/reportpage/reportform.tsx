@@ -55,17 +55,6 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
       bankaccnumber: "",
     };
 
-    let inputData = {
-      userID: "",
-      websiteurl: url,
-      websitecategory: "",
-      websitedetail: "",
-      bankaccountowner: "",
-      bank: "",
-      bankaccnumber: "",
-      successMsg: "",
-    };
-
     if (!url) {
       setFormError({
         ...inputError,
@@ -117,7 +106,9 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
       //   headers: {
       //     "Content-Type": "application/json",
       //   },
-      //   body: JSON.stringify({}),
+      //   body: JSON.stringify({
+
+      // }),
       // });
       // const data = await res.json();
       // if (res.ok) {
