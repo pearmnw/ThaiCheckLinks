@@ -234,6 +234,8 @@ const WebsiteTable = () => {
       if (selectedOptions.category) {
         const categoryA = a.WebCategoryName;
         const categoryB = b.WebCategoryName;
+        const reportA = parseInt(a.reports);
+        const reportB = parseInt(b.reports);
         const sortingKey =
           selectedOptions.category === "categoryG"
             ? "Gambling"
@@ -244,7 +246,18 @@ const WebsiteTable = () => {
             : selectedOptions.category === "categoryO"
             ? "Others"
             : "";
-        return categoryA === sortingKey ? -1 : categoryB === sortingKey ? 1 : 0;
+
+            if (categoryA === sortingKey && categoryB === sortingKey) {
+                // If both items belong to the same category, sort by report count in descending order
+                return reportB - reportA;
+            } else if (categoryA === sortingKey) {
+                // If item A belongs to the selected category, it should come first
+                return -1;
+            } else if (categoryB === sortingKey) {
+                // If item B belongs to the selected category, it should come first
+                return 1;
+                }
+        // return categoryA === sortingKey ? -1 : categoryB === sortingKey ? 1 : 0 ;
       }
 
       return 0; // Default case: no sorting applied
