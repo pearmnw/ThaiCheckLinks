@@ -23,6 +23,7 @@
     "mock-aws-s3": "^4.0.2",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
+    "next-i18next": "^15.2.0",
     "next-international": "^1.2.3",
     "next-intl": "^3.5.1",
     "nock": "^13.5.0",

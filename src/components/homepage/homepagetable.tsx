@@ -2,6 +2,7 @@
 import { Time } from 'aws-sdk/clients/cloudwatchlogs';
 import './styles.css'; 
 import { useState, useRef, useEffect} from 'react';
+import Link from 'next/link';
 
 // =========== Api connect part =========
 // import axios from 'axios';
@@ -59,36 +60,6 @@ const WebsiteTable = () => {
         report: ""
     });
     
-    // Function to handle radio button changes
-    // const handleRadioChange = (category: string, value: string) => {
-    //     setSelectedOptions(prevState => {
-    //         // If the selected option is the default option,
-    //         // uncheck all other options
-    //         if (value === "alldefaults") {
-    //             return {
-    //                 ...prevState,
-    //                 [category]: value,
-    //                 dateTime: "",
-    //                 category: "",
-    //                 report: ""
-    //             };
-    //         } 
-    //         else {
-    //             // If the selected option is not the default option,
-    //             // uncheck the default option
-    //             return {
-    //                 ...prevState,
-    //                 default: "",
-    //                 [category]: value
-    //             };
-    //         }
-    //     });
-    //      // Reset displayed range to show default number of rows
-    //     setDisplayRange({ start: 0, end: 10 });
-    //     // Reset showMore state to false
-    //     setShowMore(false);
-    // };
-
     const handleRadioChange = (category: string, value: string) => {
         setSelectedOptions(prevState => {
             // If the selected option is the default option,
@@ -285,62 +256,6 @@ const WebsiteTable = () => {
         setFilteredWebsites(filteredWebsites);
     }, [selectedOptions, websites]);
 
-// =========================
-    // useEffect(() => {
-    //     // Create a copy of the original websites array
-    //     let filteredWebsites = [...websites];
-
-    //     // Custom sorting function
-    //     const customSort = (a: Website, b: Website): number => {
-    //         if (selectedOptions.dateTime) {
-    //             const dateA = new Date(a.reporttime).getTime();
-    //             const dateB = new Date(b.reporttime).getTime();
-    //             if (selectedOptions.dateTime === "datenew") {
-    //                 return dateB - dateA; // Sort by date in descending order (newest first)
-    //             } else if (selectedOptions.dateTime === "dateold") {
-    //                 return dateA - dateB; // Sort by date in ascending order (oldest first)
-    //             }
-    //         }
-    //         if (selectedOptions.report) {
-    //             const reportA = parseInt(a.reports);
-    //             const reportB = parseInt(b.reports);
-    //             if (selectedOptions.report === "highreport") {
-    //                 return reportB - reportA; // Sort by report count in descending order
-    //             } else if (selectedOptions.report === "lowreport") {
-    //                 return reportA - reportB; // Sort by report count in ascending order
-    //             }
-    //         }
-    //         if (selectedOptions.category) {
-    //             // Category sorting logic
-    //             const sortingKey = {
-    //                 "categoryG": "Gambling",
-    //                 "categoryS": "Scam",
-    //                 "categoryF": "Fake",
-    //                 "categoryO": "Others"
-    //             };
-    //             const categoryA = sortingKey[selectedOptions.category as keyof typeof sortingKey];
-    //             const categoryB = sortingKey[selectedOptions.category as keyof typeof sortingKey];
-    //             console.log("Category A:", categoryA);
-    //             console.log("Category B:", categoryB);
-                
-    //             // Check if categoryA and categoryB are defined
-    //             if (categoryA && categoryB) {
-    //                 console.log("Comparing categories:", categoryA, categoryB);
-    //                 return categoryA.localeCompare(categoryB); // Sort by category
-    //             } else {
-    //                 console.log("One or both categories are undefined.");
-    //             }
-    //         }
-    //         return 0; // Default case: no sorting applied
-    //     };
-
-    //     // Apply custom sorting function
-    //     filteredWebsites.sort(customSort);
-
-    //     setFilteredWebsites(filteredWebsites);
-    // }, [selectedOptions, websites]);
-
-//=====================
     const displayedWebsites = showMore
         ? filteredWebsites  // Show all websites when showMore is true
         : filteredWebsites.slice(0, displayRange.end); // Show a limited number of websites when showMore is false
@@ -390,7 +305,13 @@ const WebsiteTable = () => {
                         </div>
                     </td>
                     <td className="whitespace-nowrap py-4 url-column">{website.WebsiteURL}</td>
-                    <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center"><a href="#" className="underline" id="linkdetail">More details</a></div></td>
+                    <td className="whitespace-nowrap px-6 py-4 ">
+                        <Link href={`/details/${encodeURIComponent(website.WebsiteURL)}`} passHref>
+                            <div className="flex justify-center items-center">
+                                <a className="underline" id="linkdetail">More details</a>
+                            </div>
+                        </Link>
+                    </td>
                     <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center">{website.WebCategoryName}</div></td>
                     <td className="whitespace-nowrap px-6 py-4 "><div className="flex justify-center items-center">{website.reports}</div></td>
                     <td className="whitespace-nowrap px-3 py-4 "></td>
