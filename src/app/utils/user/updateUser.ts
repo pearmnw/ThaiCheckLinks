@@ -3,8 +3,6 @@ import { hash } from "bcrypt";
 
 export const updateUserAllInfo = async (currentUser: any, body: any) => {
     try {
-        // console.log("Hi")
-        // console.log(body);
         const { UserName, UserEmail, UserPhone, UserPassword } = body;
         const hashedPassword = await hash(UserPassword, 10)
         const result = await db.userDetail.update({

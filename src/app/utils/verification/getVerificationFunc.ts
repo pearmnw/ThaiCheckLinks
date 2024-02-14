@@ -1,13 +1,15 @@
 // TODO: Create the useful function with db for the Vefication Page
 
-// model UserVerifyBox {
-//     UserVerifyID       Int            @id @default(autoincrement())
-//     WebsiteURL         String         @db.VarChar(256)
+// model WebsiteMeta {
+//     MetaWebsiteID      Int             @id @default(autoincrement())
+//     WebCategoryID      Int             @default(autoincrement())
+//     WebsiteURL         String?
 //     WebsiteMetaTitle   String?
 //     WebsiteMetaDesc    String?
 //     WebsiteMetaKeyword String?
-//     WebsiteStatus      Boolean
-//     Verification       Verification[]
+//     WebsiteText        String?
+//     WebsiteStatus      Boolean?        @default(true)
+//     WebsiteCategory    WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
 //   }
 
 // model Verification {
@@ -29,3 +31,11 @@
 //     WebsiteDetail       WebsiteDetail    @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
 //     WhitelistWebsite    WhitelistWebsite @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
 //   }
+
+export const getMaxPercent = async () => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}

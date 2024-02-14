@@ -9,13 +9,6 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
   const router = useRouter();
   const userID = useSession();
 
-  // useEffect(() => {
-  //   console.log(url);
-  //   console.log(metaWebsite);
-  //   console.log(currentPercent);
-  //   console.log(verifySuccess);
-  // });
-
   const [formInput, setFormInput] = useState({
     websitecategory: "",
     websitedetail: "",
@@ -100,6 +93,8 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
       console.log("formError:", formError);
       console.log(url);
       console.log(userID.data?.user.id);
+      console.log(metaWebsite);
+      console.log(currentPercent);
       // router.push("/report/success");
       // const res = await fetch("api/linkreport", {
       //   method: "POST",
