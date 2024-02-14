@@ -1,5 +1,7 @@
 // TODO: Create the useful function with db for the Vefication Page
 
+import { db } from "@/lib/db";
+
 // model WebsiteMeta {
 //     MetaWebsiteID      Int             @id @default(autoincrement())
 //     WebCategoryID      Int             @default(autoincrement())
@@ -32,7 +34,75 @@
 //     WhitelistWebsite    WhitelistWebsite @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
 //   }
 
-export const getMaxPercent = async () => {
+export const getVerificationByMetaWebsiteID = async (MetaWebsiteID: any, VerificationInfo: any) => {
+    try {
+        const verificationInfo = await db.verification.findUnique({
+            where: {
+                WebsiteID: MetaWebsiteID
+            }
+        }
+        )
+        if (verificationInfo) {
+            return verificationInfo
+        }
+        else {
+            // Create verification
+            throw Error("No have data")
+        }
+    } catch (error) {
+        return error;
+    }
+}
+
+export const checkPercent = async (MaxPercent: any, CurrentPercent: any) => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateCurrentPercent = async (MaxPercent: any, CurrentPercent: any) => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateMaxGamblingPercent = async (MaxPercent: any, CurrentPercent: any) => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateMaxScamPercent = async (MaxPercent: any, CurrentPercent: any) => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateMaxFakePercent = async (MaxPercent: any, CurrentPercent: any) => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const updateMaxOtherPercent = async (MaxPercent: any, CurrentPercent: any) => {
+    try {
+
+    } catch (error) {
+        return error;
+    }
+}
+
+export const createVerification = async (MaxPercent: any, CurrentPercent: any) => {
     try {
 
     } catch (error) {

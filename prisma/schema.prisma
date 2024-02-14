@@ -36,23 +36,23 @@ model UserVerifyBox {
 }
 
 model Verification {
-  VerificationID      Int              @id @default(autoincrement())
-  WebsiteID           Int              @default(autoincrement())
-  WhitelistID         Int              @default(autoincrement())
-  UserVerifyID        Int              @default(autoincrement())
+  VerificationID      Int               @id @default(autoincrement())
+  WebsiteID           Int               @unique @default(autoincrement())
+  WhitelistID         Int?
+  UserVerifyID        Int?              @default(autoincrement())
   CGamblingPercentage Int
   CScamPercentage     Int
   CFakePercentage     Int
   COtherPercentage    Int
-  CVerifyDate         DateTime         @db.Timestamptz(6)
+  CVerifyDate         DateTime          @default(now()) @db.Timestamptz(6)
   MGamblingPercentage Int
   MScamPercentage     Int
   MFakePercentage     Int
   MOtherPercentage    Int
-  MVerifyDate         DateTime         @default(now()) @db.Timestamptz(6)
-  UserVerifyBox       UserVerifyBox    @relation(fields: [UserVerifyID], references: [UserVerifyID], onDelete: NoAction, onUpdate: NoAction, map: "UserVerifyID")
-  WebsiteDetail       WebsiteDetail    @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
-  WhitelistWebsite    WhitelistWebsite @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
+  MVerifyDate         DateTime          @default(now()) @db.Timestamptz(6)
+  UserVerifyBox       UserVerifyBox?    @relation(fields: [UserVerifyID], references: [UserVerifyID], onDelete: NoAction, onUpdate: NoAction, map: "UserVerifyID")
+  WebsiteDetail       WebsiteDetail     @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
+  WhitelistWebsite    WhitelistWebsite? @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
 }
 
 model WebsiteCategory {
@@ -72,7 +72,7 @@ model WebsiteDetail {
   BankAccountOwner       String?         @db.VarChar(128)
   BankNumber_            String?         @map("BankNumber ") @db.VarChar(50)
   WebsiteReportedDetails String
-  Verification           Verification[]
+  Verification           Verification?
   Bank                   Bank?           @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
   UserDetail             UserDetail      @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
   WebsiteCategory        WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
@@ -81,7 +81,7 @@ model WebsiteDetail {
 model WebsiteMeta {
   MetaWebsiteID      Int             @id @default(autoincrement())
   WebCategoryID      Int             @default(autoincrement())
-  WebsiteURL         String?
+  WebsiteURL         String?         @unique
   WebsiteMetaTitle   String?
   WebsiteMetaDesc    String?
   WebsiteMetaKeyword String?

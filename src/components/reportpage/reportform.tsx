@@ -7,7 +7,7 @@ import { useState } from "react";
 const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
   const t = useScopedI18n("report");
   const router = useRouter();
-  const userID = useSession();
+  const userInfo = useSession();
 
   const [formInput, setFormInput] = useState({
     websitecategory: "",
@@ -92,20 +92,30 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
       console.log("formInput:", formInput);
       console.log("formError:", formError);
       console.log(url);
-      console.log(userID.data?.user.id);
-      console.log(metaWebsite);
+      console.log(userInfo.data?.user.id);
+      console.log(metaWebsite.url);
       console.log(currentPercent);
+      console.log(currentPercent.normal);
       // router.push("/report/success");
-      // const res = await fetch("api/linkreport", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-
-      // }),
-      // });
-      // const data = await res.json();
+      const res = await fetch("api/linkreport", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          UserID: userInfo,
+          WebsiteURL: url,
+          WebsiteCategory: formInput.websitecategory,
+          BankID: formInput.bank,
+          BankAccountOwner: formInput.bankaccountowner,
+          BankNumber: formInput.bankaccnumber,
+          WebsiteReportedDetails: formInput.websitedetail,
+          MetaWebsite: metaWebsite,
+          VerificationInfo: currentPercent,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
       // if (res.ok) {
       //   toast.success(data.message);
       //   router.push("/success");
