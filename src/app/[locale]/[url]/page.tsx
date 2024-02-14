@@ -17,7 +17,7 @@
 
 // export default async function Details() {
 //   const t = await getScopedI18n("detailpage");
-  
+
 //   // Fetch data using getServerSideProps
 //   const { props } = await getServerSideProps({ params: { detail: 'your-detail-value' } });
 
@@ -67,7 +67,7 @@
 //   const router = useRouter();
 //   const { url } = router.query;
 //   console.log(url)
-  
+
 //   // Check if url is null before attempting to decode it
 //   const websiteURL = url ? decodeURIComponent(url as string) : '';
 //   console.log(websiteURL)
@@ -79,7 +79,6 @@
 //   );
 // }
 
-
 // import DetailsBox from "@/components/detailsbox";
 // // import { getScopedI18n } from "@/locales/server";
 // import { useRouter } from 'next/router';
@@ -89,20 +88,19 @@
 //   const router = useRouter();
 //   const { url } = router.query;
 //   console.log(url)
-  
+
 //   // Check if url is null before attempting to decode it
 //   const websiteURL = url ? decodeURIComponent(url as string) : '';
 //   console.log(websiteURL)
 
 //   return (
-    
+
 //       <DetailsBox websiteUrl={websiteURL} />
-    
+
 //   )
 // }
 
 // export default Details
-
 
 // import DetailsBox from "@/components/detailsbox";
 
@@ -118,7 +116,7 @@
 
 //   return <DetailsBox websiteUrl='https://www.bbc.com'/>;
 // }
-  
+
 // import DetailsBox from "@/components/detailsbox";
 // import { useRouter } from 'next/router';
 
@@ -135,16 +133,15 @@
 //   return <DetailsBox websiteUrl={decodedWebsiteURL} />;
 // }
 
-
 import DetailsBox from "@/components/detailsbox";
 
 export default async function Details({ params }: any) {
   console.log(params.url);
 
   // Check if params.url is defined before attempting to decode it
-  const websiteURL = params.url || '';
-  const decodedWebsiteURL = websiteURL ? decodeURIComponent(websiteURL) : '';
-  
+  const websiteURL = params.url || "";
+  const decodedWebsiteURL = websiteURL ? decodeURIComponent(websiteURL) : "";
+
   console.log(decodedWebsiteURL);
   return <DetailsBox websiteUrl={decodedWebsiteURL} />;
 }
