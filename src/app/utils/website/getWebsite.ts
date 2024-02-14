@@ -164,48 +164,45 @@ export const GetWebsiteGroup = async (): Promise<FormattedWebsite[]> => {
 
     const websiteGroups: WebsiteGroup = websiteDetails.reduce((groups: WebsiteGroup, website) => {
         const parsedUrl = new URL(website.WebsiteURL);
-        const { protocol, hostname } = parsedUrl;
-        const hostnameParts = hostname.split('.');
-        const subdomain = hostnameParts.length > 2 ? hostnameParts[0] : "";
-        const sdl = hostnameParts.length > 2 ? hostnameParts[1] : hostnameParts[0];
-        const tld = hostnameParts.length > 1 ? hostnameParts.pop()! : ''; // Handle empty TLD
-        const key = `${protocol}//${hostnameParts.join('.')}`;
-
-        if (!groups[key]) {
-            groups[key] = {
-                Protocol: protocol,
-                Subdomain: subdomain,
-                SDL: sdl,
-                TLD: tld,
-                MaxCategoryID: website.WebCategoryID, // Initialize with current category ID
+        const websiteURL = `${parsedUrl.protocol}//${parsedUrl.hostname}`;
+    
+        if (!groups[websiteURL]) {
+            groups[websiteURL] = {
+                Protocol: parsedUrl.protocol,
+                Subdomain: parsedUrl.hostname.split('.')[0], // Extract subdomain if present
+                SDL: parsedUrl.hostname.split('.')[1], // Extract SDL part
+                TLD: parsedUrl.hostname.split('.').slice(2).join('.'), // Extract TLD
+                MaxCategoryID: website.WebCategoryID,
                 _count: {
                     WebsiteID: 0
                 },
                 latestReportDate: null
             };
         }
-
-        // Update MaxCategoryID if the current category is greater
-        if (website.WebCategoryID > groups[key].MaxCategoryID) {
-            groups[key].MaxCategoryID = website.WebCategoryID;
+    
+        groups[websiteURL]._count.WebsiteID++;
+    
+        if (website.WebCategoryID > groups[websiteURL].MaxCategoryID) {
+            groups[websiteURL].MaxCategoryID = website.WebCategoryID;
         }
-
-        groups[key]._count.WebsiteID++;
-
-        // Update latestReportDate if the current report is more recent
-        if (!groups[key].latestReportDate || website.WebsiteReportedDate > groups[key].latestReportDate!) {
-            groups[key].latestReportDate = website.WebsiteReportedDate;
+    
+        if (!groups[websiteURL].latestReportDate || website.WebsiteReportedDate > groups[websiteURL].latestReportDate!) {
+            groups[websiteURL].latestReportDate = website.WebsiteReportedDate;
         }
-
+    
         return groups;
     }, {});
-
-
+    
+    
     const formattedWebsites: FormattedWebsite[] = Object.values(websiteGroups).map((websiteGroup, index) => {
         const { Protocol, Subdomain, SDL, TLD, MaxCategoryID, _count, latestReportDate } = websiteGroup;
-
-        let websiteURL = `${Protocol}//${Subdomain ? Subdomain + '.' : ''}${SDL}.${TLD}`;
-
+    
+        // Construct the website URL based on the presence of subdomain and TLD
+        let websiteURL = `${Protocol}//${Subdomain ? Subdomain + '.' : ''}${SDL}`;
+        if (TLD) {
+            websiteURL += `.${TLD}`;
+        }
+    
         return {
             id: index + 1,
             WebsiteURL: websiteURL,
@@ -215,8 +212,9 @@ export const GetWebsiteGroup = async (): Promise<FormattedWebsite[]> => {
             reporttime: latestReportDate
         };
     });
-
-
+    
+    
+    
 
     // Sort formattedWebsites by the number of reports in descending order
     formattedWebsites.sort((a, b) => b.reports - a.reports);
