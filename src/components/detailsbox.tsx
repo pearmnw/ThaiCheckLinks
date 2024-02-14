@@ -27,11 +27,11 @@ interface Detail {
 const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   const t = useScopedI18n("detailpage");
   const [detail, setDetail] = useState<Detail[]>([]);  
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`api/homemoredetail?WebsiteUrl=${encodeURIComponent(websiteUrl)}`, {
+        const response = await fetch(`api/homemoredetail?WebsiteURL=${encodeURIComponent(websiteUrl)}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -90,9 +90,9 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
@@ -112,9 +112,9 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
@@ -133,9 +133,9 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
@@ -154,9 +154,9 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>

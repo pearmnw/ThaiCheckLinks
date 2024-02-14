@@ -306,7 +306,7 @@ const WebsiteTable = () => {
                     </td>
                     <td className="whitespace-nowrap py-4 url-column">{website.WebsiteURL}</td>
                     <td className="whitespace-nowrap px-6 py-4 ">
-                        <Link href={`/details/${encodeURIComponent(website.WebsiteURL)}`} passHref>
+                        <Link href={`en/details/${encodeURIComponent(website.WebsiteURL)}`} passHref>
                             <div className="flex justify-center items-center">
                                 <a className="underline" id="linkdetail">More details</a>
                             </div>

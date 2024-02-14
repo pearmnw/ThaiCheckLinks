@@ -200,18 +200,23 @@ export const GetWebsiteGroup = async (): Promise<FormattedWebsite[]> => {
         return groups;
     }, {});
 
+
     const formattedWebsites: FormattedWebsite[] = Object.values(websiteGroups).map((websiteGroup, index) => {
         const { Protocol, Subdomain, SDL, TLD, MaxCategoryID, _count, latestReportDate } = websiteGroup;
 
+        let websiteURL = `${Protocol}//${Subdomain ? Subdomain + '.' : ''}${SDL}.${TLD}`;
+
         return {
             id: index + 1,
-            WebsiteURL: `${Protocol}//${Subdomain}.${SDL}.${TLD}`,
+            WebsiteURL: websiteURL,
             WebCategoryID: MaxCategoryID, // Assign MaxCategoryID
             WebCategoryName: "Unknown", // Default value if category not found
             reports: _count.WebsiteID,
             reporttime: latestReportDate
         };
     });
+
+
 
     // Sort formattedWebsites by the number of reports in descending order
     formattedWebsites.sort((a, b) => b.reports - a.reports);

@@ -104,28 +104,47 @@
 // export default Details
 
 
+// import DetailsBox from "@/components/detailsbox";
+
+// export default function Details({
+//   params,
+// }: {
+//   params: { websiteURL: string };
+// }) {
+//   const { websiteURL } = params;
+//   const decodedWebsiteURL = decodeURIComponent(websiteURL);
+
+//   console.log(websiteURL);
+
+//   return <DetailsBox websiteUrl='https://www.bbc.com'/>;
+// }
+  
+// import DetailsBox from "@/components/detailsbox";
+// import { useRouter } from 'next/router';
+
+// export default function Details() {
+//   const router = useRouter();
+//   const { query } = router;
+//   const websiteURL = (query as { url?: string }).url || ''; // Access query parameter
+
+//   // Ensure websiteURL is decoded
+//   const decodedWebsiteURL = typeof websiteURL === 'string' ? decodeURIComponent(websiteURL) : '';
+
+//   console.log(decodedWebsiteURL);
+
+//   return <DetailsBox websiteUrl={decodedWebsiteURL} />;
+// }
+
+
 import DetailsBox from "@/components/detailsbox";
 
-export default async function Details( {
-  params,
-}:{
-  params: {websiteURL: string};
-}){
-  console.log(params.websiteURL)
-  return  <DetailsBox websiteUrl={params.websiteURL} />; 
-}
-  
-//   const router = useRouter();
-//   const { url } = router.query;
-//   console.log(url)
-  
-//   // Check if url is null before attempting to decode it
-//   const websiteURL = url ? decodeURIComponent(url as string) : '';
-//   console.log(websiteURL)
+export default async function Details({ params }: any) {
+  console.log(params.url);
 
-//   return (
-//     <>
-//       <DetailsBox websiteUrl={websiteURL} />
-//     </>
-//   );
-// }
+  // Check if params.url is defined before attempting to decode it
+  const websiteURL = params.url || '';
+  const decodedWebsiteURL = websiteURL ? decodeURIComponent(websiteURL) : '';
+  
+  console.log(decodedWebsiteURL);
+  return <DetailsBox websiteUrl={decodedWebsiteURL} />;
+}
