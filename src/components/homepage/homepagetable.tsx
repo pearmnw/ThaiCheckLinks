@@ -230,7 +230,7 @@ const WebsiteTable = () => {
         }
       }
 
-      // Sort by category if category option is selected
+    //   Sort by category if category option is selected
       if (selectedOptions.category) {
         const categoryA = a.WebCategoryName;
         const categoryB = b.WebCategoryName;
@@ -257,7 +257,6 @@ const WebsiteTable = () => {
                 // If item B belongs to the selected category, it should come first
                 return 1;
                 }
-        // return categoryA === sortingKey ? -1 : categoryB === sortingKey ? 1 : 0 ;
       }
 
       return 0; // Default case: no sorting applied
