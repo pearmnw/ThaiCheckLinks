@@ -136,14 +136,14 @@ export default {
     "analysis-subtitle": "Highest Percentage Ever Examined",
     "see-overview": "SEE THE OVERVIEW",
 
-    'update': "Current update",
-    'readmore': "Read More Website Details Here",
-    'malicious-url': "Malicious URL Detection",
-
     "gambling-label": "Gambing",
     "scam-label": "Scam",
     "fake-label": "Fake",
     "other-label": "Other",
+    'report-found': 'FOUND IN DATABASE',
+    'report-not-found': 'NOT FOUND IN DATABASE',
+    'report-most': "Most reported as",
+    'report-unit': "People",
 
     "report-title": "Verify The Database",
     "report-subtitle": "Verify Against The User Reporting Database In Thai.ScamLinks",

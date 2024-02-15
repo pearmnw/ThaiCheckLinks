@@ -5,15 +5,15 @@ import ReportRisk from './report/ReportRisk'
 import ReportVisualization from './report/ReportVisualization'
 import { ReportProps } from '@/lib/interface/verification/interface'
 
-const Report:React.FC<ReportProps> = ({ categoryCount }) => {
+const Report:React.FC<any> = ({ report }) => {
   const t = useScopedI18n('verificationpage')
 
   return (
     <div className='px-8 border-b-2 border-custom-black' id="myReport">
-      <ReportHeader />
+      <ReportHeader report={report} />
       <div className='flex flex-col lg:flex-row justify-center items-center w-full'>
-        <ReportRisk />
-        <ReportVisualization categoryCount={categoryCount} />
+        <ReportRisk report={report} />
+        <ReportVisualization report={report} />
       </div>
     </div>
   );

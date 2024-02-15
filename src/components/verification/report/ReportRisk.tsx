@@ -2,7 +2,7 @@ import { useScopedI18n } from '@/locales/client'
 import React from 'react'
 import CircularProgressBar from './CircularProgressBar';
 
-const ReportRisk = () => {
+const ReportRisk: React.FC<any> = ({ report }) => {
   const t = useScopedI18n('verificationpage')
 
   return (
@@ -27,7 +27,7 @@ const ReportRisk = () => {
         </li>
       </ul>
 
-      <CircularProgressBar score={11} />
+      <CircularProgressBar score={report.sumReport} />
     </div>
   );
 }

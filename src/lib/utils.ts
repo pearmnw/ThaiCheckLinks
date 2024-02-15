@@ -31,3 +31,10 @@ export const getDomainName = (url: string) => {
     return url;
 };
 
+
+export const categoryTypeMapping: any = {
+    0: "other",
+    1: "gambling",
+    2: 'scam',
+    3: 'fake'
+}

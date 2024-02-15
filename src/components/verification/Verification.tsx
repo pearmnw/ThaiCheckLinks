@@ -1,22 +1,24 @@
-"use client";
-import React, { useState } from "react";
-import { useScopedI18n, useCurrentLocale } from "@/locales/client";
-import axios from "axios";
-import SearchBarMain from "../searchbar/searchbarmain";
-import Classification from "./Classification";
-import Loader from "../loading/Loader";
-import ProgressBar from "../loading/ProgressBar";
-import Report from "./Report";
-import Overall from "./Overall";
-import API from "./API";
-import { makeRequest } from "@/lib/utils";
-import Measurement from "./Measurement";
+'use client';
+import React, { useState } from 'react';
+import { useScopedI18n, useCurrentLocale } from '@/locales/client';
+import axios from 'axios';
+
+import SearchBarMain from '../searchbar/searchbarmain';
+import Classification from './Classification';
+import Loader from '../loading/Loader';
+import Report from './Report';
+import Overall from './Overall';
+import API from './API';
+import Measurement from './Measurement';
+
+import { makeRequest } from '@/lib/utils';
 
 const Verification = () => {
-  const t = useScopedI18n("verificationpage");
+  const t = useScopedI18n('verificationpage');
   const currentLocale = useCurrentLocale();
+  
 
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
@@ -26,20 +28,22 @@ const Verification = () => {
     aiResultScore: 0,
     isAnotherDatabase: false,
   });
-  const [reportCount, setReportCount] = useState<number>(0);
-  const [categoryCount, setCategoryCount] = useState<any>({
+
+  const [report, setReport] = useState<any>({
     gambling: 0,
     scam: 0,
     fake: 0,
     other: 0,
+    maxReport: 0,
+    sumReport: 0,
   });
 
-  const [checkIPQuality, setCheckIPQuality] = useState<string>(t("No Result"));
-  const [checkURLHaus, setCheckURLHaus] = useState<string>(t("No Result"));
+  const [checkIPQuality, setCheckIPQuality] = useState<string>(t('No Result'));
+  const [checkURLHaus, setCheckURLHaus] = useState<string>(t('No Result'));
 
   const data = [
-    { name: "IPQuality", status: checkIPQuality },
-    { name: "URLHaus", status: checkURLHaus },
+    { name: 'IPQuality', status: checkIPQuality },
+    { name: 'URLHaus', status: checkURLHaus },
   ];
 
   const [currentPercent, setCurrentPercent] = useState({
@@ -60,8 +64,8 @@ const Verification = () => {
   });
 
   const formData = new FormData();
-  formData.append("url", url);
-  formData.append("path", "verification");
+  formData.append('url', url);
+  formData.append('path', 'verification');
 
   const updateCurrentPercent = (newData: any) => {
     setCurrentPercent((prevCurrentPercent) => ({
@@ -98,11 +102,11 @@ const Verification = () => {
     //   });
     // }, 1000);
 
-    axios.defaults.headers.common["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Accept"] = "application/json";
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
 
     await axios
-      .post("http://127.0.0.1:8000/", formData)
+      .post('http://127.0.0.1:8000/', formData)
       .then((resp) => {
         console.log(resp.data);
         if (resp.data) {
@@ -125,19 +129,27 @@ const Verification = () => {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-      });
+        setReport((prevReportCount: any) => {
+          return {
+            ...prevReportCount,
+            ...data.finalCategoryCounts,
+          };
+        })
+      }).catch((error) => {
+        console.log(error);
+        return;
+      }) ;
   };
 
   const getApi = async () => {
     try {
       const response_ip_quality = await fetch(
-        `/${currentLocale}/api/proxy?url=${url}`,
+        `/${currentLocale}/api/proxy?url=${url}`
       );
 
       let url_http = makeRequest(url);
       const response_url_haus = await fetch(
-        `/${currentLocale}/api/urlhaus?url=${url_http}`,
+        `/${currentLocale}/api/urlhaus?url=${url_http}`
       );
 
       // IPQuality
@@ -149,12 +161,12 @@ const Verification = () => {
           data.phishing === true ||
           data.suspicious === true
         ) {
-          setCheckIPQuality(t("FOUND"));
+          setCheckIPQuality(t('FOUND'));
         } else {
-          setCheckIPQuality(t("NOT FOUND"));
+          setCheckIPQuality(t('NOT FOUND'));
         }
       } else {
-        setCheckIPQuality(t("NOT FOUND"));
+        setCheckIPQuality(t('NOT FOUND'));
       }
 
       // URLHause
@@ -163,10 +175,10 @@ const Verification = () => {
       }
       const data = await response_url_haus.json();
 
-      if (data.query_status == "ok") {
-        setCheckURLHaus(t("FOUND"));
+      if (data.query_status == 'ok') {
+        setCheckURLHaus(t('FOUND'));
       } else {
-        setCheckURLHaus(t("NOT FOUND"));
+        setCheckURLHaus(t('NOT FOUND'));
       }
 
       console.log(data);
@@ -191,25 +203,25 @@ const Verification = () => {
   return (
     <section>
       {isLoading && (
-        <div className="fixed inset-0 flex flex-col items-center justify-center gap-12">
+        <div className='fixed inset-0 flex flex-col items-center justify-center gap-12'>
           <Loader />
           {/* <ProgressBar progress={progress} /> */}
         </div>
       )}
 
-      <div className={`${isLoading ? "opacity-20" : ""}`}>
+      <div className={`${isLoading ? 'opacity-20' : ''}`}>
         <h1
           className={`relative bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3] bg-clip-text text-center text-[48px] font-extrabold text-transparent`}
         >
-          {t("title")}
+          {t('title')}
         </h1>
-        <h2 className="flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent ">
-          {t("caption")}
+        <h2 className='flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent '>
+          {t('caption')}
         </h2>
         <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} />
-        <div className="mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4">
-          <Overall />
-          <Report categoryCount={categoryCount} />
+        <div className='mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4'>
+          <Overall report={report}/>
+          <Report report={report} />
           <Classification
             urlPercent={urlPercent}
             currentPercent={currentPercent}

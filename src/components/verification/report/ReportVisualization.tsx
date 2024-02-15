@@ -9,10 +9,9 @@ import {
   Legend,
 } from 'recharts';
 import React, { useState, useEffect }  from 'react';
-import { ReportVisualizationProps } from '@/lib/interface/verification/interface';
 
 
-const ReportVisualization:React.FC<ReportVisualizationProps> = ({ categoryCount }) => {
+const ReportVisualization:React.FC<any> = ({ report }) => {
   const t = useScopedI18n('verificationpage')
   const [isMounted, setIsMounted] = useState(false);
 
@@ -25,10 +24,10 @@ const ReportVisualization:React.FC<ReportVisualizationProps> = ({ categoryCount 
   }
 
   const data = [
-    { name: 'Gambling', count: categoryCount.gambling },
-    { name: 'Scam', count: categoryCount.scam },
-    { name: 'Fake', count: categoryCount.fake },
-    { name: 'Others', count: categoryCount.other },
+    { name: 'Gambling', count: report.gambling },
+    { name: 'Scam', count: report.scam },
+    { name: 'Fake', count: report.fake },
+    { name: 'Others', count: report.other },
   ];
 
   return (

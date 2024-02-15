@@ -139,15 +139,15 @@ export default {
     "analysis-subtitle": "ค่าเปอร์เซ็นมากสุดที่เคยวิเคราะห์ได้",
     "see-overview": "กลับไปดูที่ภาพรวม",
 
-    'update': "อัพเดทปัจจุบัน",
-    'readmore': "อ่านรายละเอียดเว็บไซต์เพิ่มเติมที่นี่",
-    'malicious-url': "Malicious URL Detection",
-
     "gambling-label": "พนัน",
     "scam-label": "หลอกลงทุน",
     "fake-label": "ปลอมแปลง",
     "other-label": "อื่นๆ",
-    
+    'report-found': 'มีข้อมูลในฐานข้อมูล',
+    'report-not-found': 'ไม่มีข้อมูลในฐานข้อมูล',
+    'report-most': "ส่วนใหญ่แจ้งเป็นเว็บ",
+    'report-unit': "คน",
+
     "report-title": "ตรวจสอบจากฐานข้อมูล",
     "report-subtitle": "ตรวจสอบเว็บไซต์กับฐานข้อมูลการรายงานผู้ใช้ใน Thai.ScamLinks",
     "report-title-result": "ผลการตรวจสอบ",
