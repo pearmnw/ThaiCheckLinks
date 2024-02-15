@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         const session = getServerSession(authOptions);
         const currUserSession = JSON.stringify(session);
         console.log(currUserSession);
-        const { UserID, WebsiteURL, WebsiteCategory, BankID, BankAccountOwner, BankNumber, WebsiteReportedDetails, MetaWebsite, CurrentPercent } = body
+        let { UserID, WebsiteURL, WebsiteCategory, BankID, BankAccountOwner, BankNumber, WebsiteReportedDetails, MetaWebsite, CurrentPercent } = body
         // TODO: SetCategoryID
         const webcatID = await setCategoryID(WebsiteCategory);
         console.log("userID: ", UserID);
@@ -50,44 +50,33 @@ export async function POST(req: Request) {
             }
         }
         // TODO: Create WebsiteDetails [report details]
+        if (!BankID.length) {
+            BankID = null;
+        }
+        if (!BankAccountOwner.length) {
+            BankAccountOwner = null;
+        }
+        if (!BankNumber.length) {
+            BankNumber = null;
+        }
         console.log("Create Report here!!")
-        // const newReport = await db.websiteDetail.create({
-        //     data: {
-        //         UserID: UserID,
-        //         WebCategoryID: Number(webcatID),
-        //         WebsiteURL: WebsiteURL,
-        //         BankID: BankID,
-        //         BankAccountOwner: BankAccountOwner,
-        //         BankNumber_: BankNumber,
-        //         WebsiteReportedDetails: WebsiteReportedDetails,
-        //     }
-        // });
         const newReport = await db.websiteDetail.create({
             data: {
-                UserID,
+                UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
                 WebCategoryID: Number(webcatID),
                 WebsiteURL,
-                WebsiteReportedDetails,
+                BankID,
+                BankAccountOwner,
+                BankNumber_: BankNumber,
+                WebsiteReportedDetails
             }
         });
         console.log(newReport);
         // return NextResponse.json({ websiteMeta: websiteMetaArray, message: "Find Meta Here" }, { status: 201 });
         return NextResponse.json({ websiteDetail: newReport, message: "Report created successfully" }, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ message: error });
+        console.error(error);
+        // Return or log the error message
+        return NextResponse.json({ message: error.message || 'Unknown error' });
     }
 }
-
-// TODO: Create WebsiteDetails [report details]
-// const WebsiteStatus = true;
-// const newReport = await db.websiteDetail.create({
-//     data: {
-//         UserID,
-//         WebCategoryID,
-//         WebsiteURL,
-//         BankID,
-//         BankAccountOwner,
-//         BankNumber_,
-//         WebsiteReportedDetails,
-//     }
-// });

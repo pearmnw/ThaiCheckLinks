@@ -63,7 +63,7 @@ model WebsiteCategory {
 }
 
 model WebsiteDetail {
-  WebsiteID              Int             @id @default(autoincrement())
+  WebsiteID              Int             @id @unique @default(autoincrement())
   UserID                 Int
   WebCategoryID          Int
   WebsiteURL             String

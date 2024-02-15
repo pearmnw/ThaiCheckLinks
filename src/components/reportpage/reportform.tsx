@@ -103,7 +103,7 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          UserID: userInfo,
+          UserID: userInfo.data?.user.id,
           WebsiteURL: url,
           WebsiteCategory: formInput.websitecategory,
           BankID: formInput.bank,
