@@ -74,7 +74,7 @@ export default {
     "gambling": "พนัน รายงาน",
     "scam": "หลอกลวง รายงาน",
     "fake": "ปลอมแปลง รายงาน",
-    "other": "อื่นๆ รายงาน",
+    "others": "อื่นๆ รายงาน",
     "searchtext": "ค้นหาคำ",
     "searchbutt": "ค้นหา",
     "detail": "รายละเอียด",

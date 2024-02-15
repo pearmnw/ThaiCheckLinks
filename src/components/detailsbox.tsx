@@ -2,7 +2,7 @@
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import SearchWordBar from "./searchbar/searchwordbar";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
 interface DetailsBoxProps {
   websiteUrl: string;
@@ -29,6 +29,13 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   const [detail, setDetail] = useState<Detail[]>([]);  
   const [displayRange, setDisplayRange] = useState({ start: 0, end: 5 });
   const [showMore, setShowMore] = useState(false);
+  const [categoryCounts, setCategoryCounts] = useState<{ [key: string]: number }>({
+      gambling: 0,
+      scam: 0,
+      fake: 0,
+      others: 0,
+    });
+    const [clickedCategory, setClickedCategory] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +62,10 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
           setDisplayRange({ start: 0, end: data.length });
         }
 
+        // Calculate category counts
+        const counts = countReportsByCategory(data);
+        setCategoryCounts(counts);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -65,6 +76,39 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   // function checkcurrlocale() {
   //   console.log(currentLocale);
   // }
+
+  // Function to count the number of reports for each category
+  const countReportsByCategory = (data: Detail[]) => {
+    const counts: { [key: string]: number } = {
+      gambling: 0,
+      scam: 0,
+      fake: 0,
+      others: 0,
+    };
+
+
+    data.forEach(item => {
+      counts[item.WebCategoryName.toLowerCase()]++;
+    });
+
+    return counts;
+  };
+
+  // const handleCategoryClick = (category: SetStateAction<string>) => {
+  //   setClickedCategory(category === clickedCategory ? "" : category);
+  // };
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
+
+  const handleCategoryClick = (category: string) => {
+    const updatedSelectedCategories = new Set(selectedCategories);
+    if (updatedSelectedCategories.has(category)) {
+      updatedSelectedCategories.delete(category);
+    } else {
+      updatedSelectedCategories.add(category);
+    }
+    setSelectedCategories(updatedSelectedCategories);
+  };
+  
 
   //========== see more detail function =========
     const toggleShowMore = () => {
@@ -118,101 +162,65 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
         <div className="flex pt-4 pb-6 justify-center text-center text-[30px] font-semibold text-transparent bg-clip-text bg-[#011E52]">
           {t("category")}
           {":"} &nbsp;
-          <div className=" flex space-x-3 justify-center items-center text-center text-[18px] font-medium text-transparent bg-clip-text bg-[#011E52]">
-            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
-              <span className="">
-                {t("gambling")}
-                {" 1K"}
-              </span>
-              <svg
-                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-            </button>
+    {/* =============================================== */}
 
-            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
-              <span className="">
-                {t("scam")}
-                {" 10"}
-              </span>
-              <svg
-                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
+          {/* ==== Button for filter when click = hide the detail box having that category ====*/}
+          <div className="flex space-x-3 justify-center items-center text-center text-[18px] font-medium text-transparent bg-clip-text bg-[#011E52]">
+            {['G', 'S', 'F', 'O'].map(category => (
+              <button
+                key={category}
+                className={`bg-${selectedCategories.has(category) ? '[#BDC1C7]' : '[#CCD2DE]'}  text-[#011E52] py-2 px-4 rounded inline-flex items-center`}
+                onClick={() => handleCategoryClick(category)}
               >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-            </button>
-
-            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
-              <span className="">
-                {t("fake")} {" 5"}
-              </span>
-              <svg
-                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-            </button>
-
-            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
-              <span className="">
-                {t("other")} {" 2"}
-              </span>
-              <svg
-                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-            </button>
+                <span className="">
+                {category === 'G' ? t("gambling") : category === 'S' ? t("scam") : category === 'F' ? t("fake") : t("others")} {category === 'G' ? categoryCounts["gambling"]: category === 'S' ? categoryCounts["scam"] : category === 'F' ? categoryCounts["fake"] : category === 'O' ? categoryCounts["others"]:null}
+                </span>
+                {selectedCategories.has(category) ? (
+                  <svg
+                    className="ml-3 w-3 h-3 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M12.6624 3.91285L5.28487 11.2904L1.32227 7.01818L2.17763 6.2248L5.31647 9.60886L11.8375 3.08789L12.6624 3.91285Z"
+                      fill="black"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                )}
+              </button>
+            ))}
           </div>
+
+  {/* ==== ==================================================== ====*/}
         </div>
         <SearchWordBar />
       </div>
     
-
-
     {/* // ===================Detail box========================= */}
-      {detail.slice(displayRange.start, displayRange.end).map((item, index) => (
+    {detail
+      .filter((item) => !selectedCategories.has(item.WebCategoryName.toUpperCase()[0]))
+      .slice(displayRange.start, displayRange.end)
+      .map((item, index) => (
               <div className="flex justify-center py-6" key={index}>
                 <div className="block bg-[#CCD2DECF] w-[50rem] h-[25rem] rounded-[8px] text-[#121B2B] relative px-20">
                   <div className="pt-11 flex justify-center items-center">
@@ -256,7 +264,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
             ))}
 
             {/* Show more/less buttons */}
-          {detail.length > 5 && (
+          {detail.filter(item => !selectedCategories.has(item.WebCategoryName.toUpperCase()[0])).length > 5 && (
               <div className="border-b-2 bg-[#BDC1C7] dark:border-white rounded px-6 py-4 w-[50rem] ml-14 flex justify-center" style={{ height: '5rem' }}>
                 <div className="w-full flex justify-end space-x-4">
                   {(!showMore && detail.length > 5) && (
