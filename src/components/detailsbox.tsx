@@ -87,7 +87,8 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
       detail.WebsiteReportedDetails.search(new RegExp(searchTerm, 'iu')) !== -1 ||
       detail.BankName.search(new RegExp(searchTerm, 'iu')) !== -1 ||
       detail.BankAccountOwner.search(new RegExp(searchTerm, 'iu')) !== -1 ||
-      detail.BankNumber.toString().includes(searchTerm)
+      detail.BankNumber.toString().includes(searchTerm) ||
+      detail.UserName.search(new RegExp(searchTerm, 'iu')) !== -1
     );
     setFilteredDetails(filtered as Detail[]);
   }, [detail, searchTerm]);
@@ -249,7 +250,21 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       src={item.UserPictureURL || '/defaultprofile.jpeg'}
                       alt="Rounded avatar"
                     />
-                    <div className="flex-grow px-6 font-semibold text-[30px]">{item.UserName}</div>
+                    <div className="flex-grow px-6 font-semibold text-[30px]">
+                    {searchTerm ? (
+                          // If there is a search term, conditionally render the highlighted search term
+                          item.UserName.split(new RegExp(`(${searchTerm})`, 'gi')).map((part, index) => (
+                            part.toLowerCase() === searchTerm.toLowerCase() ? (
+                              <span key={index} style={{ backgroundColor: '#7F9BBC' }}>{part}</span>
+                            ) : (
+                              <span key={index}>{part}</span>
+                            )
+                          ))
+                        ) : (
+                          // If there is no search term, display the username as is
+                          item.UserName
+                        )}
+                    </div>
                     <div className="font-normal text-[24px] absolute top-11 right-10 pr-6 pt-6">
                     {new Date(item.reporttime).toLocaleString('en-US', {
                           year: 'numeric',
