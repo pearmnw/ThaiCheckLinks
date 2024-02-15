@@ -8,32 +8,34 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useContext }  from 'react';
+import { VerificationContext } from '../Verification';
 
 
-const ReportVisualization:React.FC<any> = ({ report }) => {
+const ReportVisualization = () => {
   const t = useScopedI18n('verificationpage')
   const [isMounted, setIsMounted] = useState(false);
+  const { userReportCount } = useContext(VerificationContext).overviewScore;
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   if (!isMounted) {
-    return null; // or a loader if you prefer
+    return null; 
   }
 
   const data = [
-    { name: 'Gambling', count: report.gambling },
-    { name: 'Scam', count: report.scam },
-    { name: 'Fake', count: report.fake },
-    { name: 'Others', count: report.other },
+    { name: t('gambling-label'), count: userReportCount.gambling },
+    { name: t('scam-label'), count: userReportCount.scam },
+    { name: t('fake-label'), count: userReportCount.fake },
+    { name: t('other-label'), count: userReportCount.other },
   ];
 
   return (
     <div className='bg-custom-bg-moredetail flex flex-col justify-start items-center w-2/3 h-[450px] rounded-xl p-5'>
       <h4 className='text-xl font-semibold'>
-        Number of each type of reporting
+        {t('report-label-bar-plot')}
       </h4>
       <div className='mt-10 flex flex-col justify-center items-center'>
         <BarChart

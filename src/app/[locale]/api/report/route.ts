@@ -8,17 +8,23 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
     const urlList = req.url?.split('=') as string[];
     const url = urlList[1];
 
-    let finalCategoryCounts: any = {
+    let maxCategoryReport: {
+      _count: number;
+      _type: string;
+    } = {
+      _count: -Infinity,
+      _type: '',
+    };
+
+    let userReportCount: any = {
       other: 0,
       gambling: 0,
       scam: 0,
       fake: 0,
-      maxType: '',
-      maxReport: -Infinity,
-      sumReport: 0,
+      sumUserReport: 0,
     };
 
-    const groupCategory = await db.websiteDetail.groupBy({
+    const groupCategoryDatabase = await db.websiteDetail.groupBy({
       by: ['WebCategoryID'],
       where: {
         WebsiteURL: {
@@ -35,32 +41,31 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    for (let i = 0; i < groupCategory.length; i++) {
-      const categoryName = categoryTypeMapping[groupCategory[i].WebCategoryID];
-      const count = groupCategory[i]._count.UserID;
+    for (let i = 0; i < groupCategoryDatabase.length; i++) {
+      const categoryName =
+        categoryTypeMapping[groupCategoryDatabase[i].WebCategoryID];
+      const countReport = groupCategoryDatabase[i]._count.UserID;
 
-      if (count > finalCategoryCounts.maxReport) {
-        finalCategoryCounts.maxReport = count;
-        finalCategoryCounts.maxType = categoryName;
+      if (countReport > maxCategoryReport._count) {
+        maxCategoryReport._count = countReport;
+        maxCategoryReport._type = categoryName;
       }
 
-      if (finalCategoryCounts.hasOwnProperty(categoryName)) {
-        finalCategoryCounts[categoryName] += count;
+      if (userReportCount.hasOwnProperty(categoryName)) {
+        userReportCount[categoryName] += countReport;
       }
 
       // Do not count "normal" or "other" Type
       if (categoryName !== 'other') {
-        finalCategoryCounts.sumReport += count;
+        userReportCount.sumUserReport += countReport;
       }
     }
-    
-    if (finalCategoryCounts.maxReport === 0) {
-      finalCategoryCounts.maxType = "";
+
+    if (maxCategoryReport._count === 0) {
+      maxCategoryReport._type = '';
     }
 
-
-
-    return NextResponse.json({ finalCategoryCounts });
+    return NextResponse.json({ userReportCount, maxCategoryReport });
   } catch (error: any) {
     return NextResponse.json({ message: error.message });
   }

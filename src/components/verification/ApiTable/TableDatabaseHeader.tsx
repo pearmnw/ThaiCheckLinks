@@ -2,7 +2,7 @@ import { useScopedI18n } from '@/locales/client';
 import React from 'react'
 
 const TableDatabaseHeader = () => {
-  const t = useScopedI18n('moredetailpage')
+  const t = useScopedI18n('verificationpage')
 
   return (
     <>

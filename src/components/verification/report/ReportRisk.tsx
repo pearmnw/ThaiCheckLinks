@@ -1,9 +1,11 @@
-import { useScopedI18n } from '@/locales/client'
-import React from 'react'
+import { useScopedI18n } from '@/locales/client';
+import React, { useContext } from 'react';
 import CircularProgressBar from './CircularProgressBar';
+import { VerificationContext } from '../Verification';
 
-const ReportRisk: React.FC<any> = ({ report }) => {
-  const t = useScopedI18n('verificationpage')
+const ReportRisk = () => {
+  const t = useScopedI18n('verificationpage');
+  const { userReportCount } = useContext(VerificationContext).overviewScore;
 
   return (
     <div className='bg-custom-bg-moredetail flex flex-col justify-start items-center p-5 gap-2 rounded-xl m-3 w-2/3 h-[450px]'>
@@ -27,9 +29,9 @@ const ReportRisk: React.FC<any> = ({ report }) => {
         </li>
       </ul>
 
-      <CircularProgressBar score={report.sumReport} />
+      <CircularProgressBar score={userReportCount.sumUserReport} />
     </div>
   );
-}
+};
 
-export default ReportRisk
+export default ReportRisk;

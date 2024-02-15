@@ -1,12 +1,28 @@
 import { useScopedI18n } from '@/locales/client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { VerificationContext } from '../Verification';
 
-const RiskMeasurement: React.FC<any> = ({ report }) => {
+const RiskMeasurement = () => {
   const t = useScopedI18n('verificationpage');
+  const { maxCategoryReport, highestVerifyOverall, hasAnotherDatabase } =
+    useContext(VerificationContext).overviewScore;
 
-  // Get color based on the score
-  const getColorReport = (score: number) => {
+  const getColorHighestVerify = (score: number) => {
+    if (score > 1 && score <= 25) {
+      return '#04CE00';
+    } else if (score > 25 && score <= 50) {
+      return '#F2CC6B';
+    } else if (score > 50 && score <= 75) {
+      return '#F97316';
+    } else if (score >= 100) {
+      return '#B51A36';
+    } else {
+      return '#ccc';
+    }
+  };
+
+  const getColorReportCount = (score: number) => {
     if (score > 0 && score <= 5) {
       return '#04CE00';
     } else if (score > 5 && score <= 10) {
@@ -16,9 +32,61 @@ const RiskMeasurement: React.FC<any> = ({ report }) => {
     } else if (score > 15) {
       return '#B51A36';
     } else {
-      return '#B51A36';
+      return '#ccc';
     }
   };
+
+  const getResultReportCount = () => {
+    if (
+      maxCategoryReport &&
+      maxCategoryReport._type !== 'other' &&
+      maxCategoryReport._count
+    ) {
+      return (
+        <div className='flex flex-col gap-1'>
+          {maxCategoryReport._count} {t('report-unit')}
+          <p className='text-sm'>
+            *{t('report-most')} "{t(maxCategoryReport._type)}"
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <p className='text-4xl' style={{ color: '#04CE00' }}>
+          {t('NOT FOUND')}
+        </p>
+      );
+    }
+  };
+
+
+  const getResultHighestVerify = () => {
+    if (
+      highestVerifyOverall &&
+      highestVerifyOverall._type !== 'other' &&
+      highestVerifyOverall._count
+    ) {
+      return (
+        <div className='flex flex-col gap-1'>
+          {highestVerifyOverall._count} %
+          <p className='text-sm'>
+            *{t('analysis-most')} "{t(highestVerifyOverall._type)}"
+          </p>
+        </div>
+      );
+    } else {
+      return (
+        <p className='text-4xl' style={{ color: '#04CE00' }}>
+          {t('NOT FOUND')}
+        </p>
+      );
+    }
+  };
+
+  const getApiDatabaseResult = () => {
+    const isFoundStatus = hasAnotherDatabase.some((db: any) => db.status === t('FOUND'));
+    return isFoundStatus;
+  }
 
   return (
     <div>
@@ -33,22 +101,9 @@ const RiskMeasurement: React.FC<any> = ({ report }) => {
             </p>
             <div
               className='text-center text-5xl font-bold'
-              style={{ color: getColorReport(report.maxReport) }}
+              style={{ color: getColorReportCount(maxCategoryReport._count) }}
             >
-
-              {report.maxReport === 0 || report.maxType === 'other' ? (
-                <p className='text-4xl' style={{ color: '#04CE00' }}>
-                  {t('NOT FOUND')}
-                </p>
-              ) : (
-                <div className='flex flex-col gap-1'>
-                  {report.maxReport} {t('report-unit')}
-                  <p className='text-sm'>
-                    *{t('report-most')} "{t(report.maxType)}"
-                  </p>
-                </div>
-              )}
-              
+              {getResultReportCount()}
             </div>
             <div className='text-right underline font-medium'>
               <Link href='#myReport'>{t('seemore')}</Link>
@@ -60,9 +115,11 @@ const RiskMeasurement: React.FC<any> = ({ report }) => {
             </p>
             <div
               className='text-center text-5xl font-bold'
-              style={{ color: '#B51A36' }}
+              style={{
+                color: getColorHighestVerify(highestVerifyOverall._count),
+              }}
             >
-              100%
+              {getResultHighestVerify()}
             </div>
             <div className='text-right underline font-medium'>
               <Link href='#myAI'>{t('seemore')}</Link>
@@ -87,10 +144,10 @@ const RiskMeasurement: React.FC<any> = ({ report }) => {
               {t('found-other-database')}
             </p>
             <div
-              className='text-center text-5xl font-bold'
-              style={{ color: '#B51A36' }}
+              className='text-center text-4xl font-bold'
+              style={getApiDatabaseResult() ? { color: '#B51A36' } : { color: '#04CE00' }}
             >
-              100%
+              {getApiDatabaseResult() ? t('FOUND') : t('NOT FOUND')}
             </div>
             <div className='text-right underline font-medium'>
               <Link href='#myAPI'>{t('seemore')}</Link>

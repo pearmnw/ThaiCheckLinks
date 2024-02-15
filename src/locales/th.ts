@@ -131,35 +131,46 @@ export default {
     "found-thai-scam-link": "ค้นพบในประวัติเว็บไซต์ข้อมูลผิดกฎหมาย Thai.ScamLinks",
     "found-ai": "ค้นพบ AI ตรวจสอบเปอร์เซ็นต์ความเสี่ยง", 
     "url-measure": "ความเสี่ยงของ URL วัดจาก URL Detection", 
-    "found-other-database": "ค้นภพในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
+    "found-other-database": "ค้นพบในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
     "seemore": "ดูเพิ่มเติม",
     "click-here": "คลิกที่นี่หากต้องการรายงานเพิ่มเติม",
 
     "analysis-title": "AI ตรวจสอบเปอร์เซ็นความเสี่ยง",
     "analysis-subtitle": "ค่าเปอร์เซ็นมากสุดที่เคยวิเคราะห์ได้",
     "see-overview": "กลับไปดูที่ภาพรวม",
-
-    "gambling-label": "พนัน",
-    "scam-label": "หลอกลงทุน",
-    "fake-label": "ปลอมแปลง",
-    "other-label": "อื่นๆ",
-    'report-found': 'มีข้อมูลในฐานข้อมูล',
-    'report-not-found': 'ไม่มีข้อมูลในฐานข้อมูล',
-    'report-most': "ส่วนใหญ่แจ้งเป็นเว็บ",
-    'report-unit': "คน",
+    'update': 'อัพเดทล่าสุด', 
+    'analysis-most': "วิเคราะห์เป็นเว็บ",
 
     "report-title": "ตรวจสอบจากฐานข้อมูล",
     "report-subtitle": "ตรวจสอบเว็บไซต์กับฐานข้อมูลการรายงานผู้ใช้ใน Thai.ScamLinks",
     "report-title-result": "ผลการตรวจสอบ",
     "risk-title-count": "อัตราความเสี่ยงจากจำนวนรายงาน",
+
     "low-risk-count": "ความเสี่ยงต่ำมี 0-5 รายงาน",
     "moderate-risk-count": "ความเสี่ยงปานกลางมี 6-10 รายงาน",
     "quite-high-risk-count": "ความเสี่ยงค่อนข้างสูงมี 11-15 รายงาน",
     "serious-risk-count": "ความเสี่ยงอันตรายมี 16 รายงาน",
+
     "low-count": "ต่ำ",
     "quite-low-count": "ค่อนข้างต่ำ",
     "quite-high-count": "ค่อนข้างอันตราย",
     "high-count": "อันตราย",
+
+    "gambling-label": "พนัน",
+    "scam-label": "หลอกลงทุน",
+    "fake-label": "ปลอมแปลง",
+    "other-label": "อื่นๆ",
+    "gambling": "พนัน",
+    "scam": "หลอกลงทุน",
+    "fake": "ปลอมแปลง",
+
+    'report-found': 'มีข้อมูลในฐานข้อมูล',
+    'report-not-found': 'ไม่มีข้อมูลในฐานข้อมูล',
+
+    'report-most': "ส่วนใหญ่แจ้งเป็นเว็บ",
+    'report-unit': "คน",
+
+    "report-label-bar-plot": "จำนวนการรีพอร์ตในแต่ละประเภท",
 
     "measure-title": "ตรวจสอบจาก URL Detection",
     "measure-subtitle": "ตรวจสอบความเสี่ยงของเว็บไซต์จาก URL",
@@ -187,22 +198,4 @@ export default {
     'positive': 'ข้อดี',
     'negative': 'ข้อเสีย'
   },
-
-  "measurement": {
-    "measurement": "เกณฑ์การวัดความน่าเชื่อถือ",
-    'positive': 'ข้อดี',
-    'negative': 'ข้อเสีย',
-    'ssl-true': 'ใบรับรอง SSL ถูกต้อง',
-    'ssl-false': 'ใบรับรอง SSL ไม่ถูกต้อง',
-    'whois-true': 'ข้อมูลประจำตัวของเจ้าของเว็บไซต์แสดงบน WHOIS',
-    'whois-false': 'ข้อมูลประจำตัวของเจ้าของเว็บไซต์ไม่แสดงบน WHOIS',
-    'tranco-true': 'อันดับ Tranco (ปริมาณการเข้าชม) อยู่ในระดับสูง',
-    'tranco-false': 'อันดับ Tranco (ปริมาณการเข้าชม) อยู่ในระดับต่ำ',
-    'email-true': 'ที่อยู่อีเมลแบบชำระเงินใช้สำหรับจดทะเบียน',
-    'email-false': 'ที่อยู่อีเมลแบบฟรีใช้สำหรับจดทะเบียน',
-    'country-true': 'เว็บไซต์ตั้งอยู่ในประเทศที่มีความเสี่ยงต่ำ',
-    'country-false': 'เว็บไซต์ตั้งอยู่ในประเทศที่มีความเสี่ยงสูง',
-    'age-true': 'เว็บไซต์นี้มีมาหลายปีแล้ว',
-    'age-false': 'เว็บไซต์นี้ค่อนข้างใหม่'
-  }
 }

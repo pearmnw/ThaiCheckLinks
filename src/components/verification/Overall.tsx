@@ -4,7 +4,7 @@ import CircularProgressBar from './overall/CircularProgressBar';
 import RiskMeasurement from './overall/RiskMeasurement';
 import Link from 'next/link';
 
-const Overall: React.FC<any> = ({ report }) => {
+const Overall = () => {
   const t = useScopedI18n('verificationpage');
 
   return (
@@ -23,7 +23,7 @@ const Overall: React.FC<any> = ({ report }) => {
         
         {/* TODO: Calculate the Score */}
         <CircularProgressBar score={25}/>
-        <RiskMeasurement report={report}/>
+        <RiskMeasurement />
         <Link href="/report">
           <button className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold">
             Report

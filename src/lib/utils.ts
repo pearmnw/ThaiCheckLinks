@@ -38,3 +38,14 @@ export const categoryTypeMapping: any = {
     2: 'scam',
     3: 'fake'
 }
+
+export const getHighestVerifyOverall = (percent: Record<string, number>) => {
+    const [_type, _count] = Object.entries(percent).reduce((acc, [key, value]) => {
+        if (value > acc[1]) {
+        return [key, value];
+        } else {
+        return acc;
+        }
+    }, ['', 0]);
+    return { _count: _count, _type: _type }
+};
