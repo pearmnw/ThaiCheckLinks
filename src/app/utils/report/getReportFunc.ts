@@ -127,7 +127,3 @@ export const getWebsiteMetaByURL = async (url: any) => {
 //     WebsiteStatus      Boolean?        @default(true)
 //     WebsiteCategory    WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
 //   }
-
-export const createMetaWebsite = async (MetaWebsite: any) => {
-    // รอเกณฑ์การคิดคะแนน
-}

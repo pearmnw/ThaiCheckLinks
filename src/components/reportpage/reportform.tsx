@@ -111,7 +111,7 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
           BankNumber: formInput.bankaccnumber,
           WebsiteReportedDetails: formInput.websitedetail,
           MetaWebsite: metaWebsite,
-          VerificationInfo: currentPercent,
+          CurrentPercent: currentPercent,
         }),
       });
       const data = await res.json();

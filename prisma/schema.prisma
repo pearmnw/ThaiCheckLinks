@@ -64,14 +64,14 @@ model WebsiteCategory {
 
 model WebsiteDetail {
   WebsiteID              Int             @id @default(autoincrement())
-  UserID                 Int             @default(autoincrement())
-  WebCategoryID          Int             @default(autoincrement())
+  UserID                 Int
+  WebCategoryID          Int
   WebsiteURL             String
   WebsiteReportedDate    DateTime        @default(now()) @db.Timestamptz(6)
   BankID                 String?         @db.VarChar(128)
   BankAccountOwner       String?         @db.VarChar(128)
-  BankNumber_            String?         @map("BankNumber ") @db.VarChar(50)
   WebsiteReportedDetails String
+  BankNumber_            String?         @db.VarChar(50)
   Verification           Verification?
   Bank                   Bank?           @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
   UserDetail             UserDetail      @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
@@ -80,7 +80,7 @@ model WebsiteDetail {
 
 model WebsiteMeta {
   MetaWebsiteID      Int             @id @default(autoincrement())
-  WebCategoryID      Int             @default(autoincrement())
+  WebCategoryID      Int
   WebsiteURL         String?         @unique
   WebsiteMetaTitle   String?
   WebsiteMetaDesc    String?
