@@ -29,6 +29,9 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   const [detail, setDetail] = useState<Detail[]>([]);  
   const [displayRange, setDisplayRange] = useState({ start: 0, end: 5 });
   const [showMore, setShowMore] = useState(false);
+  const [filteredDetails, setFilteredDetails] = useState<Detail[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
   const [categoryCounts, setCategoryCounts] = useState<{ [key: string]: number }>({
       gambling: 0,
       scam: 0,
@@ -76,6 +79,23 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   // function checkcurrlocale() {
   //   console.log(currentLocale);
   // }
+
+  //==============Search==========
+  useEffect(() => {
+    // Filter details based on search term
+    const filtered = detail.filter(detail =>
+      detail.WebsiteReportedDetails.search(new RegExp(searchTerm, 'iu')) !== -1 ||
+      detail.BankName.search(new RegExp(searchTerm, 'iu')) !== -1 ||
+      detail.BankAccountOwner.search(new RegExp(searchTerm, 'iu')) !== -1 ||
+      detail.BankNumber.toString().includes(searchTerm)
+    );
+    setFilteredDetails(filtered as Detail[]);
+  }, [detail, searchTerm]);
+  //========================
+
+    const handleSearch = (term: SetStateAction<string>) => {
+      setSearchTerm(term);
+    };
 
   // Function to count the number of reports for each category
   const countReportsByCategory = (data: Detail[]) => {
@@ -213,11 +233,11 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
 
   {/* ==== ==================================================== ====*/}
         </div>
-        <SearchWordBar />
+        <SearchWordBar onSearch={handleSearch}/>
       </div>
     
     {/* // ===================Detail box========================= */}
-    {detail
+    {filteredDetails
       .filter((item) => !selectedCategories.has(item.WebCategoryName.toUpperCase()[0]))
       .slice(displayRange.start, displayRange.end)
       .map((item, index) => (
@@ -251,20 +271,39 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
 
                     <div className="pt-2 flex">
                       <div className="pl-2 font-semibold text-[24px]">Detail: </div>
-                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5 line-clamp-3">{item.WebsiteReportedDetails}</div>
+                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5 line-clamp-3">
+                      {searchTerm ? (
+                          item.WebsiteReportedDetails.split(new RegExp(`(${searchTerm})`, "gi")).map((part, index) => (
+                            part.toLowerCase() === searchTerm.toLowerCase() ?
+                              <span key={index} style={{ backgroundColor: "#7F9BBC" }}>{part}</span>
+                              :
+                              <span key={index}>{part}</span>
+                          ))
+                        ) : (
+                          <span>{item.WebsiteReportedDetails}</span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="pt-2 flex">
                       <div className="pl-2 font-semibold text-[24px]">Bank: </div>
-                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">{`${item.BankName} ${item.BankAccountOwner} ${item.BankNumber}`}</div>
+                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">
+                      {
+                      `${item.BankName} ${item.BankAccountOwner} ${item.BankNumber}`.split(new RegExp(`(${searchTerm})`, 'gi')).map((word, index) => (
+                          isNaN(parseInt(word)) && word.toLowerCase() === searchTerm.toLowerCase() ?
+                            <span key={index} style={{ backgroundColor: '#7F9BBC' }}>{word}</span> :
+                            <span key={index}>{word}</span>
+                        ))}
+                      </div>
                     </div>
+
                   </div>
                 </div>
               </div>
             ))}
 
             {/* Show more/less buttons */}
-          {detail.filter(item => !selectedCategories.has(item.WebCategoryName.toUpperCase()[0])).length > 5 && (
+          {filteredDetails.filter(item => !selectedCategories.has(item.WebCategoryName.toUpperCase()[0])).length > 5 && (
               <div className="border-b-2 bg-[#BDC1C7] dark:border-white rounded px-6 py-4 w-[50rem] ml-14 flex justify-center" style={{ height: '5rem' }}>
                 <div className="w-full flex justify-end space-x-4">
                   {(!showMore && detail.length > 5) && (
