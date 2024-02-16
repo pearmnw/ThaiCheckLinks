@@ -163,6 +163,7 @@ export default {
     "gambling": "พนัน",
     "scam": "หลอกลงทุน",
     "fake": "ปลอมแปลง",
+    "other": "อื่นๆ",
 
     'report-found': 'มีข้อมูลในฐานข้อมูล',
     'report-not-found': 'ไม่มีข้อมูลในฐานข้อมูล',

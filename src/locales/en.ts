@@ -160,6 +160,7 @@ export default {
     "gambling": "gambling",
     "scam": "scam",
     "fake": "fake",
+    "other": "other",
 
     'report-found': 'FOUND IN DATABASE',
     'report-not-found': 'NOT FOUND IN DATABASE',

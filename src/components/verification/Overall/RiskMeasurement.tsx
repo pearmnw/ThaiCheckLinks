@@ -8,8 +8,8 @@ const RiskMeasurement = () => {
   const { maxCategoryReport, highestVerifyOverall, hasAnotherDatabase } =
     useContext(VerificationContext).overviewScore;
 
-  const getColorHighestVerify = (score: number) => {
-    if (score > 1 && score <= 25) {
+  const getColor = (score: number) => {
+    if (score >= 1 && score <= 25) {
       return '#04CE00';
     } else if (score > 25 && score <= 50) {
       return '#F2CC6B';
@@ -59,15 +59,16 @@ const RiskMeasurement = () => {
     }
   };
 
-
   const getResultHighestVerify = () => {
     if (
       highestVerifyOverall &&
-      highestVerifyOverall._type !== 'other' &&
       highestVerifyOverall._count
     ) {
       return (
-        <div className='flex flex-col gap-1'>
+        <div className='flex flex-col gap-1' style={ 
+          highestVerifyOverall._type === 'other' ?
+            { color: '#04CE00' } : {  }
+          }>
           {highestVerifyOverall._count} %
           <p className='text-sm'>
             *{t('analysis-most')} "{t(highestVerifyOverall._type)}"
@@ -84,9 +85,11 @@ const RiskMeasurement = () => {
   };
 
   const getApiDatabaseResult = () => {
-    const isFoundStatus = hasAnotherDatabase.some((db: any) => db.status === t('FOUND'));
+    const isFoundStatus = hasAnotherDatabase.some(
+      (db: any) => db.status === t('FOUND')
+    );
     return isFoundStatus;
-  }
+  };
 
   return (
     <div>
@@ -116,7 +119,7 @@ const RiskMeasurement = () => {
             <div
               className='text-center text-5xl font-bold'
               style={{
-                color: getColorHighestVerify(highestVerifyOverall._count),
+                color: getColor(highestVerifyOverall._count),
               }}
             >
               {getResultHighestVerify()}
@@ -131,9 +134,9 @@ const RiskMeasurement = () => {
             </p>
             <div
               className='text-center text-5xl font-bold'
-              style={{ color: '#B51A36' }}
+              style={{ color: getColor(0) }}
             >
-              100%
+              0%
             </div>
             <div className='text-right underline font-medium'>
               <Link href='#myURL'>{t('seemore')}</Link>
@@ -145,7 +148,11 @@ const RiskMeasurement = () => {
             </p>
             <div
               className='text-center text-4xl font-bold'
-              style={getApiDatabaseResult() ? { color: '#B51A36' } : { color: '#04CE00' }}
+              style={
+                getApiDatabaseResult()
+                  ? { color: '#B51A36' }
+                  : { color: '#04CE00' }
+              }
             >
               {getApiDatabaseResult() ? t('FOUND') : t('NOT FOUND')}
             </div>

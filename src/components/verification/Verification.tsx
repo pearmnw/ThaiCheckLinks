@@ -72,7 +72,6 @@ const Verification = () => {
     const formData = new FormData();
     formData.append('url', url);
     formData.append('path', 'verification');
-
     axios.defaults.headers.common['Content-Type'] = 'application/json';
     axios.defaults.headers.common['Accept'] = 'application/json';
 
@@ -221,7 +220,7 @@ const Verification = () => {
       setIsLoading(true); // Start Loading
       await getVerifyResult();
       await fetchWebsiteDetail();
-      // await getApi();
+      await getApi();
     } catch (error: any) {
       console.error(`An error occured: ${error}`);
     } finally {
@@ -238,7 +237,6 @@ const Verification = () => {
         {isLoading && (
           <div className='fixed inset-0 flex flex-col items-center justify-center gap-12'>
             <Loader />
-            {/* <ProgressBar progress={progress} /> */}
           </div>
         )}
 
@@ -251,7 +249,12 @@ const Verification = () => {
           <h2 className='flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent '>
             {t('caption')}
           </h2>
-          <SearchBarMain onPredict={predictBtn} url={url} setUrl={setUrl} setOverview={setOverviewScore}/>
+          <SearchBarMain 
+            onPredict={predictBtn} 
+            url={url} 
+            setUrl={setUrl} 
+            setOverview={setOverviewScore}
+          />
           {overviewScore.isShow === true ? (
             <div className='mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4'>
               <Overall />

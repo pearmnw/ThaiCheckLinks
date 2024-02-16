@@ -5,7 +5,6 @@ import { MouseEventHandler, useState } from "react";
 
 const SearchBarMain: React.FC<any> = ({ onPredict, url, setUrl, setOverview }) => {
   const t = useScopedI18n('homepage');
-  const currentLocale = useCurrentLocale();
   const [open, setOpen] = useState(false);
 
   const handleInputChange = (e: any) => {
