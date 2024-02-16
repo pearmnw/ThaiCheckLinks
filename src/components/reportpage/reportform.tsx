@@ -3,8 +3,14 @@ import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
-const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
+const ReportForm = ({
+  url,
+  metaWebsite,
+  currentPercent,
+  verifySuccess,
+}: any) => {
   const t = useScopedI18n("report");
   const router = useRouter();
   const userInfo = useSession();
@@ -116,18 +122,18 @@ const ReportForm = ({ url, metaWebsite, currentPercent, verifySuccess }) => {
       });
       const data = await res.json();
       console.log(data);
-      // if (res.ok) {
-      //   toast.success(data.message);
-      //   router.push("/success");
-      // } else {
-      //   console.log("Report Failed");
-      //   toast.error(data.message);
-      //   setFormInput((prevState) => ({
-      //     ...prevState,
-      //     successMsg: "",
-      //   }));
-      //   return;
-      // }
+      if (res.ok) {
+        toast.success(data.message);
+        router.push("/report/success");
+      } else {
+        console.log("Report Failed");
+        toast.error(data.message);
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     } catch (error) {
       console.log(error);
     }

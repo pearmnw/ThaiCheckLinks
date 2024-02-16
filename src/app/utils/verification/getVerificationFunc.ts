@@ -237,5 +237,4 @@ export const setCategoryIDForWebMeta = async (currentPercent: any) => {
     } catch (error) {
         console.log(error);
     }
-
 }

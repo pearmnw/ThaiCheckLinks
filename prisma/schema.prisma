@@ -71,7 +71,7 @@ model WebsiteDetail {
   BankID                 String?         @db.VarChar(128)
   BankAccountOwner       String?         @db.VarChar(128)
   WebsiteReportedDetails String
-  BankNumber_            String?         @db.VarChar(50)
+  BankNumber             String?         @db.VarChar(50)
   Verification           Verification?
   Bank                   Bank?           @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
   UserDetail             UserDetail      @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
