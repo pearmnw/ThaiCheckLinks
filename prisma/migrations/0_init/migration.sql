@@ -61,7 +61,7 @@ CREATE TABLE "WebsiteDetail" (
     "WebsiteReportedDate" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "BankID" VARCHAR(128),
     "BankAccountOwner" VARCHAR(128),
-    "BankNumber " VARCHAR(50),
+    "BankNumber" VARCHAR(50),
     "WebsiteReportedDetails" TEXT,
 
     CONSTRAINT "WebsiteDetail_pkey" PRIMARY KEY ("WebsiteID")

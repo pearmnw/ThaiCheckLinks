@@ -173,7 +173,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
     <div className="text-center text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3]">
         {t("title")}
         <div className="flex justify-center text-center text-[30px] font-semibold text-transparent bg-clip-text bg-[#011E52]">
-          URL: 
+          URL: &nbsp;
           <div className="text-[30px] font-thin text-transparent bg-clip-text bg-[#011E52]">
             {/* TODO: This text may change to variable for the data in database */}
              {websiteUrl}
