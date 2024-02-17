@@ -19,7 +19,7 @@ const TableDatabaseBody= () => {
             </td>
             {item.status !== null ? (
               <td
-                className={`px-6 py-4 whitespace-nowrap text-3xl ${
+                className={`px-6 py-4 whitespace-nowrap text-3xl text-center ${
                   item.status !== t('FOUND')
                     ? 'text-green-600'
                     : 'text-red-600'
@@ -28,7 +28,7 @@ const TableDatabaseBody= () => {
                 {item.status}
               </td>
             ) : (
-              <td className='px-6 py-4 whitespace-nowrap text-3xl text-custom-black'>
+              <td className='px-6 py-4 whitespace-nowrap text-3xl text-custom-black text-center'>
                 {t('No Result')}
               </td>
             )}

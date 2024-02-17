@@ -6,7 +6,6 @@ import React from 'react';
 
 const ProgressBar: React.FC<ProgressBarScoreProps> = ({ score, maxScore, color }) => {
   const t = useScopedI18n('verificationpage');
-  const currentLocale = useCurrentLocale();
   const widthPercent = (score / maxScore) * 100;
 
   return (

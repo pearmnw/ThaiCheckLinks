@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, createContext } from 'react';
+
+import React, { useState, createContext, useEffect } from 'react';
 import { useScopedI18n, useCurrentLocale } from '@/locales/client';
 import axios from 'axios';
 
@@ -11,7 +12,13 @@ import Overall from './Overall';
 import API from './API';
 import Measurement from './Measurement';
 
-import { getHighestVerifyOverall, makeRequest } from '@/lib/utils';
+import {
+  getHighestVerifyScore,
+  makeRequest,
+  getMaliciousScore,
+  countStatus,
+  scaleNumber,
+} from '@/lib/utils';
 
 export const VerificationContext = createContext<any>(null);
 
@@ -25,6 +32,7 @@ const Verification = () => {
   const [overviewScore, setOverviewScore] = useState<any>({
     isShow: false,
     riskScoreOverall: 0,
+    maliciousUrlOverall: 0,
     userReportCount: {
       gambling: 0,
       scam: 0,
@@ -52,10 +60,6 @@ const Verification = () => {
       maxScam: 0,
       maxFake: 0,
     },
-    maliciousPercent: {
-      benignProb: 0,
-      maliciousProb: 0,
-    },
     hasAnotherDatabase: [
       {
         name: 'IPQuality',
@@ -80,38 +84,13 @@ const Verification = () => {
       .then((res) => {
         // Display Data
         console.log(res.data);
-        const { currentPercent } = res.data;
+        const { currentPercent, urlDetection, isRisk } = res.data;
 
-        // Find max of current Percent
-        const highestVerifyOverall = getHighestVerifyOverall(currentPercent);
-
-        if (!!currentPercent) {
-          // TODO: Update Max Percent with Database (UNDONE!!!)
+        // IF AI DOESN'T WORK ANYWAY
+        if (currentPercent === null) {
           setOverviewScore((prev: any) => {
             return {
               ...prev,
-              maxPercent: {
-                maxOther: 70,
-                maxGambling: 15,
-                maxScam: 15,
-                maxFake: 44,
-              },
-              currentPercent,
-              highestVerifyOverall,
-            };
-          });
-
-          // updateUrlPercent(resp.data.url_detection);
-        } else {
-          setOverviewScore((prev: any) => {
-            return {
-              ...prev,
-              maxPercent: {
-                maxOther: 0,
-                maxGambling: 0,
-                maxScam: 0,
-                maxFake: 0,
-              },
               currentPercent: {
                 other: 0,
                 gambling: 0,
@@ -121,6 +100,31 @@ const Verification = () => {
             };
           });
         }
+
+        // Find max of current Percent
+        const highestVerifyOverall = getHighestVerifyScore(currentPercent);
+
+        // Calculate Percent of URL
+        const maliciousUrlOverall = getMaliciousScore(
+          urlDetection.maliciousUrlPercent,
+          isRisk.measurement
+        );
+
+        // TODO: Update Max Percent with Database (UNDONE!!!)
+        setOverviewScore((prev: any) => {
+          return {
+            ...prev,
+            maxPercent: {
+              maxOther: 70,
+              maxGambling: 15,
+              maxScam: 15,
+              maxFake: 44,
+            },
+            currentPercent,
+            highestVerifyOverall,
+            maliciousUrlOverall,
+          };
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -231,6 +235,47 @@ const Verification = () => {
     }
   };
 
+  useEffect(() => {
+    const getOverallScore = async () => {
+      const {
+        maxCategoryReport,
+        highestVerifyOverall,
+        maliciousUrlOverall,
+        hasAnotherDatabase,
+      } = overviewScore;
+      let statusCount = await countStatus(hasAnotherDatabase);
+
+      const reportScore = Math.min(25, maxCategoryReport._count);
+      const verifyScore = highestVerifyOverall._count;
+      const urlScore = maliciousUrlOverall;
+      const apiScore = statusCount;
+
+      const scaledVerifyFactor = scaleNumber(0, 45, 0, 100);
+      const scaledVerifyScore = (verifyScore - 0) * scaledVerifyFactor + 0;
+
+      const scaledUrlFactor = scaleNumber(0, 20, 0, 100);
+      const scaledUrlScore = (urlScore - 0) * scaledUrlFactor + 0;
+
+      const scaledApiFactor = scaleNumber(0, 10, 0, 2);
+      const scaledApiScore = (apiScore - 0) * scaledApiFactor + 0;
+
+      const riskScoreOverall = Math.round(reportScore + scaledVerifyScore + scaledUrlScore + scaledApiScore);
+
+      setOverviewScore((prev: any) => {
+        return {
+          ...prev,
+          riskScoreOverall,
+        };
+      });
+    }
+
+    if (!isLoading) {
+      getOverallScore();
+    }
+
+  }, [isLoading]);
+
+
   return (
     <VerificationContext.Provider value={{ overviewScore }}>
       <section>
@@ -249,10 +294,10 @@ const Verification = () => {
           <h2 className='flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent '>
             {t('caption')}
           </h2>
-          <SearchBarMain 
-            onPredict={predictBtn} 
-            url={url} 
-            setUrl={setUrl} 
+          <SearchBarMain
+            onPredict={predictBtn}
+            url={url}
+            setUrl={setUrl}
             setOverview={setOverviewScore}
           />
           {overviewScore.isShow === true ? (

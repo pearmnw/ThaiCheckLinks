@@ -1,15 +1,21 @@
+"use client";
 import { useScopedI18n } from '@/locales/client';
 import Link from 'next/link';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { VerificationContext } from '../Verification';
 
 const RiskMeasurement = () => {
   const t = useScopedI18n('verificationpage');
-  const { maxCategoryReport, highestVerifyOverall, hasAnotherDatabase } =
-    useContext(VerificationContext).overviewScore;
+  const {
+    maxCategoryReport,
+    highestVerifyOverall,
+    maliciousUrlOverall,
+    hasAnotherDatabase,
+  } = useContext(VerificationContext).overviewScore;
+
 
   const getColor = (score: number) => {
-    if (score >= 1 && score <= 25) {
+    if (score >= 0 && score <= 25) {
       return '#04CE00';
     } else if (score > 25 && score <= 50) {
       return '#F2CC6B';
@@ -60,15 +66,14 @@ const RiskMeasurement = () => {
   };
 
   const getResultHighestVerify = () => {
-    if (
-      highestVerifyOverall &&
-      highestVerifyOverall._count
-    ) {
+    if (highestVerifyOverall && highestVerifyOverall._count) {
       return (
-        <div className='flex flex-col gap-1' style={ 
-          highestVerifyOverall._type === 'other' ?
-            { color: '#04CE00' } : {  }
-          }>
+        <div
+          className='flex flex-col gap-1'
+          style={
+            highestVerifyOverall._type === 'other' ? { color: '#04CE00' } : {}
+          }
+        >
           {highestVerifyOverall._count} %
           <p className='text-sm'>
             *{t('analysis-most')} "{t(highestVerifyOverall._type)}"
@@ -134,9 +139,9 @@ const RiskMeasurement = () => {
             </p>
             <div
               className='text-center text-5xl font-bold'
-              style={{ color: getColor(0) }}
+              style={{ color: getColor(maliciousUrlOverall) }}
             >
-              0%
+              <div className='flex flex-col gap-1'>{maliciousUrlOverall} %</div>
             </div>
             <div className='text-right underline font-medium'>
               <Link href='#myURL'>{t('seemore')}</Link>

@@ -3,8 +3,6 @@ import ReportHeader from './report/ReportHeader'
 import { useScopedI18n } from '@/locales/client'
 import ReportRisk from './report/ReportRisk'
 import ReportVisualization from './report/ReportVisualization'
-import { ReportProps } from '@/lib/interface/verification/interface'
-import { VerificationContext } from './Verification'
 
 const Report = () => {
   const t = useScopedI18n('verificationpage')
