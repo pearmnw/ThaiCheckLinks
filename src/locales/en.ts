@@ -71,7 +71,7 @@ export default {
     "gambling": "Gambling Report",
     "scam": "Scam Report",
     "fake": "Fake Report",
-    "other": "Other Report",
+    "others": "Others Report",
     "searchtext": "Search Word",
     "searchbutt": "Search",
     "detail": "Details",

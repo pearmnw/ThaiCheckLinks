@@ -1,10 +1,20 @@
 "use client";
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useState } from 'react';
 
-const SearchWordBar = () => {
+interface SearchWordBarProps {
+  onSearch: (term: string) => void;
+}
+const SearchWordBar : React.FC<SearchWordBarProps> = ({ onSearch }) =>{
   const t = useScopedI18n("detailpage");
   const currentLocale = useCurrentLocale();
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchTerm);
+  };
 
   function checkcurrlocale() {
     console.log(currentLocale);
@@ -20,6 +30,8 @@ const SearchWordBar = () => {
             placeholder={t("searchtext")}
             aria-label="Search"
             aria-describedby="button-addon3"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           {/* Search button */}
@@ -28,6 +40,7 @@ const SearchWordBar = () => {
             type="button"
             id="button-addon3"
             data-te-ripple-init
+            onClick={handleSearch}
           >
             {t("searchbutt")}
           </button>

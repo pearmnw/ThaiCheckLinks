@@ -2,7 +2,6 @@
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import { useState } from "react";
 
-
 const SearchBarHome = () => {
   const t = useScopedI18n("homepage");
   const currentLocale = useCurrentLocale();
