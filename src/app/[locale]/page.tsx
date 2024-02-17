@@ -1,5 +1,5 @@
 import WebsiteTable from "@/components/homepage/homepagetable";
-import SearchBarHome from "@/components/searchbar/searchbarhome";
+import SearchBarHome from "@/components/searchbar/searchdatahome";
 import { getScopedI18n } from "../../locales/server";
 export default async function Home() {
   const t = await getScopedI18n("homepage");
