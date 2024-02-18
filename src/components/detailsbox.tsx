@@ -22,7 +22,7 @@ interface Detail {
   BankNumber: string; 
   WebsiteReportedDetails: string; 
 }
-
+//
 // const currentLocale = useCurrentLocale();
 const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   const t = useScopedI18n("detailpage");
