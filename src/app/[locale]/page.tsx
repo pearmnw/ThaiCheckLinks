@@ -12,6 +12,7 @@ export default async function Home() {
           {t("caption")}
         </div>
         <SearchBarMain />
+        {/* Create a condition by icon Search for data / search for verification on component*/}
         <WebsiteTable />
       </div>
     </>
