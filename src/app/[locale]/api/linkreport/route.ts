@@ -33,6 +33,8 @@ export async function POST(req: Request) {
         const websiteMetaArray = await getWebsiteMetaByURL(URL);
         let websiteMeta;
         let webVerification;
+        let createdWebmeta;
+        let methodsucces = false;
         // Result is an array, actually each link must be unique!!
         if (websiteMetaArray.length > 0) {
             // So we can access just the first element
@@ -40,11 +42,18 @@ export async function POST(req: Request) {
             websiteMeta = websiteMetaArray[0];
             console.log(websiteMeta.MetaWebsiteID);
             webVerification = await getVerificationByMetaWebsiteID(websiteMeta.MetaWebsiteID, CurrentPercent);
-            console.log(webVerification);
+            if (webVerification) {
+                console.log("GetVerificationTable: ", webVerification)
+                methodsucces = true;
+            }
         } else {
             console.log("Entry state 2: this url no have in database")
             if (CurrentPercent.gambling >= 70 || CurrentPercent.scam >= 70 || CurrentPercent.fake >= 70) {
-                await createMetaWebsite(MetaWebsite, CurrentPercent)
+                createdWebmeta = await createMetaWebsite(MetaWebsite, CurrentPercent)
+                if (createdWebmeta) {
+                    console.log("CreateMetaWebsite&VerificationTable: ", createdWebmeta)
+                    methodsucces = true;
+                }
             }
             else {
                 console.log("The percent are not pass the threshold");
@@ -60,21 +69,26 @@ export async function POST(req: Request) {
         if (!BankNumber.length) {
             BankNumber = null;
         }
-        console.log("Create Report here!!")
-        const newReport = await db.websiteDetail.create({
-            data: {
-                UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
-                WebCategoryID: Number(webcatID),
-                WebsiteURL,
-                BankID,
-                BankAccountOwner,
-                BankNumber,
-                WebsiteReportedDetails
-            }
-        });
-        console.log(newReport);
-        // return NextResponse.json({ websiteMeta: websiteMetaArray, message: "Find Meta Here" }, { status: 201 });
-        return NextResponse.json({ websiteDetail: newReport, message: "Report created successfully" }, { status: 201 });
+        let newReport;
+        if (methodsucces) {
+            console.log("Create Report here!!")
+            newReport = await db.websiteDetail.create({
+                data: {
+                    UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
+                    WebCategoryID: Number(webcatID),
+                    WebsiteURL,
+                    BankID,
+                    BankAccountOwner,
+                    BankNumber,
+                    WebsiteReportedDetails
+                }
+            });
+            console.log(newReport);
+            return NextResponse.json({ websiteDetail: newReport, message: "Report created successfully" }, { status: 201 });
+        }
+        else {
+            throw Error("Something Wrong");
+        }
     } catch (error) {
         console.error(error);
         // Return or log the error message

@@ -11,7 +11,7 @@ export default {
     "signin": "Sign In",
     "signup": "Sign Up",
     "username": "Username",
-    "text1": "Enter your username, call number or gmail.",
+    "text1": "Enter your username",
     "text2": "Enter your password",
     "password": "Password",
     "signupmes": "If you don't have a user account, click"

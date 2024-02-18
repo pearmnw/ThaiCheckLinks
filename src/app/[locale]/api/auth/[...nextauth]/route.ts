@@ -18,13 +18,12 @@ async function signin(credentials: any) {
             })
             console.log(existingUserName);
             if (!existingUserName) {
-                // return NextResponse.json({message: "This username not exists" }, { status: 409 })
-                throw new Error("Wrong username");
+                throw { status: 409, message: "Wrong username" };
             }
             const passwordMatch = await compare(credentials.password, existingUserName?.UserPassword);
             if (!passwordMatch) {
                 // return NextResponse.json({message: "Password not match" }, { status: 409 })
-                throw new Error("Wrong password");
+                throw { status: 409, message: "Wrong password" };
             }
             return existingUserName;
         }
@@ -52,6 +51,7 @@ async function signin(credentials: any) {
     } catch (error) {
         console.log(error);
         console.log("error while logging in.");
+        throw error;
     }
 
 }
@@ -78,12 +78,15 @@ export const authOptions: NextAuthOptions = {
 
                     if (user) {
                         return {
-                            id: `${user?.UserID}`,
-                            name: user?.UserName,
-                            email: user?.UserEmail,
-                            userphone: user?.UserPhone,
-                            password: user?.UserPassword
-                        }
+                            user: {
+                                id: `${user?.UserID}`,
+                                name: user?.UserName,
+                                email: user?.UserEmail,
+                                userphone: user?.UserPhone,
+                                password: user?.UserPassword,
+                            },
+                            message: "Authentication successful",
+                        };
                     }
                     else {
                         throw new Error("Somethings Wrong!!")
@@ -92,7 +95,7 @@ export const authOptions: NextAuthOptions = {
 
                 } catch (error) {
                     console.log(error);
-                    throw new Error("Failed to signin.");
+                    throw error;
                 }
             },
         })

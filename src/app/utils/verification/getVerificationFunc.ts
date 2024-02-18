@@ -170,16 +170,17 @@ export const createVerification = async (webID: any, currentPercent: any) => {
                 CGamblingPercentage: currentPercent.gambling,
                 CScamPercentage: currentPercent.scam,
                 CFakePercentage: currentPercent.fake,
-                COtherPercentage: currentPercent.others,
+                COtherPercentage: currentPercent.normal,
                 MGamblingPercentage: currentPercent.gambling,
                 MScamPercentage: currentPercent.scam,
                 MFakePercentage: currentPercent.fake,
-                MOtherPercentage: currentPercent.others,
+                MOtherPercentage: currentPercent.normal,
             }
         })
         if (result) {
             console.log(result)
             console.log("Success->updateCurrentPercent");
+            return result;
         }
     } catch (error) {
         return error;
@@ -189,26 +190,26 @@ export const createVerification = async (webID: any, currentPercent: any) => {
 export const createMetaWebsite = async (metaWebsite: any, currentPercent: any) => {
     // TODO: we will keep the website only when the some of type's ML percent[Gambling, Scam, Fake] > 70
     try {
-        if (metaWebsite && currentPercent) {
-            console.log("Start->updateCurrentPercent");
-            const webcatID = setCategoryIDForWebMeta(currentPercent)
-            console.log(metaWebsite);
-            const result = await db.websiteMeta.create({
-                data: {
-                    WebCategoryID: Number(webcatID),
-                    WebsiteURL: metaWebsite.url,
-                    WebsiteMetaTitle: metaWebsite.title,
-                    WebsiteMetaDesc: metaWebsite.description,
-                    WebsiteMetaKeyword: metaWebsite.keyword,
-                    WebsiteText: metaWebsite.detail,
-                    WebsiteStatus: metaWebsite.status,
-                }
-            })
-            if (result) {
-                console.log(result)
-                console.log("Success->updateCurrentPercent");
-                await createVerification(result.MetaWebsiteID, currentPercent)
+        console.log("Start->CreateMetaWebsite");
+        const webcatID = await setCategoryIDForWebMeta(currentPercent)
+        console.log(metaWebsite);
+        const result = await db.websiteMeta.create({
+            data: {
+                WebCategoryID: Number(webcatID),
+                WebsiteURL: metaWebsite.url,
+                WebsiteMetaTitle: metaWebsite.title[0],
+                WebsiteMetaDesc: metaWebsite.description[0],
+                WebsiteMetaKeyword: metaWebsite.keyword,
+                WebsiteText: metaWebsite.detail,
+                WebsiteStatus: metaWebsite.status,
             }
+        })
+        if (result) {
+            console.log(result)
+            console.log("Success->CreateMetaWebsite");
+            const VerificationCreate = await createVerification(result.MetaWebsiteID, currentPercent)
+            console.log("Verification: ", VerificationCreate)
+            return result;
         }
     } catch (error) {
         return error;
@@ -220,14 +221,17 @@ export const setCategoryIDForWebMeta = async (currentPercent: any) => {
         let WebCategoryID;
         // ถ้า Fake กับ gambling or scam มีค่าเท่ากันเก็บอันไหน? ทำไม?
         const maxpercent = Math.max(Number(currentPercent.gambling), Number(currentPercent.scam), Number(currentPercent.fake))
-        switch (maxpercent.toString) {
-            case currentPercent.gambling:
+        console.log("Start set Category Here!")
+        console.log("Maxpercent: ", maxpercent);
+        console.log("maxpercenttostring: ", maxpercent.toString())
+        switch (maxpercent.toString()) {
+            case currentPercent.gambling.toString():
                 WebCategoryID = 1
                 break;
-            case currentPercent.scam:
+            case currentPercent.scam.toString():
                 WebCategoryID = 2
                 break;
-            case currentPercent.fake:
+            case currentPercent.fake.toString():
                 WebCategoryID = 3
                 break;
             default:
