@@ -22,7 +22,7 @@ interface Detail {
   BankNumber: string; 
   WebsiteReportedDetails: string; 
 }
-
+//
 // const currentLocale = useCurrentLocale();
 const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
   const t = useScopedI18n("detailpage");
@@ -194,7 +194,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                 onClick={() => handleCategoryClick(category)}
               >
                 <span className="">
-                {category === 'G' ? t("gambling") : category === 'S' ? t("scam") : category === 'F' ? t("fake") : t("others")} {category === 'G' ? categoryCounts["gambling"]: category === 'S' ? categoryCounts["scam"] : category === 'F' ? categoryCounts["fake"] : category === 'O' ? categoryCounts["others"]:null}
+                {category === 'G' ? t("gamblingr") : category === 'S' ? t("scamr") : category === 'F' ? t("faker") : t("othersr")} {category === 'G' ? categoryCounts["gambling"]: category === 'S' ? categoryCounts["scam"] : category === 'F' ? categoryCounts["fake"] : category === 'O' ? categoryCounts["others"]:null}
                 </span>
                 {selectedCategories.has(category) ? (
                   <svg
@@ -280,12 +280,14 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                   </div>
                   <div className="mt-4 ">
                     <div className="pt-4 flex">
-                      <div className="pl-2 font-semibold text-[24px]">Category: </div>
-                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">{item.WebCategoryName}</div>
+                      <div className="pl-2 font-semibold text-[24px]">{t("category")} : </div>
+                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">
+                      {item.WebCategoryName === 'Gambling' ? t("gambling") : item.WebCategoryName === 'Scam' ? t("scam") : item.WebCategoryName === 'Fake' ? t("fake") : t("others")} 
+                      </div>
                     </div>
 
                     <div className="pt-2 flex">
-                      <div className="pl-2 font-semibold text-[24px]">Detail: </div>
+                      <div className="pl-2 font-semibold text-[24px]">{t("detail")} : </div>
                       <div className="font-normal text-justify text-[22px] pl-2 mt-0.5 line-clamp-3">
                       {searchTerm ? (
                           item.WebsiteReportedDetails.split(new RegExp(`(${searchTerm})`, "gi")).map((part, index) => (
@@ -301,7 +303,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                     </div>
 
                     <div className="pt-2 flex">
-                      <div className="pl-2 font-semibold text-[24px]">Bank: </div>
+                      <div className="pl-2 font-semibold text-[24px]">{t("bank")} : </div>
                       <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">
                       {
                       `${item.BankName} ${item.BankAccountOwner} ${item.BankNumber}`.split(new RegExp(`(${searchTerm})`, 'gi')).map((word, index) => (
@@ -326,7 +328,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       className="text-[#011E52] underline text-xl font-bold"
                       onClick={handleShowMoreClick}
                     >
-                      See More
+                      {t("seemore")}
                     </button>
                   )}
                   {(!showMore && detail.length > 5) && (
@@ -334,7 +336,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       className="text-[#011E52] underline text-xl font-bold"
                       onClick={handleShowAllClick}
                     >
-                      See All
+                      {t("seeall")}
                     </button>
                   )}
                   {(!showMore || detail.length > 5) && (
@@ -342,7 +344,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       className="text-[#011E52] underline text-xl font-bold"
                       onClick={handleShowLessClick}
                     >
-                      See Less
+                      {t("seeless")}
                     </button>
                   )}
               

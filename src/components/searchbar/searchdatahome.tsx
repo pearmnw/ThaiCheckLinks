@@ -1,16 +1,16 @@
 "use client";
-
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
-import { useState } from 'react';
+import { useState } from "react";
 
 interface SearchWordBarProps {
   onSearch: (term: string) => void;
 }
-const SearchWordBar : React.FC<SearchWordBarProps> = ({ onSearch }) =>{
-  const t = useScopedI18n("detailpage");
+
+const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
+  const t = useScopedI18n("homepage");
   const currentLocale = useCurrentLocale();
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
     onSearch(searchTerm);
@@ -24,7 +24,7 @@ const SearchWordBar : React.FC<SearchWordBarProps> = ({ onSearch }) =>{
     <>
       <div className="flex justify-center mb-3">
         <div className="flex justify-center items-center w-[650px] h-[66px] rounded-[50px] bg-[#121B2B]">
-          
+        
         <div className= "pl-6">
             <span className="flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,11 +34,11 @@ const SearchWordBar : React.FC<SearchWordBarProps> = ({ onSearch }) =>{
                 </svg>
               </span>
           </div>
-          
+
           <input
             type="search"
             className="ml-2 -mr-0.5 block min-w-0 flex-auto bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-[#FFFFFF] outline-none transition duration-200 ease-in-out focus:z-[3]"
-            placeholder={t("searchtext")}
+            placeholder={t("text")}
             aria-label="Search"
             aria-describedby="button-addon3"
             value={searchTerm}
@@ -61,4 +61,4 @@ const SearchWordBar : React.FC<SearchWordBarProps> = ({ onSearch }) =>{
   );
 };
 
-export default SearchWordBar;
+export default SearchDataHome;
