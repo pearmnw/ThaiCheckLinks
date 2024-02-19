@@ -56,7 +56,7 @@ export default {
   "homepage": {
     "title": "Start Checking Website Links For Your Safety",
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
-    "text": "Search URL link or category here",
+    "text": "Search URL link or category",
     "verify": "Verify",
     "rank": "Ranking fraudulent links",
     "detail": "Details",
