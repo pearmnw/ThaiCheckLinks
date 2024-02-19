@@ -56,13 +56,30 @@ export default {
   "homepage": {
     "title": "Start Checking Website Links For Your Safety",
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
-    "text": "Insert link here",
+    "text": "Search URL link or category here",
     "verify": "Verify",
     "rank": "Ranking fraudulent links",
     "detail": "Details",
     "category": "Category",
     "reportnum": "Reports Number",
-    "more": "See More"
+    "more": "More details",
+    "searchbutt": "Search",
+    "reportbutt": "Report",
+    "filter": "Filter",
+    "alldefault": "All Defaults",
+    "date": "Date/Time",
+    "old": "Oldest Date",
+    "new": "Lastest Date",
+    "report": "Report Number",
+    "high": "Highest Report",
+    "low": "Lowest Report",
+    "gambling": "Gambling",
+    "scam": "Scam",
+    "fake": "Fake",
+    "others": "Others",
+    "seemore": "See More",
+    "seeall": "See All",
+    "seeless": "See Less"
   },
 
   "detailpage": {

@@ -7,7 +7,7 @@ interface SearchWordBarProps {
 }
 
 const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
-  const t = useScopedI18n("detailpage");
+  const t = useScopedI18n("homepage");
   const currentLocale = useCurrentLocale();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,11 +34,11 @@ const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
                 </svg>
               </span>
           </div>
-          
+
           <input
             type="search"
             className="ml-2 -mr-0.5 block min-w-0 flex-auto bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-[#FFFFFF] outline-none transition duration-200 ease-in-out focus:z-[3]"
-            placeholder={t("searchtext")}
+            placeholder={t("text")}
             aria-label="Search"
             aria-describedby="button-addon3"
             value={searchTerm}

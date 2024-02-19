@@ -1,5 +1,5 @@
 "use client";
-import { useCurrentLocale } from "@/locales/client";
+import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import Link from "next/link";
 import { SetStateAction, useEffect, useRef, useState } from "react";
 import "./styles.css";
@@ -7,7 +7,6 @@ import SearchBarMain from "../searchbar/searchbarmain";
 import SearchDataHome from "../searchbar/searchdatahome";
 
 // =========== Api connect part =========
-// import axios from 'axios';
 
 interface Website {
   id: number; //-> sequentialId
@@ -27,6 +26,7 @@ const WebsiteTable = () => {
   const [filteredDetails, setFilteredDetails] = useState<Website[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const currentLocale = useCurrentLocale();
+  const t = useScopedI18n("homepage");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -133,18 +133,18 @@ const WebsiteTable = () => {
   };
 
   const showMoreButton = !showMore && (
-    <button onClick={handleShowMoreClick}>See More</button>
+    <button onClick={handleShowMoreClick}>{t("seemore")}</button>
   );
 
   let showLessButton = null;
   if (!showMore && displayRange.end > 10 && websites.length > 10) {
-    showLessButton = <button onClick={handleShowLessClick}>See Less</button>;
+    showLessButton = <button onClick={handleShowLessClick}>{t("seeless")}</button>;
   } else if (showMore) {
-    showLessButton = <button onClick={handleShowLessClick}>See Less</button>;
+    showLessButton = <button onClick={handleShowLessClick}>{t("seeless")}</button>;
   }
 
   const showAllButton = !showMore && websites.length > displayRange.end && (
-    <button onClick={handleShowAllClick}>See All</button>
+    <button onClick={handleShowAllClick}>{t("seeall")}</button>
   );
 
   // Overlay filter function
@@ -153,6 +153,7 @@ const WebsiteTable = () => {
     setShowFilterOverlay(!showFilterOverlay);
   };
   // =========
+  // const [displayMore, setDisplayMore] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
@@ -198,7 +199,6 @@ const WebsiteTable = () => {
     };
   }, [showFilterOverlay]);
 
-  // =============== Demo mockup ================
 
   //  ================ API filter ================
   const [filteredWebsites, setFilteredWebsites] = useState<Website[]>([]);
@@ -290,15 +290,21 @@ const WebsiteTable = () => {
 
   const displayedWebsites = showMore
     ? filteredWebsites // Show all websites when showMore is true
-    : filteredWebsites.slice(0, displayRange.end); // Show a limited number of websites when showMore is false
-
+    : filteredWebsites.filter(website => {
+        if (searchTerm) {
+            return (
+                website.WebsiteURL.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                website.WebCategoryName.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        } else {
+            return true; // If no searchTerm, include all websites
+        }
+    }).slice(0, displayRange.end);
+    
   ///==============
 
   return (
     <>
-    
-    
-    {/* //Searchbar */}
     
     <div>
     <SearchDataHome onSearch={handleSearch} />
@@ -315,22 +321,26 @@ const WebsiteTable = () => {
                   <tr>
                     <th scope="col" colSpan={2} className="px-6 py-4">
                       <div className="flex justify-center items-center">
-                        Ranking fraudulent links
+                      {t("rank")}
+                        {/* Ranking fraudulent links */}
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-4">
                       <div className="flex justify-center items-center">
-                        Details
+                      {t("detail")}
+                        {/* Details */}
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-4">
                       <div className="flex justify-center items-center">
-                        Category
+                      {t("category")}
+                        {/* Category */}
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-4">
                       <div className="flex justify-center items-center">
-                        Reports Number
+                      {t("reportnum")}
+                        {/* Reports Number */}
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-4">
@@ -374,18 +384,7 @@ const WebsiteTable = () => {
 
                   {/* {filteredWebsites.map((website, index )=> ( */}
                   {displayedWebsites
-                  .filter((website) => {
-                    // Filter based on searchTerm
-                    if (searchTerm) {
-                      return (
-                        website.WebsiteURL.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        website.WebCategoryName.toLowerCase().includes(searchTerm.toLowerCase())
-                      );
-                    } else {
-                      return true; // If no searchTerm, include all websites
-                    }
-                  })
-                  .map((website, index) => (
+                  .map((website, index) =>(
                     <tr
                       className="border-b-2 bg-[#CCD2DE] dark:border-white"
                       key={website.id}
@@ -397,17 +396,6 @@ const WebsiteTable = () => {
                       </td>
 
                       <td className="whitespace-nowrap py-4 url-column">
-                        {/* {searchTerm ? (
-                          website.WebsiteURL.split(new RegExp(`(${searchTerm})`, 'gi')).map((part, index) => (
-                            part.toLowerCase() === searchTerm.toLowerCase() ? (
-                              <span key={index} style={{ backgroundColor: '#7F9BBC' }}>{part}</span>
-                            ) : (
-                              <span key={index}>{part}</span>
-                            )
-                          ))
-                        ) : (
-                          website.WebsiteURL
-                        )} */}
                         {website.WebsiteURL}
                       </td>
 
@@ -420,7 +408,8 @@ const WebsiteTable = () => {
                         >
                           <div className="flex justify-center items-center">
                             <a className="underline" id="linkdetail">
-                              More details
+                            {t("more")}
+                              {/* More details */}
                             </a>
                           </div>
                         </Link>
@@ -429,18 +418,17 @@ const WebsiteTable = () => {
 
                       <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex justify-center items-center">
-                        {/* {searchTerm ? (
-                          website.WebCategoryName.split(new RegExp(`(${searchTerm})`, 'gi')).map((part, index) => (
-                            part.toLowerCase() === searchTerm.toLowerCase() ? (
-                              <span key={index} style={{ backgroundColor: '#7F9BBC' }}>{part}</span>
-                            ) : (
-                              <span key={index}>{part}</span>
-                            )
-                          ))
+                        {/* {website.WebCategoryName} */}
+                        {/* {["gambling", "scam", "fake", "others"].includes(website.WebCategoryName.toLowerCase()) ? (
+                            // Render the localized text based on the matched category
+                            <span>{t(website.WebCategoryName.toLowerCase().toString)}</span>
                         ) : (
-                          website.WebCategoryName
+                            // Render the original WebCategoryName if it doesn't match any of the specified values
+                            <span>{website.WebCategoryName}</span>
                         )} */}
-                        {website.WebCategoryName}
+                        <span>
+                        {website.WebCategoryName === 'Gambling' ? t("gambling") : website.WebCategoryName === 'Scam' ? t("scam") : website.WebCategoryName === 'Fake' ? t("fake") : t("others")} 
+                        </span>
                       </div>
                     </td>
 
@@ -487,7 +475,8 @@ const WebsiteTable = () => {
             }}
           >
             <h2 className="text-base font-semibold mb-2 px-5 pt-4 flex justify-start text-slate-950">
-              Filter
+            {t("filter")}
+              {/* Filter */}
             </h2>
             <hr className="mb-1 w-fulll h-1.5 border-0 bg-gray-900 bg-opacity-20" />
             {/* Date/Time */}
@@ -502,14 +491,16 @@ const WebsiteTable = () => {
                     onChange={() => handleRadioChange("default", "alldefaults")}
                     checked={selectedOptions.default === "alldefaults"} />
                   <span className="ml-2 text-xs text-slate-950 font-normal ">
-                    All Defaults
+                    {t("alldefault")}
+                    {/* All Defaults */}
                   </span>
                 </label>
               </div>
 
               <div>
                 <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">
-                  Date/Time
+                {t("date")}
+                  {/* Date/Time */}
                 </h3>
                 <div>
                   <label className="flex justify-start items-center mb-2 px-4">
@@ -521,7 +512,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("dateTime", "dateold")}
                       checked={selectedOptions.dateTime === "dateold"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Oldest Date
+                    {t("old")}
+                      {/* Oldest Date */}
                     </span>
                   </label>
 
@@ -534,7 +526,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("dateTime", "datenew")}
                       checked={selectedOptions.dateTime === "datenew"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Latest Date
+                    {t("new")}
+                      {/* Latest Date */}
                     </span>
                   </label>
                 </div>
@@ -542,7 +535,8 @@ const WebsiteTable = () => {
 
               <div>
                 <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">
-                  Report Number
+                  {t("report")}
+                  {/* Report Number */}
                 </h3>
                 <div>
                   <label className="flex justify-start items-center mb-2 px-4">
@@ -554,7 +548,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("report", "highreport")}
                       checked={selectedOptions.report === "highreport"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Highest Report
+                      {t("high")}
+                      {/* Highest Report */}
                     </span>
                   </label>
 
@@ -567,7 +562,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("report", "lowreport")}
                       checked={selectedOptions.report === "lowreport"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Lowest Report
+                    {t("low")}
+                      {/* Lowest Report */}
                     </span>
                   </label>
                 </div>
@@ -575,7 +571,8 @@ const WebsiteTable = () => {
 
               <div>
                 <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">
-                  Category
+                {t("category")}
+                  {/* Category */}
                 </h3>
                 <div>
                   <label className="flex justify-start items-center mb-2 px-4">
@@ -587,7 +584,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("category", "categoryG")}
                       checked={selectedOptions.category === "categoryG"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Gambling
+                      {/* Gambling */}
+                      {t("gambling")}
                     </span>
                   </label>
 
@@ -600,7 +598,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("category", "categoryS")}
                       checked={selectedOptions.category === "categoryS"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Scam
+                    {t("scam")}
+                      {/* Scam */}
                     </span>
                   </label>
 
@@ -613,7 +612,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("category", "categoryF")}
                       checked={selectedOptions.category === "categoryF"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Fake
+                    {t("fake")}
+                      {/* Fake */}
                     </span>
                   </label>
 
@@ -626,7 +626,8 @@ const WebsiteTable = () => {
                       onChange={() => handleRadioChange("category", "categoryO")}
                       checked={selectedOptions.category === "categoryO"} />
                     <span className="ml-2 text-xs text-slate-950 font-normal">
-                      Others
+                    {t("others")}
+                      {/* Others */}
                     </span>
                   </label>
                 </div>
@@ -640,3 +641,4 @@ const WebsiteTable = () => {
 };
 
 export default WebsiteTable;
+
