@@ -1,6 +1,5 @@
-import { ReportVisualizationProps } from "@/lib/interface/verification/interface";
 import { useScopedI18n } from "@/locales/client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   BarChart,
   CartesianGrid,
@@ -8,11 +7,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from "recharts";
-import React, { useState, useEffect, useContext } from "react";
 import { VerificationContext } from "../Verification";
 
 const ReportVisualization = () => {

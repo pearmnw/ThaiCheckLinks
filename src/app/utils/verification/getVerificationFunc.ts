@@ -26,7 +26,7 @@ export const getVerificationByMetaWebsiteID = async (metaWebsiteID: any, current
                 updateMaxFakePercent(verificationInfo.WebsiteID, currentPercent.fake)
             }
             if (checkMaxOthers) {
-                updateMaxOtherPercent(verificationInfo.WebsiteID, currentPercent.others)
+                updateMaxOtherPercent(verificationInfo.WebsiteID, currentPercent.normal)
             }
             return verificationInfo
         }
@@ -68,7 +68,7 @@ export const updateCurrentPercent = async (webID: any, currentPercent: any) => {
                 CGamblingPercentage: currentPercent.gambling,
                 CScamPercentage: currentPercent.scam,
                 CFakePercentage: currentPercent.fake,
-                COtherPercentage: currentPercent.others,
+                COtherPercentage: currentPercent.normal,
             }
         })
         if (result) {
