@@ -85,7 +85,7 @@ export default {
   "detailpage": {
     "title": "Crime Wesite Details",
     "category": "Category",
-    "gambling": "Gamblingt",
+    "gambling": "Gambling",
     "scam": "Scam",
     "fake": "Fake",
     "others": "Others",
