@@ -99,32 +99,33 @@ const Verification = () => {
               },
             };
           });
+        } else {
+
+          // Find max of current Percent
+          const highestVerifyOverall = getHighestVerifyScore(currentPercent);
+
+          // Calculate Percent of URL
+          const maliciousUrlOverall = getMaliciousScore(
+            urlDetection.maliciousUrlPercent,
+            isRisk.measurement
+          );
+
+          // TODO: Update Max Percent with Database (UNDONE!!!)
+          setOverviewScore((prev: any) => {
+            return {
+              ...prev,
+              maxPercent: {
+                maxOther: 70,
+                maxGambling: 15,
+                maxScam: 15,
+                maxFake: 44,
+              },
+              currentPercent,
+              highestVerifyOverall,
+              maliciousUrlOverall,
+            };
+          });
         }
-
-        // Find max of current Percent
-        const highestVerifyOverall = getHighestVerifyScore(currentPercent);
-
-        // Calculate Percent of URL
-        const maliciousUrlOverall = getMaliciousScore(
-          urlDetection.maliciousUrlPercent,
-          isRisk.measurement
-        );
-
-        // TODO: Update Max Percent with Database (UNDONE!!!)
-        setOverviewScore((prev: any) => {
-          return {
-            ...prev,
-            maxPercent: {
-              maxOther: 70,
-              maxGambling: 15,
-              maxScam: 15,
-              maxFake: 44,
-            },
-            currentPercent,
-            highestVerifyOverall,
-            maliciousUrlOverall,
-          };
-        });
       })
       .catch((error) => {
         console.log(error);
