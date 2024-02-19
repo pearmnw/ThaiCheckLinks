@@ -194,7 +194,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                 onClick={() => handleCategoryClick(category)}
               >
                 <span className="">
-                {category === 'G' ? t("gambling") : category === 'S' ? t("scam") : category === 'F' ? t("fake") : t("others")} {category === 'G' ? categoryCounts["gambling"]: category === 'S' ? categoryCounts["scam"] : category === 'F' ? categoryCounts["fake"] : category === 'O' ? categoryCounts["others"]:null}
+                {category === 'G' ? t("gamblingr") : category === 'S' ? t("scamr") : category === 'F' ? t("faker") : t("othersr")} {category === 'G' ? categoryCounts["gambling"]: category === 'S' ? categoryCounts["scam"] : category === 'F' ? categoryCounts["fake"] : category === 'O' ? categoryCounts["others"]:null}
                 </span>
                 {selectedCategories.has(category) ? (
                   <svg
@@ -281,7 +281,9 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                   <div className="mt-4 ">
                     <div className="pt-4 flex">
                       <div className="pl-2 font-semibold text-[24px]">{t("category")} : </div>
-                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">{item.WebCategoryName}</div>
+                      <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">
+                      {item.WebCategoryName === 'Gambling' ? t("gambling") : item.WebCategoryName === 'Scam' ? t("scam") : item.WebCategoryName === 'Fake' ? t("fake") : t("others")} 
+                      </div>
                     </div>
 
                     <div className="pt-2 flex">
