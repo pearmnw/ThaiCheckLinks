@@ -177,28 +177,40 @@ export default {
     "analysis-title": "AI Analyzes Risk Percent",
     "analysis-subtitle": "Highest Percentage Ever Examined",
     "see-overview": "SEE THE OVERVIEW",
-
-    'update': "Current update",
-    'readmore': "Read More Website Details Here",
-    'malicious-url': "Malicious URL Detection",
-
-    "gambling-label": "Gambing",
-    "scam-label": "Scam",
-    "fake-label": "Fake",
-    "other-label": "Other",
+    'update': 'current update',
+    'analysis-most': "Analyzed as a",
 
     "report-title": "Verify The Database",
     "report-subtitle": "Verify Against The User Reporting Database In Thai.ScamLinks",
     "report-title-result": "Verification Result",
     "risk-title-count": "Risk rate based on number of reports",
+
     "low-risk-count": "Low risk with 0-5 reports",
     "moderate-risk-count": "Moderate risk with 6-10 reports",
     "quite-high-risk-count": "Quite high risk with 11-15 reports",
     "serious-risk-count": "Serious risk with 16+ reports",
+    
     "low-count": "Low Risk",
     "quite-low-count": "Quite Low Risk",
     "quite-high-count": "Quite High Risk",
     "high-count": "Serious Risk",
+
+    "gambling-label": "Gambing",
+    "scam-label": "Scam",
+    "fake-label": "Fake",
+    "other-label": "Other",
+    "gambling": "gambling",
+    "scam": "scam",
+    "fake": "fake",
+    "other": "other",
+
+    'report-found': 'FOUND IN DATABASE',
+    'report-not-found': 'NOT FOUND IN DATABASE',
+
+    'report-most': "Most reported as",
+    'report-unit': "People",
+
+    "report-label-bar-plot": "Number of each type of reporting",
 
     "measure-title": "Verify From URL Detection",
     "measure-subtitle": "Check For Risks From URL Information",
@@ -226,22 +238,4 @@ export default {
     'positive': 'Positive',
     'negative': 'Negative'
   },
-
-  "measurement": {
-    "measurement": "Trust Score Measurement Criteria",
-    'positive': 'Positive',
-    'negative': 'Negative',
-    'ssl-true': 'The SSL certificate is valid',
-    'ssl-false': 'The SSL certificate is invalid',
-    'whois-true': 'The website is show on WHOIS',
-    'whois-false': 'The website is hidden on WHOIS',
-    'tranco-true': 'The Tranco rank (how much traffic) is high',
-    'tranco-false': 'The Tranco rank (how much traffic) is rather low',
-    'email-true': 'Paid email address used for registrar',
-    'email-false': 'Free email address used for registrar',
-    'country-true': 'The website is located in a low-risk country',
-    'country-false': 'The website is located in a high-risk country',
-    'age-true': 'This website has existed for quite some years',
-    'age-false': 'This website is relatively new'
-  }
 }

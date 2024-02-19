@@ -1,10 +1,12 @@
 import { useScopedI18n } from '@/locales/client';
 import Link from 'next/link';
-import React from 'react'
+import React, { useContext } from 'react';
+import { VerificationContext } from '../Verification';
 
 const ReportHeader = () => {
-  const t = useScopedI18n('verificationpage')
-
+  const t = useScopedI18n('verificationpage');
+  const { maxCategoryReport } = useContext(VerificationContext).overviewScore;
+  
   return (
     <div className='flex flex-col justify-center items-start text-custom-black gap-5 w-full'>
       <div className='flex justify-between items-center w-full'>
@@ -20,12 +22,24 @@ const ReportHeader = () => {
         {t('report-subtitle')}
       </h3>
 
-      {/* TODO: Connect to Database */}
-      <h3 className='text-3xl font-semibold text-custom-black w-full text-center'>
-        {t('report-title-result')}:
+      <h3 className='text-4xl font-semibold text-custom-black w-full text-center my-8'>
+        {t('report-title-result')}:{' '}
+        {maxCategoryReport._type !== '' ? (
+          <>
+            {maxCategoryReport._type === 'other' ? (
+              <span style={{ color: '#04CE00' }}>{t('report-not-found')}</span>
+            ) : (
+              <span style={{ color: '#B51A36' }}>{t('report-found')}</span>
+            )}
+          </>
+        ) : (
+          <span style={{ color: '#ccc' }}>
+            {t('No Result')}
+          </span>
+        )}
       </h3>
     </div>
   );
-}
+};
 
-export default ReportHeader
+export default ReportHeader;

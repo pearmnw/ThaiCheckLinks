@@ -5,11 +5,7 @@ import TableDatabase from './ApiTable/TableDatabase';
 import { APIProps } from '@/lib/interface/moredetail/interface';
 import Link from 'next/link';
 
-const API: React.FC<APIProps> = ({
-  data,
-  checkIPQuality,
-  checkURLHaus,
-}) => {
+const API = () => {
   const t = useScopedI18n('verificationpage');
   const currentLocale = useCurrentLocale();
 
@@ -30,11 +26,7 @@ const API: React.FC<APIProps> = ({
       </div>
 
       <div className='overflow-hidden shadow-md sm:rounded-lg w-2/3'>
-        <TableDatabase
-          data={data}
-          checkIPQuality={checkIPQuality}
-          checkURLHaus={checkURLHaus}
-        />
+        <TableDatabase />
       </div>
     </section>
   );

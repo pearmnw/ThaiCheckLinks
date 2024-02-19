@@ -1,8 +1,6 @@
 import { useScopedI18n } from '@/locales/client';
-import React, { useState, useEffect } from 'react'
-import { IdentifyRiskProps } from '@/lib/interface/verification/interface';
 
-const IdentifyRisk: React.FC<IdentifyRiskProps> = ({ checked, riskLabel, color, }) => {
+const IdentifyRisk: React.FC<any> = ({ checked, riskLabel, color }) => {
   const t = useScopedI18n('verificationpage')
 
   return (

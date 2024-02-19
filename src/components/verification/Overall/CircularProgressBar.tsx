@@ -1,12 +1,16 @@
 import { CircularProgressBarProps } from '@/lib/interface/verification/interface';
 import { useScopedI18n } from '@/locales/client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { VerificationContext } from '../Verification';
 
-const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
+const CircularProgressBar = () => {
   const t = useScopedI18n('verificationpage');
+  const { riskScoreOverall } = useContext(VerificationContext).overviewScore;
+
+
   const [riskLabel, setRiskLabel] = useState('');
   const maxScore = 100;
-  const normalizedScore = Math.min(score, maxScore); // Ensure score does not exceed 15
+  const normalizedScore = Math.min(riskScoreOverall, maxScore); // Ensure score does not exceed 15
   const angle = (normalizedScore / maxScore) * 180; // Calculate angle based on normalized score
   const radius = 335;
   const x = 435,
@@ -14,7 +18,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
 
   useEffect(() => {
     setRiskLabel(label);
-  }, [score, t]);
+  }, [riskScoreOverall, t]);
 
   const generateTicks = (radius: number, x: number, y: number) => {
     const ticks = [];
@@ -102,13 +106,13 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
 
   // Get color based on the score
   const getColor = () => {
-    if (score > 0 && score <= 25) {
+    if (riskScoreOverall >= 0 && riskScoreOverall <= 25) {
       return { color: '#04CE00', label: t('low-score')}; 
-    } else if (score > 25 && score <= 50) {
+    } else if (riskScoreOverall > 25 && riskScoreOverall <= 50) {
       return { color: '#F2CC6B', label: t('quite-low-score') } ; 
-    } else if (score > 50 && score <= 75) {
+    } else if (riskScoreOverall > 50 && riskScoreOverall <= 75) {
       return { color: '#F97316', label: t('quite-high-score') }; 
-    } else if (score > 75 && score <= 100) {
+    } else if (riskScoreOverall > 75 && riskScoreOverall <= 100) {
       return { color: '#B51A36', label: t('high-score') };
     } else {
       return { color: '#B51A36', label: t('high-score') };
@@ -157,7 +161,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
           {t('sum-percentage')}
         </p>
         <p className='text-6xl font-bold' style={{ color: color }}>
-          {score > 100 ? 100 : score}%
+          {riskScoreOverall > 100 ? 100 : riskScoreOverall}%
         </p>
       </div>
     </div>

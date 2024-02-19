@@ -1,14 +1,15 @@
 import { useScopedI18n } from '@/locales/client'
-import React from 'react'
-import { TableDatabaseBodyProps } from '@/lib/interface/moredetail/interface';
+import React, { useContext } from 'react'
+import { VerificationContext } from '../Verification';
 
-const TableDatabaseBody: React.FC<TableDatabaseBodyProps> = ({ data, checkIPQuality, checkURLHaus }) => {
-  const t = useScopedI18n('moredetailpage');
+const TableDatabaseBody= () => {
+  const t = useScopedI18n('verificationpage');
+  const { hasAnotherDatabase } = useContext(VerificationContext).overviewScore;
 
   return (
     <>
       <tbody>
-        {data.map((item: any, index: number) => (
+        {hasAnotherDatabase.map((item: any, index: number) => (
           <tr
             key={index}
             className={index % 2 !== 0 ? 'bg-white' : 'bg-gray-50'}
@@ -16,10 +17,10 @@ const TableDatabaseBody: React.FC<TableDatabaseBodyProps> = ({ data, checkIPQual
             <td className='px-6 py-4 whitespace-nowrap text-2xl font-medium text-gray-900 text-start border-r-4 border-custom-black'>
               {item.name}
             </td>
-            {checkIPQuality !== 'No Result' && checkURLHaus !== 'No Result' ? (
+            {item.status !== null ? (
               <td
-                className={`px-6 py-4 whitespace-nowrap text-3xl ${
-                  item.status === ('FOUND' || 'ค้นพบ')
+                className={`px-6 py-4 whitespace-nowrap text-3xl text-center ${
+                  item.status !== t('FOUND')
                     ? 'text-green-600'
                     : 'text-red-600'
                 }`}
@@ -27,8 +28,8 @@ const TableDatabaseBody: React.FC<TableDatabaseBodyProps> = ({ data, checkIPQual
                 {item.status}
               </td>
             ) : (
-              <td className='px-6 py-4 whitespace-nowrap text-3xl text-custom-black'>
-                {item.status}
+              <td className='px-6 py-4 whitespace-nowrap text-3xl text-custom-black text-center'>
+                {t('No Result')}
               </td>
             )}
           </tr>

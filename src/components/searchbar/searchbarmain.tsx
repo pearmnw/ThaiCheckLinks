@@ -1,25 +1,21 @@
 "use client";
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
 import { useState } from "react";
 
-interface SearchBarMainProps {
-  onPredict?: any;
-  url: any;
-  setUrl: any;
-}
-
-const SearchBarMain: React.FC<SearchBarMainProps> = ({
+const SearchBarMain: React.FC<any> = ({
   onPredict,
   url,
   setUrl,
+  setOverview,
 }) => {
   const t = useScopedI18n("homepage");
-  const currentLocale = useCurrentLocale();
-  const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
 
   const handleInputChange = (e: any) => {
     setUrl(e.target.value);
+    setOverview((prev: any) => {
+      return { ...prev, isShow: false };
+    });
   };
 
   return (
