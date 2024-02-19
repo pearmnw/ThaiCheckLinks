@@ -95,7 +95,10 @@ export default {
     "searchbutt": "ค้นหา",
     "detail": "รายละเอียด",
     "bank": "บัญชีธนาคาร",
-    "more": "ดูเพิ่มเติม"
+    "more": "ดูเพิ่มเติม",
+    "seemore": "ดูเพิ่มเติม",
+    "seeall": "ดูทั้งหมด",
+    "seeless": "ดูน้อยลง"
   },
 
   "report": {

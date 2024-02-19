@@ -326,7 +326,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       className="text-[#011E52] underline text-xl font-bold"
                       onClick={handleShowMoreClick}
                     >
-                      See More
+                      {t("seemore")}
                     </button>
                   )}
                   {(!showMore && detail.length > 5) && (
@@ -334,7 +334,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       className="text-[#011E52] underline text-xl font-bold"
                       onClick={handleShowAllClick}
                     >
-                      See All
+                      {t("seeall")}
                     </button>
                   )}
                   {(!showMore || detail.length > 5) && (
@@ -342,7 +342,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                       className="text-[#011E52] underline text-xl font-bold"
                       onClick={handleShowLessClick}
                     >
-                      See Less
+                      {t("seeless")}
                     </button>
                   )}
               

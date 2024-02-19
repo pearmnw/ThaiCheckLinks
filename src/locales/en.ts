@@ -93,7 +93,10 @@ export default {
     "searchbutt": "Search",
     "detail": "Details",
     "bank": "Bank Account",
-    "more": "See More"
+    "more": "See More",
+    "seemore": "See More",
+    "seeall": "See All",
+    "seeless": "See Less"
   },
 
   "report": {
