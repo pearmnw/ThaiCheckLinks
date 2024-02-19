@@ -27,27 +27,6 @@ async function signin(credentials: any) {
             }
             return existingUserName;
         }
-        // else if (phonenumpattern.test(credentials.username)) {
-        //     const existingUserPhone = await db.userDetail.findUnique({
-        //         where: { UserPhone: credentials.username },
-        //     })
-        //     if (!existingUserPhone) throw new Error("Wrong Credentials")
-        //     const passwordMatch = await compare(credentials.password, existingUserPhone?.UserPassword);
-        //     if (!passwordMatch) throw new Error("Wrong password");
-        //     return existingUserPhone;
-        // }
-        // else if (emailpattern.test(credentials.username)) {
-        //     const existingUserEmail = await db.userDetail.findUnique({
-        //         where: { UserPhone: credentials.username },
-        //     })
-        //     if (!existingUserEmail) throw new Error("Wrong Credentials")
-        //     const passwordMatch = await compare(credentials.password, existingUserEmail?.UserPassword);
-        //     if (!passwordMatch) throw new Error("Wrong password");
-        //     return existingUserEmail;
-        // }
-        // else {
-        //     throw new Error("Wrong Credentials")
-        // }
     } catch (error) {
         console.log(error);
         console.log("error while logging in.");
@@ -72,20 +51,15 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 try {
                     const user = await signin(credentials);
-                    // console.log({ credentials })
-                    // console.log(user);
-                    // return user;
-
                     if (user) {
                         return {
-                            user: {
-                                id: `${user?.UserID}`,
-                                name: user?.UserName,
-                                email: user?.UserEmail,
-                                userphone: user?.UserPhone,
-                                password: user?.UserPassword,
-                            },
-                            message: "Authentication successful",
+
+                            id: `${user?.UserID}`,
+                            name: user?.UserName,
+                            email: user?.UserEmail,
+                            userphone: user?.UserPhone,
+                            password: user?.UserPassword,
+
                         };
                     }
                     else {
@@ -104,13 +78,6 @@ export const authOptions: NextAuthOptions = {
         jwt: async ({ token, user }) => {
             // on login if a user is passed, we set that data to this token
             user && (token.user = user);
-            // if(user){
-            //     return{
-            //         ...token,
-            //         userphone: user.userphone
-            //     }
-            // }
-            // console.log(token);
             return token;
         },
         session: async ({ session, token }) => {
