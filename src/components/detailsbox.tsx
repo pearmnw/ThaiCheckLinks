@@ -280,12 +280,12 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                   </div>
                   <div className="mt-4 ">
                     <div className="pt-4 flex">
-                      <div className="pl-2 font-semibold text-[24px]">Category: </div>
+                      <div className="pl-2 font-semibold text-[24px]">{t("category")} : </div>
                       <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">{item.WebCategoryName}</div>
                     </div>
 
                     <div className="pt-2 flex">
-                      <div className="pl-2 font-semibold text-[24px]">Detail: </div>
+                      <div className="pl-2 font-semibold text-[24px]">{t("detail")} : </div>
                       <div className="font-normal text-justify text-[22px] pl-2 mt-0.5 line-clamp-3">
                       {searchTerm ? (
                           item.WebsiteReportedDetails.split(new RegExp(`(${searchTerm})`, "gi")).map((part, index) => (
@@ -301,7 +301,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                     </div>
 
                     <div className="pt-2 flex">
-                      <div className="pl-2 font-semibold text-[24px]">Bank: </div>
+                      <div className="pl-2 font-semibold text-[24px]">{t("bank")} : </div>
                       <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">
                       {
                       `${item.BankName} ${item.BankAccountOwner} ${item.BankNumber}`.split(new RegExp(`(${searchTerm})`, 'gi')).map((word, index) => (

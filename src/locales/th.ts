@@ -81,7 +81,7 @@ export default {
     "others": "อื่นๆ",
     "seemore": "ดูเพิ่มเติม",
     "seeall": "ดูทั้งหมด",
-    "seeless": "ย่อข้อมูล"
+    "seeless": "ดูน้อยลง"
   },
 
   "detailpage": {
