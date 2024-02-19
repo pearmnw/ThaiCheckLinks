@@ -288,18 +288,42 @@ const WebsiteTable = () => {
     setFilteredWebsites(filteredWebsites);
   }, [selectedOptions, websites]);
 
-  const displayedWebsites = showMore
+  const thaiToEnglishMap: Record<string, string>  = {
+    "พนัน": "gambling",
+    "หลอกลวง": "scam",
+    "ปลอมแปลง": "fake",
+    "อื่นๆ": "others"
+};
+
+const displayedWebsites = showMore
     ? filteredWebsites // Show all websites when showMore is true
     : filteredWebsites.filter(website => {
         if (searchTerm) {
+            let modifiedSearchTerm = searchTerm;
+            // Check if the search term is in Thai and replace it with English if found in the map
+            if (thaiToEnglishMap.hasOwnProperty(searchTerm)) {
+                modifiedSearchTerm = thaiToEnglishMap[searchTerm];
+            }
+
+            const searchTermLower = modifiedSearchTerm.toLowerCase();
+            const searchTermRegExp = new RegExp(searchTermLower, 'iu'); // 'i' for case insensitive, 'u' for Unicode support
+            
+            console.log('Search Term:', searchTermLower);
+            console.log('Website URL:', website.WebsiteURL);
+            console.log('Web Category Name:', website.WebCategoryName);
+
             return (
-                website.WebsiteURL.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                website.WebCategoryName.toLowerCase().includes(searchTerm.toLowerCase())
+                website.WebsiteURL.toLowerCase().includes(searchTermLower) ||
+                searchTermRegExp.test(website.WebCategoryName.toLowerCase())
             );
         } else {
             return true; // If no searchTerm, include all websites
         }
     }).slice(0, displayRange.end);
+
+
+
+
     
   ///==============
 
@@ -418,14 +442,6 @@ const WebsiteTable = () => {
 
                       <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex justify-center items-center">
-                        {/* {website.WebCategoryName} */}
-                        {/* {["gambling", "scam", "fake", "others"].includes(website.WebCategoryName.toLowerCase()) ? (
-                            // Render the localized text based on the matched category
-                            <span>{t(website.WebCategoryName.toLowerCase().toString)}</span>
-                        ) : (
-                            // Render the original WebCategoryName if it doesn't match any of the specified values
-                            <span>{website.WebCategoryName}</span>
-                        )} */}
                         <span>
                         {website.WebCategoryName === 'Gambling' ? t("gambling") : website.WebCategoryName === 'Scam' ? t("scam") : website.WebCategoryName === 'Fake' ? t("fake") : t("others")} 
                         </span>
@@ -443,12 +459,11 @@ const WebsiteTable = () => {
                   ))}
 
                   {/* ********* See More See Less on Table ********* */}
-                  {(!searchTerm || searchTerm.length < 10) && (
+                  {(!searchTerm || searchTerm.length < 10)  && displayedWebsites.length > 0 && (
                   <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
                     <td colSpan={7} className="whitespace-nowrap px-6 py-4">
                       <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg">
                         <div className="flex justify-center space-x-4">
-                          {/* Center align the buttons and add spacing between them */}
                           {showMoreButton}
                           {showAllButton}
                           {showLessButton}
