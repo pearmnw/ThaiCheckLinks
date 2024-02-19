@@ -49,6 +49,7 @@ export const getHighestVerifyScore = (percent: Record<string, number>) => {
     },
     ['', 0]
   );
+
   return { _count: _count, _type: _type };
 };
 

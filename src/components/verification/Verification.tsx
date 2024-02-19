@@ -246,17 +246,16 @@ const Verification = () => {
       let statusCount = await countStatus(hasAnotherDatabase);
 
       const reportScore = Math.min(25, maxCategoryReport._count);
-      const verifyScore = highestVerifyOverall._count;
+      const verifyScore = highestVerifyOverall._type === "other"? 0 : highestVerifyOverall._count;
       const urlScore = maliciousUrlOverall;
       const apiScore = statusCount;
 
       const scaledVerifyFactor = scaleNumber(0, 45, 0, 100);
-      const scaledVerifyScore = (verifyScore - 0) * scaledVerifyFactor + 0;
-
-      const scaledUrlFactor = scaleNumber(0, 20, 0, 100);
-      const scaledUrlScore = (urlScore - 0) * scaledUrlFactor + 0;
-
       const scaledApiFactor = scaleNumber(0, 10, 0, 2);
+      const scaledUrlFactor = scaleNumber(0, 20, 0, 100);
+      
+      const scaledVerifyScore = (verifyScore - 0) * scaledVerifyFactor + 0;
+      const scaledUrlScore = (urlScore - 0) * scaledUrlFactor + 0;
       const scaledApiScore = (apiScore - 0) * scaledApiFactor + 0;
 
       const riskScoreOverall = Math.round(reportScore + scaledVerifyScore + scaledUrlScore + scaledApiScore);
