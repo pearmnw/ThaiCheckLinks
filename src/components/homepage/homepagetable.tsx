@@ -468,7 +468,7 @@ const WebsiteTable = () => {
         {/* Overlay Rectangle for Filters */}
         {showFilterOverlay && filterButtonRef.current && (
           <div
-            className="fixed w-48 bg-gray-900 bg-opacity-20 rounded-lg shadow-lg"
+            className="fixed w-48 bg-gray-900 backdrop-blur-sm bg-opacity-20 rounded-lg shadow-lg"
             style={{
               top: filterPosition.top + "px",
               left: filterPosition.left + "px",
