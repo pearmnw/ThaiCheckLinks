@@ -122,7 +122,7 @@ const ReportForm = ({
       });
       const data = await res.json();
       console.log(data);
-      if (res.ok) {
+      if (res.ok && data.websiteDetail) {
         toast.success(data.message);
         router.push("/report/success");
       } else {

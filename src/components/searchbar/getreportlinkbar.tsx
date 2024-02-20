@@ -11,7 +11,7 @@ const ReportLinkBar = ({
   getMetaWebsite,
   getCurrentPercent,
   getSuccess,
-}) => {
+}: any) => {
   const t = useScopedI18n("report");
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const ReportLinkBar = ({
     }));
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const value = e.target.value;
     setUrl(value);
     onInputChange(value);
@@ -102,7 +102,7 @@ const ReportLinkBar = ({
       })
       .catch((error) => {
         console.log(error);
-        toast.success(error);
+        toast.error(error);
       });
   };
 
