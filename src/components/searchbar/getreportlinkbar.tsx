@@ -3,6 +3,7 @@
 import { useScopedI18n } from "@/locales/client";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import LoaderOnButt from "../loading/LoaderOnButt";
 
 const ReportLinkBar = ({
@@ -12,7 +13,6 @@ const ReportLinkBar = ({
   getSuccess,
 }) => {
   const t = useScopedI18n("report");
-  // const currentLocale = useCurrentLocale();
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -96,10 +96,13 @@ const ReportLinkBar = ({
           updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
 
           updateMetaWebsite(resp.data.meta_website);
+        } else {
+          throw { message: "Can not verify this website" };
         }
       })
       .catch((error) => {
         console.log(error);
+        toast.success(error);
       });
   };
 

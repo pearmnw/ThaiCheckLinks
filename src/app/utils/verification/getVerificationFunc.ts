@@ -32,6 +32,12 @@ export const getVerificationByMetaWebsiteID = async (metaWebsiteID: any, current
         }
         else {
             // Create verification
+            const verificationInfo = await createVerification(metaWebsiteID, currentPercent);
+            if (verificationInfo) {
+                console.log(verificationInfo);
+                console.log("Success Create Verification for WebID: ", metaWebsiteID)
+            }
+            return verificationInfo
 
         }
     } catch (error) {
@@ -209,6 +215,32 @@ export const createMetaWebsite = async (metaWebsite: any, currentPercent: any) =
             console.log("Success->CreateMetaWebsite");
             const VerificationCreate = await createVerification(result.MetaWebsiteID, currentPercent)
             console.log("Verification: ", VerificationCreate)
+            return VerificationCreate;
+        }
+    } catch (error) {
+        return error;
+    }
+}
+
+export const createUserVerifyBox = async (metaWebsite: any, currentPercent: any) => {
+    // TODO: we will keep the website only when the some of type's ML percent[Gambling, Scam, Fake] > 70
+    try {
+        console.log("Start->createUserVerifyBox");
+        const webcatID = await setCategoryIDForWebMeta(currentPercent)
+        console.log(metaWebsite);
+        const result = await db.userVerifyBox.create({
+            data: {
+                WebsiteURL: metaWebsite.url,
+                WebsiteMetaTitle: metaWebsite.title[0],
+                WebsiteMetaDesc: metaWebsite.description[0],
+                WebsiteMetaKeyword: metaWebsite.keyword,
+                WebsiteStatus: metaWebsite.status,
+            }
+        })
+        if (result) {
+
+            console.log(result)
+            console.log("Success->createUserVerifyBox");
             return result;
         }
     } catch (error) {
