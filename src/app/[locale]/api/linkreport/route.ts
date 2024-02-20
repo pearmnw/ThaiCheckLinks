@@ -6,7 +6,7 @@
 // - ถ้าไม่มีต้องเก็บเข้าเว็บไซต์ Meta + verification ด้วย [ในกรณีที่ซักประเภท>70%]
 
 import { getWebsiteMetaByURL, setCategoryID, setURL } from "@/app/utils/report/getReportFunc";
-import { createMetaWebsite, getVerificationByMetaWebsiteID } from "@/app/utils/verification/getVerificationFunc";
+import { createMetaWebsite, createUserVerifyBox, createVerification, getVerificationByMetaWebsiteID } from "@/app/utils/verification/getVerificationFunc";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -30,66 +30,99 @@ export async function POST(req: Request) {
         // TODO: Call setURL Function to Clean the URL to match the existing URL in WebsiteMeta
         const URL = await setURL(WebsiteURL);
         // TODO: Call getWebsiteMetaByURL function to check existing url in WebsiteMeta
-        const websiteMetaArray = await getWebsiteMetaByURL(URL);
+        const websiteMetaArray: any = await getWebsiteMetaByURL(URL);
         let websiteMeta;
         let webVerification;
-        let createdWebmeta;
+        let getVeriInfo;
         let methodsucces = false;
-        // Result is an array, actually each link must be unique!!
-        if (websiteMetaArray.length > 0) {
-            // So we can access just the first element
-            console.log("Entry state 1: this url have in database")
-            websiteMeta = websiteMetaArray[0];
-            console.log(websiteMeta.MetaWebsiteID);
-            webVerification = await getVerificationByMetaWebsiteID(websiteMeta.MetaWebsiteID, CurrentPercent);
-            if (webVerification) {
-                console.log("GetVerificationTable: ", webVerification)
-                methodsucces = true;
-            }
-        } else {
-            console.log("Entry state 2: this url no have in database")
-            if (CurrentPercent.gambling >= 70 || CurrentPercent.scam >= 70 || CurrentPercent.fake >= 70) {
-                createdWebmeta = await createMetaWebsite(MetaWebsite, CurrentPercent)
-                if (createdWebmeta) {
-                    console.log("CreateMetaWebsite&VerificationTable: ", createdWebmeta)
+        if (websiteMetaArray != null) {
+            // Result is an array, actually each link must be unique!!
+            if (websiteMetaArray.length > 0) {
+                // So we can access just the first element
+                console.log("Entry state 1: this url have in database")
+                websiteMeta = websiteMetaArray[0];
+                console.log(websiteMeta.MetaWebsiteID);
+                webVerification = await getVerificationByMetaWebsiteID(websiteMeta.MetaWebsiteID, CurrentPercent);
+                // Have Verification data: assume that it also has UserVerify data
+                if (webVerification) {
+                    console.log("GetVerificationTable: ", webVerification)
                     methodsucces = true;
                 }
+                else {
+                    // TODO: Create UserVeriBox && Create Verification
+                    const createUserVeriBox: any = await createUserVerifyBox(
+                        MetaWebsite,
+                        CurrentPercent
+                    );
+                    if (!!createUserVeriBox == true) {
+                        getVeriInfo = await createVerification(
+                            websiteMeta.MetaWebsiteID,
+                            CurrentPercent,
+                            createUserVeriBox.UserVerifyID
+                        );
+                        console.log(getVeriInfo);
+                    }
+                }
+            } else {
+                console.log("Entry state 2: this url no have in database")
+                if (CurrentPercent.gambling >= 70 || CurrentPercent.scam >= 70 || CurrentPercent.fake >= 70) {
+                    const createUserVeriBox: any = await createUserVerifyBox(
+                        MetaWebsite,
+                        CurrentPercent
+                    );
+                    if (!!createUserVeriBox == true) {
+                        getVeriInfo = await createMetaWebsite(
+                            MetaWebsite,
+                            CurrentPercent,
+                            createUserVeriBox.UserVerifyID
+                        );
+                        console.log(getVeriInfo);
+                    }
+                }
+                else {
+                    console.log("The percent are not pass the threshold");
+                }
+            }
+            // TODO: Create WebsiteDetails [report details]
+            if (!BankID.length) {
+                BankID = null;
+            }
+            if (!BankAccountOwner.length) {
+                BankAccountOwner = null;
+            }
+            if (!BankNumber.length) {
+                BankNumber = null;
+            }
+            let newReport;
+            if (methodsucces) {
+                console.log("Create Report here!!")
+                newReport = await db.websiteDetail.create({
+                    data: {
+                        UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
+                        WebCategoryID: Number(webcatID),
+                        WebsiteURL,
+                        BankID,
+                        BankAccountOwner,
+                        BankNumber,
+                        WebsiteReportedDetails
+                    }
+                });
+                console.log(newReport);
+                return NextResponse.json({ websiteDetail: newReport, message: "Report created successfully" }, { status: 201 });
             }
             else {
-                console.log("The percent are not pass the threshold");
+                throw Error("Something Wrong");
             }
+        } else {
+            return NextResponse.json(
+                {
+                    VerificationInfo: null,
+                    message: ' is null',
+                },
+                { status: 201 }
+            );
         }
-        // TODO: Create WebsiteDetails [report details]
-        if (!BankID.length) {
-            BankID = null;
-        }
-        if (!BankAccountOwner.length) {
-            BankAccountOwner = null;
-        }
-        if (!BankNumber.length) {
-            BankNumber = null;
-        }
-        let newReport;
-        if (methodsucces) {
-            console.log("Create Report here!!")
-            newReport = await db.websiteDetail.create({
-                data: {
-                    UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
-                    WebCategoryID: Number(webcatID),
-                    WebsiteURL,
-                    BankID,
-                    BankAccountOwner,
-                    BankNumber,
-                    WebsiteReportedDetails
-                }
-            });
-            console.log(newReport);
-            return NextResponse.json({ websiteDetail: newReport, message: "Report created successfully" }, { status: 201 });
-        }
-        else {
-            throw Error("Something Wrong");
-        }
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
         // Return or log the error message
         return NextResponse.json({ message: error.message || 'Unknown error' });

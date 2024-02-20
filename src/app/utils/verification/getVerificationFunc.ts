@@ -4,7 +4,7 @@ import { db } from '@/lib/db';
 
 export const getVerificationByMetaWebsiteID = async (
   metaWebsiteID: any,
-  currentPercent: any
+  currentPercent: any,
 ) => {
   try {
     const verificationInfo = await db.verification.findUnique({
@@ -45,18 +45,12 @@ export const getVerificationByMetaWebsiteID = async (
       if (checkMaxOthers) {
         updateMaxOtherPercent(verificationInfo.WebsiteID, currentPercent.other);
       }
+      console.log(verificationInfo);
+      console.log('Success Create Verification for WebID: ', metaWebsiteID);
       return verificationInfo;
     } else {
       // Create verification
-      const verificationInfo = await createVerification(
-        metaWebsiteID,
-        currentPercent
-      );
-      if (verificationInfo) {
-        console.log(verificationInfo);
-        console.log('Success Create Verification for WebID: ', metaWebsiteID);
-      }
-      return verificationInfo;
+      return null;
     }
   } catch (error) {
     return error;
