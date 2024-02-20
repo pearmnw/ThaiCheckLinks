@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useScopedI18n } from '@/locales/client';
 import Link from 'next/link';
 import React, { useContext } from 'react';
@@ -12,7 +12,6 @@ const RiskMeasurement = () => {
     maliciousUrlOverall,
     hasAnotherDatabase,
   } = useContext(VerificationContext).overviewScore;
-
 
   const getColor = (score: number) => {
     if (score >= 0 && score <= 25) {
@@ -51,7 +50,7 @@ const RiskMeasurement = () => {
       return (
         <div className='flex flex-col gap-1'>
           {maxCategoryReport._count} {t('report-unit')}
-          <p className='text-sm'>
+          <p className='text-sm font-medium'>
             *{t('report-most')} "{t(maxCategoryReport._type)}"
           </p>
         </div>
@@ -75,7 +74,7 @@ const RiskMeasurement = () => {
           }
         >
           {highestVerifyOverall._count} %
-          <p className='text-sm'>
+          <p className='text-sm font-medium'>
             *{t('analysis-most')} "{t(highestVerifyOverall._type)}"
           </p>
         </div>
@@ -99,7 +98,7 @@ const RiskMeasurement = () => {
   return (
     <div>
       <div className='flex flex-col justify-center items-center gap-3 p-4'>
-        <h4 className='text-xl font-semibold text-custom-black'>
+        <h4 className='text-2xl font-semibold text-custom-black'>
           {t('risk-measurement-citeria')}
         </h4>
         <div className='flex flex-col lg:flex-row justify-center items-center gap-3 w-full'>

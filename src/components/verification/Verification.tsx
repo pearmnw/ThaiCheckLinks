@@ -88,6 +88,7 @@ const Verification = () => {
 
         // IF AI DOESN'T WORK ANYWAY
         if (currentPercent === null) {
+          // TODO: Compare Current score with the max score in database, if that website was exist.
           setOverviewScore((prev: any) => {
             return {
               ...prev,
@@ -100,7 +101,6 @@ const Verification = () => {
             };
           });
         } else {
-
           // Find max of current Percent
           const highestVerifyOverall = getHighestVerifyScore(currentPercent);
 
@@ -109,6 +109,8 @@ const Verification = () => {
             urlDetection.maliciousUrlPercent,
             isRisk.measurement
           );
+
+
 
           // TODO: Update Max Percent with Database (UNDONE!!!)
           setOverviewScore((prev: any) => {
@@ -246,20 +248,28 @@ const Verification = () => {
       } = overviewScore;
       let statusCount = await countStatus(hasAnotherDatabase);
 
-      const reportScore = Math.min(25, maxCategoryReport._count);
-      const verifyScore = highestVerifyOverall._type === "other"? 0 : highestVerifyOverall._count;
+      const reportScore =
+        maxCategoryReport._type === 'other'
+          ? 0
+          : Math.min(25, maxCategoryReport._count);
+      const verifyScore =
+        highestVerifyOverall._type === 'other'
+          ? 0
+          : highestVerifyOverall._count;
       const urlScore = maliciousUrlOverall;
       const apiScore = statusCount;
 
       const scaledVerifyFactor = scaleNumber(0, 45, 0, 100);
       const scaledApiFactor = scaleNumber(0, 10, 0, 2);
       const scaledUrlFactor = scaleNumber(0, 20, 0, 100);
-      
+
       const scaledVerifyScore = (verifyScore - 0) * scaledVerifyFactor + 0;
       const scaledUrlScore = (urlScore - 0) * scaledUrlFactor + 0;
       const scaledApiScore = (apiScore - 0) * scaledApiFactor + 0;
 
-      const riskScoreOverall = Math.round(reportScore + scaledVerifyScore + scaledUrlScore + scaledApiScore);
+      const riskScoreOverall = Math.round(
+        reportScore + scaledVerifyScore + scaledUrlScore + scaledApiScore
+      );
 
       setOverviewScore((prev: any) => {
         return {
@@ -267,14 +277,12 @@ const Verification = () => {
           riskScoreOverall,
         };
       });
-    }
+    };
 
     if (!isLoading) {
       getOverallScore();
     }
-
   }, [isLoading]);
-
 
   return (
     <VerificationContext.Provider value={{ overviewScore }}>

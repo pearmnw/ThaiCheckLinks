@@ -1,12 +1,11 @@
 import { CircularProgressBarProps } from '@/lib/interface/verification/interface';
-import { useScopedI18n } from '@/locales/client'
-import React, { useState, useEffect, useContext } from 'react'
+import { useScopedI18n } from '@/locales/client';
+import React, { useState, useEffect, useContext } from 'react';
 import { VerificationContext } from '../Verification';
 
 const CircularProgressBar = () => {
   const t = useScopedI18n('verificationpage');
   const { riskScoreOverall } = useContext(VerificationContext).overviewScore;
-
 
   const [riskLabel, setRiskLabel] = useState('');
   const maxScore = 100;
@@ -107,11 +106,11 @@ const CircularProgressBar = () => {
   // Get color based on the score
   const getColor = () => {
     if (riskScoreOverall >= 0 && riskScoreOverall <= 25) {
-      return { color: '#04CE00', label: t('low-score')}; 
+      return { color: '#04CE00', label: t('low-score') };
     } else if (riskScoreOverall > 25 && riskScoreOverall <= 50) {
-      return { color: '#F2CC6B', label: t('quite-low-score') } ; 
+      return { color: '#F2CC6B', label: t('quite-low-score') };
     } else if (riskScoreOverall > 50 && riskScoreOverall <= 75) {
-      return { color: '#F97316', label: t('quite-high-score') }; 
+      return { color: '#F97316', label: t('quite-high-score') };
     } else if (riskScoreOverall > 75 && riskScoreOverall <= 100) {
       return { color: '#B51A36', label: t('high-score') };
     } else {
@@ -125,8 +124,8 @@ const CircularProgressBar = () => {
     <div className='relative p-5'>
       <svg
         width='870'
-        height='400'
-        viewBox='0 0 870 400'
+        height='420'
+        viewBox='0 0 870 420'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
       >
@@ -166,6 +165,6 @@ const CircularProgressBar = () => {
       </div>
     </div>
   );
-}
+};
 
-export default CircularProgressBar
+export default CircularProgressBar;
