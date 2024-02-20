@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
-import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
+import axios from 'axios';
+import { createContext, useEffect, useState } from 'react';
 
-import Loader from "../loading/Loader";
-import SearchBarMain from "../searchbar/searchbarmain";
-import API from "./API";
-import Classification from "./Classification";
-import Measurement from "./Measurement";
-import Overall from "./Overall";
-import Report from "./Report";
+import Loader from '../loading/Loader';
+import SearchBarMain from '../searchbar/searchbarmain';
+import API from './API';
+import Classification from './Classification';
+import Measurement from './Measurement';
+import Overall from './Overall';
+import Report from './Report';
 
 import {
   countStatus,
@@ -18,15 +18,15 @@ import {
   getMaliciousScore,
   makeRequest,
   scaleNumber,
-} from "@/lib/utils";
+} from '@/lib/utils';
 
 export const VerificationContext = createContext<any>(null);
 
 const Verification = () => {
-  const t = useScopedI18n("verificationpage");
+  const t = useScopedI18n('verificationpage');
   const currentLocale = useCurrentLocale();
 
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [overviewScore, setOverviewScore] = useState<any>({
@@ -42,11 +42,11 @@ const Verification = () => {
     },
     maxCategoryReport: {
       _count: 0,
-      _type: "",
+      _type: '',
     },
     highestVerifyOverall: {
       _count: 0,
-      _type: "",
+      _type: '',
     },
     currentPercent: {
       other: 0,
@@ -62,91 +62,111 @@ const Verification = () => {
     },
     hasAnotherDatabase: [
       {
-        name: "IPQuality",
+        name: 'IPQuality',
         status: null,
       },
       {
-        name: "URLHaus",
+        name: 'URLHaus',
         status: null,
       },
     ],
     metaWebsite: {
-      url: "",
-      title: "",
-      description: "",
-      keyword: "",
-      detail: "",
+      url: '',
+      title: '',
+      description: '',
+      keyword: '',
+      detail: '',
       status: true,
     },
   });
 
   const getVerifyResult = async () => {
     const formData = new FormData();
-    formData.append("url", url);
-    formData.append("path", "verification");
-    axios.defaults.headers.common["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Accept"] = "application/json";
+    formData.append('url', url);
+    formData.append('path', 'verification');
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
 
     await axios
-      .post("http://127.0.0.1:8000/", formData)
+      .post('http://127.0.0.1:8000/', formData)
       .then(async (res) => {
         // Display Data
         console.log(res.data);
         const { currentPercent, urlDetection, isRisk, meta_website } = res.data;
 
-        // IF AI DOESN'T WORK ANYWAY
-        if (currentPercent === null) {
+        // TODO: Compare Current score with the max score in database, if that website was exist.
+        // Find max of current Percent
+        const highestVerifyOverall = getHighestVerifyScore(currentPercent);
+
+        // Calculate Percent of URL
+        const maliciousUrlOverall = getMaliciousScore(
+          urlDetection.maliciousUrlPercent,
+          isRisk.measurement
+        );
+
+        const resp = await fetch('api/verification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            WebsiteURL: url,
+            MetaWebsite: meta_website,
+            CurrentPercent: currentPercent,
+          }),
+        });
+        const data = await resp.json();
+        const { VerificationInfo } = data;
+        console.log(data);
+        const maxPercent = {
+          maxOther: VerificationInfo.MOtherPercentage,
+          maxGambling: VerificationInfo.MGamblingPercentage,
+          maxScam: VerificationInfo.MScamPercentage,
+          maxFake: VerificationInfo.MFakePercentage,
+        };
+
+        // TODO: Update Max Percent with Database (UNDONE!!!)
+        if (currentPercent != null) {
           setOverviewScore((prev: any) => {
             return {
               ...prev,
-              currentPercent: {
-                other: 0,
-                gambling: 0,
-                scam: 0,
-                fake: 0,
-              },
-            };
-          });
-        } else {
-          // TODO: Compare Current score with the max score in database, if that website was exist.
-          // Find max of current Percent
-          const highestVerifyOverall = getHighestVerifyScore(currentPercent);
-
-          // Calculate Percent of URL
-          const maliciousUrlOverall = getMaliciousScore(
-            urlDetection.maliciousUrlPercent,
-            isRisk.measurement
-          );
-
-          const res = await fetch("api/verification", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              WebsiteURL: url,
-              MetaWebsite: meta_website,
-              CurrentPercent: currentPercent,
-            }),
-          });
-          const data = await res.json();
-          console.log(data);
-
-          // TODO: Update Max Percent with Database (UNDONE!!!)
-          setOverviewScore((prev: any) => {
-            return {
-              ...prev,
-              maxPercent: {
-                maxOther: 70,
-                maxGambling: 15,
-                maxScam: 15,
-                maxFake: 44,
-              },
+              maxPercent: maxPercent,
               currentPercent,
               highestVerifyOverall,
               maliciousUrlOverall,
             };
           });
+        } else {
+          if (VerificationInfo == null) {
+            setOverviewScore((prev: any) => {
+              return {
+                ...prev,
+                maxPercent: {
+                  maxOther: 0,
+                  maxGambling: 0,
+                  maxScam: 0,
+                  maxFake: 0,
+                },
+                currentPercent: {
+                  other: 0,
+                  gambling: 0,
+                  scam: 0,
+                  fake: 0,
+                },
+              };
+            });
+          } else {
+            let highestVerifyOverallFromDB = getHighestVerifyScore(maxPercent);
+            setOverviewScore((prev: any) => {
+              return {
+                ...prev,
+                maxPercent: maxPercent,
+                currentPercent,
+                highestVerifyOverall: highestVerifyOverallFromDB,
+                maliciousUrlOverall,
+              };
+            });
+          }
         }
       })
       .catch((error) => {
@@ -192,7 +212,7 @@ const Verification = () => {
         const data = await response_ip_quality.json();
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "IPQuality"
+            db.name === 'IPQuality'
               ? {
                   ...db,
                   status:
@@ -200,8 +220,8 @@ const Verification = () => {
                     data.malware === true ||
                     data.phishing === true ||
                     data.suspicious === true
-                      ? t("FOUND")
-                      : t("NOT FOUND"),
+                      ? t('FOUND')
+                      : t('NOT FOUND'),
                 }
               : db
           );
@@ -210,7 +230,7 @@ const Verification = () => {
       } else {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "IPQuality" ? { ...db, status: t("NOT FOUND") } : db
+            db.name === 'IPQuality' ? { ...db, status: t('NOT FOUND') } : db
           );
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
@@ -222,17 +242,17 @@ const Verification = () => {
       }
       const data = await response_url_haus.json();
 
-      if (data.query_status == "ok") {
+      if (data.query_status == 'ok') {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "URLHaus" ? { ...db, status: t("FOUND") } : db
+            db.name === 'URLHaus' ? { ...db, status: t('FOUND') } : db
           );
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
       } else {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "URLHaus" ? { ...db, status: t("NOT FOUND") } : db
+            db.name === 'URLHaus' ? { ...db, status: t('NOT FOUND') } : db
           );
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
@@ -269,11 +289,11 @@ const Verification = () => {
       let statusCount = await countStatus(hasAnotherDatabase);
 
       const reportScore =
-        maxCategoryReport._type === "other"
+        maxCategoryReport._type === 'other'
           ? 0
           : Math.min(25, maxCategoryReport._count);
       const verifyScore =
-        highestVerifyOverall._type === "other"
+        highestVerifyOverall._type === 'other'
           ? 0
           : highestVerifyOverall._count;
       const urlScore = maliciousUrlOverall;
@@ -308,19 +328,19 @@ const Verification = () => {
     <VerificationContext.Provider value={{ overviewScore }}>
       <section>
         {isLoading && (
-          <div className="fixed inset-0 flex flex-col items-center justify-center gap-12">
+          <div className='fixed inset-0 flex flex-col items-center justify-center gap-12'>
             <Loader />
           </div>
         )}
 
-        <div className={`${isLoading ? "opacity-20" : ""}`}>
+        <div className={`${isLoading ? 'opacity-20' : ''}`}>
           <h1
             className={`relative bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3] bg-clip-text text-center text-[48px] font-extrabold text-transparent`}
           >
-            {t("title")}
+            {t('title')}
           </h1>
-          <h2 className="flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent ">
-            {t("caption")}
+          <h2 className='flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent '>
+            {t('caption')}
           </h2>
           <SearchBarMain
             onPredict={predictBtn}
@@ -329,7 +349,7 @@ const Verification = () => {
             setOverview={setOverviewScore}
           />
           {overviewScore.isShow === true ? (
-            <div className="mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4">
+            <div className='mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4'>
               <Overall />
               <Report />
               <Classification />
@@ -337,9 +357,9 @@ const Verification = () => {
               <API />
             </div>
           ) : (
-            <div className="mx-28 my-8 flex flex-row justify-center items-center gap-8 rounded-lg border-2 border-solid border-slate-600 py-4 h-screen">
-              <h1 className="text-5xl text-custom-black font-bold">
-                {t("No Result")}
+            <div className='mx-28 my-8 flex flex-row justify-center items-center gap-8 rounded-lg border-2 border-solid border-slate-600 py-4 h-screen'>
+              <h1 className='text-5xl text-custom-black font-bold'>
+                {t('No Result')}
               </h1>
             </div>
           )}
