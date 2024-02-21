@@ -4,7 +4,7 @@ import { VerificationContext } from '../Verification';
 
 const TableDatabaseBody= () => {
   const t = useScopedI18n('verificationpage');
-  const { hasAnotherDatabase } = useContext(VerificationContext).overviewScore;
+  const { hasAnotherDatabase, riskScoreOverall } = useContext(VerificationContext).overviewScore;
 
   return (
     <>
@@ -20,9 +20,11 @@ const TableDatabaseBody= () => {
             {item.status !== null ? (
               <td
                 className={`px-6 py-4 whitespace-nowrap text-3xl text-center ${
-                  item.status !== t('FOUND')
+                  item.status !== t('FOUND') && riskScoreOverall > 0
                     ? 'text-green-600'
-                    : 'text-red-600'
+                    : item.status !== t('NOT FOUND') && riskScoreOverall > 0
+                    ? 'text-red-600'
+                    : 'text-gray-600'
                 }`}
               >
                 {item.status}

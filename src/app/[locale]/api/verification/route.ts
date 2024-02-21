@@ -28,6 +28,9 @@ export async function POST(req: Request) {
         let websiteMeta;
         let webVerification;
         let getVeriInfo;
+        // let createUserVeriBox;
+        let methodsucces: boolean = false;
+        let verificationInfo;
         if (websiteMetaArray != null) {
             // Result is an array, actually each link must be unique!!
             if (websiteMetaArray.length > 0) {
@@ -42,6 +45,7 @@ export async function POST(req: Request) {
                 if (webVerification) {
                     console.log('GetVerificationTable: ', webVerification);
                     getVeriInfo = webVerification;
+                    methodsucces = true;
                 }
             } else {
                 console.log('Entry state 2: this url no have in database');

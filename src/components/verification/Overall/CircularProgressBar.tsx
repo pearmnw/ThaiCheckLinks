@@ -17,7 +17,7 @@ const CircularProgressBar = () => {
 
   useEffect(() => {
     setRiskLabel(label);
-  }, [riskScoreOverall, t]);
+  }, [riskScoreOverall]);
 
   const generateTicks = (radius: number, x: number, y: number) => {
     const ticks = [];
@@ -105,7 +105,7 @@ const CircularProgressBar = () => {
 
   // Get color based on the score
   const getColor = () => {
-    if (riskScoreOverall >= 0 && riskScoreOverall <= 25) {
+    if (riskScoreOverall >= 1 && riskScoreOverall <= 25) {
       return { color: '#04CE00', label: t('low-score') };
     } else if (riskScoreOverall > 25 && riskScoreOverall <= 50) {
       return { color: '#F2CC6B', label: t('quite-low-score') };
@@ -114,7 +114,7 @@ const CircularProgressBar = () => {
     } else if (riskScoreOverall > 75 && riskScoreOverall <= 100) {
       return { color: '#B51A36', label: t('high-score') };
     } else {
-      return { color: '#B51A36', label: t('high-score') };
+      return { color: '#ccc', label: t('No Result') };
     }
   };
 
