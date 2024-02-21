@@ -31,23 +31,22 @@ export async function POST(req: Request) {
     // let createUserVeriBox;
     let methodsucces: boolean = false;
     let verificationInfo;
-    if (websiteMetaArray != null) {
-        // Result is an array, actually each link must be unique!!
-        if (websiteMetaArray.length > 0) {
-        // So we can access just the first element
-        console.log('Entry state 1: this url have in database');
-        websiteMeta = websiteMetaArray[0];
-        console.log(websiteMeta.MetaWebsiteID);
-        webVerification = await getVerificationByMetaWebsiteID(
-            websiteMeta.MetaWebsiteID,
-            CurrentPercent
-        );
-        if (webVerification) {
-            console.log('GetVerificationTable: ', webVerification);
-            getVeriInfo = webVerification;
-            methodsucces = true;
-        }
-        } else {
+    // Result is an array, actually each link must be unique!!
+    if (websiteMetaArray.length > 0) {
+    // So we can access just the first element
+    console.log('Entry state 1: this url have in database');
+    websiteMeta = websiteMetaArray[0];
+    console.log(websiteMeta.MetaWebsiteID);
+    webVerification = await getVerificationByMetaWebsiteID(
+        websiteMeta.MetaWebsiteID,
+        CurrentPercent
+    );
+    if (webVerification) {
+        console.log('GetVerificationTable: ', webVerification);
+        getVeriInfo = webVerification;
+        methodsucces = true;
+    }
+    } else {
         console.log('Entry state 2: this url no have in database');
         if (
             CurrentPercent.gambling >= 70 ||
@@ -68,24 +67,15 @@ export async function POST(req: Request) {
         } else {
             console.log('The percent are not pass the threshold');
         }
-        }
-
-        return NextResponse.json(
-        {
-            VerificationInfo: getVeriInfo,
-            message: 'Verification created successfully',
-        },
-        { status: 201 }
-        );
-    } else {
-        return NextResponse.json(
-            {
-                VerificationInfo: null,
-                message: 'Verification is null',
-            },
-            { status: 201 }
-        );
     }
+
+    return NextResponse.json(
+    {
+        VerificationInfo: getVeriInfo,
+        message: 'Verification created successfully',
+    },
+    { status: 201 }
+    );
     } catch (error: any) {
         console.error(error);
         // Return or log the error message

@@ -14,6 +14,7 @@ import Report from './Report';
 
 import {
   countStatus,
+  defaultOverviewScore,
   getHighestVerifyScore,
   getMaliciousScore,
   makeRequest,
@@ -70,14 +71,6 @@ const Verification = () => {
         status: null,
       },
     ],
-    metaWebsite: {
-      url: '',
-      title: '',
-      description: '',
-      keyword: '',
-      detail: '',
-      status: true,
-    },
   });
 
   const getVerifyResult = async () => {
@@ -93,7 +86,7 @@ const Verification = () => {
         // Display Data
         console.log(res.data);
         const { currentPercent, urlDetection, isRisk, meta_website } = res.data;
-
+        
         // TODO: Compare Current score with the max score in database, if that website was exist.
         // Find max of current Percent
         const highestVerifyOverall = getHighestVerifyScore(currentPercent);
@@ -115,14 +108,15 @@ const Verification = () => {
             CurrentPercent: currentPercent,
           }),
         });
+        console.log(resp)
         const data = await resp.json();
         const { VerificationInfo } = data;
         console.log(data);
         const maxPercent = {
-          maxOther: VerificationInfo.MOtherPercentage,
-          maxGambling: VerificationInfo.MGamblingPercentage,
-          maxScam: VerificationInfo.MScamPercentage,
-          maxFake: VerificationInfo.MFakePercentage,
+          maxOther: 80,
+          maxGambling: 10,
+          maxScam: 10,
+          maxFake: 44,
         };
 
         // TODO: Update Max Percent with Database (UNDONE!!!)
@@ -171,6 +165,7 @@ const Verification = () => {
       })
       .catch((error) => {
         console.log(error);
+        setOverviewScore(defaultOverviewScore)
       });
   };
 

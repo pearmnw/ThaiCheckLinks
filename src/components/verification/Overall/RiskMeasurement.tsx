@@ -11,16 +11,17 @@ const RiskMeasurement = () => {
     highestVerifyOverall,
     maliciousUrlOverall,
     hasAnotherDatabase,
+    riskScoreOverall,
   } = useContext(VerificationContext).overviewScore;
 
   const getColor = (score: number) => {
-    if (score >= 0 && score <= 25) {
+    if (score >= 1 && score <= 25) {
       return '#04CE00';
     } else if (score > 25 && score <= 50) {
       return '#F2CC6B';
     } else if (score > 50 && score <= 75) {
       return '#F97316';
-    } else if (score >= 100) {
+    } else if (score > 75) {
       return '#B51A36';
     } else {
       return '#ccc';
@@ -28,7 +29,7 @@ const RiskMeasurement = () => {
   };
 
   const getColorReportCount = (score: number) => {
-    if (score > 0 && score <= 5) {
+    if (score >= 0 && score <= 5) {
       return '#04CE00';
     } else if (score > 5 && score <= 10) {
       return '#F2CC6B';
@@ -55,9 +56,15 @@ const RiskMeasurement = () => {
           </p>
         </div>
       );
-    } else {
+    } else if (maxCategoryReport._type === 'other' || riskScoreOverall !== 0) {
       return (
         <p className='text-4xl' style={{ color: '#04CE00' }}>
+          {t('NOT FOUND')}
+        </p>
+      );
+    } else {
+      return (
+        <p className='text-4xl' style={{ color: '#ccc' }}>
           {t('NOT FOUND')}
         </p>
       );
@@ -81,7 +88,7 @@ const RiskMeasurement = () => {
       );
     } else {
       return (
-        <p className='text-4xl' style={{ color: '#04CE00' }}>
+        <p className='text-4xl' style={{ color: '#ccc' }}>
           {t('NOT FOUND')}
         </p>
       );
@@ -155,6 +162,8 @@ const RiskMeasurement = () => {
               style={
                 getApiDatabaseResult()
                   ? { color: '#B51A36' }
+                  : maliciousUrlOverall === 0
+                  ? { color: '#ccc' }
                   : { color: '#04CE00' }
               }
             >

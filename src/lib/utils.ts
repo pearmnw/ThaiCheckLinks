@@ -38,6 +38,49 @@ export const categoryTypeMapping: any = {
   3: 'fake',
 };
 
+export const defaultOverviewScore: any = {
+  isShow: false,
+  riskScoreOverall: 0,
+  maliciousUrlOverall: 0,
+  userReportCount: {
+    gambling: 0,
+    scam: 0,
+    fake: 0,
+    other: 0,
+    sumUserReport: 0,
+  },
+  maxCategoryReport: {
+    _count: 0,
+    _type: '',
+  },
+  highestVerifyOverall: {
+    _count: 0,
+    _type: '',
+  },
+  currentPercent: {
+    other: 0,
+    gambling: 0,
+    scam: 0,
+    fake: 0,
+  },
+  maxPercent: {
+    maxOther: 0,
+    maxGambling: 0,
+    maxScam: 0,
+    maxFake: 0,
+  },
+  hasAnotherDatabase: [
+    {
+      name: 'IPQuality',
+      status: null,
+    },
+    {
+      name: 'URLHaus',
+      status: null,
+    },
+  ],
+};
+
 export const getHighestVerifyScore = (percent: Record<string, number>) => {
   const [_type, _count] = Object.entries(percent).reduce(
     (acc, [key, value]) => {
