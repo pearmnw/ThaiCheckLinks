@@ -100,7 +100,8 @@ export default {
     "more": "See More",
     "seemore": "See More",
     "seeall": "See All",
-    "seeless": "See Less"
+    "seeless": "See Less",
+    "user": "User"
   },
 
   "report": {

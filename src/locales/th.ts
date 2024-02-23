@@ -102,7 +102,8 @@ export default {
     "more": "ดูเพิ่มเติม",
     "seemore": "ดูเพิ่มเติม",
     "seeall": "ดูทั้งหมด",
-    "seeless": "ดูน้อยลง"
+    "seeless": "ดูน้อยลง",
+    "user": "ผู้แจ้งรายที่"
   },
 
   "report": {
