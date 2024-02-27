@@ -15,6 +15,8 @@ const ReportForm = ({
   const router = useRouter();
   const userInfo = useSession();
 
+  const [inputFilled, setInputFilled] = useState(false);
+
   const [formInput, setFormInput] = useState({
     websitecategory: "",
     websitedetail: "",
@@ -38,6 +40,10 @@ const ReportForm = ({
       ...formInput,
       [name]: value,
     });
+    // Check if the input field is filled and update the state
+    if (formInput.websitecategory !== "" && formInput.websitedetail !== "") {
+      setInputFilled(true);
+    }
   };
 
   const validateFormInput = (event: { preventDefault: () => void }) => {
@@ -55,6 +61,7 @@ const ReportForm = ({
     };
 
     if (!url) {
+      setInputFilled(false);
       setFormError({
         ...inputError,
         websiteurl: "Please provide the url",
@@ -63,6 +70,7 @@ const ReportForm = ({
     }
 
     if (!formInput.websitecategory || formInput.websitecategory == "default") {
+      setInputFilled(false);
       setFormError({
         ...inputError,
         websitecategory: t("webCatError"),
@@ -73,6 +81,7 @@ const ReportForm = ({
     }
 
     if (!formInput.websitedetail) {
+      setInputFilled(false);
       console.log("Website details not provided");
       setFormError({
         ...inputError,
@@ -81,7 +90,43 @@ const ReportForm = ({
       hasErrors = true;
     }
 
+    if (formInput.websitedetail) {
+      const words = formInput.websitedetail.toLowerCase().split(/[\s\u200B]+/);
+
+      if (formInput.websitedetail.length <= 50) {
+        setInputFilled(false);
+        console.log("Website details not over than 50 words");
+        setFormError({
+          ...inputError,
+          websitedetail: t("moredetailError2"),
+        });
+        hasErrors = true;
+      }
+
+      // Create a frequency map for each word
+      const wordFrequencyMap: any = {};
+      words.forEach((word) => {
+        wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
+      });
+
+      // Check if any word is repeated more than three times
+      const hasRedundancy = Object.values(wordFrequencyMap).some(
+        (count: any) => count > 3
+      );
+
+      if (hasRedundancy) {
+        setInputFilled(false);
+        console.log("Website details have redundant words");
+        setFormError({
+          ...inputError,
+          websitedetail: t("moredetailError3"),
+        });
+        hasErrors = true;
+      }
+    }
+
     if (!hasErrors) {
+      setInputFilled(false);
       console.log("formInput:", formInput);
       console.log("formError:", formError);
       console.log(url);
@@ -138,6 +183,12 @@ const ReportForm = ({
       console.log(error);
     }
   };
+  const [open, setOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setOpen(!open);
+  };
+
   if (verifySuccess == true) {
     return (
       <>
@@ -190,7 +241,7 @@ const ReportForm = ({
                     console.log("details:", formInput.websitedetail);
                   }}
                   // required
-                  className="block w-[29rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="w-full md:w-[25rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder={t("details")}
                 ></textarea>
                 <p className="text-[12px] font-[500] text-red-600">
@@ -200,8 +251,39 @@ const ReportForm = ({
             </div>
 
             <div className="flex">
-              {t("bankacc")}&nbsp;
-              {":"}
+              <button
+                id="states-button"
+                data-dropdown-toggle="dropdown-states"
+                className="flex"
+                type="button"
+                onClick={toggleDropdown}
+              >
+                {t("bankacc")}&nbsp;
+                <svg
+                  className={`w-3 h-3 ms-3 m-auto transform ${
+                    open ? "rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 4 4 4-4"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div
+              id="dropdown-states"
+              className={`${
+                open ? "" : "hidden"
+              } bg-[#CCD2DE] m-2 px-4 py-8 rounded-md items-center`}
+            >
               <div className="px-[1rem]">
                 <input
                   id="bankaccountowner"
@@ -211,54 +293,55 @@ const ReportForm = ({
                     console.log("Selected value:", target.value);
                     handleUserInput(target.name, target.value);
                   }}
-                  className="block w-[25rem] h-[3rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block mx-auto w-[30rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder={t("banktext")}
                 />
               </div>
-            </div>
-
-            <div className="flex py-8">
-              <select
-                title="bank"
-                id="bank"
-                name="bank"
-                value={formInput.bank}
-                onChange={({ target }) => {
-                  console.log("Selected value:", target.value);
-                  handleUserInput(target.name, target.value);
-                }}
-                className="w-[10.5rem] h-11 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500
-              text-sm"
-              >
-                <option value="default">{t("bank")}</option>
-                <option value="scb">{t("scb")}</option>
-                <option value="kbtg">{t("kbtg")}</option>
-                <option value="ktb">{t("ktb")}</option>
-                <option value="ttb">{t("ttb")}</option>
-                <option value="boa">{t("boa")}</option>
-                <option value="lhb">{t("lhb")}</option>
-                <option value="gsb">{t("gsb")}</option>
-                <option value="others">{t("bankothers")}</option>
-              </select>
-
-              <div className="px-[2rem]">
-                <input
-                  id="bankaccnumber"
-                  name="bankaccnumber"
-                  value={formInput.bankaccnumber}
+              <div className="flex pt-8">
+                <select
+                  title="bank"
+                  id="bank"
+                  name="bank"
+                  value={formInput.bank}
                   onChange={({ target }) => {
                     console.log("Selected value:", target.value);
                     handleUserInput(target.name, target.value);
                   }}
-                  className="block w-[25rem] h-[3rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={t("banknum")}
-                />
+                  className="w-[8rem] h-8 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500 m-auto
+  text-sm"
+                >
+                  <option value="default">{t("bank")}</option>
+                  <option value="scb">{t("scb")}</option>
+                  <option value="kbtg">{t("kbtg")}</option>
+                  <option value="ktb">{t("ktb")}</option>
+                  <option value="ttb">{t("ttb")}</option>
+                  <option value="boa">{t("boa")}</option>
+                  <option value="lhb">{t("lhb")}</option>
+                  <option value="gsb">{t("gsb")}</option>
+                  <option value="others">{t("bankothers")}</option>
+                </select>
+
+                <div className="pl-[1rem]">
+                  <input
+                    id="bankaccnumber"
+                    name="bankaccnumber"
+                    value={formInput.bankaccnumber}
+                    onChange={({ target }) => {
+                      console.log("Selected value:", target.value);
+                      handleUserInput(target.name, target.value);
+                    }}
+                    className="block w-[24rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder={t("banknum")}
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div className="text-center py-[2.5rem]">
             <button
-              className="items-center justify-center text-[16px] mr-2 bg-[#9F9FA4] text-white w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
+              className={`items-center justify-center text-[16px] mr-2 ${
+                inputFilled ? "bg-[#121B2B]" : "bg-[#9F9FA4]"
+              } text-white w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex`}
               type="submit"
               id="button-addon3"
               data-te-ripple-init

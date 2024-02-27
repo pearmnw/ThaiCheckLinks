@@ -113,8 +113,8 @@ export default {
     "searchbutt": "Confirm",
     "Catagory": "Catagories of illegal links*",
     "typefield": "Catagory",
-    "moredetails": "More details*",
-    "details": "Details",
+    "moredetails": "How does this website pose a risk?*",
+    "details": "Details (At Least 50 characters)",
     "bankacc": "Bank Account (Optional)",
     "banktext": "Bank Account Holder Name (Select 1 account if there are many)",
     "bankfield1": "Bank Account",
@@ -134,7 +134,9 @@ export default {
     "gsb": "Government Savings Bank",
     "bankothers": "Others",
     "webCatError": "Please select your website catagory",
-    "moredetailError": "Please provide more details about this website"
+    "moredetailError": "Please provide more details about this website",
+    "moredetailError2": "Please provide the details over than 50 characters",
+    "moredetailError3": "Please do not use the redundancy word over 3 time",
   },
 
   "reportsuccess": {
@@ -189,7 +191,7 @@ export default {
     "moderate-risk-count": "Moderate risk with 6-10 reports",
     "quite-high-risk-count": "Quite high risk with 11-15 reports",
     "serious-risk-count": "Serious risk with 16+ reports",
-    
+
     "low-count": "Low Risk",
     "quite-low-count": "Quite Low Risk",
     "quite-high-count": "Quite High Risk",

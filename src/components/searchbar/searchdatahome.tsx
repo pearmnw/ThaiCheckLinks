@@ -35,13 +35,13 @@ const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
               >
                 <path
                   fillRule="evenodd"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                   d="M2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10ZM4 12.5C4 12.5 10 20.5 15.5 10C15.5 6.96243 13 4 10 4.5L7 8.5L4 12.5Z"
                   fill="white"
                 />
                 <path
                   fillRule="evenodd"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                   d="M15.7072 14.293L21.7072 20.293L20.293 21.7072L14.293 15.7072L15.7072 14.293Z"
                   fill="white"
                 />
