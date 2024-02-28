@@ -264,6 +264,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                           // If there is no search term, display the username as is
                           item.UserName
                         )}
+                        {/* {`${t("user")} ${index + 1}`} */}
                     </div>
                     <div className="font-normal text-[24px] absolute top-11 right-10 pr-6 pt-6">
                     {new Date(item.reporttime).toLocaleString('en-US', {
