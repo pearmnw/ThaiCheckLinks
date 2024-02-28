@@ -295,6 +295,34 @@ const WebsiteTable = () => {
     "อื่นๆ": "others"
 };
 
+// const displayedWebsites = showMore
+//   ? filteredWebsites // Show all websites when showMore is true
+//   : filteredWebsites.filter((website) => {
+//       if (searchTerm) {
+//         let modifiedSearchTerm = searchTerm.trim(); // Remove leading and trailing spaces
+//         // Check if the search term is in Thai and replace it with English if found in the map
+//         if (thaiToEnglishMap.hasOwnProperty(modifiedSearchTerm)) {
+//           modifiedSearchTerm = thaiToEnglishMap[modifiedSearchTerm];
+//         }
+
+//         const searchTermLower = modifiedSearchTerm.toLowerCase();
+//         const searchTermRegExp = new RegExp(searchTermLower, 'iu'); // 'i' for case insensitive, 'u' for Unicode support
+
+//         const cleanURL = website.WebsiteURL.trim().replace(/\s+/g, ''); // Remove all spaces in the URL
+
+//         // Check if the base URL is a substring of the search term
+//         const baseUrlRegex = new RegExp(`^${cleanURL.replace(/\./g, '\\.')}`, 'iu');
+
+//         return (
+//           baseUrlRegex.test(searchTermLower) ||
+//           cleanURL.toLowerCase().includes(searchTermLower) ||
+//           searchTermRegExp.test(website.WebCategoryName.toLowerCase())
+//         );
+//       } else {
+//         return true; // If no searchTerm, include all websites
+//       }
+//     }).slice(0, displayRange.end);
+
 const displayedWebsites = showMore
   ? filteredWebsites // Show all websites when showMore is true
   : filteredWebsites.filter((website) => {
@@ -305,6 +333,11 @@ const displayedWebsites = showMore
           modifiedSearchTerm = thaiToEnglishMap[modifiedSearchTerm];
         }
 
+        // Add 'https://' if the search term does not start with 'http://' or 'https://'
+        if (!/^https?:\/\//i.test(modifiedSearchTerm)) {
+          modifiedSearchTerm = 'https://' + modifiedSearchTerm;
+        }
+
         const searchTermLower = modifiedSearchTerm.toLowerCase();
         const searchTermRegExp = new RegExp(searchTermLower, 'iu'); // 'i' for case insensitive, 'u' for Unicode support
 
@@ -313,8 +346,12 @@ const displayedWebsites = showMore
         // Check if the base URL is a substring of the search term
         const baseUrlRegex = new RegExp(`^${cleanURL.replace(/\./g, '\\.')}`, 'iu');
 
+        // Match even if additional paths exist after the base URL
+        const baseUrlWithPathsRegex = new RegExp(`^${cleanURL.replace(/\./g, '\\.')}(\/.*)?`, 'iu');
+
         return (
           baseUrlRegex.test(searchTermLower) ||
+          baseUrlWithPathsRegex.test(searchTermLower) || // Match even if additional paths exist
           cleanURL.toLowerCase().includes(searchTermLower) ||
           searchTermRegExp.test(website.WebCategoryName.toLowerCase())
         );
@@ -322,6 +359,8 @@ const displayedWebsites = showMore
         return true; // If no searchTerm, include all websites
       }
     }).slice(0, displayRange.end);
+
+
 
 
   ///==============
