@@ -3,7 +3,7 @@ import { URL } from 'url';
 
 interface WebsiteReport {
     UserName: string;
-    UserPictureURL: string| null; // Update to accept null values;
+    UserPictureURL: string | null; // Update to accept null values;
     WebsiteURL: string;
     WebCategoryID: number;
     WebCategoryName: string;

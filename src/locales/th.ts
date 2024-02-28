@@ -138,7 +138,7 @@ export default {
     "webCatError": "โปรดเลือกประเภทของเว็บไซต์!",
     "moredetailError": "โปรดกรอกข้อมูลเกี่ยวกับเว็บไซต์เพิ่มเติม!",
     "moredetailError2": "กรุณากรอกรายละเอียดให้เกิน 50 ตัวอักษร",
-    "moredetailError3": "กรุณาไม่ใช้คำซ้ำซ้อนเกิน 3 ครั้ง", ห
+    "moredetailError3": "กรุณาไม่ใช้คำซ้ำซ้อนเกิน 3 ครั้ง",
   },
 
   "reportsuccess": {
