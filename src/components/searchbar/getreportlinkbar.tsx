@@ -50,6 +50,10 @@ const ReportLinkBar = ({
     fake: 0,
   });
 
+  const [formError, setFormError] = useState({
+    websiteurl: "",
+  });
+
   const formData = new FormData();
   formData.append("url", url);
   formData.append("path", "report");
@@ -106,16 +110,52 @@ const ReportLinkBar = ({
       });
   };
 
+  const checkURL = async () => {
+    let hasError = false;
+    const urlPattern = /^(https?:\/\/)/;
+    const inputError = {
+      websiteurl: "",
+    };
+
+    if (!url) {
+      hasError = true;
+      setFormError({
+        ...inputError,
+        websiteurl: t("urlError"),
+      });
+    } else {
+      if (!urlPattern.test(url)) {
+        hasError = true;
+        setFormError({
+          ...inputError,
+          websiteurl: t("urlError2"),
+        });
+      } else {
+        setFormError({
+          ...inputError,
+          websiteurl: "",
+        });
+      }
+    }
+    return hasError;
+  };
+
   const handleClick = async () => {
     try {
       setIsLoading(true);
-      await getVerifyResult(); // Corrected this line
+      const hasURLError = await checkURL();
+      if (!hasURLError) {
+        await getVerifyResult();
+        setIsLoading(false); // Stop Loading
+        setIsSuccess(true);
+        console.log(verifyInfo);
+      } else {
+        setIsLoading(false); // Stop Loading
+        setIsSuccess(false);
+        console.log(verifyInfo);
+      }
     } catch (error: any) {
       console.error(`An error occurred: ${error}`);
-    } finally {
-      setIsLoading(false); // Stop Loading
-      setIsSuccess(true);
-      console.log(verifyInfo);
     }
   };
 
@@ -188,6 +228,9 @@ const ReportLinkBar = ({
           </button>
         </div>
       </div>
+      <p className="text-[12px] font-[500] text-center text-red-600">
+        {formError.websiteurl}
+      </p>
       <div className="flex justify-center mb-3">
         <button
           type="button"
@@ -197,7 +240,7 @@ const ReportLinkBar = ({
         >
           {isSuccess && !isLoading ? (
             <div
-              className="items-center justify-center text-[16px] mr-2 bg-[#9F9FA4] text-white w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
+              className="items-center justify-center text-[16px] mr-2 bg-[#121B2B] text-white w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
               id="button-addon3"
               data-te-ripple-init
             >

@@ -42,6 +42,7 @@ export default {
     "errpw2": "password must contain at least one number.",
     "errphone": "please enter a correct phone number.",
     "errconsent": "Please read and consent to the terms.",
+    "warntext": "(This username will show when reporting)"
   },
 
 
@@ -114,7 +115,7 @@ export default {
     "searchbutt": "Confirm",
     "Catagory": "Catagories of illegal links*",
     "typefield": "Catagory",
-    "moredetails": "How does this website pose a risk?*",
+    "moredetails": "How does this website risk*",
     "details": "Details (At Least 50 characters)",
     "bankacc": "Bank Account (Optional)",
     "banktext": "Bank Account Holder Name (Select 1 account if there are many)",
@@ -134,6 +135,8 @@ export default {
     "lhb": "Land and Houses Bank",
     "gsb": "Government Savings Bank",
     "bankothers": "Others",
+    "urlError": "Please provide the URL",
+    "urlError2": "Please provide the correct URL's format",
     "webCatError": "Please select your website catagory",
     "moredetailError": "Please provide more details about this website",
     "moredetailError2": "Please provide the details over than 50 characters",

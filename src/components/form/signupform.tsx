@@ -226,9 +226,14 @@ const SignUpForm = () => {
     <div id="__next" className="m-0 text-start mx-auto w-full">
       <form onSubmit={validateFormInput}>
         <div className="pt-4">
-          <label className="block text-sm font-semibold leading-6 text-gray-900 mb-[-20px]">
-            {t("username")}
-          </label>
+          <p className="flex">
+            <label className="block text-sm font-semibold leading-6 text-gray-900 mb-[-20px]">
+              {t("username")}&nbsp;
+            </label>
+            <label className="block text-sm font-semibold leading-6 text-[#787B93] mb-[-20px]">
+              {t("warntext")}
+            </label>
+          </p>
           <div className="m-0 py-0 w-[24rem] h-12 px-4 bg-white rounded-2xl border border-stone-300 justify-start items-center inline-flex">
             <input
               id="username"

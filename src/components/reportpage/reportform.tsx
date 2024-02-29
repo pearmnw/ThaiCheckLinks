@@ -46,11 +46,116 @@ const ReportForm = ({
     }
   };
 
+  // const validateFormInput = (event: { preventDefault: () => void }) => {
+  //   event.preventDefault();
+  //   let hasErrors = false;
+  //   // Initialize an object to track input errors
+  //   let inputError = {
+  //     userID: "",
+  //     websiteurl: "",
+  //     websitecategory: "",
+  //     websitedetail: "",
+  //     bankaccname: "",
+  //     bankaccountowner: "",
+  //     bankaccnumber: "",
+  //   };
+
+  //   if (!url) {
+  //     setInputFilled(false);
+  //     setFormError({
+  //       ...inputError,
+  //       websiteurl: "Please provide the url",
+  //     });
+  //     hasErrors = true;
+  //   }
+
+  //   if (!formInput.websitecategory || formInput.websitecategory == "default") {
+  //     setInputFilled(false);
+  //     setFormError({
+  //       ...inputError,
+  //       websitecategory: t("webCatError"),
+  //     });
+  //     console.log(formError.websitecategory);
+  //     console.log("Category not provided");
+  //     hasErrors = true;
+  //   }
+
+  //   if (!formInput.websitedetail) {
+  //     setInputFilled(false);
+  //     console.log("Website details not provided");
+  //     setFormError({
+  //       ...inputError,
+  //       websitedetail: t("moredetailError"),
+  //     });
+  //     hasErrors = true;
+  //   }
+
+  //   if (formInput.websitedetail) {
+  //     const words = formInput.websitedetail.toLowerCase().split(/[\s\u200B]+/);
+
+  //     if (formInput.websitedetail.length <= 50) {
+  //       setInputFilled(false);
+  //       console.log("Website details not over than 50 words");
+  //       setFormError({
+  //         ...inputError,
+  //         websitedetail: t("moredetailError2"),
+  //       });
+  //       hasErrors = true;
+  //     }
+
+  //     // Create a frequency map for each word
+  //     const wordFrequencyMap: any = {};
+  //     words.forEach((word) => {
+  //       wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
+  //     });
+
+  //     // Check if any word is repeated more than three times
+  //     const hasRedundancy = Object.values(wordFrequencyMap).some(
+  //       (count: any) => count > 3
+  //     );
+
+  //     if (hasRedundancy) {
+  //       setInputFilled(false);
+  //       console.log("Website details have redundant words");
+  //       setFormError({
+  //         ...inputError,
+  //         websitedetail: t("moredetailError3"),
+  //       });
+  //       hasErrors = true;
+  //     }
+  //   }
+
+  //   if (!hasErrors) {
+  //     setInputFilled(false);
+  //     console.log("formInput:", formInput);
+  //     console.log("formError:", formError);
+  //     console.log(url);
+  //     setFormInput((prevState) => ({
+  //       ...prevState,
+  //       successMsg: "",
+  //     }));
+  //     onSubmit();
+  //   }
+  // };
+
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
+    const inputError = validateFields();
+
+    if (Object.values(inputError).some((error) => error !== "")) {
+      setInputFilled(false);
+      setFormError(inputError);
+    } else {
+      setInputFilled(true);
+      onSubmit();
+    }
+  };
+
+  const validateFields = () => {
     let hasErrors = false;
-    // Initialize an object to track input errors
-    let inputError = {
+
+    const inputError = {
       userID: "",
       websiteurl: "",
       websitecategory: "",
@@ -61,83 +166,47 @@ const ReportForm = ({
     };
 
     if (!url) {
-      setInputFilled(false);
-      setFormError({
-        ...inputError,
-        websiteurl: "Please provide the url",
-      });
+      inputError.websiteurl = "Please provide the url";
       hasErrors = true;
     }
 
-    if (!formInput.websitecategory || formInput.websitecategory == "default") {
-      setInputFilled(false);
-      setFormError({
-        ...inputError,
-        websitecategory: t("webCatError"),
-      });
-      console.log(formError.websitecategory);
-      console.log("Category not provided");
+    if (!formInput.websitecategory || formInput.websitecategory === "default") {
+      inputError.websitecategory = t("webCatError");
       hasErrors = true;
     }
 
     if (!formInput.websitedetail) {
-      setInputFilled(false);
-      console.log("Website details not provided");
-      setFormError({
-        ...inputError,
-        websitedetail: t("moredetailError"),
-      });
+      inputError.websitedetail = t("moredetailError");
       hasErrors = true;
-    }
-
-    if (formInput.websitedetail) {
-      const words = formInput.websitedetail.toLowerCase().split(/[\s\u200B]+/);
-
-      if (formInput.websitedetail.length <= 50) {
-        setInputFilled(false);
-        console.log("Website details not over than 50 words");
-        setFormError({
-          ...inputError,
-          websitedetail: t("moredetailError2"),
-        });
-        hasErrors = true;
-      }
-
-      // Create a frequency map for each word
-      const wordFrequencyMap: any = {};
-      words.forEach((word) => {
-        wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
-      });
-
-      // Check if any word is repeated more than three times
-      const hasRedundancy = Object.values(wordFrequencyMap).some(
-        (count: any) => count > 3
-      );
-
-      if (hasRedundancy) {
-        setInputFilled(false);
-        console.log("Website details have redundant words");
-        setFormError({
-          ...inputError,
-          websitedetail: t("moredetailError3"),
-        });
+    } else {
+      const validationResult = validateWebsiteDetail(formInput.websitedetail);
+      if (validationResult) {
+        inputError.websitedetail = validationResult;
         hasErrors = true;
       }
     }
-
-    if (!hasErrors) {
-      setInputFilled(false);
-      console.log("formInput:", formInput);
-      console.log("formError:", formError);
-      console.log(url);
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      onSubmit();
-    }
+    return inputError;
   };
 
+  const validateWebsiteDetail = (detail: string) => {
+    const words = detail.toLowerCase().split(/[\s\u200B]+/);
+
+    if (detail.length <= 50) {
+      return t("moredetailError2");
+    }
+
+    const wordFrequencyMap: any = {};
+    words.forEach((word) => {
+      wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
+    });
+
+    if (Object.values(wordFrequencyMap).some((count: any) => count > 3)) {
+      return t("moredetailError3");
+    }
+
+    return null;
+  };
+  //---------------------- END Refactor of validateFormInput ---------------------//
   const onSubmit = async () => {
     try {
       console.log("formInput:", formInput);
@@ -192,9 +261,6 @@ const ReportForm = ({
   if (verifySuccess == true) {
     return (
       <>
-        <p className="text-[12px] font-[500] text-center text-red-600">
-          {formError.websiteurl}
-        </p>
         <form onSubmit={validateFormInput}>
           <div className="flex-row px-[17rem] justify-center items-center text-slate-700 text-xl font-semibold tracking-tight">
             <div className="flex pt-5 pb-1">
