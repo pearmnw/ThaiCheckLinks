@@ -1,7 +1,7 @@
 "use client";
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface SearchWordBarProps {
   onSearch: (term: string) => void;

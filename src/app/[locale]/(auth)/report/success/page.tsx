@@ -1,4 +1,5 @@
 import { getScopedI18n } from "@/locales/server";
+import React from "react";
 
 const success = async () => {
   const t = await getScopedI18n("reportsuccess");

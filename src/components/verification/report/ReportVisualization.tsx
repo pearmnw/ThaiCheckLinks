@@ -1,5 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Bar,
   BarChart,

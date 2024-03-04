@@ -1,6 +1,6 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const BankContainer = () => {
   const t = useScopedI18n("report");

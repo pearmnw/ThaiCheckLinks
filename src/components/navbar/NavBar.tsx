@@ -3,7 +3,7 @@
 import { useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NavBar = () => {

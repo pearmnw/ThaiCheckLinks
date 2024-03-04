@@ -1,6 +1,7 @@
 import ReportContainer from "@/components/reportpage/reportcontainer";
 import UnAuth from "@/components/reportpage/unauth";
 import { getServerSession } from "next-auth";
+import React from "react";
 import { getScopedI18n } from "../../../../locales/server";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 

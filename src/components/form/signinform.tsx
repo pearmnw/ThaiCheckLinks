@@ -4,6 +4,7 @@ import { useScopedI18n } from "@/locales/client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React from "react";
 import { FormEventHandler, useState } from "react";
 import toast from "react-hot-toast";
 

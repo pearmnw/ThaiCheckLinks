@@ -2,7 +2,7 @@
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 import Loader from "../loading/Loader";
 import SearchBarMain from "../searchbar/searchbarmain";

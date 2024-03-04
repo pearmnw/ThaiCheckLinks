@@ -2,7 +2,7 @@
 
 import { useScopedI18n } from "@/locales/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import Modal from "react-modal";
 import { generateUsername } from "unique-username-generator";

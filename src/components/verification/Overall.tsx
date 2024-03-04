@@ -1,6 +1,6 @@
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import ReportForm from "../reportpage/reportform";
 import CircularProgressBar from "./overall/CircularProgressBar";

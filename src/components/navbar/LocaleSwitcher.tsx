@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useChangeLocale, useCurrentLocale } from "@/locales/client";
+import React from "react";
 import { Button } from "../ui/button";
 
 const LocaleSwitcher = () => {

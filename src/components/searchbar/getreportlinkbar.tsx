@@ -2,7 +2,7 @@
 
 import { useScopedI18n } from "@/locales/client";
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import LoaderOnButt from "../loading/LoaderOnButt";
 

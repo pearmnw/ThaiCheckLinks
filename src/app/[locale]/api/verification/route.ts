@@ -1,4 +1,3 @@
-import { UserVerifyBox } from './../../../../../node_modules/.prisma/client/index.d';
 // เราต้องทำอะไรบ้างในการจะเก็บ Verification 1 ครั้ง
 // - เช็ค URL with table WebsiteMeta (ต้องจัดformatURLที่ User ใส่เข้ามาด้วย)
 // - ถ้ามีก็ไม่ต้อง Create WebsiteMeta
@@ -10,6 +9,7 @@ import { getWebsiteMetaByURL, setURL } from '@/app/utils/report/getReportFunc';
 import {
     createMetaWebsite,
     createUserVerifyBox,
+    createVerification,
     getVerificationByMetaWebsiteID,
 } from '@/app/utils/verification/getVerificationFunc';
 import { NextResponse } from 'next/server';
@@ -42,10 +42,27 @@ export async function POST(req: Request) {
                     websiteMeta.MetaWebsiteID,
                     CurrentPercent
                 );
+                //TODO: Check that website have info in Verification Table && UserVerifyBox
                 if (webVerification) {
                     console.log('GetVerificationTable: ', webVerification);
                     getVeriInfo = webVerification;
                     methodsucces = true;
+                }
+                else {
+                    // TODO: Create UserVeriBox && Create Verification
+                    const createUserVeriBox: any = await createUserVerifyBox(
+                        MetaWebsite,
+                        CurrentPercent
+                    );
+                    if (!!createUserVeriBox == true) {
+                        getVeriInfo = await createVerification(
+                            websiteMeta.MetaWebsiteID,
+                            CurrentPercent,
+                            createUserVeriBox.UserVerifyID
+                        );
+                        methodsucces = true;
+                        console.log(getVeriInfo);
+                    }
                 }
             } else {
                 console.log('Entry state 2: this url no have in database');

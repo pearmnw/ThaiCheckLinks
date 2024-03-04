@@ -1,4 +1,5 @@
 import Verification from "@/components/verification/Verification";
+import React from "react";
 
 export default async function verification() {
   // const url = 'https://www.google.com/'; // Normal Web

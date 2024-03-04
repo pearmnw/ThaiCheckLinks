@@ -1,5 +1,6 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
+import React from "react";
 
 const SuccessButton = () => {
   const t = useScopedI18n("report");
