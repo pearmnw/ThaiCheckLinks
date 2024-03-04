@@ -17,17 +17,17 @@ const ReportLinkBar = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [currentPercent, setCurrentPercent] = useState({
-    normal: 0,
-    gambling: 0,
-    scam: 0,
     fake: 0,
-  });
-  const [maxPercent, setMaxPercent] = useState({
-    normal: 0,
     gambling: 0,
+    other: 0,
     scam: 0,
-    fake: 0,
   });
+  // const [maxPercent, setMaxPercent] = useState({
+  //   fake: 0,
+  //   gambling: 0,
+  //   other: 0,
+  //   scam: 0,
+  // });
   const [metaWebsite, setMetaWebsite] = useState({
     url: "",
     title: "",
@@ -65,12 +65,12 @@ const ReportLinkBar = ({
     }));
   };
 
-  const updateMaxPercent = (newData: any) => {
-    setMaxPercent((prevMaxPercent) => ({
-      ...prevMaxPercent,
-      ...newData,
-    }));
-  };
+  // const updateMaxPercent = (newData: any) => {
+  //   setMaxPercent((prevMaxPercent) => ({
+  //     ...prevMaxPercent,
+  //     ...newData,
+  //   }));
+  // };
 
   const updateMetaWebsite = (newData: any) => {
     setMetaWebsite((prevMetaWebsite) => ({
@@ -96,8 +96,8 @@ const ReportLinkBar = ({
         if (resp.data) {
           updateCurrentPercent(resp.data.classify);
 
-          // TODO: Update Max Percent with Database (UNDONE!!!)
-          updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
+          // // TODO: Update Max Percent with Database (UNDONE!!!)
+          // updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
 
           updateMetaWebsite(resp.data.meta_website);
         } else {
@@ -161,7 +161,6 @@ const ReportLinkBar = ({
 
   const handleVerifyInfo = async () => {
     try {
-      console.log(maxPercent);
       console.log(metaWebsite);
       console.log(currentPercent);
 

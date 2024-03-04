@@ -209,13 +209,14 @@ const ReportForm = ({
   //---------------------- END Refactor of validateFormInput ---------------------//
   const onSubmit = async () => {
     try {
+      console.log("Submit the report Here!!!");
       console.log("formInput:", formInput);
       console.log("formError:", formError);
       console.log(url);
       console.log(userInfo.data?.user.id);
       console.log(metaWebsite.url);
       console.log(currentPercent);
-      console.log(currentPercent.normal);
+      console.log(currentPercent.other);
       // router.push("/report/success");
       const res = await fetch("api/linkreport", {
         method: "POST",
