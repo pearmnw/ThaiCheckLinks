@@ -247,7 +247,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl })  => {
                   <div className="pt-11 flex justify-center items-center">
                     <img
                       className="w-[5rem] h-[5rem] rounded-full"
-                      src={item.UserPictureURL || '/defaultprofile.jpeg'}
+                      src={'/defaultprofile.jpeg'}
                       alt="Rounded avatar"
                     />
                     <div className="flex-grow px-6 font-semibold text-[30px]">
