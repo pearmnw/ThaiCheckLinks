@@ -3,7 +3,6 @@ import { URL } from 'url';
 
 interface WebsiteReport {
     UserName: string;
-    UserPictureURL: string | null; // Update to accept null values;
     WebsiteURL: string;
     WebCategoryID: number;
     WebCategoryName: string;
@@ -21,8 +20,7 @@ export const GetMoreDetail = async (): Promise<WebsiteReport[]> => {
         include: {
             UserDetail: {
                 select: {
-                    UserName: true,
-                    UserPictureURL: true // Include UserPictureURL
+                    UserName: true
                 }
             }
         }
@@ -40,7 +38,6 @@ export const GetMoreDetail = async (): Promise<WebsiteReport[]> => {
         // Format the report
         const formattedReport: WebsiteReport = {
             UserName: website.UserDetail.UserName, // Include the username
-            UserPictureURL: website.UserDetail.UserPictureURL,
             WebsiteURL: websiteURL,
             WebCategoryID: website.WebCategoryID,
             WebCategoryName: "Unknown", // Default value for WebCategoryName
@@ -48,7 +45,7 @@ export const GetMoreDetail = async (): Promise<WebsiteReport[]> => {
             BankID: website.BankID || null, // Include BankID
             BankName: "-", // Default value for BankName
             BankAccountOwner: website.BankAccountOwner || "", // Default value for BankAccountOwner
-            BankNumber: website.BankNumber_ || "",
+            BankNumber: website.BankNumber || "",
             WebsiteReportedDetails: website.WebsiteReportedDetails || null // Include WebsiteReportedDetails 
         };
 
