@@ -15,24 +15,24 @@ export default function LocaleLayout({
   const currentLocale = useCurrentLocale();
 
   return (
-    <html lang="en">
+    <html lang='en'>
       <I18nProviderClient locale={currentLocale}>
-        <body className="overflow-auto">
+        <body className='overflow-auto scroll-py-5 scroll-px-5'>
           <NextAuthProvider>
             <NavBar />
             <div
               style={{
-                backgroundImage: `url(${backgroundImage.src})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "100vh",
-                display: "flex",
-                justifyContent: "center",
+                // backgroundImage: `url(${backgroundImage.src})`,
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
-              <Toaster position="top-center" />
-              <div className="pt-9">{children}</div>
+              <Toaster position='top-center' />
+              <div className='pt-9'>{children}</div>
             </div>
           </NextAuthProvider>
         </body>

@@ -7,10 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Bank {
+  BankID        String          @id @db.VarChar(128)
+  BankName      String?         @db.VarChar(256)
+  WebsiteDetail WebsiteDetail[]
+}
+
 model UserDetail {
   UserID         Int             @id @default(autoincrement())
-  UserName       String          @db.VarChar(128)
-  UserEmail      String          @db.VarChar(128)
+  UserName       String          @unique @db.VarChar(128)
+  UserEmail      String          @unique @db.VarChar(128)
   UserPhone      String?         @db.VarChar(25)
   UserPassword   String
   UserJoinedDate DateTime        @default(now()) @db.Timestamptz(6)
@@ -30,45 +36,58 @@ model UserVerifyBox {
 }
 
 model Verification {
-  VerificationID      Int              @id @default(autoincrement())
-  WebsiteID           Int              @default(autoincrement())
-  WhitelistID         Int              @default(autoincrement())
-  UserVerifyID        Int              @default(autoincrement())
+  VerificationID      Int               @id @default(autoincrement())
+  WebsiteID           Int               @unique @default(autoincrement())
+  WhitelistID         Int?
+  UserVerifyID        Int?              @default(autoincrement())
   CGamblingPercentage Int
   CScamPercentage     Int
   CFakePercentage     Int
   COtherPercentage    Int
-  CVerifyDate         DateTime         @db.Timestamptz(6)
+  CVerifyDate         DateTime          @default(now()) @db.Timestamptz(6)
   MGamblingPercentage Int
   MScamPercentage     Int
   MFakePercentage     Int
   MOtherPercentage    Int
-  MVerifyDate         DateTime         @default(now()) @db.Timestamptz(6)
-  UserVerifyBox       UserVerifyBox    @relation(fields: [UserVerifyID], references: [UserVerifyID], onDelete: NoAction, onUpdate: NoAction, map: "UserVerifyID")
-  WebsiteDetail       WebsiteDetail    @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
-  WhitelistWebsite    WhitelistWebsite @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
+  MVerifyDate         DateTime          @default(now()) @db.Timestamptz(6)
+  UserVerifyBox       UserVerifyBox?    @relation(fields: [UserVerifyID], references: [UserVerifyID], onDelete: NoAction, onUpdate: NoAction, map: "UserVerifyID")
+  WebsiteDetail       WebsiteDetail     @relation(fields: [WebsiteID], references: [WebsiteID], onDelete: NoAction, onUpdate: NoAction, map: "WebsiteID")
+  WhitelistWebsite    WhitelistWebsite? @relation(fields: [WhitelistID], references: [WhitelistID], onDelete: NoAction, onUpdate: NoAction, map: "WhitelistID")
 }
 
 model WebsiteCategory {
   WebCategoryID   Int             @id @default(autoincrement())
   WebCategoryName String          @db.VarChar(128)
   WebsiteDetail   WebsiteDetail[]
+  WebsiteMeta     WebsiteMeta[]
 }
 
 model WebsiteDetail {
-  WebsiteID              Int             @id @default(autoincrement())
-  UserID                 Int             @default(autoincrement())
-  WebCategoryID          Int             @default(autoincrement())
+  WebsiteID              Int             @id @unique @default(autoincrement())
+  UserID                 Int
+  WebCategoryID          Int
   WebsiteURL             String
   WebsiteReportedDate    DateTime        @default(now()) @db.Timestamptz(6)
   BankID                 String?         @db.VarChar(128)
   BankAccountOwner       String?         @db.VarChar(128)
-  BankNumber             String?         @map("BankNumber ") @db.VarChar(50)
-  WebsiteReportedDetails String?
-  Verification           Verification[]
+  WebsiteReportedDetails String
+  BankNumber             String?         @db.VarChar(50)
+  Verification           Verification?
   Bank                   Bank?           @relation(fields: [BankID], references: [BankID], onDelete: NoAction, onUpdate: NoAction, map: "BankID")
   UserDetail             UserDetail      @relation(fields: [UserID], references: [UserID], onDelete: NoAction, onUpdate: NoAction, map: "UserID")
   WebsiteCategory        WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
+}
+
+model WebsiteMeta {
+  MetaWebsiteID      Int             @id @default(autoincrement())
+  WebCategoryID      Int
+  WebsiteURL         String?         @unique
+  WebsiteMetaTitle   String?
+  WebsiteMetaDesc    String?
+  WebsiteMetaKeyword String?
+  WebsiteText        String?
+  WebsiteStatus      Boolean?        @default(true)
+  WebsiteCategory    WebsiteCategory @relation(fields: [WebCategoryID], references: [WebCategoryID], onDelete: NoAction, onUpdate: NoAction, map: "WebCategoryID")
 }
 
 model WhitelistWebsite {
@@ -79,21 +98,4 @@ model WhitelistWebsite {
   WhistlistMetaKeyword String?
   WhitelistText        String?
   Verification         Verification[]
-}
-
-model Bank {
-  BankID        String          @id @db.VarChar(128)
-  BankName      String?         @db.VarChar(256)
-  WebsiteDetail WebsiteDetail[]
-}
-
-model WebsiteMeta {
-  MetaWebsiteID      Int      @id @default(autoincrement())
-  WebCategoryID      Int      @default(autoincrement())
-  WebsiteURL         String?
-  WebsiteMetaTitle   String?
-  WebsiteMetaDesc    String?
-  WebsiteMetaKeyword String?
-  WebsiteText        String?
-  WebsiteStatus      Boolean? @default(true)
 }

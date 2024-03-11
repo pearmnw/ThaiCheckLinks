@@ -5,8 +5,10 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
+import toast from "react-hot-toast";
 
 const SignInForm = () => {
+  const e = useScopedI18n("errormessage");
   const t = useScopedI18n("signinpage");
   const router = useRouter();
 
@@ -36,16 +38,11 @@ const SignInForm = () => {
         router.refresh();
         router.push("/report");
         router.refresh();
+        toast.success(e("signinsuccess"));
       } else {
+        console.log("SignIn Failed");
+        toast.error(signInData?.error!);
       }
-      // if (signInData?.error) {
-      //   console.log(signInData.error);
-      //   return;
-      // } else {
-      //   router.refresh();
-      //   router.push("/report");
-      //   router.refresh();
-      // }
     } catch (error) {
       console.log(error);
     }

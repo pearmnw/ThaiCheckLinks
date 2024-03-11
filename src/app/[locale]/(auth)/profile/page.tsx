@@ -3,6 +3,7 @@ import UnAuth from "@/components/reportpage/unauth";
 import { getServerSession } from "next-auth";
 import { getScopedI18n } from "../../../../locales/server";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
+import React from "react";
 
 export default async function Profile() {
   const session = await getServerSession(authOptions);

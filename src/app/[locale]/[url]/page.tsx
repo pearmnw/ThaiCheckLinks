@@ -1,4 +1,5 @@
 import DetailsBox from "@/components/detailsbox";
+import React from "react";
 
 export default async function Details({ params }: any) {
   console.log(params.url);

@@ -3,12 +3,13 @@
 import { useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NavBar = () => {
   const { data: session, status } = useSession();
   const t = useScopedI18n("navbar");
-  // const [header, setHeader] = useState(false);
+  const [header, setHeader] = useState(false);
   // const scrollHeader = () => {
   //   if (window.scrollY >= 20) {
   //     setHeader(true);
@@ -27,11 +28,11 @@ const NavBar = () => {
 
   return (
     <div
-    // className={
-    //   header
-    //     ? "fixed w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
-    //     : "bg-[transparent]"
-    // }
+      className={
+        header
+          ? "w-[100%] text-[black] bg-gradient-to-r from-[#02006D] to-[#144EE3]"
+          : "bg-[transparent]"
+      }
     >
       <nav className="bg-[#CCD2DE]">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
@@ -40,7 +41,7 @@ const NavBar = () => {
               href="/"
               className="text-[32px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#02006D] to-[#144EE3]"
             >
-              Thai.Scamlinks
+              Thai.CheckLinks
             </Link>
             <div className="flex items-center md:order-2 space-x-5">
               <Link

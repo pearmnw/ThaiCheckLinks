@@ -1,95 +1,50 @@
 "use client";
+import { useScopedI18n } from "@/locales/client";
+import React, { useState } from "react";
 
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
-import { useState } from "react";
-
-const SearchBarMain = () => {
+const SearchBarMain: React.FC<any> = ({
+  onPredict,
+  url,
+  setUrl,
+  setOverview,
+}) => {
   const t = useScopedI18n("homepage");
-  const currentLocale = useCurrentLocale();
-  const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState("");
 
   const handleInputChange = (e: any) => {
     setUrl(e.target.value);
-  };
-
-  const handleClick = async () => {
-    console.log(url);
+    setOverview((prev: any) => {
+      return { ...prev, isShow: false };
+    });
   };
 
   return (
     <>
       <div className="flex justify-center mb-3">
         <div className="flex justify-center items-center w-[650px] h-[66px] rounded-[50px] bg-[#121B2B]">
-          <div className="flex">
-            <button
-              title="selecttype"
-              onClick={() => setOpen(!open)}
-              type="button"
-              className="w-[66px] h-[66px] bg-slate-700 rounded-tl-[48px] rounded-bl-[48px]"
-            >
-              <span className="flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-white dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 19 19"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M11.013 7.962a3.519 3.519 0 0 0-4.975 0l-3.554 3.554a3.518 3.518 0 0 0 4.975 4.975l.461-.46m-.461-4.515a3.518 3.518 0 0 0 4.975 0l3.553-3.554a3.518 3.518 0 0 0-4.974-4.975L10.3 3.7"
-                  />
-                </svg>
-                <svg
-                  className="w-[10px] h-[10px] ml-2 text-white dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 8"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"
-                  />
-                </svg>
-              </span>
-            </button>
-            {/* <ul
-              className={`bg-white mt-2 overflow-y-auto ${
-                open ? "max-h-60" : "max-h-0"
-              } `}
-            >
-              <li>
-                <svg
-                  className="w-5 h-5 text-white dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 19 19"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M11.013 7.962a3.519 3.519 0 0 0-4.975 0l-3.554 3.554a3.518 3.518 0 0 0 4.975 4.975l.461-.46m-.461-4.515a3.518 3.518 0 0 0 4.975 0l3.553-3.554a3.518 3.518 0 0 0-4.974-4.975L10.3 3.7"
-                  />
-                </svg>
-              </li>
-            </ul> */}
+          <div className="pl-6">
+            <span className="flex items-center justify-center">
+              <svg
+                className="w-5 h-5 text-white dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 19 19"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M11.013 7.962a3.519 3.519 0 0 0-4.975 0l-3.554 3.554a3.518 3.518 0 0 0 4.975 4.975l.461-.46m-.461-4.515a3.518 3.518 0 0 0 4.975 0l3.553-3.554a3.518 3.518 0 0 0-4.974-4.975L10.3 3.7"
+                />
+              </svg>
+            </span>
           </div>
           <input
             type="search"
             className="ml-2 -mr-0.5 block min-w-0 flex-auto bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-[#FFFFFF] outline-none transition duration-200 ease-in-out focus:z-[3]"
-            placeholder={t("text")}
+            placeholder={t("placeholder")}
             value={url}
             onChange={handleInputChange}
             aria-label="Search"
@@ -102,7 +57,7 @@ const SearchBarMain = () => {
             type="button"
             id="button-addon3"
             data-te-ripple-init
-            onClick={handleClick}
+            onClick={onPredict}
           >
             {t("verify")}
           </button>

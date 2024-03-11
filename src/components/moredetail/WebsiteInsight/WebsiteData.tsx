@@ -1,11 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-
-interface WebsiteDataProps {
-  websitedata: any;
-  rank: string;
-}
+import { WebsiteDataProps } from '@/lib/interface/moredetail/interface';
 
 const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
   const t = useScopedI18n('moredetailpage');
@@ -48,19 +44,16 @@ const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
         >
           <div className='py-1' role='none'>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Alexa rank: <span className='font-medium'>{rank ? rank : t('No Result')}</span>
-            </p>
-            <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Meta title:{' '}
+              Alexa rank:{' '}
               <span className='font-medium'>
-                {websitedata.title ? websitedata.title : t('No Result')}
+                {rank ? rank : t('No Result')}
               </span>
             </p>
             <p className='text-gray-700 block px-4 py-2 text-sm'>
-              Meta description:{' '}
+              Tranco rank:{' '}
               <span className='font-medium'>
-                {websitedata.desciption
-                  ? websitedata.desciption
+                {websitedata.tranco_rank
+                  ? websitedata.tranco_rank
                   : t('No Result')}
               </span>
             </p>
@@ -120,6 +113,12 @@ const WebsiteData: React.FC<WebsiteDataProps> = ({ websitedata, rank }) => {
                 {websitedata.whois_renew_date
                   ? websitedata.whois_renew_date
                   : t('No Result')}
+              </span>
+            </p>
+            <p className='text-gray-700 block px-4 py-2 text-sm'>
+              WHOIS hidden:{' '}
+              <span className='font-medium'>
+                {websitedata.is_hidden ? websitedata.is_hidden : t('No Result')}
               </span>
             </p>
           </div>

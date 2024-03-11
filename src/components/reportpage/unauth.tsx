@@ -1,6 +1,7 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
 import Link from "next/link";
+import React from "react";
 
 const UnAuth = () => {
   const t = useScopedI18n("report");

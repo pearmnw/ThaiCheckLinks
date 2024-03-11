@@ -1,5 +1,5 @@
 import WebsiteTable from "@/components/homepage/homepagetable";
-import SearchBarHome from "@/components/searchbar/searchbarhome";
+import React from "react";
 import { getScopedI18n } from "../../locales/server";
 export default async function Home() {
   const t = await getScopedI18n("homepage");
@@ -11,7 +11,6 @@ export default async function Home() {
         <div className="flex justify-center text-center text-[24px] font-light leading-normal text-transparent bg-clip-text bg-[#011E52] px-[10rem] pb-6 ">
           {t("caption")}
         </div>
-        <SearchBarHome />
         <WebsiteTable />
       </div>
     </>

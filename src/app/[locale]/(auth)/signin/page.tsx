@@ -1,5 +1,6 @@
 import SignInForm from "@/components/form/signinform";
 import { getScopedI18n } from "../../../../locales/server";
+import React from "react";
 
 export default async function Signin() {
   const t = await getScopedI18n("signinpage");

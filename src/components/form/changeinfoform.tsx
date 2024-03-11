@@ -1,14 +1,17 @@
 "use client";
 
-import { db } from "@/lib/db";
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ChangeInfoForm = () => {
+  const e = useScopedI18n("errormessage");
   const t = useScopedI18n("signuppage");
   const { data: session, status } = useSession();
   console.log(session?.user?.name);
+  const router = useRouter();
   interface User {
     username: String;
     email: String;
@@ -25,19 +28,13 @@ const ChangeInfoForm = () => {
     successMsg: "",
   });
 
-  const [currentUser, setCurrentUSer] = useState({
-    username: "",
-    email: "",
-    phonenumber: "" ?? {},
-    password: "",
-  });
-
   const [formError, setFormError] = useState({
     username: "",
     email: "",
     phonenumber: "",
     password: "",
     confirmpassword: "",
+    errorMsg: "",
   });
 
   const handleUserInput = (name: string, value: string) => {
@@ -47,28 +44,7 @@ const ChangeInfoForm = () => {
     });
   };
 
-  const getCurrentUser = async () => {
-    try {
-      const res = await db.userDetail.findUnique({
-        where: { UserName: session?.user?.name ?? "" },
-      });
-
-      if (res) {
-        console.log(res);
-        setCurrentUSer({
-          ...currentUser,
-          username: res.UserName,
-          email: res.UserEmail,
-          phonenumber: res.UserPhone!,
-          password: res.UserPassword,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const validateFormInput = (event: { preventDefault: () => void }) => {
+  const validateFormInput = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     // Initialize an object to track input errors
@@ -78,106 +54,135 @@ const ChangeInfoForm = () => {
       phonenumber: "",
       password: "",
       confirmpassword: "",
+      errorMsg: "",
       consent: "",
     };
 
-    const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+    if (formInput.email) {
+      const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-    // Check if email match the pattern
-    if (!emailpattern.test(formInput.email)) {
-      console.log("wrong email");
-      setFormError({
-        ...inputError,
-        email: t("erremail"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+      // Check if email match the pattern
+      if (!emailpattern.test(formInput.email)) {
+        console.log("wrong email");
+        setFormError({
+          ...inputError,
+          email: t("erremail"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
-    // check if phone number is least than 10
-    if (formInput.phonenumber.length < 10) {
-      console.log("wrong phonenum");
-      setFormError({
-        ...inputError,
-        phonenumber: t("errphone"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+    if (formInput.phonenumber) {
+      // check if phone number is least than 10
+      if (formInput.phonenumber.length < 10) {
+        console.log("wrong phonenum");
+        setFormError({
+          ...inputError,
+          phonenumber: t("errphone"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
     // Check if the password is match the pattern
-    if (formInput.password.length < 8) {
-      console.log("wrong pw1");
-      setFormError({
-        ...inputError,
-        password: t("errpw1"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
-    }
-    if (!/\d/.test(formInput.password)) {
-      console.log("wrong pw2");
-      setFormError({
-        ...inputError,
-        password: t("errpw2"),
-      });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
+    if (formInput.password) {
+      if (formInput.password.length < 8) {
+        console.log("wrong pw1");
+        setFormError({
+          ...inputError,
+          password: t("errpw1"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
+      if (!/\d/.test(formInput.password)) {
+        console.log("wrong pw2");
+        setFormError({
+          ...inputError,
+          password: t("errpw2"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
+
+      if (formInput.password !== formInput.confirmpassword) {
+        // Check if password and confirmpassword is match
+        console.log("wrong pw3");
+        setFormError({
+          ...inputError,
+          confirmpassword: t("errconfirmpass"),
+        });
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return;
+      }
     }
 
-    if (formInput.password !== formInput.confirmpassword) {
-      // Check if password and confirmpassword is match
+    const updateuser = await onSubmit();
+    if (updateuser) {
+      setFormError(inputError);
+      setFormInput((prevState) => ({
+        ...prevState,
+        successMsg: t("successmsg"),
+      }));
+      router.refresh();
+      console.log(session?.user.email);
+    } else {
       console.log("wrong pw3");
       setFormError({
         ...inputError,
-        confirmpassword: t("errconfirmpass"),
+        errorMsg: e("editerrinfo"),
       });
-      setFormInput((prevState) => ({
-        ...prevState,
-        successMsg: "",
-      }));
-      return;
     }
-
-    setFormError(inputError);
-    setFormInput((prevState) => ({
-      ...prevState,
-      successMsg: t("successmsg"),
-    }));
-    // getCurrentUser();
-    onSubmit();
   };
 
   const onSubmit = async () => {
-    // const res = await fetch("api/editprofile", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     UserName: formInput.username,
-    //     UserEmail: formInput.email,
-    //     UserPhone: formInput.phonenumber,
-    //     UserPassword: formInput.password,
-    //   }),
-    // });
-    // if (res.ok) {
-    //   router.refresh();
-    // } else {
-    //   console.error("Edit information failed");
-    // }
+    try {
+      const res = await fetch("api/editprofile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          CurrentUser: session?.user.name,
+          UserName: formInput.username,
+          UserEmail: formInput.email,
+          UserPhone: formInput.phonenumber,
+          UserPassword: formInput.password,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok && data.websiteDetail) {
+        toast.success(data.message);
+      } else {
+        console.log("Edit Failed");
+        toast.error(data.message);
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -213,8 +218,6 @@ const ChangeInfoForm = () => {
               name="username"
               type="username"
               placeholder={session?.user?.name ?? ""}
-              // {t("usertext")}
-              required
               className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
             <button className="items-center">
@@ -244,8 +247,6 @@ const ChangeInfoForm = () => {
               name="email"
               type="text"
               placeholder={session?.user?.email ?? ""}
-              // {t("emtext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -270,9 +271,12 @@ const ChangeInfoForm = () => {
               }}
               name="phonenumber"
               type="phonenumber"
-              placeholder={t("phntext")}
+              placeholder={
+                session?.user?.userphone ?? ""
+                  ? session?.user?.userphone ?? ""
+                  : t("phntext")
+              }
               autoComplete="phonenumber"
-              // required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -298,7 +302,6 @@ const ChangeInfoForm = () => {
               name="password"
               type="password"
               placeholder={t("pwtext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -324,7 +327,6 @@ const ChangeInfoForm = () => {
               name="confirmpassword"
               type="password"
               placeholder={t("cftext")}
-              required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -340,6 +342,9 @@ const ChangeInfoForm = () => {
             Edit Information
           </button>
         </div>
+        <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
+          {formInput.successMsg}
+        </p>
       </form>
     </div>
   );

@@ -16,8 +16,13 @@ const config: Config = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        'primary': '#144EE3',
         'custom-black': '#121b2a',
+        'custom-blue': '#233465',
         'custom-bg-moredetail': '#f7f8fa',
+      },
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
       },
     },
   },
