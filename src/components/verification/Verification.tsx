@@ -2,7 +2,7 @@
 
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import Loader from "../loading/Loader";
 import SearchBarMain from "../searchbar/searchbarmain";
@@ -20,12 +20,14 @@ import {
   makeRequest,
   scaleNumber,
 } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 export const VerificationContext = createContext<any>(null);
 
 const Verification = () => {
   const t = useScopedI18n("verificationpage");
   const r = useScopedI18n("report");
+  const e = useScopedI18n("errormessage");
   const currentLocale = useCurrentLocale();
 
   const [url, setUrl] = useState<string>("");
@@ -104,6 +106,7 @@ const Verification = () => {
       .then(async (res) => {
         // Display Data
         console.log(res.data);
+
         const { currentPercent, urlDetection, isRisk, meta_website } = res.data;
 
         // TODO: Compare Current score with the max score in database, if that website was exist.
@@ -171,6 +174,7 @@ const Verification = () => {
           });
           setVerifySuccess(true);
         } else {
+          toast.error(e("reporterrwebsiteinact"));
           if (VerificationInfo == null) {
             setOverviewScore((prev: any) => {
               return {
@@ -207,6 +211,7 @@ const Verification = () => {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(e("reporterrwebsiteinact"));
         setOverviewScore(defaultOverviewScore);
       });
   };

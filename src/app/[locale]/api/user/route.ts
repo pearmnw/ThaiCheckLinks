@@ -1,9 +1,11 @@
+import { getScopedI18n } from '@/locales/server';
 import { hash } from 'bcrypt';
 import { NextResponse } from 'next/server';
 import { db } from '../../../../lib/db';
 
 export async function POST(req: Request) {
     try {
+        const t = await getScopedI18n("errormessage");
         const body = await req.json();
         console.log(body);
         const { UserName, UserEmail, UserPhone, UserPassword } = body;
@@ -14,7 +16,7 @@ export async function POST(req: Request) {
         });
 
         if (existingUserByUserName) {
-            return NextResponse.json({ UserDetail: null, message: "User with this Username already exists" }, { status: 409 })
+            return NextResponse.json({ UserDetail: null, message: t("errmessuserexist") }, { status: 409 })
         }
 
         // Check if email, username, password
@@ -22,7 +24,7 @@ export async function POST(req: Request) {
             where: { UserEmail: UserEmail }
         });
         if (existingUserByEmail) {
-            return NextResponse.json({ UserDetail: null, message: "User with this Email already exists" }, { status: 409 })
+            return NextResponse.json({ UserDetail: null, message: t("errmessemailexist") }, { status: 409 })
         }
 
         // Rest of the code for both cases
@@ -32,7 +34,7 @@ export async function POST(req: Request) {
                 where: { UserPhone: UserPhone }
             });
             if (existingUserByPhone) {
-                return NextResponse.json({ UserDetail: null, message: "User with this Phonenumber already exists" }, { status: 409 })
+                return NextResponse.json({ UserDetail: null, message: t("errmessphoneexist") }, { status: 409 })
             }
         }
 
@@ -49,7 +51,7 @@ export async function POST(req: Request) {
 
         // Return response
         return NextResponse.json(
-            { UserDetail: newUser, message: 'User created successfully' },
+            { UserDetail: newUser, message: t("usersuccess") },
             { status: 201 }
         );
     } catch (error) {

@@ -23,7 +23,7 @@ export default {
     "username": "Username",
     "usertext": "Enter your username",
     "email": "Email",
-    "emtext": "Enter your gmail",
+    "emtext": "Enter your Email (example@gmail.com)",
     "phonenum": "Phone number (Optional)",
     "phntext": "Enter your phone number",
     "password": "Password",
@@ -37,10 +37,10 @@ export default {
     "consent2": "to allow us to collect your data.",
     "errconfirmpass": "Password and confirm password should be the same.",
     "successmsg": "Information Validation Success.",
-    "erremail": "Wrong Email Format.",
-    "errpw1": "password must be at least 8 characters long.",
-    "errpw2": "password must contain at least one number.",
-    "errphone": "please enter a correct phone number.",
+    "erremail": "Please enter a correct Email Format.",
+    "errpw1": "Password must be at least 8 characters.",
+    "errpw2": "Password must contain at least one number.",
+    "errphone": "Please enter a correct phone number format.",
     "errconsent": "Please read and consent to the terms.",
     "warntext": "(This username will show when reporting)"
   },
@@ -80,7 +80,8 @@ export default {
     "others": "Others",
     "seemore": "See More",
     "seeall": "See All",
-    "seeless": "See Less"
+    "seeless": "See Less",
+    "placeholder": "Enter link eg. https://www.example.com ...",
   },
 
   "detailpage": {
@@ -106,15 +107,15 @@ export default {
   },
 
   "report": {
-    "title": "Start reporting illegal website links",
+    "title": "Start reporting suspicious website links",
     "caption": "Sign in or sign up before reporting information to ensure accuracy.",
     "signin": "Sign In",
     "signup": "Sign Up",
     "caption2": "Reporting unlawful links here can help investigators find criminal websites",
-    "placeholder": "Enter an illegal link",
+    "placeholder": "Enter link eg. https://www.example.com ...",
     "searchbutt": "Confirm",
-    "Catagory": "Catagories of illegal links*",
-    "typefield": "Catagory",
+    "Category": "Categories of suspicious links*",
+    "typefield": "Categories",
     "moredetails": "How does this website risk*",
     "details": "Details (At Least 50 characters)",
     "bankacc": "Bank Account (Optional)",
@@ -144,8 +145,8 @@ export default {
   },
 
   "reportsuccess": {
-    "title": "Successfully reported illegal website links",
-    "sub-title": "Thank you for reporting illegal links here.",
+    "title": "Successfully reported suspicious website links",
+    "sub-title": "Thank you for reporting suspicious links here.",
     "sub-title2": "We will continue to use criminal web investigations to help the public.",
     "successmess": "Successful report"
   },
@@ -165,7 +166,7 @@ export default {
     "No Result": "No Result",
 
     "overall-title": "Overview Of The Risks Of Website",
-    "overall-subtitle": "The Percentage Of Risk Of Being An Illgal Website Is Based On All Citeria",
+    "overall-subtitle": "The Percentage Of Risk Of Being An suspicious Website Is Based On All Citeria",
     "risk-value": "Risk value",
     "sum-percentage": "Total percentage",
     "low-score": "Low Risk",
@@ -173,7 +174,7 @@ export default {
     "quite-high-score": "Quite High Risk",
     "high-score": "High Risk",
     'risk-measurement-citeria': "Risk Measurement Criteria",
-    "found-thai-scam-link": "Found In History Illegal Website Data Thai.ScamLinks",
+    "found-thai-scam-link": "Found In History Website Reported in Thai.CheckLinks",
     "found-ai": "Discover In AI Audit Risk Percentage",
     "url-measure": "URL Risks Measured By URL Detection",
     "found-other-database": "Found On The Other Website Checker",
@@ -212,6 +213,7 @@ export default {
 
     'report-found': 'FOUND IN DATABASE',
     'report-not-found': 'NOT FOUND IN DATABASE',
+    'report-not-found2': 'FOUND BEING TYPE OTHER IN THE DATABASE',
 
     'report-most': "Most reported as",
     'report-unit': "People",
@@ -244,4 +246,23 @@ export default {
     'positive': 'Positive',
     'negative': 'Negative'
   },
+
+  "errormessage": {
+    "errmessuserexist": "User with this username already exists",
+    "errmessemailexist": "User with this email already exists",
+    "errmessphoneexist": "User with this phone number already exists",
+    "errmesspassword": "You can not change your password with your old password",
+    "editnoinfo": "Require information for an update",
+    "editerrinfo": "Something Wrong with your information",
+    "editsuccess": "User information was edited successfully",
+    "usersuccess": "User information was created successfully",
+    "errsigninusername": "The provided username does not exist. Please sign up if you don't have an account.",
+    "errsigninpassword": "Invalid password",
+    "errsigninsystem": "We're experiencing technical difficulties. Please try signing in again in a few minutes.",
+    "signinsuccess": "Authentication successful",
+    "reporterrwebsiteinact": "This website may inactive already",
+    "reportsuccess": "Report information was created successfully",
+    "errurl1": "Can not verify this website but user still can report this website",
+    "errurl2": "Please check the machine learning connection but the user still can report this website",
+  }
 }

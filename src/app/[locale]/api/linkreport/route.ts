@@ -11,9 +11,11 @@ import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { getScopedI18n } from "@/locales/server";
 
 export async function POST(req: Request) {
     try {
+        const t = await getScopedI18n("errormessage");
         const body = await req.json();
         console.log(body);
         const session = getServerSession(authOptions);
@@ -109,7 +111,7 @@ export async function POST(req: Request) {
                 }
             });
             console.log(newReport);
-            return NextResponse.json({ websiteDetail: newReport, message: "Report created successfully" }, { status: 201 });
+            return NextResponse.json({ websiteDetail: newReport, message: t("reportsuccess") }, { status: 201 });
         }
         else {
             console.log("Create Report here!!")
@@ -127,7 +129,7 @@ export async function POST(req: Request) {
             return NextResponse.json(
                 {
                     websiteDetail: newReport,
-                    message: 'This website may inactive already',
+                    message: t("errmessuserexist"),
                 },
                 { status: 201 }
             );

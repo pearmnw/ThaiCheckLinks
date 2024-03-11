@@ -46,7 +46,7 @@ export const getVerificationByMetaWebsiteID = async (
         updateMaxOtherPercent(verificationInfo.WebsiteID, currentPercent.other);
       }
       console.log(verificationInfo);
-      console.log('Success Create Verification for WebID: ', metaWebsiteID);
+      console.log('Success Update Verification for WebID: ', metaWebsiteID);
       return verificationInfo;
     } else {
       // Create verification

@@ -1,6 +1,7 @@
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
 import Modal from "react-modal";
 import ReportForm from "../reportpage/reportform";
 import CircularProgressBar from "./overall/CircularProgressBar";
@@ -117,6 +118,11 @@ const Overall = ({ url, metaWebsite, currentPercent, verifySuccess }: any) => {
           {/* TODO: Calculate the Score */}
           <CircularProgressBar />
           <RiskMeasurement />
+          <Link href="/report">
+            <button className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold">
+              Report
+            </button>
+          </Link>
         </div>
       </section>
     );

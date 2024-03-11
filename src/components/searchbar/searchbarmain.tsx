@@ -44,7 +44,7 @@ const SearchBarMain: React.FC<any> = ({
           <input
             type="search"
             className="ml-2 -mr-0.5 block min-w-0 flex-auto bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-[#FFFFFF] outline-none transition duration-200 ease-in-out focus:z-[3]"
-            placeholder={t("text")}
+            placeholder={t("placeholder")}
             value={url}
             onChange={handleInputChange}
             aria-label="Search"

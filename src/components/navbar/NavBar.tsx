@@ -3,7 +3,7 @@
 import { useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
 const NavBar = () => {
@@ -41,7 +41,7 @@ const NavBar = () => {
               href="/"
               className="text-[32px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#02006D] to-[#144EE3]"
             >
-              Thai.Scamlinks
+              Thai.CheckLinks
             </Link>
             <div className="flex items-center md:order-2 space-x-5">
               <Link

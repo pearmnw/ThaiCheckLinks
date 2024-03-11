@@ -2,7 +2,7 @@
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 const ReportForm = ({
@@ -247,7 +247,7 @@ const ReportForm = ({
           ...prevState,
           successMsg: "",
         }));
-        return;
+        return data;
       }
     } catch (error) {
       console.log(error);
@@ -265,7 +265,7 @@ const ReportForm = ({
         <form onSubmit={validateFormInput}>
           <div className="flex-row px-[17rem] justify-center items-center text-slate-700 text-xl font-semibold tracking-tight">
             <div className="flex pt-5 pb-1">
-              {t("Catagory")}&nbsp;
+              {t("Category")}&nbsp;
               {":"}
               <div className="px-[1rem]">
                 <select
@@ -328,7 +328,7 @@ const ReportForm = ({
                 {t("bankacc")}&nbsp;
                 <svg
                   className={`w-3 h-3 ms-3 m-auto transform ${
-                    open ? "rotate-180" : ""
+                    open ? "" : "rotate-180"
                   }`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -364,42 +364,44 @@ const ReportForm = ({
                   placeholder={t("banktext")}
                 />
               </div>
-              <div className="flex pt-8">
-                <select
-                  title="bank"
-                  id="bank"
-                  name="bank"
-                  value={formInput.bank}
-                  onChange={({ target }) => {
-                    console.log("Selected value:", target.value);
-                    handleUserInput(target.name, target.value);
-                  }}
-                  className="w-[8rem] h-8 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500 m-auto
-  text-sm"
-                >
-                  <option value="default">{t("bank")}</option>
-                  <option value="scb">{t("scb")}</option>
-                  <option value="kbtg">{t("kbtg")}</option>
-                  <option value="ktb">{t("ktb")}</option>
-                  <option value="ttb">{t("ttb")}</option>
-                  <option value="boa">{t("boa")}</option>
-                  <option value="lhb">{t("lhb")}</option>
-                  <option value="gsb">{t("gsb")}</option>
-                  <option value="others">{t("bankothers")}</option>
-                </select>
-
-                <div className="pl-[1rem]">
-                  <input
-                    id="bankaccnumber"
-                    name="bankaccnumber"
-                    value={formInput.bankaccnumber}
+              <div className="px-[3rem]">
+                <div className="flex flex-col items-center pt-8 sm:flex-row">
+                  <select
+                    title="bank"
+                    id="bank"
+                    name="bank"
+                    value={formInput.bank}
                     onChange={({ target }) => {
                       console.log("Selected value:", target.value);
                       handleUserInput(target.name, target.value);
                     }}
-                    className="block w-[24rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder={t("banknum")}
-                  />
+                    className="w-[8rem] h-8 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500 m-auto
+  text-sm"
+                  >
+                    <option value="default">{t("bank")}</option>
+                    <option value="scb">{t("scb")}</option>
+                    <option value="kbtg">{t("kbtg")}</option>
+                    <option value="ktb">{t("ktb")}</option>
+                    <option value="ttb">{t("ttb")}</option>
+                    <option value="boa">{t("boa")}</option>
+                    <option value="lhb">{t("lhb")}</option>
+                    <option value="gsb">{t("gsb")}</option>
+                    <option value="others">{t("bankothers")}</option>
+                  </select>
+
+                  <div className="w-full sm:pl-4">
+                    <input
+                      id="bankaccnumber"
+                      name="bankaccnumber"
+                      value={formInput.bankaccnumber}
+                      onChange={({ target }) => {
+                        console.log("Selected value:", target.value);
+                        handleUserInput(target.name, target.value);
+                      }}
+                      className="block w-[24rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder={t("banknum")}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

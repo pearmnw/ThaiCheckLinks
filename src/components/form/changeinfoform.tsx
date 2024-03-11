@@ -3,9 +3,11 @@
 import { useScopedI18n } from "@/locales/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ChangeInfoForm = () => {
+  const e = useScopedI18n("errormessage");
   const t = useScopedI18n("signuppage");
   const { data: session, status } = useSession();
   console.log(session?.user?.name);
@@ -145,27 +147,42 @@ const ChangeInfoForm = () => {
       console.log("wrong pw3");
       setFormError({
         ...inputError,
-        errorMsg: "Something Wrong with your information",
+        errorMsg: e("editerrinfo"),
       });
     }
   };
 
   const onSubmit = async () => {
-    const res = await fetch("api/editprofile", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        CurrentUser: session?.user.name,
-        UserName: formInput.username,
-        UserEmail: formInput.email,
-        UserPhone: formInput.phonenumber,
-        UserPassword: formInput.password,
-      }),
-    });
-    console.log(res);
-    return res;
+    try {
+      const res = await fetch("api/editprofile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          CurrentUser: session?.user.name,
+          UserName: formInput.username,
+          UserEmail: formInput.email,
+          UserPhone: formInput.phonenumber,
+          UserPassword: formInput.password,
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok && data.websiteDetail) {
+        toast.success(data.message);
+      } else {
+        console.log("Edit Failed");
+        toast.error(data.message);
+        setFormInput((prevState) => ({
+          ...prevState,
+          successMsg: "",
+        }));
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

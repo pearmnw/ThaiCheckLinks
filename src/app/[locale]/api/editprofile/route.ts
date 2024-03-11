@@ -1,5 +1,6 @@
 import { updatePassword, updateUserAllInfo, updateUserEmail, updateUserName, updateUserPhone } from "@/app/utils/user/updateUser";
 import { db } from "@/lib/db";
+import { getScopedI18n } from "@/locales/server";
 import { compare } from "bcrypt";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -20,6 +21,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function PUT(req: Request) {
     try {
+        const t = await getScopedI18n("errormessage");
         const body = await req.json();
         console.log(body);
         const { CurrentUser, UserName, UserEmail, UserPhone, UserPassword } = body;
@@ -30,18 +32,30 @@ export async function PUT(req: Request) {
             const existingUserByUserName = await db.userDetail.findUnique({
                 where: { UserName: UserName }
             });
+            const existingUserByEmail = await db.userDetail.findUnique({
+                where: { UserEmail: UserEmail }
+            });
+            const existingUserByPhone = await db.userDetail.findFirst({
+                where: { UserPhone: UserPhone }
+            });
             if (existingUserByUserName) {
-                return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
+                return NextResponse.json({ user: null, message: t("errmessuserexist") }, { status: 409 })
+            }
+            else if (existingUserByEmail) {
+                return NextResponse.json({ user: null, message: t("errmessemailexist") }, { status: 409 })
+            }
+            else if (existingUserByPhone) {
+                return NextResponse.json({ user: null, message: t("errmessphoneexist") }, { status: 409 })
             }
             else {
                 const updateresult = await updateUserAllInfo(CurrentUser, body);
                 console.log(updateresult);
-                return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
+                return NextResponse.json({ UserDetail: updateresult, message: t("editsuccess") }, { status: 201 });
             }
         }
 
         else if (!UserName && !UserEmail && !UserPhone && !UserPassword) {
-            return NextResponse.json({ user: null, message: "Require some information for update" }, { status: 409 })
+            return NextResponse.json({ user: null, message: t("editnoinfo") }, { status: 409 })
         }
         else {
             let updateresult;
@@ -51,7 +65,7 @@ export async function PUT(req: Request) {
                     where: { UserEmail: UserEmail }
                 });
                 if (existingUserByEmail) {
-                    return NextResponse.json({ user: null, message: "User with this email already exists" }, { status: 409 })
+                    return NextResponse.json({ user: null, message: t("errmessemailexist") }, { status: 409 })
                 }
                 else {
                     updateresult = await updateUserEmail(CurrentUser, UserEmail);
@@ -65,7 +79,7 @@ export async function PUT(req: Request) {
                     where: { UserPhone: UserPhone }
                 });
                 if (existingUserByPhone) {
-                    return NextResponse.json({ user: null, message: "User with this phonenumber already exists" }, { status: 409 })
+                    return NextResponse.json({ user: null, message: t("errmessphoneexist") }, { status: 409 })
 
                 }
                 else {
@@ -79,7 +93,7 @@ export async function PUT(req: Request) {
             if (UserPassword) {
                 const checkWithOldPW = await compare(UserPassword, currUserSession);
                 if (checkWithOldPW) {
-                    return NextResponse.json({ user: null, message: "You can not change password with your old password" }, { status: 409 })
+                    return NextResponse.json({ user: null, message: t("errmesspassword") }, { status: 409 })
                 }
                 else {
                     updateresult = await updatePassword(CurrentUser, UserPassword);
@@ -94,7 +108,7 @@ export async function PUT(req: Request) {
                     where: { UserName: UserName }
                 });
                 if (existingUserByUserName) {
-                    return NextResponse.json({ user: null, message: "User with this username already exists" }, { status: 409 })
+                    return NextResponse.json({ user: null, message: t("errmessuserexist") }, { status: 409 })
                 }
                 else {
                     updateresult = await updateUserName(CurrentUser, UserName);
@@ -103,14 +117,8 @@ export async function PUT(req: Request) {
                 }
             }
 
-            return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
+            return NextResponse.json({ UserDetail: updateresult, message: t("editsuccess") }, { status: 201 });
         }
-        // console.log(updateUser);
-        // if (updateUser) {
-        // }
-        // else {
-        //     throw new Error("Something Wrong!!");
-        // }
     } catch (error) {
         return NextResponse.json({ message: error }, { status: 500 });
     }

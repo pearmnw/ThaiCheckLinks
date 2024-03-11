@@ -2,7 +2,7 @@
 
 import { useScopedI18n } from "@/locales/client";
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import LoaderOnButt from "../loading/LoaderOnButt";
 
@@ -13,6 +13,7 @@ const ReportLinkBar = ({
   getSuccess,
 }: any) => {
   const t = useScopedI18n("report");
+  const e = useScopedI18n("errormessage");
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -93,7 +94,7 @@ const ReportLinkBar = ({
       .post("http://127.0.0.1:8000/", formData)
       .then((resp) => {
         console.log(resp.data);
-        if (resp.data) {
+        if (resp.data.classify !== null) {
           updateCurrentPercent(resp.data.classify);
 
           // // TODO: Update Max Percent with Database (UNDONE!!!)
@@ -101,12 +102,18 @@ const ReportLinkBar = ({
 
           updateMetaWebsite(resp.data.meta_website);
         } else {
-          throw { message: "Can not verify this website" };
+          throw {
+            message: e("errurl1"),
+          };
         }
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error);
+        if (error.message === "Network Error") {
+          toast.error(e("errurl2"));
+        } else {
+          toast.error(error.message);
+        }
       });
   };
 

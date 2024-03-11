@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { getScopedI18n } from "@/locales/server";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -7,6 +8,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 async function signin(credentials: any) {
     try {
+        const t = await getScopedI18n("errormessage");
         // const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         const usernamepattern = /^[a-zA-Z0-9]/;
         // const phonenumpattern = /^[0-9]/;
@@ -18,12 +20,12 @@ async function signin(credentials: any) {
             })
             console.log(existingUserName);
             if (!existingUserName) {
-                throw { status: 409, message: "Wrong username" };
+                throw { status: 409, message: t("errsigninusername") };
             }
             const passwordMatch = await compare(credentials.password, existingUserName?.UserPassword);
             if (!passwordMatch) {
                 // return NextResponse.json({message: "Password not match" }, { status: 409 })
-                throw { status: 409, message: "Wrong password" };
+                throw { status: 409, message: t("errsigninpassword") };
             }
             return existingUserName;
         }
@@ -50,6 +52,7 @@ export const authOptions: NextAuthOptions = {
             credentials: {},
             async authorize(credentials) {
                 try {
+                    const t = await getScopedI18n("errormessage");
                     const user = await signin(credentials);
                     if (user) {
                         return {
@@ -63,7 +66,7 @@ export const authOptions: NextAuthOptions = {
                         };
                     }
                     else {
-                        throw new Error("Somethings Wrong!!")
+                        throw new Error(t("errsigninpassword"))
                     }
 
 
