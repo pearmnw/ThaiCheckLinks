@@ -26,10 +26,10 @@ export const setURL = async (url: any) => {
                 throw Error("This URL format not valid!!");
             }
         } else {
-            throw Error("No have URL Ka");
+            throw Error("Please provide the URL");
         }
     } catch (error) {
-        return error;
+        return Promise.reject(error);
     }
 }
 
@@ -59,6 +59,7 @@ export const setCategoryID = async (WebsiteCategory: any) => {
         return WebCategoryID;
     } catch (error) {
         console.log(error);
+        return Promise.reject(error);
     }
 }
 

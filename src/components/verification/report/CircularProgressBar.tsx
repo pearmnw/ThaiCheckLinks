@@ -1,10 +1,10 @@
-import { CircularProgressBarProps } from '@/lib/interface/verification/interface';
-import { useScopedI18n } from '@/locales/client';
-import React, { useState, useEffect } from 'react';
+import { CircularProgressBarProps } from "@/lib/interface/verification/interface";
+import { useScopedI18n } from "@/locales/client";
+import React, { useEffect, useState } from "react";
 
 const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
-  const t = useScopedI18n('verificationpage');
-  const [riskLabel, setRiskLabel] = useState('');
+  const t = useScopedI18n("verificationpage");
+  const [riskLabel, setRiskLabel] = useState("");
   const maxScore = 15;
   const normalizedScore = Math.min(score, maxScore); // Ensure score does not exceed 15
   const angle = (normalizedScore / maxScore) * 180; // Calculate angle based on normalized score
@@ -14,15 +14,15 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
 
   const identifyRiskFromScore = (riskScore: number) => {
     if (score > 0 && score <= 5) {
-      return t('low-count');
+      return t("low-count");
     } else if (score > 5 && score <= 10) {
-      return t('quite-low-count');
+      return t("quite-low-count");
     } else if (score > 10 && score <= 15) {
-      return t('quite-high-count');
+      return t("quite-high-count");
     } else if (score > 15) {
-      return t('high-count');
+      return t("high-count");
     }
-    return t('No Result');
+    return t("No Result");
   };
 
   useEffect(() => {
@@ -58,10 +58,10 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
             key={`label-${i}`}
             x={labelX}
             y={labelY}
-            fill='black'
-            fontSize='16'
-            textAnchor='middle'
-            alignmentBaseline='middle'
+            fill="black"
+            fontSize="16"
+            textAnchor="middle"
+            alignmentBaseline="middle"
           >
             {i}
           </text>
@@ -81,12 +81,12 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
   ) => {
     var start = polarToCartesian(x, y, radius, endAngle);
     var end = polarToCartesian(x, y, radius, startAngle);
-    var largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+    var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
     var d = [
-      'M',
+      "M",
       start.x,
       start.y,
-      'A',
+      "A",
       radius,
       radius,
       0,
@@ -94,7 +94,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
       0,
       end.x,
       end.y,
-    ].join(' ');
+    ].join(" ");
 
     return d;
   };
@@ -116,42 +116,42 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
 
   // Get color based on the score
   const getColor = () => {
-    if (score > 0 && score <= 5) {
-      return { color: '#04CE00', label: t('low-count') };
+    if (score >= 0 && score <= 5) {
+      return { color: "#04CE00", label: t("low-count") };
     } else if (score > 5 && score <= 10) {
-      return { color: '#F2CC6B', label: t('quite-low-count') }; 
+      return { color: "#F2CC6B", label: t("quite-low-count") };
     } else if (score > 10 && score <= 15) {
-      return { color: '#F97316', label: t('quite-high-count')} ; 
+      return { color: "#F97316", label: t("quite-high-count") };
     } else if (score > 15) {
-      return { color: '#B51A36', label: t('high-count')};
+      return { color: "#B51A36", label: t("high-count") };
     }
-    return { color: '#ccc', label: t('No Result')} ;
+    return { color: "#ccc", label: t("No Result") };
   };
 
   const { color, label } = getColor();
 
   return (
-    <div className='relative p-5'>
+    <div className="relative p-5">
       <svg
-        width='400'
-        height='200'
-        viewBox='0 0 870 400'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
+        width="400"
+        height="200"
+        viewBox="0 0 870 400"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          fill='none'
-          stroke='#ccc'
-          strokeWidth='25'
-          strokeLinecap='round'
+          fill="none"
+          stroke="#ccc"
+          strokeWidth="25"
+          strokeLinecap="round"
           d={describeArc(x, y, radius, 0, 180)}
         />
         {color && (
           <path
-            fill='none'
+            fill="none"
             stroke={color}
-            strokeWidth='25'
-            strokeLinecap='round'
+            strokeWidth="25"
+            strokeLinecap="round"
             d={describeArc(x, y, radius, 0, angle)}
           />
         )}
@@ -159,11 +159,11 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ score }) => {
           <React.Fragment key={index}>{tick}</React.Fragment>
         ))}
       </svg>
-      <div className='absolute top-44 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center flex flex-col justify-center items-center'>
-        <p className='text-2xl font-semibold text-custom-black'>
-          {t('risk-value')}
+      <div className="absolute top-44 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center flex flex-col justify-center items-center">
+        <p className="text-2xl font-semibold text-custom-black">
+          {t("risk-value")}
         </p>
-        <p className='text-4xl font-bold' style={{ color: color }}>
+        <p className="text-4xl font-bold" style={{ color: color }}>
           {riskLabel}
         </p>
       </div>

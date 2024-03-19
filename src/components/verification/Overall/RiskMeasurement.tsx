@@ -56,7 +56,16 @@ const RiskMeasurement = () => {
           </p>
         </div>
       );
-    } else if (maxCategoryReport._type === "other" || riskScoreOverall !== 0) {
+    } else if (
+      maxCategoryReport &&
+      !maxCategoryReport._count &&
+      !maxCategoryReport._type
+    ) {
+      return <p className="text-4xl">{t("NOT FOUND")}</p>;
+    } else if (
+      (maxCategoryReport._count && maxCategoryReport._type === "other") ||
+      riskScoreOverall !== 0
+    ) {
       return (
         <div className="flex flex-col gap-1">
           {maxCategoryReport._count} {t("report-unit")}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import ReportLinkBar from "../searchbar/getreportlinkbar";
 import ReportForm from "./reportform";
 
@@ -20,9 +20,14 @@ const ReportContainer = () => {
     status: true,
   });
   const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
+  // Update
+  const [isLinkBarChanging, setIsLinkBarChanging] = useState<boolean>(false);
+  const [showReportForm, setShowReportForm] = useState<boolean>(false);
 
   const handleInputChange = (value: any) => {
     setUrl(value);
+    setIsLinkBarChanging(true);
+    setShowReportForm(false);
   };
 
   const handleMetaWebsite = (value: any) => {
@@ -36,7 +41,12 @@ const ReportContainer = () => {
   const handleVerifySuccess = (value: any) => {
     if (value == true) {
       setVerifySuccess(true);
+      setShowReportForm(true);
+    } else {
+      setVerifySuccess(false);
+      setShowReportForm(false);
     }
+    setIsLinkBarChanging(false);
   };
 
   return (
@@ -47,12 +57,22 @@ const ReportContainer = () => {
         getCurrentPercent={handleCurrentPercent}
         getSuccess={handleVerifySuccess}
       />
-      <ReportForm
+      {/* <ReportForm
         url={url}
         metaWebsite={metaWebsite}
         currentPercent={currentPercent}
         verifySuccess={verifySuccess}
-      />
+      /> */}
+      {showReportForm &&
+        !isLinkBarChanging && ( // Conditionally render ReportForm if it should be shown and ReportLinkBar is not changing
+          <ReportForm
+            url={url}
+            metaWebsite={metaWebsite}
+            currentPercent={currentPercent}
+            verifySuccess={verifySuccess}
+          />
+        )}
+      :<></>
     </>
   );
 };

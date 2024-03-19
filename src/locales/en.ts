@@ -4,7 +4,8 @@ export default {
     "reportweb": "Report Websites",
     "verifyweb": "Check Website's Link",
     "signin": "Sign In",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "signout": "Sign Out"
   },
 
   "signinpage": {
@@ -138,10 +139,10 @@ export default {
     "bankothers": "Others",
     "urlError": "Please provide the URL",
     "urlError2": "Please provide the correct URL's format",
-    "webCatError": "Please select your website catagory",
+    "webCatError": "Please select your website category",
     "moredetailError": "Please provide more details about this website",
     "moredetailError2": "Please provide the details over than 50 characters",
-    "moredetailError3": "Please do not use the redundancy word over 3 time",
+    "moredetailError3": "Please do not use the redundancy word over 3 times",
   },
 
   "reportsuccess": {
