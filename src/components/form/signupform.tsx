@@ -58,6 +58,8 @@ const SignUpForm = () => {
   //   }
   // };
 
+  let hasErrors = false;
+
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -73,15 +75,19 @@ const SignUpForm = () => {
 
     // Check if each field is filled in by the user
     if (!formInput.username) {
+      hasErrors = true;
       inputError.username = t("errfield");
     }
     if (!formInput.email) {
+      hasErrors = true;
       inputError.email = t("errfield");
     }
     if (!formInput.password) {
+      hasErrors = true;
       inputError.password = t("errfield");
     }
     if (!formInput.confirmpassword) {
+      hasErrors = true;
       inputError.confirmpassword = t("errfield");
     }
 
@@ -91,10 +97,8 @@ const SignUpForm = () => {
       // Check if email match the pattern
       if (!emailpattern.test(formInput.email)) {
         console.log("wrong email");
-        setFormError({
-          ...inputError,
-          email: t("erremail"),
-        });
+        hasErrors = true;
+        inputError.email = t("erremail");
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -105,11 +109,9 @@ const SignUpForm = () => {
     if (formInput.phonenumber) {
       // check if phone number is least than 10
       if (formInput.phonenumber.length < 10) {
+        hasErrors = true;
         console.log("wrong phonenum");
-        setFormError({
-          ...inputError,
-          phonenumber: t("errphone"),
-        });
+        inputError.phonenumber = t("errphone");
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -121,10 +123,8 @@ const SignUpForm = () => {
     if (formInput.password) {
       if (formInput.password.length < 8) {
         console.log("wrong pw1");
-        setFormError({
-          ...inputError,
-          password: t("errpw1"),
-        });
+        hasErrors = true;
+        inputError.password = t("errpw1");
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -133,10 +133,8 @@ const SignUpForm = () => {
 
       if (!/\d/.test(formInput.password)) {
         console.log("wrong pw2");
-        setFormError({
-          ...inputError,
-          password: t("errpw2"),
-        });
+        hasErrors = true;
+        inputError.password = t("errpw2");
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -146,10 +144,8 @@ const SignUpForm = () => {
       if (formInput.password !== formInput.confirmpassword) {
         // Check if password and confirmpassword is match
         console.log("wrong pw3");
-        setFormError({
-          ...inputError,
-          confirmpassword: t("errconfirmpass"),
-        });
+        hasErrors = true;
+        inputError.confirmpassword = t("errconfirmpass");
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -159,22 +155,41 @@ const SignUpForm = () => {
 
     if (!checkedValues || !checkedValues.includes("consent")) {
       console.log("No consent");
-      setFormError({
-        ...inputError,
-        consent: t("errconsent"),
-      });
+      hasErrors = true;
+      inputError.consent = t("errconsent");
       setFormInput((prevState) => ({
         ...prevState,
         successMsg: "",
       }));
     }
 
-    setFormError(inputError);
-    setFormInput((prevState) => ({
-      ...prevState,
-      successMsg: t("successmsg"),
-    }));
-    onSubmit();
+    // setFormError(inputError);
+    // setFormInput((prevState) => ({
+    //   ...prevState,
+    //   successMsg: t("successmsg"),
+    // }));
+    // onSubmit();
+
+    console.log("hasErrors:", hasErrors);
+
+    if (!hasErrors) {
+      setFormError((prevState) => ({
+        ...prevState,
+        username: "",
+        email: "",
+        phonenumber: "",
+        password: "",
+        confirmpassword: "",
+        consent: "",
+      }));
+      setFormInput((prevState) => ({
+        ...prevState,
+        successMsg: t("successmsg"),
+      }));
+      onSubmit();
+    } else {
+      setFormError(inputError);
+    }
   };
 
   const aiSetName = () => {
