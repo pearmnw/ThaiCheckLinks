@@ -134,24 +134,47 @@ const Verification = () => {
         const data = await resp.json();
         const { VerificationInfo } = data;
         console.log(data);
-        const maxPercent = {
-          maxOther: 80,
-          maxGambling: 10,
-          maxScam: 10,
-          maxFake: 44,
-        };
+        // // Custome Max Percent
+        // const maxPercent = {
+        //   maxOther: 80,
+        //   maxGambling: 10,
+        //   maxScam: 10,
+        //   maxFake: 44,
+        // };
 
         // TODO: Update Max Percent with Database (UNDONE!!!)
         if (currentPercent != null) {
-          setOverviewScore((prev: any) => {
-            return {
-              ...prev,
-              maxPercent: maxPercent,
-              currentPercent,
-              highestVerifyOverall,
-              maliciousUrlOverall,
-            };
-          });
+          if (VerificationInfo == null) {
+            setOverviewScore((prev: any) => {
+              return {
+                ...prev,
+                maxPercent: {
+                  maxOther: currentPercent.other,
+                  maxGambling: currentPercent.gambling,
+                  maxScam: currentPercent.scam,
+                  maxFake: currentPercent.fake,
+                },
+                currentPercent,
+                highestVerifyOverall,
+                maliciousUrlOverall,
+              };
+            });
+          } else {
+            setOverviewScore((prev: any) => {
+              return {
+                ...prev,
+                maxPercent: {
+                  maxOther: VerificationInfo.MOtherPercentage,
+                  maxGambling: VerificationInfo.MGamblingPercentage,
+                  maxScam: VerificationInfo.MScamPercentage,
+                  maxFake: VerificationInfo.MFakePercentage,
+                },
+                currentPercent,
+                highestVerifyOverall,
+                maliciousUrlOverall,
+              };
+            });
+          }
           setCurrentPercent((prev: any) => {
             return {
               ...prev,
@@ -195,11 +218,12 @@ const Verification = () => {
             });
             setVerifySuccess(false);
           } else {
-            let highestVerifyOverallFromDB = getHighestVerifyScore(maxPercent);
+            let highestVerifyOverallFromDB = getHighestVerifyScore(
+              overviewScore.maxPercent
+            );
             setOverviewScore((prev: any) => {
               return {
                 ...prev,
-                maxPercent: maxPercent,
                 currentPercent,
                 highestVerifyOverall: highestVerifyOverallFromDB,
                 maliciousUrlOverall,

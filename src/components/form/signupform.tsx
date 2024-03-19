@@ -2,7 +2,7 @@
 
 import { useScopedI18n } from "@/locales/client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import Modal from "react-modal";
 import { generateUsername } from "unique-username-generator";
@@ -37,15 +37,26 @@ const SignUpForm = () => {
     });
   };
 
-  const [checkedValues, setValue] = useState({});
+  const [checkedValues, setCheckedValues] = useState<string[]>([]);
 
   const handleChange = (event: { target: { value: any; checked: any } }) => {
     const { value, checked } = event.target;
-
     if (checked) {
-      setValue([value]);
+      setCheckedValues((prevValues) => [...prevValues, value]); // Add the value to the array of checked values
+    } else {
+      setCheckedValues((prevValues) =>
+        prevValues.filter((val) => val !== value)
+      ); // Remove the value from the array of checked values if unchecked
     }
   };
+
+  // const handleChange = (event: { target: { value: any; checked: any } }) => {
+  //   const { value, checked } = event.target;
+
+  //   if (checked) {
+  //     setValue([value]);
+  //   }
+  // };
 
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -60,7 +71,21 @@ const SignUpForm = () => {
       consent: "",
     };
 
-    if (formInput.email) {
+    // Check if each field is filled in by the user
+    if (!formInput.username) {
+      inputError.username = t("errfield");
+    }
+    if (!formInput.email) {
+      inputError.email = t("errfield");
+    }
+    if (!formInput.password) {
+      inputError.password = t("errfield");
+    }
+    if (!formInput.confirmpassword) {
+      inputError.confirmpassword = t("errfield");
+    }
+
+    if (formInput.email != "") {
       const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
       // Check if email match the pattern
@@ -74,7 +99,6 @@ const SignUpForm = () => {
           ...prevState,
           successMsg: "",
         }));
-        return;
       }
     }
 
@@ -90,7 +114,6 @@ const SignUpForm = () => {
           ...prevState,
           successMsg: "",
         }));
-        return;
       }
     }
 
@@ -106,8 +129,8 @@ const SignUpForm = () => {
           ...prevState,
           successMsg: "",
         }));
-        return;
       }
+
       if (!/\d/.test(formInput.password)) {
         console.log("wrong pw2");
         setFormError({
@@ -118,7 +141,6 @@ const SignUpForm = () => {
           ...prevState,
           successMsg: "",
         }));
-        return;
       }
 
       if (formInput.password !== formInput.confirmpassword) {
@@ -132,11 +154,10 @@ const SignUpForm = () => {
           ...prevState,
           successMsg: "",
         }));
-        return;
       }
     }
 
-    if (checkedValues != "consent") {
+    if (!checkedValues || !checkedValues.includes("consent")) {
       console.log("No consent");
       setFormError({
         ...inputError,
@@ -146,7 +167,6 @@ const SignUpForm = () => {
         ...prevState,
         successMsg: "",
       }));
-      return;
     }
 
     setFormError(inputError);
@@ -244,7 +264,7 @@ const SignUpForm = () => {
               name="username"
               type="username"
               placeholder={t("usertext")}
-              required
+              // required
               className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
             <button onClick={aiSetName} className="items-center">
@@ -277,7 +297,7 @@ const SignUpForm = () => {
               name="email"
               type="text"
               placeholder={t("emtext")}
-              required
+              // required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -330,7 +350,7 @@ const SignUpForm = () => {
               name="password"
               type="password"
               placeholder={t("pwtext")}
-              required
+              // required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>
@@ -356,7 +376,7 @@ const SignUpForm = () => {
               name="confirmpassword"
               type="password"
               placeholder={t("cftext")}
-              required
+              // required
               className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
             />
           </div>

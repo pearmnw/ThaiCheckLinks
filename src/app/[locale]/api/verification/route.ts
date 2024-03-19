@@ -65,7 +65,7 @@ export async function POST(req: Request) {
                     }
                 }
             } else {
-                console.log('Entry state 2: this url no have in database');
+                console.log('Entry state 2: this url no have in verification database');
                 if (
                     CurrentPercent.gambling >= 70 ||
                     CurrentPercent.scam >= 70 ||
@@ -86,7 +86,6 @@ export async function POST(req: Request) {
                     console.log('The percent are not pass the threshold');
                 }
             }
-
             return NextResponse.json(
                 {
                     VerificationInfo: getVeriInfo,
@@ -95,6 +94,7 @@ export async function POST(req: Request) {
                 { status: 201 }
             );
         } else {
+            console.log('Entry state 2: this url no have in verification database');
             return NextResponse.json(
                 {
                     VerificationInfo: null,
