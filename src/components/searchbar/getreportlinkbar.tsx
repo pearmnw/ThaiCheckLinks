@@ -66,13 +66,6 @@ const ReportLinkBar = ({
     }));
   };
 
-  // const updateMaxPercent = (newData: any) => {
-  //   setMaxPercent((prevMaxPercent) => ({
-  //     ...prevMaxPercent,
-  //     ...newData,
-  //   }));
-  // };
-
   const updateMetaWebsite = (newData: any) => {
     setMetaWebsite((prevMetaWebsite) => ({
       ...prevMetaWebsite,
@@ -82,8 +75,9 @@ const ReportLinkBar = ({
 
   const handleInputChange = (e: any) => {
     const value = e.target.value;
-    setUrl(value);
+    setUrl(value.trim());
     onInputChange(value);
+    setIsSuccess(false);
   };
 
   const getVerifyResult = async () => {

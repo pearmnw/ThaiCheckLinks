@@ -90,7 +90,7 @@ const NavBar = () => {
                 >
                   &nbsp;
                   {" | "}
-                  Sign Out
+                  {t("signout")}
                 </button>
               </div>
             ) : (

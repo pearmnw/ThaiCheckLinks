@@ -8,7 +8,8 @@ export default {
     "reportweb": "รายงานเว็บไซต์มิจฉาชีพ",
     "verifyweb": "ตรวจสอบลิงค์เว็บไซต์",
     "signin": "เข้าสู่ระบบ",
-    "signup": "ลงทะเบียน"
+    "signup": "ลงทะเบียน",
+    "signout": "ออกจากระบบ"
   },
 
   "signinpage": {

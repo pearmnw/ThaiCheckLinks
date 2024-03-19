@@ -12,7 +12,7 @@ const SearchBarMain: React.FC<any> = ({
   const [open, setOpen] = useState(false);
 
   const handleInputChange = (e: any) => {
-    setUrl(e.target.value);
+    setUrl(e.target.value.trim());
     setOverview((prev: any) => {
       return { ...prev, isShow: false };
     });

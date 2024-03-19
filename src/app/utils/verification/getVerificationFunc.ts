@@ -183,7 +183,7 @@ export const createVerification = async (
 ) => {
   // TODO: we will keep the website only when the some of type's ML percent[Gambling, Scam, Fake] > 70
   try {
-    console.log('Start->updateCurrentPercent');
+    console.log('Start->CreateVerification');
     const result = await db.verification.create({
       data: {
         WebsiteID: webID,
@@ -200,7 +200,7 @@ export const createVerification = async (
     });
     if (result) {
       console.log(result);
-      console.log('Success->updateCurrentPercent');
+      console.log('Success->CreateVerification');
       return result;
     }
   } catch (error) {
@@ -253,14 +253,18 @@ export const createUserVerifyBox = async (
   let websiteStatus = true;
   try {
     console.log('Start->createUserVerifyBox');
-    const webcatID = await setCategoryIDForWebMeta(currentPercent);
+    const websiteURL = metaWebsite.url || '';
+    const websiteMetaTitle = metaWebsite.title ? metaWebsite.title[0] : null;
+    const websiteMetaDesc = metaWebsite.description ? metaWebsite.description[0] : null;
+    const websiteMetaKeyword = metaWebsite.keyword ? metaWebsite.keyword[0] : null;
+
     console.log('We here for create User verification Box');
     const result = await db.userVerifyBox.create({
       data: {
-        WebsiteURL: metaWebsite.url,
-        WebsiteMetaTitle: metaWebsite.title[0],
-        WebsiteMetaDesc: metaWebsite.description[0],
-        WebsiteMetaKeyword: metaWebsite.keyword,
+        WebsiteURL: websiteURL,
+        WebsiteMetaTitle: websiteMetaTitle,
+        WebsiteMetaDesc: websiteMetaDesc,
+        WebsiteMetaKeyword: websiteMetaKeyword,
         WebsiteStatus: websiteStatus,
       },
     });

@@ -1,7 +1,6 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
 import Link from "next/link";
-import React from "react";
 
 const UnAuth = () => {
   const t = useScopedI18n("report");
@@ -11,22 +10,24 @@ const UnAuth = () => {
         {t("caption")}
       </div>
 
-      <div className="text-center justify-center items-center">
-        <button className="w-[296px] h-[50px] bg-gray-900 rounded-[23px]">
-          <Link
-            href="/signin"
-            className="text-[24px] font-bold text-transparent bg-clip-text bg-white"
-          >
-            {t("signin")}
-            {" | "}
-          </Link>
-          <Link
-            href="/signup"
-            className="text-[24px] font-bold text-transparent bg-clip-text bg-white"
-          >
-            {t("signup")}
-          </Link>
-        </button>
+      <div className="flex justify-center">
+        <div className="flex text-center justify-center items-center w-[296px] h-[50px] bg-gray-900 rounded-[23px]">
+          <button className="text-[24px] font-bold text-transparent bg-clip-text bg-white hover:text-[#CCD2DE]">
+            <Link href="/signin">{t("signin")}</Link>
+          </button>
+          <p className="text-[24px] font-bold text-transparent bg-clip-text bg-white">
+            &nbsp;{" | "}&nbsp;
+          </p>
+
+          <button className="text-[24px] font-bold text-transparent bg-clip-text bg-white hover:text-[#CCD2DE]">
+            <Link
+              href="/signup"
+              // className="text-[24px] font-bold text-transparent bg-clip-text bg-white"
+            >
+              {t("signup")}
+            </Link>
+          </button>
+        </div>
       </div>
     </>
   );

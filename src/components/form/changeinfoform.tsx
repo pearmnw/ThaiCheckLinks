@@ -1,7 +1,7 @@
 "use client";
 
 import { useScopedI18n } from "@/locales/client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -169,8 +169,9 @@ const ChangeInfoForm = () => {
       });
       const data = await res.json();
       console.log(data);
-      if (res.ok && data.websiteDetail) {
+      if (res.ok && data) {
         toast.success(data.message);
+        signOut();
       } else {
         console.log("Edit Failed");
         toast.error(data.message);

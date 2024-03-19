@@ -8,10 +8,10 @@
 import { getWebsiteMetaByURL, setCategoryID, setURL } from "@/app/utils/report/getReportFunc";
 import { createMetaWebsite, createUserVerifyBox, createVerification, getVerificationByMetaWebsiteID } from "@/app/utils/verification/getVerificationFunc";
 import { db } from "@/lib/db";
+import { getScopedI18n } from "@/locales/server";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { getScopedI18n } from "@/locales/server";
 
 export async function POST(req: Request) {
     try {
@@ -83,6 +83,7 @@ export async function POST(req: Request) {
                 }
             }
             else {
+                methodsucces = true;
                 console.log("The percent are not pass the threshold");
             }
         }
@@ -114,25 +115,26 @@ export async function POST(req: Request) {
             return NextResponse.json({ websiteDetail: newReport, message: t("reportsuccess") }, { status: 201 });
         }
         else {
-            console.log("Create Report here!!")
-            newReport = await db.websiteDetail.create({
-                data: {
-                    UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
-                    WebCategoryID: Number(webcatID),
-                    WebsiteURL,
-                    BankID,
-                    BankAccountOwner,
-                    BankNumber,
-                    WebsiteReportedDetails
-                }
-            });
-            return NextResponse.json(
-                {
-                    websiteDetail: newReport,
-                    message: t("errmessuserexist"),
-                },
-                { status: 201 }
-            );
+            console.log("Cannot Create Report here!!")
+            // newReport = await db.websiteDetail.create({
+            //     data: {
+            //         UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
+            //         WebCategoryID: Number(webcatID),
+            //         WebsiteURL,
+            //         BankID,
+            //         BankAccountOwner,
+            //         BankNumber,
+            //         WebsiteReportedDetails
+            //     }
+            // });
+            // return NextResponse.json(
+            //     {
+            //         websiteDetail: newReport,
+            //         message: t("reportsuccess"),
+            //     },
+            //     { status: 201 }
+            // );
+            throw Error("Something go wrong")
         }
     } catch (error: any) {
         console.error(error);
