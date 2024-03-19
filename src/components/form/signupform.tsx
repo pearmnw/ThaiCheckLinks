@@ -76,23 +76,23 @@ const SignUpForm = () => {
       consent: "",
     };
 
-    // Check if each field is filled in by the user
-    if (!formInput.username) {
-      hasErrors = true;
-      inputError.username = t("errfield");
-    }
-    if (!formInput.email) {
-      hasErrors = true;
-      inputError.email = t("errfield");
-    }
-    if (!formInput.password) {
-      hasErrors = true;
-      inputError.password = t("errfield");
-    }
-    if (!formInput.confirmpassword) {
-      hasErrors = true;
-      inputError.confirmpassword = t("errfield");
-    }
+    // // Check if each field is filled in by the user
+    // if (!formInput.username) {
+    //   hasErrors = true;
+    //   inputError.username = t("errfield");
+    // }
+    // if (!formInput.email) {
+    //   hasErrors = true;
+    //   inputError.email = t("errfield");
+    // }
+    // if (!formInput.password) {
+    //   hasErrors = true;
+    //   inputError.password = t("errfield");
+    // }
+    // if (!formInput.confirmpassword) {
+    //   hasErrors = true;
+    //   inputError.confirmpassword = t("errfield");
+    // }
 
     if (formInput.email != "") {
       const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
@@ -292,10 +292,16 @@ const SignUpForm = () => {
                   name="username"
                   type="username"
                   placeholder={t("usertext")}
-                  // required
+                  required
                   className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
-                <button onClick={aiSetName} className="items-center">
+                <button
+                  onClick={(event) => {
+                    event.preventDefault(); // This line prevents the default form submission
+                    aiSetName();
+                  }}
+                  className="items-center"
+                >
                   <img
                     className="h-auto w-auto"
                     src="/aiicon.svg"
@@ -325,7 +331,7 @@ const SignUpForm = () => {
                   name="email"
                   type="text"
                   placeholder={t("emtext")}
-                  // required
+                  required
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
@@ -352,7 +358,7 @@ const SignUpForm = () => {
                   type="phonenumber"
                   placeholder={t("phntext")}
                   autoComplete="phonenumber"
-                  // required
+                  required
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
@@ -378,7 +384,7 @@ const SignUpForm = () => {
                   name="password"
                   type="password"
                   placeholder={t("pwtext")}
-                  // required
+                  required
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
@@ -404,7 +410,7 @@ const SignUpForm = () => {
                   name="confirmpassword"
                   type="password"
                   placeholder={t("cftext")}
-                  // required
+                  required
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
@@ -426,7 +432,11 @@ const SignUpForm = () => {
                 <div className="px-4">
                   {t("consent1")}
                   <button
-                    onClick={openModalTOU}
+                    // onClick={openModalTOU}
+                    onClick={(event) => {
+                      event.preventDefault(); // This line prevents the default form submission
+                      openModalTOU();
+                    }}
                     className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                   >
                     &nbsp;{t("termofuse")}
@@ -446,7 +456,11 @@ const SignUpForm = () => {
                           </h3>
                           <button
                             type="button"
-                            onClick={closeModalTOU}
+                            // onClick={closeModalTOU}
+                            onClick={(event) => {
+                              event.preventDefault(); // This line prevents the default form submission
+                              closeModalTOU();
+                            }}
                             className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                           >
                             <svg
@@ -1179,7 +1193,11 @@ const SignUpForm = () => {
                   </Modal>
                   &nbsp;{t("and")}
                   <button
-                    onClick={openModalPP}
+                    // onClick={openModalPP}
+                    onClick={(event) => {
+                      event.preventDefault(); // This line prevents the default form submission
+                      openModalPP();
+                    }}
                     className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                   >
                     &nbsp;{t("privacypolicy")}
@@ -1197,7 +1215,11 @@ const SignUpForm = () => {
                           {t("privacypolicy")}
                         </h3>
                         <button
-                          onClick={closeModalPP}
+                          // onClick={closeModalPP}
+                          onClick={(event) => {
+                            event.preventDefault(); // This line prevents the default form submission
+                            closeModalPP();
+                          }}
                           type="button"
                           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         >

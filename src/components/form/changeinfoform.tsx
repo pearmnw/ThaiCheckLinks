@@ -5,6 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { generateUsername } from "unique-username-generator";
 import Loader from "../loading/Loader";
 
 const ChangeInfoForm = () => {
@@ -155,6 +156,15 @@ const ChangeInfoForm = () => {
     }
   };
 
+  const aiSetName = () => {
+    const generatedUsername = generateUsername();
+    setFormInput((prevState) => ({
+      ...prevState,
+      username: generatedUsername,
+    }));
+    console.log(generatedUsername);
+  };
+
   const onSubmit = async () => {
     try {
       setIsLoading(true);
@@ -234,7 +244,13 @@ const ChangeInfoForm = () => {
                   placeholder={session?.user?.name ?? ""}
                   className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
-                <button className="items-center">
+                <button
+                  onClick={(event) => {
+                    event.preventDefault(); // This line prevents the default form submission
+                    aiSetName();
+                  }}
+                  className="items-center"
+                >
                   <img
                     className="h-auto w-auto"
                     src="/aiicon.svg"
