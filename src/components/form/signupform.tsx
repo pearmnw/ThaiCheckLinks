@@ -358,7 +358,6 @@ const SignUpForm = () => {
                   type="phonenumber"
                   placeholder={t("phntext")}
                   autoComplete="phonenumber"
-                  required
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
