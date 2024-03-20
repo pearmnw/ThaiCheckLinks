@@ -40,7 +40,7 @@ const SignInForm = () => {
       if (signInData?.ok) {
         setIsLoading(false);
         router.refresh();
-        router.push("/report");
+        router.push("/profile");
         router.refresh();
         toast.success(e("signinsuccess"));
       } else {
