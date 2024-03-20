@@ -56,7 +56,7 @@ const Overall = ({ url, metaWebsite, currentPercent, verifySuccess }: any) => {
                   {/* <!-- Modal header --> */}
                   <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                      Report
+                      {t("report")}
                     </h3>
                     <button
                       type="button"
@@ -120,9 +120,12 @@ const Overall = ({ url, metaWebsite, currentPercent, verifySuccess }: any) => {
           <RiskMeasurement />
           <Link href="/report">
             <button className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold">
-              Report
+              {t("report")}
             </button>
           </Link>
+          <h5 className="text-gray-400 font-semibold text-lg">
+            *{t("click-here")}
+          </h5>
         </div>
       </section>
     );

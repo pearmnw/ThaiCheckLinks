@@ -43,7 +43,8 @@ export default {
     "errpw2": "Password must contain at least one number.",
     "errphone": "Please enter a correct phone number format.",
     "errconsent": "Please read and consent to the terms.",
-    "warntext": "(This username will show when reporting)"
+    "warntext": "(This username will show when reporting)",
+    "errfield": "Please fill out this field",
   },
 
 
@@ -165,6 +166,7 @@ export default {
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
     "url-detection-title": "URL Detection",
     "No Result": "No Result",
+    "report": "Report",
 
     "overall-title": "Overview Of The Risks Of Website",
     "overall-subtitle": "The Percentage Of Risk Of Being An suspicious Website Is Based On All Citeria",
@@ -261,7 +263,7 @@ export default {
     "errsigninpassword": "Invalid password",
     "errsigninsystem": "We're experiencing technical difficulties. Please try signing in again in a few minutes.",
     "signinsuccess": "Authentication successful",
-    "reporterrwebsiteinact": "This website may inactive already",
+    "reporterrwebsiteinact": "This website may be inactive already",
     "reportsuccess": "Report information was created successfully",
     "errurl1": "Can not verify this website but user still can report this website",
     "errurl2": "Please check the machine learning connection but the user still can report this website",
