@@ -150,6 +150,16 @@ const WebsiteTable = () => {
     });
 };
 
+// const handleShowMoreClick = () => {
+//   let nextEnd = displayRange.end + 10;
+//   if (nextEnd >= filteredWebsites.length) {
+//     nextEnd = filteredWebsites.length;
+//     setShowMore(false); // Only set showMore to false if all items are displayed
+//   }
+//   setDisplayRange({ start: displayRange.start, end: nextEnd });
+// };
+
+
 
   const handleShowLessClick = () => {
     setDisplayRange({ start: 0, end: 10 }); // Reset display range to show less
@@ -509,8 +519,7 @@ const WebsiteTable = () => {
 
                     {/* ********* See More See Less on Table ********* */}
                     {(!searchTerm || searchTerm.length < 10) &&
-                        displayedWebsites.length >= 10 &&
-                        displayedWebsites.length < filteredWebsites.length && (
+                        displayedWebsites.length >= 10 &&(
                         <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
                           <td colSpan={7} className="whitespace-nowrap px-6 py-4">
                             <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg">
