@@ -150,16 +150,6 @@ const WebsiteTable = () => {
     });
 };
 
-// const handleShowMoreClick = () => {
-//   let nextEnd = displayRange.end + 10;
-//   if (nextEnd >= filteredWebsites.length) {
-//     nextEnd = filteredWebsites.length;
-//     setShowMore(false); // Only set showMore to false if all items are displayed
-//   }
-//   setDisplayRange({ start: displayRange.start, end: nextEnd });
-// };
-
-
 
   const handleShowLessClick = () => {
     setDisplayRange({ start: 0, end: 10 }); // Reset display range to show less
