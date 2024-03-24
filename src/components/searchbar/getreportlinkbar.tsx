@@ -85,15 +85,11 @@ const ReportLinkBar = ({
     axios.defaults.headers.common["Accept"] = "application/json";
 
     await axios
-      .post("http://127.0.0.1:8000/", formData)
+      .post("https://nationally-helped-haddock.ngrok-free.app", formData)
       .then((resp) => {
         console.log(resp.data);
         if (resp.data.classify !== null) {
           updateCurrentPercent(resp.data.classify);
-
-          // // TODO: Update Max Percent with Database (UNDONE!!!)
-          // updateMaxPercent({ normal: 80, gambling: 10, scam: 10, fake: 45 });
-
           updateMetaWebsite(resp.data.meta_website);
         } else {
           throw {

@@ -1,8 +1,9 @@
 "use client";
 
-import { useScopedI18n } from "@/locales/client";
+import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
@@ -10,6 +11,9 @@ const NavBar = () => {
   const { data: session, status } = useSession();
   const t = useScopedI18n("navbar");
   const [header, setHeader] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const currentLocale = useCurrentLocale();
   // const scrollHeader = () => {
   //   if (window.scrollY >= 20) {
   //     setHeader(true);
@@ -25,6 +29,13 @@ const NavBar = () => {
   //     window.addEventListener("scroll", scrollHeader);
   //   };
   // }, []);
+
+  const isNavReportItemActive = (path: any) => {
+    return pathname === path; // Check if current path matches navigation item path
+  };
+  const isNavVeriItemActive = (path: any) => {
+    return pathname === path; // Check if current path matches navigation item path
+  };
 
   return (
     <div
@@ -44,15 +55,28 @@ const NavBar = () => {
               Thai.CheckLinks
             </Link>
             <div className="flex items-center md:order-2 space-x-5">
-              <Link
+              {/* <Link
                 href="/report"
                 className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+              > */}
+              <Link
+                href="/report"
+                className={`${
+                  !isNavReportItemActive(`/${currentLocale}/report`)
+                    ? "text-[24px] font-bold text-[#011E52] hover:text-[#144EE3]"
+                    : "text-[24px] font-bold text-[#011E52] underline hover:text-[#144EE3]"
+                }`}
               >
                 {t("reportweb")}
               </Link>
               <Link
                 href="/verification"
-                className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                // className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                className={`${
+                  !isNavVeriItemActive(`/${currentLocale}/verification`)
+                    ? "text-[24px] font-bold text-[#011E52]"
+                    : "text-[24px] font-bold text-[#144EE3] underline"
+                }`}
               >
                 {t("verifyweb")}
               </Link>
@@ -85,7 +109,10 @@ const NavBar = () => {
                   </div>
                 </Link>
                 <button
-                  onClick={() => signOut()}
+                  onClick={() => {
+                    signOut({ redirect: false });
+                    router.push("/signin");
+                  }}
                   className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
                 >
                   &nbsp;

@@ -35,15 +35,21 @@ const ReportForm = ({
     bankaccnumber: "",
   });
 
+  const [charCount, setCharCount] = useState(0);
+
   const handleUserInput = (name: string, value: string) => {
     setFormInput({
       ...formInput,
       [name]: value,
     });
+
+    // Update character count
+    setCharCount(value.length);
+
     // Check if the input field is filled and update the state
-    if (formInput.websitecategory !== "" && formInput.websitedetail !== "") {
-      setInputFilled(true);
-    }
+    setInputFilled(
+      formInput.websitecategory !== "" && formInput.websitedetail !== ""
+    );
   };
 
   // const validateFormInput = (event: { preventDefault: () => void }) => {
@@ -307,12 +313,15 @@ const ReportForm = ({
                     handleUserInput(target.name, target.value);
                     console.log("details:", formInput.websitedetail);
                   }}
-                  // required
+                  required
                   className="w-full md:w-[25rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder={t("details")}
                 ></textarea>
                 <p className="text-[12px] font-[500] text-red-600">
                   {formError.websitedetail}
+                </p>
+                <p className="text-end text-[12px] font-[500] text-gray-600">
+                  {charCount} characters
                 </p>
               </div>
             </div>
@@ -386,7 +395,7 @@ const ReportForm = ({
                     <option value="boa">{t("boa")}</option>
                     <option value="lhb">{t("lhb")}</option>
                     <option value="gsb">{t("gsb")}</option>
-                    <option value="others">{t("bankothers")}</option>
+                    {/* <option value="others">{t("bankothers")}</option> */}
                   </select>
 
                   <div className="w-full sm:pl-4">
@@ -414,6 +423,7 @@ const ReportForm = ({
               type="submit"
               id="button-addon3"
               data-te-ripple-init
+              disabled={!inputFilled}
             >
               {t("reportbutt")}
             </button>

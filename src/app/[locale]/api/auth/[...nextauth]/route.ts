@@ -3,7 +3,7 @@ import { getScopedI18n } from "@/locales/server";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { compare } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 async function signin(credentials: any) {
@@ -37,7 +37,7 @@ async function signin(credentials: any) {
 
 }
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(db),
     secret: process.env.NEXTAUTH_SECRET,
     session: {
@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
         CredentialsProvider({
             type: 'credentials',
             credentials: {},
-            async authorize(credentials) {
+            async authorize(credentials): Promise<any> {
                 try {
                     const t = await getScopedI18n("errormessage");
                     const user = await signin(credentials);

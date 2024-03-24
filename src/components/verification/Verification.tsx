@@ -102,7 +102,7 @@ const Verification = () => {
     axios.defaults.headers.common["Accept"] = "application/json";
 
     await axios
-      .post("http://127.0.0.1:8000/", formData)
+      .post("https://nationally-helped-haddock.ngrok-free.app", formData)
       .then(async (res) => {
         // Display Data
         console.log(res.data);
@@ -408,14 +408,17 @@ const Verification = () => {
       } = overviewScore;
       let statusCount = await countStatus(hasAnotherDatabase);
 
+      // TODO: FIX SCORE thershold
       const reportScore =
         maxCategoryReport._type === "other"
           ? 0
           : Math.min(25, maxCategoryReport._count);
+      // TODO: FIX SCORE thershold
       const verifyScore =
         highestVerifyOverall._type === "other"
           ? 0
           : highestVerifyOverall._count;
+
       const urlScore = maliciousUrlOverall;
       const apiScore = statusCount;
 
