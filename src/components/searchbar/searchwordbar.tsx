@@ -13,9 +13,10 @@ const SearchWordBar: React.FC<SearchWordBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
-    onSearch(searchTerm);
+    const trimmedSearchTerm = searchTerm.trim(); // Trim leading and trailing spaces
+    onSearch(trimmedSearchTerm);
   };
-
+  
   function checkcurrlocale() {
     console.log(currentLocale);
   }
