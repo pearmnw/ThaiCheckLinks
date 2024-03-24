@@ -20,6 +20,12 @@ const SearchWordBar: React.FC<SearchWordBarProps> = ({ onSearch }) => {
     console.log(currentLocale);
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center mb-3">
@@ -61,6 +67,7 @@ const SearchWordBar: React.FC<SearchWordBarProps> = ({ onSearch }) => {
             aria-describedby="button-addon3"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown} // Handle Enter key press
           />
 
           {/* Search button */}
