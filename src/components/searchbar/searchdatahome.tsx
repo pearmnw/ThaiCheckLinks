@@ -16,6 +16,12 @@ const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
     onSearch(searchTerm);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   function checkcurrlocale() {
     console.log(currentLocale);
   }
@@ -61,6 +67,7 @@ const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
             aria-describedby="button-addon3"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown} // Handle Enter key press
           />
 
           {/* Search button */}

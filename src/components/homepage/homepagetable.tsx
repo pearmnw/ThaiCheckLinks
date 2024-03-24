@@ -60,26 +60,11 @@ const WebsiteTable = () => {
   //     console.log('Websites State:', websites);
   // =========== ========= =========
 
-  //==============Search==========
-  useEffect(() => {
-    // Filter details based on search term
-    const filtered = websites.filter(
-      (websites) =>
-        websites.WebsiteURL.search(
-          new RegExp(`\\b${searchTerm.trim()}\\b`, "iu")
-        ) !== -1 ||
-        websites.WebCategoryName.search(new RegExp(searchTerm, "iu")) !== -1
-    );
-    setFilteredDetails(filtered as Website[]);
-  }, [websites, searchTerm]);
-  //========================
-  const handleSearch = (term: SetStateAction<string>) => {
-    setSearchTerm(term);
-  };
-
+  
+  
   // State to track selected filter options
   const [selectedOptions, setSelectedOptions] = useState({
-    default: "",
+    default: "alldefaults",
     dateTime: "",
     category: "",
     report: "",
@@ -115,6 +100,25 @@ const WebsiteTable = () => {
     // Reset showMore state to false
     setShowMore(false);
   };
+  
+
+  //==============Search==========
+  useEffect(() => {
+    // Filter details based on search term
+    const filtered = websites.filter(
+      (websites) =>
+        websites.WebsiteURL.search(
+          new RegExp(`\\b${searchTerm.trim()}\\b`, "iu")
+        ) !== -1 ||
+        websites.WebCategoryName.search(new RegExp(searchTerm, "iu")) !== -1
+    );
+    setFilteredDetails(filtered as Website[]);
+  }, [websites, searchTerm]);
+  //========================
+  
+  const handleSearch = (term: SetStateAction<string>) => {
+    setSearchTerm(term);
+  };
 
   // See more see less function
   const [showMore, setShowMore] = useState(false);
@@ -124,24 +128,61 @@ const WebsiteTable = () => {
   };
 
   const handleShowMoreClick = () => {
-    setDisplayRange((prevRange) => ({
-      start: prevRange.start,
-      end: prevRange.end + 10, // Increase the end index by 10 to show more rows
-    }));
-  };
+    let nextEnd = displayRange.end + 10;
+
+    // Filter websites based on the search term
+    const filteredWebsites = websites.filter(website => {
+        const urlMatches = website.WebsiteURL.includes(searchTerm);
+        const categoryNameMatches = website.WebCategoryName.includes(searchTerm);
+        return urlMatches || categoryNameMatches;
+    });
+
+    // Show all remaining websites if nextEnd equals or exceeds the total number of filtered websites
+    if (nextEnd >= filteredWebsites.length) {
+        setShowMore(false); // Hide "See More" button
+        nextEnd = filteredWebsites.length; // Set nextEnd to the total number of filtered websites
+        setShowMore(true); 
+    }
+
+    setDisplayRange({
+        start: displayRange.start,
+        end: nextEnd,
+    });
+};
+
 
   const handleShowLessClick = () => {
     setDisplayRange({ start: 0, end: 10 }); // Reset display range to show less
     setShowMore(false); // Also set showMore to false when showing less
   };
 
-  const handleShowAllClick = () => {
-    setDisplayRange({ start: 0, end: websites.length }); // Show all rows
-    setShowMore(true); // Set showMore to true when showing all
-  };
 
-  const showMoreButton = !showMore && (
-    <button onClick={handleShowMoreClick}>{t("seemore")}</button>
+  const handleShowAllClick = () => {
+    let filteredDisplayedWebsites;
+    if (searchTerm) {
+      // Filter all websites based on whether the URL or category name contains the search term
+      filteredDisplayedWebsites = websites.filter(website => {
+        const urlMatches = website.WebsiteURL.includes(searchTerm);
+        const categoryNameMatches = website.WebCategoryName.includes(searchTerm);
+        return urlMatches || categoryNameMatches;
+      });
+    } else {
+      // If there's no search term, show all displayed websites
+      filteredDisplayedWebsites = displayedWebsites;
+    }
+    
+    setFilteredDetails(filteredDisplayedWebsites);
+    setShowMore(true);
+  };
+  
+  
+    const showMoreButton =!showMore && displayRange.end < websites.length -1 && (
+      <button onClick={handleShowMoreClick}>{t("seemore")}</button>
+    );
+
+  
+  const showAllButton = !showMore && displayRange.end < websites.length - 1 && (
+    <button onClick={handleShowAllClick}>{t("seeall")}</button>
   );
 
   let showLessButton = null;
@@ -154,10 +195,6 @@ const WebsiteTable = () => {
       <button onClick={handleShowLessClick}>{t("seeless")}</button>
     );
   }
-
-  const showAllButton = !showMore && websites.length > displayRange.end && (
-    <button onClick={handleShowAllClick}>{t("seeall")}</button>
-  );
 
   // Overlay filter function
   const [showFilterOverlay, setShowFilterOverlay] = useState(false);
@@ -307,50 +344,28 @@ const WebsiteTable = () => {
   };
 
   const displayedWebsites = showMore
-    ? filteredWebsites // Show all websites when showMore is true
-    : filteredWebsites
-        .filter((website) => {
-          if (searchTerm) {
-            let modifiedSearchTerm = searchTerm.trim(); // Remove leading and trailing spaces
-            // Check if the search term is in Thai and replace it with English if found in the map
-            if (thaiToEnglishMap.hasOwnProperty(modifiedSearchTerm)) {
-              modifiedSearchTerm = thaiToEnglishMap[modifiedSearchTerm];
-            }
+  ? (searchTerm ? filteredWebsites.filter((website) => {
+        const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
+        const cleanURL = website.WebsiteURL.trim().toLowerCase(); // Normalize URL
+        const cleanCategoryName = website.WebCategoryName.trim().toLowerCase(); // Normalize category name
 
-            // Add 'https://' if the search term does not start with 'http://' or 'https://'
-            if (!/^https?:\/\//i.test(modifiedSearchTerm)) {
-              modifiedSearchTerm = "https://" + modifiedSearchTerm;
-            }
+        return cleanURL.includes(modifiedSearchTerm) || cleanCategoryName.includes(modifiedSearchTerm);
+      }) : filteredWebsites)
+  : filteredWebsites.filter((website) => {
+      if (searchTerm) {
+        const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
+        const cleanURL = website.WebsiteURL.trim().toLowerCase(); // Normalize URL
+        const cleanCategoryName = website.WebCategoryName.trim().toLowerCase(); // Normalize category name
 
-            const searchTermLower = modifiedSearchTerm.toLowerCase();
-            const searchTermRegExp = new RegExp(searchTermLower, "iu"); // 'i' for case insensitive, 'u' for Unicode support
+        return cleanURL.includes(modifiedSearchTerm) || cleanCategoryName.includes(modifiedSearchTerm);
+      } else {
+        // If no searchTerm, show more websites without any filtering
+        return true;
+      }
+    }).slice(0, displayRange.end);
 
-            const cleanURL = website.WebsiteURL.trim().replace(/\s+/g, ""); // Remove all spaces in the URL
 
-            // Check if the base URL is a substring of the search term
-            const baseUrlRegex = new RegExp(
-              `^${cleanURL.replace(/\./g, "\\.")}`,
-              "iu"
-            );
-
-            // Match even if additional paths exist after the base URL
-            const baseUrlWithPathsRegex = new RegExp(
-              `^${cleanURL.replace(/\./g, "\\.")}(\/.*)?`,
-              "iu"
-            );
-
-            return (
-              baseUrlRegex.test(searchTermLower) ||
-              baseUrlWithPathsRegex.test(searchTermLower) || // Match even if additional paths exist
-              cleanURL.toLowerCase().includes(searchTermLower) ||
-              searchTermRegExp.test(website.WebCategoryName.toLowerCase())
-            );
-          } else {
-            return true; // If no searchTerm, include all websites
-          }
-        })
-        .slice(0, displayRange.end);
-
+  
   ///==============
 
   return (
@@ -494,12 +509,9 @@ const WebsiteTable = () => {
 
                     {/* ********* See More See Less on Table ********* */}
                     {(!searchTerm || searchTerm.length < 10) &&
-                      displayedWebsites.length > 0 && (
+                        displayedWebsites.length >= 10 &&(
                         <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
-                          <td
-                            colSpan={7}
-                            className="whitespace-nowrap px-6 py-4"
-                          >
+                          <td colSpan={7} className="whitespace-nowrap px-6 py-4">
                             <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg">
                               <div className="flex justify-center space-x-4">
                                 {showMoreButton}
