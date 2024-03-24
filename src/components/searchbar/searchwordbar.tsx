@@ -13,12 +13,19 @@ const SearchWordBar: React.FC<SearchWordBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
-    onSearch(searchTerm);
+    const trimmedSearchTerm = searchTerm.trim(); // Trim leading and trailing spaces
+    onSearch(trimmedSearchTerm);
   };
-
+  
   function checkcurrlocale() {
     console.log(currentLocale);
   }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <>
@@ -61,6 +68,7 @@ const SearchWordBar: React.FC<SearchWordBarProps> = ({ onSearch }) => {
             aria-describedby="button-addon3"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown} // Handle Enter key press
           />
 
           {/* Search button */}
