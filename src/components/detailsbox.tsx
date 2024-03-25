@@ -149,12 +149,22 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
     setShowMore((prevShowMore) => !prevShowMore);
   };
 
+  
   const handleShowMoreClick = () => {
-    setDisplayRange((prevRange) => ({
-      start: prevRange.start,
-      end: prevRange.end + 5, // Increase the end index by 5
-    }));
+    setDisplayRange((prevRange) => {
+      const newEnd = prevRange.end + 5;
+      const hasMoreDetails = newEnd < filteredDetails.length;
+      if (!hasMoreDetails) {
+        setShowMore(true);
+      }
+      return {
+        start: prevRange.start,
+        end: newEnd,
+      };
+    });
   };
+  
+
 
   const handleShowLessClick = () => {
     setDisplayRange({ start: 0, end: 5 });
@@ -231,36 +241,18 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
                       : null}
                   </span>
                   {selectedCategories.has(category) ? (
-                    <svg
-                      className="ml-3 w-3 h-3 text-gray-800 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12.6624 3.91285L5.28487 11.2904L1.32227 7.01818L2.17763 6.2248L5.31647 9.60886L11.8375 3.08789L12.6624 3.91285Z"
-                        fill="black"
-                      />
+                    <div className="ml-3">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="17" height="17" rx="1.5" fill="white" stroke="black"/>
                     </svg>
+                    </div>
                   ) : (
-                    <svg
-                      className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                      />
+                    <div className="ml-3">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.5" y="0.5" width="17" height="17" rx="1.5" fill="white" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6624 5.91285L7.28487 13.2904L3.32227 9.01818L4.17763 8.2248L7.31647 11.6089L13.8375 5.08789L14.6624 5.91285Z" fill="black" stroke="black"/>
                     </svg>
+                    </div>
                   )}
                 </button>
               ))}
@@ -398,7 +390,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
             !selectedCategories.has(item.WebCategoryName.toUpperCase()[0])
         ).length > 5 && (
           <div
-            className="border-b-2 bg-[#BDC1C7] dark:border-white rounded px-6 py-4 w-[50rem] ml-14 flex justify-center"
+            className="border-b-2 bg-[#BDC1C7] dark:border-white rounded px-6 py-4 w-[51rem] ml-16 flex justify-center"
             style={{ height: "5rem" }}
           >
             <div className="w-full flex justify-end space-x-4">
