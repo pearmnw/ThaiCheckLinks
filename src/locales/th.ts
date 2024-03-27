@@ -86,6 +86,7 @@ export default {
     "seeall": "ดูทั้งหมด",
     "seeless": "ดูน้อยลง",
     "placeholder": "ใส่ลิงค์ ตัวอย่าง. https://www.example.com ...",
+    "sort":"ตัวกรองลำดับ"
   },
 
   "detailpage": {
