@@ -213,7 +213,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
             {":"} &nbsp;
             {/* =============================================== */}
             {/* ==== Button for filter when click = hide the detail box having that category ====*/}
-            <div className="flex space-x-3 justify-center items-center text-center text-[18px] font-medium text-transparent bg-clip-text bg-[#011E52]">
+            <div className="flex space-x-3 justify-center items-center drop-shadow-xl text-center text-[18px] font-medium text-transparent bg-clip-text bg-[#011E52]">
               {["G", "S", "F", "O"].map((category) => (
                 <button
                   key={category}
@@ -396,7 +396,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
             <div className="w-full flex justify-end space-x-4">
               {!showMore && detail.length > 5 && (
                 <button
-                  className="text-[#011E52] underline text-xl font-bold"
+                  className="text-[#011E52] underline text-xl font-bold drop-shadow-lg"
                   onClick={handleShowMoreClick}
                 >
                   {t("seemore")}
@@ -404,7 +404,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
               )}
               {!showMore && detail.length > 5 && (
                 <button
-                  className="text-[#011E52] underline text-xl font-bold"
+                  className="text-[#011E52] underline text-xl font-bold drop-shadow-lg"
                   onClick={handleShowAllClick}
                 >
                   {t("seeall")}
@@ -412,7 +412,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
               )}
               {(!showMore || detail.length > 5) && (
                 <button
-                  className="text-[#011E52] underline text-xl font-bold"
+                  className="text-[#011E52] underline text-xl font-bold drop-shadow-lg"
                   onClick={handleShowLessClick}
                 >
                   {t("seeless")}

@@ -219,11 +219,13 @@ const WebsiteTable = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
 
   // ==========
   const [filterPosition, setFilterPosition] = useState({ top: 0, left: 0 });
@@ -389,30 +391,32 @@ const WebsiteTable = () => {
                   <thead className="border-b-2 bg-slate-950 font-medium dark:border-white">
                     <tr>
                       <th scope="col" colSpan={2} className="px-6 py-4">
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center text-base">
                           {t("rank")}
                           {/* Ranking fraudulent links */}
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-4">
-                        <div className="flex justify-center items-center">
+                      <th scope="col" className="px-6 py-2">
+                        <div className="flex justify-center items-center text-base">
                           {t("detail")}
                           {/* Details */}
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-4">
-                        <div className="flex justify-center items-center">
+                      <th scope="col" className="px-6 py-2">
+                        <div className="flex justify-center items-center text-base">
                           {t("category")}
                           {/* Category */}
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-4">
-                        <div className="flex justify-center items-center">
+                      <th scope="col" className="px-6 py-2">
+                        <div className="flex justify-center items-center text-base">
                           {t("reportnum")}
                           {/* Reports Number */}
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-4">
+                      <th scope="col" className="px-6 py-2">
+                      <div className="flex flex-col items-center mt-3"> 
+                      {/* <span className="text-xs">{t("sort")}</span>   */}
                         <button
                           title="button"
                           ref={filterButtonRef}
@@ -438,14 +442,16 @@ const WebsiteTable = () => {
                               </pattern>
                               <image
                                 id="b"
-                                width="48"
-                                height="48"
+                                width="45"
+                                height="45"
                                 data-name="image.png"
                                 href="data:image/png;base64,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"
                               />
                             </defs>
                           </svg>
                         </button>
+                        <span className="text-xs mt-1">{t("sort")}</span>
+                        </div>
                       </th>
                     </tr>
                   </thead>
@@ -476,7 +482,7 @@ const WebsiteTable = () => {
                             passHref
                           >
                             <div className="flex justify-center items-center">
-                              <p className="underline" id="linkdetail">
+                              <p className="underline font-medium drop-shadow-lg" id="linkdetail">
                                 {t("more")}
                                 {/* More details */}
                               </p>
@@ -512,7 +518,7 @@ const WebsiteTable = () => {
                         displayedWebsites.length >= 10 &&(
                         <tr className="border-b-2 bg-[#BDC1C7] dark:border-white">
                           <td colSpan={7} className="whitespace-nowrap px-6 py-4">
-                            <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg">
+                            <div className="flex justify-end pr-10 font-bold text-[#011E52] underline text-lg drop-shadow-lg">
                               <div className="flex justify-center space-x-4">
                                 {showMoreButton}
                                 {showAllButton}
@@ -530,6 +536,7 @@ const WebsiteTable = () => {
           {/* //* ********* Table ********* * */}
 
           {/* Overlay Rectangle for Filters */}
+          <div ref={containerRef}>
           {showFilterOverlay && filterButtonRef.current && (
             <div
               className="fixed w-48 bg-gray-900 backdrop-blur-sm bg-opacity-20 rounded-lg shadow-lg"
@@ -538,7 +545,7 @@ const WebsiteTable = () => {
                 left: filterPosition.left + "px",
               }}
             >
-              <h2 className="text-base font-semibold mb-2 px-5 pt-4 flex justify-start text-slate-950">
+              <h2 className="text-lg font-semibold mb-2 px-5 pt-4 flex justify-start text-slate-950">
                 {t("filter")}
                 {/* Filter */}
               </h2>
@@ -557,7 +564,7 @@ const WebsiteTable = () => {
                       }
                       checked={selectedOptions.default === "alldefaults"}
                     />
-                    <span className="ml-2 text-xs text-slate-950 font-normal ">
+                    <span className="ml-2 text-sm text-slate-950 font-normal ">
                       {t("alldefault")}
                       {/* All Defaults */}
                     </span>
@@ -565,7 +572,7 @@ const WebsiteTable = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">
+                  <h3 className="font-medium text-base flex px-5 justify-start pb-2 text-slate-950">
                     {t("date")}
                     {/* Date/Time */}
                   </h3>
@@ -581,7 +588,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.dateTime === "dateold"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("old")}
                         {/* Oldest Date */}
                       </span>
@@ -598,7 +605,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.dateTime === "datenew"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("new")}
                         {/* Latest Date */}
                       </span>
@@ -607,7 +614,7 @@ const WebsiteTable = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">
+                  <h3 className="font-medium text-base flex px-5 justify-start pb-2 text-slate-950">
                     {t("report")}
                     {/* Report Number */}
                   </h3>
@@ -623,7 +630,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.report === "highreport"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("high")}
                         {/* Highest Report */}
                       </span>
@@ -640,7 +647,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.report === "lowreport"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("low")}
                         {/* Lowest Report */}
                       </span>
@@ -649,7 +656,7 @@ const WebsiteTable = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-medium text-sm flex px-5 justify-start pb-2 text-slate-950">
+                  <h3 className="font-medium text-base flex px-5 justify-start pb-2 text-slate-950">
                     {t("category")}
                     {/* Category */}
                   </h3>
@@ -665,7 +672,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.category === "categoryG"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {/* Gambling */}
                         {t("gambling")}
                       </span>
@@ -682,7 +689,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.category === "categoryS"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("scam")}
                         {/* Scam */}
                       </span>
@@ -699,7 +706,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.category === "categoryF"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("fake")}
                         {/* Fake */}
                       </span>
@@ -716,7 +723,7 @@ const WebsiteTable = () => {
                         }
                         checked={selectedOptions.category === "categoryO"}
                       />
-                      <span className="ml-2 text-xs text-slate-950 font-normal">
+                      <span className="ml-2 text-sm text-slate-950 font-normal">
                         {t("others")}
                         {/* Others */}
                       </span>
@@ -726,6 +733,8 @@ const WebsiteTable = () => {
               </div>
             </div>
           )}
+
+        </div>
           {/* Overlay Rectangle for Filters */}
         </div>
       </div>

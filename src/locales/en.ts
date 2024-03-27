@@ -88,6 +88,7 @@ export default {
     "seeall": "See All",
     "seeless": "See Less",
     "placeholder": "Enter link eg. https://www.example.com ...",
+    "sort":"Sorting Filter"
   },
 
   "detailpage": {
