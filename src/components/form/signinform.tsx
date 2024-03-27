@@ -3,7 +3,7 @@
 import { useScopedI18n } from "@/locales/client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "../loading/Loader";
@@ -12,6 +12,7 @@ const SignInForm = () => {
   const e = useScopedI18n("errormessage");
   const t = useScopedI18n("signinpage");
   const router = useRouter();
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [formInput, setFormInput] = useState({
@@ -44,11 +45,16 @@ const SignInForm = () => {
         redirect: false,
       });
       console.log(signInData);
+      const prevpath = localStorage.getItem("prevpath");
       if (signInData?.ok) {
         setIsLoading(false);
         router.refresh();
-        // router.push("/profile");
-        router.back();
+        if (prevpath === "signup") {
+          router.push("/report");
+          localStorage.setItem("prevpath", "signin");
+        } else {
+          router.back();
+        }
         router.refresh();
         toast.success(e("signinsuccess"));
       } else {
@@ -112,6 +118,11 @@ const SignInForm = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder={t("text2")}
                   required
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                    }
+                  }}
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
                 <button

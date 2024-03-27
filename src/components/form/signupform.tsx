@@ -13,6 +13,10 @@ import Loader from "../loading/Loader";
 const SignUpForm = () => {
   const t = useScopedI18n("signuppage");
   const router = useRouter();
+  const prevpath =
+    typeof localStorage !== "undefined"
+      ? localStorage.setItem("prevpath", "signup")
+      : null;
   const [formInput, setFormInput] = useState({
     username: "",
     email: "",
@@ -261,15 +265,12 @@ const SignUpForm = () => {
         </div>
       )}
       <div className={`${isLoading ? "opacity-20" : ""}`}>
-        <div id="__next" className="m-0 text-start mx-auto w-full">
+        <div className="m-0 text-start mx-auto w-full">
           <form onSubmit={validateFormInput}>
-            <div className="pt-4">
-              <p className="flex">
-                <label className="block text-sm font-semibold leading-6 text-gray-900 mb-[-20px]">
+            <div className="mt-4">
+              <p className="flex mb-[-20px]">
+                <label className="block text-sm font-semibold text-gray-900">
                   {t("username")}&nbsp;
-                </label>
-                <label className="block text-sm font-semibold leading-6 text-[#787B93] mb-[-20px]">
-                  {t("warntext")}
                 </label>
               </p>
               <div className="m-0 py-0 w-[24rem] h-12 px-4 bg-white rounded-2xl border border-stone-300 justify-start items-center inline-flex">
@@ -283,25 +284,37 @@ const SignUpForm = () => {
                   type="username"
                   placeholder={t("usertext")}
                   required
-                  className="w-[24rem] py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
+                  onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                    }
+                  }}
+                  className="w-full py-3 h-12 text-light focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
                 <button
                   onClick={(event) => {
                     event.preventDefault(); // This line prevents the default form submission
                     aiSetName();
                   }}
-                  className="items-center"
+                  id="AI Generater"
+                  name="AI Generater"
+                  className="flex items-center"
                 >
-                  <img
-                    className="h-auto w-auto"
-                    src="/aiicon.svg"
-                    alt="image description"
-                  />
+                  <div className="flex flex-col items-center h-auto w-10">
+                    <img
+                      className="h-auto w-auto items-center justify-items-center"
+                      src="/aiicon.svg"
+                      alt="image description"
+                    />
+                    <p className="text-[8px] font-semibold text-[#787B93]">
+                      {t("AItxt2")}
+                    </p>
+                  </div>
                 </button>
               </div>
-              <p className="text-[12px] font-[500] mt-[6px] ml-[8px] text-red-600">
-                {formError.username}
-              </p>
+              <span className="block text-start text-[12px] font-semibold text-[#787B93]">
+                {t("warntext")}
+              </span>
             </div>
 
             <div className="pt-3">
@@ -322,6 +335,11 @@ const SignUpForm = () => {
                   type="text"
                   placeholder={t("emtext")}
                   required
+                  onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                    }
+                  }}
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
@@ -348,6 +366,11 @@ const SignUpForm = () => {
                   type="phonenumber"
                   placeholder={t("phntext")}
                   autoComplete="phonenumber"
+                  onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                    }
+                  }}
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
               </div>
@@ -375,6 +398,11 @@ const SignUpForm = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder={t("pwtext")}
                   required
+                  onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                    }
+                  }}
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
                 <button
@@ -433,6 +461,11 @@ const SignUpForm = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder={t("cftext")}
                   required
+                  onKeyPress={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                    }
+                  }}
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
                 />
                 <button
@@ -1683,7 +1716,7 @@ const SignUpForm = () => {
             </div>
             <button
               type="submit"
-              className="w-[24rem] h-12 px-6 py-3 bg-[#02016D] rounded-2xl justify-center items-center gap-1 inline-flex text-center text-white text-sm font-medium leading-tight hover: bg-[]"
+              className="w-[24rem] h-12 px-6 bg-[#02016D] hover: bg-[] rounded-2xl justify-center items-center gap-1 inline-flex text-center text-white text-sm font-medium leading-tight"
             >
               {t("signup")}
             </button>

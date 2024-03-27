@@ -1,13 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useChangeLocale, useCurrentLocale } from "@/locales/client";
-import React from "react";
+import {
+  useChangeLocale,
+  useCurrentLocale,
+  useScopedI18n,
+} from "@/locales/client";
 import { Button } from "../ui/button";
 
 const LocaleSwitcher = () => {
   const changeLocale = useChangeLocale();
   const currentLocale = useCurrentLocale();
+  const t = useScopedI18n("navbar");
 
   function handleClickEn() {
     console.log("Clicked En");
@@ -25,32 +29,40 @@ const LocaleSwitcher = () => {
         <Button
           variant="outline"
           className={cn(
-            `rounded-full
+            `
             text-xs
             border
             border-zinc-700
             w-9
-            h-9`,
-            currentLocale === "th" ? "bg-zinc-500/50" : "bg-zinc-500/10"
+            h-9
+            hover:bg-[#011E52] hover:text-[#ffff]`,
+            currentLocale === "th"
+              ? "bg-[#011E52] text-[#ffff]"
+              : "bg-zinc-500/10"
           )}
           onClick={handleClickTh}
         >
-          TH
+          {/* {t("TH")} */}
+          ไทย
         </Button>
         <Button
           variant="outline"
           className={cn(
-            `rounded-full
+            `
             text-xs
             border
             border-zinc-700
-            w-9
-            h-9`,
-            currentLocale === "en" ? "bg-zinc-500/50" : "bg-zinc-500/10"
+            w-12
+            h-9
+            hover:bg-[#011E52] hover:text-[#ffff]`,
+            currentLocale === "en"
+              ? "bg-[#011E52] text-[#ffff]"
+              : "bg-zinc-500/10"
           )}
           onClick={handleClickEn}
         >
-          EN
+          {/* {t("EN")} */}
+          English
         </Button>
       </div>
     </div>

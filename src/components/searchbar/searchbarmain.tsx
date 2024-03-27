@@ -18,6 +18,13 @@ const SearchBarMain: React.FC<any> = ({
     });
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onPredict(); // Call the function associated with the button
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center mb-3">
@@ -47,13 +54,14 @@ const SearchBarMain: React.FC<any> = ({
             placeholder={t("placeholder")}
             value={url}
             onChange={handleInputChange}
+            onKeyDown={handleKeyPress} // Add key press event handler
             aria-label="Search"
             aria-describedby="button-addon3"
           />
 
           {/* Search button */}
           <button
-            className="items-center justify-center text-[16px] mr-2 bg-[#F5F5F5] text-[#134BDE] w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
+            className="items-center justify-center text-[16px] mr-2 bg-[#F5F5F5] text-[#134BDE] hover:text-[#ffff] hover:bg-[#134BDE] w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
             type="button"
             id="button-addon3"
             data-te-ripple-init

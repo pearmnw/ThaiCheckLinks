@@ -1,6 +1,5 @@
 import SignUpForm from "@/components/form/signupform";
 import { getScopedI18n } from "@/locales/server";
-import React from "react";
 
 export default async function Signup() {
   const t = await getScopedI18n("signuppage");

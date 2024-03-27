@@ -334,7 +334,8 @@ const Verification = () => {
 
   const checkURL = async () => {
     let hasError = false;
-    const urlPattern = /^(https?:\/\/)/;
+    const urlPattern =
+      /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
     const inputError = {
       websiteurl: "",
     };
@@ -351,6 +352,19 @@ const Verification = () => {
         setFormError({
           ...inputError,
           websiteurl: r("urlError2"),
+        });
+      } else if (
+        url.includes(" ") ||
+        url.includes("%20") ||
+        url.includes("&nbsp;") ||
+        url.includes("..") ||
+        url.includes("[") ||
+        url.includes("]")
+      ) {
+        hasError = true;
+        setFormError({
+          ...inputError,
+          websiteurl: "URL contains invalid characters.",
         });
       } else {
         setFormError({

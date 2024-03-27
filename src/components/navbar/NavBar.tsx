@@ -74,8 +74,8 @@ const NavBar = () => {
                 // className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
                 className={`${
                   !isNavVeriItemActive(`/${currentLocale}/verification`)
-                    ? "text-[24px] font-bold text-[#011E52]"
-                    : "text-[24px] font-bold text-[#144EE3] underline"
+                    ? "text-[24px] font-bold text-[#011E52] hover:text-[#144EE3]"
+                    : "text-[24px] font-bold text-[#011E52] underline hover:text-[#144EE3]"
                 }`}
               >
                 {t("verifyweb")}
@@ -93,7 +93,7 @@ const NavBar = () => {
                     src="/defaultprofileimg.png"
                     alt="Rounded avatar"
                   ></img> */}
-                  <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                  <div className="relative w-10 h-10 overflow-hidden bg-[#011E52] rounded-full dark:bg-gray-600 hover:bg-gray-100">
                     <svg
                       className="absolute w-12 h-12 text-gray-400 -left-1"
                       fill="currentColor"
@@ -108,32 +108,37 @@ const NavBar = () => {
                     </svg>
                   </div>
                 </Link>
+                <p className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]">
+                  &nbsp;
+                  {" | "}
+                  &nbsp;
+                </p>
                 <button
                   onClick={() => {
                     signOut({ redirect: false });
                     router.push("/signin");
                   }}
-                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52] hover:bg-[#144EE3]"
                 >
-                  &nbsp;
-                  {" | "}
                   {t("signout")}
                 </button>
               </div>
             ) : (
-              <div>
+              <div className="flex">
                 <Link
                   href="/signin"
-                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52] hover:bg-[#144EE3]"
                 >
-                  {t("signin")}
-                  {" | "}
+                  {t("signin")}&nbsp;
                 </Link>
+                <p className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]">
+                  {"|"}
+                </p>
                 <Link
                   href="/signup"
-                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
+                  className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52] hover:bg-[#144EE3]"
                 >
-                  {t("signup")}
+                  &nbsp;{t("signup")}
                 </Link>
               </div>
             )}

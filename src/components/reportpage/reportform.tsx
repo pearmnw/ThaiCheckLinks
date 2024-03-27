@@ -15,6 +15,8 @@ const ReportForm = ({
   const router = useRouter();
   const userInfo = useSession();
 
+  console.log(metaWebsite);
+  console.log(currentPercent);
   const [inputFilled, setInputFilled] = useState(false);
 
   const [formInput, setFormInput] = useState({

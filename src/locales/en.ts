@@ -5,7 +5,9 @@ export default {
     "verifyweb": "Check Website's Link",
     "signin": "Sign In",
     "signup": "Sign Up",
-    "signout": "Sign Out"
+    "signout": "Sign Out",
+    "TH": "Thai",
+    "EN": "English"
   },
 
   "signinpage": {
@@ -43,8 +45,10 @@ export default {
     "errpw2": "Password must contain at least one number.",
     "errphone": "Please enter a correct phone number format.",
     "errconsent": "Please read and consent to the terms.",
-    "warntext": "(This username will show when reporting)",
+    "warntext": "*Note* The username will be used to sign in and display when reports",
     "errfield": "Please fill out this field",
+    "AItxt1": "(Optional) AI button to generate username",
+    "AItxt2": "Generater",
   },
 
 
@@ -140,6 +144,7 @@ export default {
     "bankothers": "Others",
     "urlError": "Please provide the URL",
     "urlError2": "Please provide the correct URL's format",
+    "urlError3": "URL contains invalid characters",
     "webCatError": "Please select your website category",
     "moredetailError": "Please provide more details about this website",
     "moredetailError2": "Please provide the details over than 50 characters",
