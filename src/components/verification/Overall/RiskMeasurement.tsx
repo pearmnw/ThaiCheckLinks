@@ -7,6 +7,7 @@ import { VerificationContext } from "../Verification";
 const RiskMeasurement = () => {
   const t = useScopedI18n("verificationpage");
   const {
+    userReportCount, // Pear edit here for Report count
     maxCategoryReport,
     highestVerifyOverall,
     maliciousUrlOverall,
@@ -46,11 +47,16 @@ const RiskMeasurement = () => {
     if (
       maxCategoryReport &&
       maxCategoryReport._type !== "other" &&
-      maxCategoryReport._count
+      maxCategoryReport._count &&
+      userReportCount.sumUserReport
     ) {
       return (
         <div className="flex flex-col gap-1">
-          {maxCategoryReport._count} {t("report-unit")}
+          {/* Pear Fixed UI here too!! */}
+          <section className="flex items-end justify-center">
+            {userReportCount.sumUserReport}
+            <p className="text-4xl font-bold">{t("report-unit")}</p>
+          </section>
           <p className="text-sm font-medium">
             *{t("report-most")} "{t(maxCategoryReport._type)}"
           </p>
@@ -59,16 +65,25 @@ const RiskMeasurement = () => {
     } else if (
       maxCategoryReport &&
       !maxCategoryReport._count &&
-      !maxCategoryReport._type
+      !maxCategoryReport._type &&
+      !userReportCount.sumUserReport
     ) {
-      return <p className="text-4xl">{t("NOT FOUND")}</p>;
+      return (
+        <p className="text-4xl" style={{ color: "#ccc" }}>
+          {t("NOT FOUND")}
+        </p>
+      );
     } else if (
       (maxCategoryReport._count && maxCategoryReport._type === "other") ||
       riskScoreOverall !== 0
     ) {
       return (
         <div className="flex flex-col gap-1">
-          {maxCategoryReport._count} {t("report-unit")}
+          {/* Pear Fixed UI here too!! */}
+          <section className="flex items-end justify-center">
+            {userReportCount.sumUserReport}
+            <p className="text-4xl font-bold">{t("report-unit")}</p>
+          </section>
           <p className="text-sm font-medium">
             *{t("report-most")} "{t(maxCategoryReport._type)}"
           </p>
@@ -127,11 +142,14 @@ const RiskMeasurement = () => {
             </p>
             <div
               className="text-center text-5xl font-bold"
-              style={{ color: getColorReportCount(maxCategoryReport._count) }}
+              // Pear fixed this change Max to Sum
+              style={{
+                color: getColorReportCount(userReportCount.sumUserReport),
+              }}
             >
               {getResultReportCount()}
             </div>
-            <div className="text-right">
+            <div className="text-right pt-2 pb-3">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myReport"
@@ -170,7 +188,7 @@ const RiskMeasurement = () => {
             >
               {getResultHighestVerify()}
             </div>
-            <div className="text-right">
+            <div className="text-right pt-2 pb-3">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myAI"
@@ -207,7 +225,7 @@ const RiskMeasurement = () => {
             >
               <div className="flex flex-col gap-1">{maliciousUrlOverall} %</div>
             </div>
-            <div className="text-right">
+            <div className="text-right pt-2 pb-3">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myURL"
@@ -250,7 +268,7 @@ const RiskMeasurement = () => {
             >
               {getApiDatabaseResult() ? t("FOUND") : t("NOT FOUND")}
             </div>
-            <div className="text-right">
+            <div className="text-right pt-2 pb-3">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myAPI"

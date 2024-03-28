@@ -73,7 +73,7 @@ const ReportLinkBar = ({ onInputChange, onPredict }: any) => {
 
           {/* Search button */}
           <button
-            className="items-center justify-center text-[16px] mr-2 bg-[#F5F5F5] text-[#134BDE] w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex"
+            className="items-center justify-center font-semibold text-[16px] mr-2 bg-[#F5F5F5] text-[#134BDE] w-[170px] h-[50px] py-2 px-4 rounded-[50px] inline-flex hover:text-[#ffff] hover:bg-[#134BDE]"
             type="button"
             id="button-addon3"
             data-te-ripple-init
@@ -86,7 +86,7 @@ const ReportLinkBar = ({ onInputChange, onPredict }: any) => {
                 {/* <ProgressBar progress={progress} /> */}
               </div>
             ) : (
-              <div className="justify-center text-semibold text-[16px] text-[#134BDE] hover:text-[#ffff] hover:bg-[#134BDE]">
+              <div className="justify-center text-[16px]">
                 {t("searchbutt")}
               </div>
             )}

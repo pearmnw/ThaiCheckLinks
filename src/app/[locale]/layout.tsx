@@ -31,7 +31,7 @@ export default function LocaleLayout({
               }}
             >
               <Toaster position="top-center" />
-              <div className="pt-9">{children}</div>
+              <div className="pt-6">{children}</div>
             </div>
           </NextAuthProvider>
         </body>

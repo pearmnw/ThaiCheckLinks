@@ -415,19 +415,24 @@ const Verification = () => {
   useEffect(() => {
     const getOverallScore = async () => {
       const {
+        // Fix User Report Score Here
+        userReportCount,
         maxCategoryReport,
         highestVerifyOverall,
         maliciousUrlOverall,
         hasAnotherDatabase,
       } = overviewScore;
       let statusCount = await countStatus(hasAnotherDatabase);
-
-      // TODO: FIX SCORE thershold
-      const reportScore =
-        maxCategoryReport._type === "other"
-          ? 0
-          : Math.min(25, maxCategoryReport._count);
-      // TODO: FIX SCORE thershold
+      console.log(
+        "We here with sumUserReport: " + userReportCount.sumUserReport
+      );
+      // TODO: FIX REPORT SCORE thershold
+      // const reportScore =
+      //   maxCategoryReport._type === "other"
+      //     ? 0
+      //     : Math.min(25, maxCategoryReport._count);
+      const reportScore = Math.min(25, userReportCount.sumUserReport);
+      // TODO: FIX VERIFY SCORE thershold
       const verifyScore =
         highestVerifyOverall._type === "other"
           ? 0
@@ -465,8 +470,9 @@ const Verification = () => {
     <VerificationContext.Provider value={{ overviewScore }}>
       <section>
         {isLoading && (
-          <div className="fixed inset-0 flex flex-col items-center justify-center gap-12">
+          <div className="fixed flex flex-col items-center justify-center gap-12 z-50">
             <Loader />
+            {/* <LoaderBanner /> */}
           </div>
         )}
 
