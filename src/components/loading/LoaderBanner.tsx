@@ -1,10 +1,10 @@
-import React, { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/scrollbar";
-import "swiper/css/navigation";
-import { tipOfUseImgs } from "./constants";
-import ImgSlide from "./ImgSlide";
+import React, { useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/scrollbar';
+import 'swiper/css/navigation';
+import { tipOfUseImgs } from './constants';
+import ImgSlide from './ImgSlide';
 
 const LoaderBanner = () => {
   const swiperRef = useRef<any>();
@@ -12,61 +12,54 @@ const LoaderBanner = () => {
   return (
     <Swiper
       onSwiper={(swiper) => (swiperRef.current = swiper)}
-      className="flex justify-center items-center w-full relative overflow-hidden rounded-xl"
+      className='flex justify-center items-center w-full relative overflow-hidden rounded-xl'
+      spaceBetween={50}
+      slidesPerView={1}
     >
-      {tipOfUseImgs.map((img, _i) => (
-        <SwiperSlide key={_i}>{<ImgSlide img={img} />}</SwiperSlide>
+      {tipOfUseImgs.map((img, index) => (
+        <SwiperSlide key={index}>
+          <ImgSlide img={img} />
+        </SwiperSlide>
       ))}
 
       <button
         onClick={() => swiperRef.current.slidePrev()}
-        className="text-black  absolute bottom-[50%] top-[50%] z-50 left-12 w-[52px] h-[52px] rounded-full bg-[#15141199] backdrop-blur items-center justify-center hidden md:flex hover:cursor-pointer"
+        className='text-black absolute bottom-[50%] translate-y-[50%] z-50 left-12 w-[52px] h-[52px] rounded-full bg-[#15141199] backdrop-blur items-center justify-center hidden md:flex hover:cursor-pointer'
       >
-        <span className="sr-only">Next</span> {/* Visually hidden text */}
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path
-              d="M15.0898 19.92L8.56984 13.4C7.79984 12.63 7.79984 11.37 8.56984 10.6L15.0898 4.08"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeMiterlimit="10"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='white'
+          className='w-6 h-6'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M15 19l-7-7 7-7'
+          />
+        </svg>
       </button>
 
       <button
         onClick={() => swiperRef.current.slideNext()}
-        className="text-black  absolute bottom-[50%] top-[50%] z-50 right-12 w-[52px] h-[52px] rounded-full bg-[#15141199] backdrop-blur  items-center justify-center hidden md:flex hover:cursor-pointer"
+        className='text-black absolute bottom-[50%] translate-y-[50%] z-50 right-12 w-[52px] h-[52px] rounded-full bg-[#15141199] backdrop-blur items-center justify-center hidden md:flex hover:cursor-pointer'
       >
-        <span className="sr-only">Next</span> {/* Visually hidden text */}
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            className="rotate-180"
-            fill="none"
-          >
-            <path
-              d="M15.0898 19.92L8.56984 13.4C7.79984 12.63 7.79984 11.37 8.56984 10.6L15.0898 4.08"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeMiterlimit="10"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='white'
+          className='w-6 h-6'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M9 5l7 7-7 7'
+          />
+        </svg>
       </button>
     </Swiper>
   );
