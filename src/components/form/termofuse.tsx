@@ -45,61 +45,24 @@ const TermOfUse = () => {
         </ul>
       </p>
       <p className="text-xl font-semibold text-gray-700 dark:text-gray-400">
-        Restrictions
+        {t("restrictions")}
       </p>
       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-        You agree not to, and you will not permit others to;
+        {t("restxt1")}
       </p>
       <p className="indent-5 list-disc text-base leading-relaxed text-gray-500 dark:text-gray-400">
-        <li>
-          License, sell, rent, lease, assign, distribute, transmit, host,
-          outsource, disclose, or otherwise commercially exploit the service or
-          make the platform available to any third party.
-        </li>
-        <li>
-          Modify, make derivative works of, disassemble, decrypt, reverse
-          compile, or reverse engineer any part of the service.
-        </li>
-        <li>
-          Modify, make derivative works of, disassemble, decrypt, reverse
-          compile, or reverse engineer any part of the service.
-        </li>
-      </p>
-      <p className="text-xl font-semibold text-gray-700 dark:text-gray-400">
-        Return and Refund Policy
-      </p>
-      <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-        {`Thanks for shopping with us. We appreciate the fact that
-you like to buy the stuff we build. We also want to make
-sure you have a rewarding experience while you're
-exploring, evaluating, and purchasing our products.`}
-        <br></br>
-        <br></br>
-        {`As with any shopping experience, there are terms and
-conditions that apply to transactions at our company.
-We'll be as brief as our attorneys will allow. The main
-thing to remember is that by placing an order or making
-a purchase from us, you agree to the terms along with
-our Privacy Policy. If, for any reason, You are not
-completely satisfied with any good or service that we
-provide, don't hesitate to contact us and we will
-discuss any of the issues you are going through with our
-product.`}
+        <li>{t("restxt2")}</li>
+        <li>{t("restxt3")}</li>
+        <li>{t("restxt4")}</li>
       </p>
       <p className="text-xl font-semibold text-gray-500 dark:text-gray-400 text-xl font-semibold">
-        Your Suggestions
+        {t("suggest")}
       </p>
       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-        {`Any feedback, comments, ideas, improvements, or
-suggestions (collectively, "Suggestions") provided by
-you to us with respect to the service shall remain the
-sole and exclusive property of us. We shall be free to
-use, copy, modify, publish, or redistribute the
-Suggestions for any purpose and in any way without any
-credit or any compensation to you.`}
+        {t("sugtxt1")}
       </p>
       <p className="text-xl font-semibold text-gray-500 dark:text-gray-400">
-        Your Consent
+        {t("consent")}
       </p>
       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
         {`We've updated our Terms & Conditions to provide you with

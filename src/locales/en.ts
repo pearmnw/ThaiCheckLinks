@@ -131,7 +131,27 @@ export default {
     the Services.`,
     // Restrictions
     "restrictions": "Restrictions",
-    "restxt": "You agree not to, and you will not permit others to;"
+    "restxt1": "You agree not to, and you will not permit others to;",
+    "restxt2": `License, sell, rent, lease, assign, distribute, transmit, host,
+    outsource, disclose, or otherwise commercially exploit the service or
+    make the platform available to any third party.`,
+    "restxt3": `Modify, make derivative works of, disassemble, decrypt, reverse
+    compile, or reverse engineer any part of the service.`,
+    "restxt4": `Modify, make derivative works of, disassemble, decrypt, reverse
+    compile, or reverse engineer any part of the service.`,
+
+    // Suggest
+    "suggest": "Your Suggestions",
+    "sugtxt1": `Any feedback, comments, ideas, improvements, or
+    suggestions (collectively, "Suggestions") provided by
+    you to us with respect to the service shall remain the
+    sole and exclusive property of us. We shall be free to
+    use, copy, modify, publish, or redistribute the
+    Suggestions for any purpose and in any way without any
+    credit or any compensation to you.`,
+
+    // Consent
+    "consent": "Your Consent",
 
   },
 

@@ -376,22 +376,6 @@ const Verification = () => {
     return hasError;
   };
 
-  // const predictBtn = async () => {
-  //   try {
-  //     setIsLoading(true); // Start Loading
-  //     await getVerifyResult();
-  //     await fetchWebsiteDetail();
-  //     await getApi();
-  //   } catch (error: any) {
-  //     console.error(`An error occured: ${error}`);
-  //   } finally {
-  //     setIsLoading(false); // Stop Loading
-  //     setOverviewScore((prev: any) => {
-  //       return { ...prev, isShow: true };
-  //     });
-  //   }
-  // };
-
   const predictBtn = async () => {
     try {
       setIsLoading(true); // Start Loading
@@ -407,6 +391,14 @@ const Verification = () => {
       } else {
         setIsLoading(false); // Stop Loading
       }
+    } catch (error: any) {
+      console.error(`An error occured: ${error}`);
+    }
+  };
+
+  const newCriteria = () => {
+    // Gambling 17.5, Scam 17.5, Fake 10
+    try {
     } catch (error: any) {
       console.error(`An error occured: ${error}`);
     }
