@@ -149,7 +149,6 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
     setShowMore((prevShowMore) => !prevShowMore);
   };
 
-  
   const handleShowMoreClick = () => {
     setDisplayRange((prevRange) => {
       const newEnd = prevRange.end + 5;
@@ -163,8 +162,6 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
       };
     });
   };
-  
-
 
   const handleShowLessClick = () => {
     setDisplayRange({ start: 0, end: 5 });
@@ -242,16 +239,50 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
                   </span>
                   {selectedCategories.has(category) ? (
                     <div className="ml-3">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0.5" y="0.5" width="17" height="17" rx="1.5" fill="white" stroke="black"/>
-                    </svg>
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          x="0.5"
+                          y="0.5"
+                          width="17"
+                          height="17"
+                          rx="1.5"
+                          fill="white"
+                          stroke="black"
+                        />
+                      </svg>
                     </div>
                   ) : (
                     <div className="ml-3">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0.5" y="0.5" width="17" height="17" rx="1.5" fill="white" stroke="black"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6624 5.91285L7.28487 13.2904L3.32227 9.01818L4.17763 8.2248L7.31647 11.6089L13.8375 5.08789L14.6624 5.91285Z" fill="black" stroke="black"/>
-                    </svg>
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          x="0.5"
+                          y="0.5"
+                          width="17"
+                          height="17"
+                          rx="1.5"
+                          fill="white"
+                          stroke="black"
+                        />
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M14.6624 5.91285L7.28487 13.2904L3.32227 9.01818L4.17763 8.2248L7.31647 11.6089L13.8375 5.08789L14.6624 5.91285Z"
+                          fill="black"
+                          stroke="black"
+                        />
+                      </svg>
                     </div>
                   )}
                 </button>

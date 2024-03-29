@@ -113,6 +113,7 @@ export const getMaliciousScore = (urlScore: number, isRisk: any) => {
     const scaledUrlFactor = scaleNumber(newRangeStart, 25, oldRangeStart, 100);
     const scaledUrlScore = (urlScore - newRangeStart) * scaledUrlFactor + oldRangeStart;
 
+
     for (let key in isRisk) {
         if (isRisk[key] === true) {
             count += 1
