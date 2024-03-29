@@ -41,9 +41,9 @@ const Overall = ({ url, metaWebsite, currentPercent, verifySuccess }: any) => {
           <div id="modal-root">
             <button
               onClick={() => setShowModal(true)}
-              className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold"
+              className="bg-custom-black rounded-3xl text-white shadow-xl p-2 w-64 text-lg font-semibold hover:border-[#134BDE] hover:bg-[#134BDE]"
             >
-              Report
+              {t("report")}
             </button>
             <Modal
               isOpen={showModal}

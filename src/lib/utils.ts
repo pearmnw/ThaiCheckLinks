@@ -106,28 +106,28 @@ export const scaleNumber = (
 };
 
 export const getMaliciousScore = (urlScore: number, isRisk: any) => {
-    const newRangeStart = 0;
-    const oldRangeStart = 0;
-    let count = 0;
+  const newRangeStart = 0;
+  const oldRangeStart = 0;
+  let count = 0;
 
-    const scaledUrlFactor = scaleNumber(newRangeStart, 25, oldRangeStart, 100);
-    const scaledUrlScore = (urlScore - newRangeStart) * scaledUrlFactor + oldRangeStart;
+  const scaledUrlFactor = scaleNumber(newRangeStart, 25, oldRangeStart, 100);
+  const scaledUrlScore = (urlScore - newRangeStart) * scaledUrlFactor + oldRangeStart;
 
 
-    for (let key in isRisk) {
-        if (isRisk[key] === true) {
-            count += 1
-        }
+  for (let key in isRisk) {
+    if (isRisk[key] === true) {
+      count += 1
     }
-    const scaledRiskFactor = scaleNumber(newRangeStart, 75, oldRangeStart, 3);
-    const scaledRiskScore = (count - newRangeStart) * scaledRiskFactor + oldRangeStart;
+  }
+  const scaledRiskFactor = scaleNumber(newRangeStart, 75, oldRangeStart, 3);
+  const scaledRiskScore = (count - newRangeStart) * scaledRiskFactor + oldRangeStart;
 
-    return Math.round(scaledUrlScore + scaledRiskScore);
+  return Math.round(scaledUrlScore + scaledRiskScore);
 };
 
 export const countStatus = async (entities: any) => {
-    return entities.filter(
-        (db: any) => db.status === 'FOUND' || db.status === 'ค้นพบ'
-    ).length;
+  return entities.filter(
+    (db: any) => db.status === 'FOUND' || db.status === 'ค้นพบ'
+  ).length;
 }
 

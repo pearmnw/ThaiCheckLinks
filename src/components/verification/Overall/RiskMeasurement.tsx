@@ -7,7 +7,7 @@ import { VerificationContext } from "../Verification";
 const RiskMeasurement = () => {
   const t = useScopedI18n("verificationpage");
   const {
-    userReportCount, // Pear edit here for Report count
+    userReportCount, // Pear edit here for Report count,
     maxCategoryReport,
     highestVerifyOverall,
     maliciousUrlOverall,
@@ -137,9 +137,11 @@ const RiskMeasurement = () => {
         </h4>
         <div className="flex flex-col lg:flex-row justify-center items-center gap-3 w-full">
           <div className="border-2 border-custom-black rounded-lg shadow-md bg-white w-2/4 h-56 py-3 px-5 flex flex-col justify-between">
-            <p className="text-custom-black font-medium text-lg h-2/6 min-h-20">
-              {t("found-thai-scam-link")}
-            </p>
+            <div className="mb-[-25px]">
+              <p className="text-custom-black font-medium text-lg h-2/6 min-h-20">
+                {t("found-thai-scam-link")}
+              </p>
+            </div>
             <div
               className="text-center text-5xl font-bold"
               // Pear fixed this change Max to Sum
@@ -149,7 +151,7 @@ const RiskMeasurement = () => {
             >
               {getResultReportCount()}
             </div>
-            <div className="text-right pt-2 pb-3">
+            <div className="text-right pb-1">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myReport"
@@ -177,9 +179,11 @@ const RiskMeasurement = () => {
             </div>
           </div>
           <div className="border-2  border-custom-black rounded-lg shadow-xl bg-white w-2/4 h-56 py-3 px-5 flex flex-col justify-between">
-            <p className="text-custom-black font-medium text-lg h-2/6 min-h-20">
-              {t("found-ai")}
-            </p>
+            <div className="mb-[-25px]">
+              <p className="text-custom-black font-medium text-lg h-2/6 min-h-20">
+                {t("found-ai")}
+              </p>
+            </div>
             <div
               className="text-center text-5xl font-bold"
               style={{
@@ -188,7 +192,7 @@ const RiskMeasurement = () => {
             >
               {getResultHighestVerify()}
             </div>
-            <div className="text-right pt-2 pb-3">
+            <div className="text-right pb-1">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myAI"
@@ -216,16 +220,18 @@ const RiskMeasurement = () => {
             </div>
           </div>
           <div className="border-2 border-custom-black rounded-lg shadow-xl bg-white w-2/4 h-56 py-3 px-5 flex flex-col justify-between">
-            <p className="text-custom-black font-medium text-lg h-2/6 min-h-20">
-              {t("url-measure")}
-            </p>
+            <div className="mb-[-35px]">
+              <p className="text-custom-black font-medium text-lg h-2/6 min-h-20">
+                {t("url-measure")}
+              </p>
+            </div>
             <div
               className="text-center text-5xl font-bold"
               style={{ color: getColor(maliciousUrlOverall) }}
             >
               <div className="flex flex-col gap-1">{maliciousUrlOverall} %</div>
             </div>
-            <div className="text-right pt-2 pb-3">
+            <div className="text-right pb-1">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myURL"
@@ -253,9 +259,11 @@ const RiskMeasurement = () => {
             </div>
           </div>
           <div className="border-2 border-custom-black rounded-lg shadow-xl bg-white w-2/4 h-56 py-3 px-5 flex flex-col justify-between">
-            <p className="text-custom-black font-medium text-lg h-2/6 min-h-20 ">
-              {t("found-other-database")}
-            </p>
+            <div className="mb-[-35px]">
+              <p className="text-custom-black font-medium text-lg h-2/6 min-h-20 ">
+                {t("found-other-database")}
+              </p>
+            </div>
             <div
               className="text-center text-4xl font-bold"
               style={
@@ -268,7 +276,7 @@ const RiskMeasurement = () => {
             >
               {getApiDatabaseResult() ? t("FOUND") : t("NOT FOUND")}
             </div>
-            <div className="text-right pt-2 pb-3">
+            <div className="text-right pb-1">
               <button className="inline-block py-1 px-2 border border-gray-300 rounded-[10px] drop-shadow-xl bg-[#02006D] hover:border-[#134BDE] hover:bg-[#134BDE]">
                 <Link
                   href="#myAPI"

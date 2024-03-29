@@ -418,6 +418,7 @@ export default {
     "caption": "ใส่ลิงค์ของคุณในช่องตรวจสอบ เพื่อตรวจสอบเว็บไซต์ที่คุณใช้และเพื่อเช็คเปอร์เซ็นความเป็นเว็บไซต์มิจฉาชีพเทียบกับฐานข้อมูลประวัติอาชญากรรม",
     "url-detection-title": "ตรวจสอบ URL",
     "No Result": "ไม่มีผลลัพธ์ดังกล่าว",
+    "cannotclassify": "เนื่องจากข้อมูลไม่เพียงพอ",
     "report": "รายงาน",
 
     "overall-title": "ภาพรวมความเสี่ยงของเป็นเว็บไซต์",
@@ -433,9 +434,6 @@ export default {
     "found-ai": "ค้นพบ AI ตรวจสอบเปอร์เซ็นต์ความเสี่ยง",
     "url-measure": "ความเสี่ยงของ URL วัดจาก URL Detection",
     "found-other-database": "ค้นภพในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
-    "found-ai": "ค้นพบ AI ตรวจสอบเปอร์เซ็นต์ความเสี่ยง",
-    "url-measure": "ความเสี่ยงของ URL วัดจาก URL Detection",
-    "found-other-database": "ค้นพบในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
     "seemore": "ดูเพิ่มเติม",
     "click-here": "คลิกที่นี่หากต้องการรายงานเพิ่มเติม",
 
@@ -443,7 +441,6 @@ export default {
     "analysis-subtitle": "ค่าเปอร์เซ็นมากสุดที่เคยวิเคราะห์ได้",
     "see-overview": "กลับไปดูที่ภาพรวม",
 
-    'update': "อัพเดทปัจจุบัน",
     'readmore': "อ่านรายละเอียดเว็บไซต์เพิ่มเติมที่นี่",
     'malicious-url': "Malicious URL Detection",
 
@@ -470,10 +467,6 @@ export default {
     "quite-high-count": "ค่อนข้างอันตราย",
     "high-count": "อันตราย",
 
-    "gambling-label": "พนัน",
-    "scam-label": "หลอกลงทุน",
-    "fake-label": "ปลอมแปลง",
-    "other-label": "อื่นๆ",
     "gambling": "พนัน",
     "scam": "หลอกลงทุน",
     "fake": "ปลอมแปลง",

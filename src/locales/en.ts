@@ -864,6 +864,7 @@ export default {
     "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
     "url-detection-title": "URL Detection",
     "No Result": "No Result",
+    "cannotclassify": `Insufficient Information`,
     "report": "Report",
 
     "overall-title": "Overview Of The Risks Of Website",
