@@ -333,7 +333,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
 
                   <div className="pt-2 flex">
                     <div className="pl-2 font-semibold text-[24px]">
-                      {t("detail")} :{" "}
+                      {t("detail")}&nbsp;:{" "}
                     </div>
                     <div className="font-normal text-justify text-[22px] pl-2 mt-0.5 line-clamp-3">
                       {searchTerm ? (
