@@ -103,17 +103,26 @@ const WebsiteTable = () => {
   
 
   //==============Search==========
+  // useEffect(() => {
+  //   // Filter details based on search term
+  //   const filtered = websites.filter(
+  //     (websites) =>
+  //       websites.WebsiteURL.search(
+  //         new RegExp(`\\b${searchTerm.trim()}\\b`, "iu")
+  //       ) !== -1 ||
+  //       websites.WebCategoryName.search(new RegExp(searchTerm, "iu")) !== -1
+  //   );
+  //   setFilteredDetails(filtered as Website[]);
+  // }, [websites, searchTerm]);
   useEffect(() => {
     // Filter details based on search term
     const filtered = websites.filter(
-      (websites) =>
-        websites.WebsiteURL.search(
-          new RegExp(`\\b${searchTerm.trim()}\\b`, "iu")
-        ) !== -1 ||
-        websites.WebCategoryName.search(new RegExp(searchTerm, "iu")) !== -1
+      (website) =>
+        website.WebsiteURL.toLowerCase().includes(searchTerm.toLowerCase().trim())
     );
-    setFilteredDetails(filtered as Website[]);
-  }, [websites, searchTerm]);
+    setFilteredDetails(filtered);
+}, [websites, searchTerm]);
+
   //========================
   
   const handleSearch = (term: SetStateAction<string>) => {
@@ -133,8 +142,7 @@ const WebsiteTable = () => {
     // Filter websites based on the search term
     const filteredWebsites = websites.filter(website => {
         const urlMatches = website.WebsiteURL.includes(searchTerm);
-        const categoryNameMatches = website.WebCategoryName.includes(searchTerm);
-        return urlMatches || categoryNameMatches;
+        return urlMatches;
     });
 
     // Show all remaining websites if nextEnd equals or exceeds the total number of filtered websites
@@ -163,8 +171,7 @@ const WebsiteTable = () => {
       // Filter all websites based on whether the URL or category name contains the search term
       filteredDisplayedWebsites = websites.filter(website => {
         const urlMatches = website.WebsiteURL.includes(searchTerm);
-        const categoryNameMatches = website.WebCategoryName.includes(searchTerm);
-        return urlMatches || categoryNameMatches;
+        return urlMatches;
       });
     } else {
       // If there's no search term, show all displayed websites
@@ -349,17 +356,15 @@ const WebsiteTable = () => {
   ? (searchTerm ? filteredWebsites.filter((website) => {
         const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
         const cleanURL = website.WebsiteURL.trim().toLowerCase(); // Normalize URL
-        const cleanCategoryName = website.WebCategoryName.trim().toLowerCase(); // Normalize category name
 
-        return cleanURL.includes(modifiedSearchTerm) || cleanCategoryName.includes(modifiedSearchTerm);
+        return cleanURL.includes(modifiedSearchTerm);
       }) : filteredWebsites)
   : filteredWebsites.filter((website) => {
       if (searchTerm) {
         const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
         const cleanURL = website.WebsiteURL.trim().toLowerCase(); // Normalize URL
-        const cleanCategoryName = website.WebCategoryName.trim().toLowerCase(); // Normalize category name
 
-        return cleanURL.includes(modifiedSearchTerm) || cleanCategoryName.includes(modifiedSearchTerm);
+        return cleanURL.includes(modifiedSearchTerm);
       } else {
         // If no searchTerm, show more websites without any filtering
         return true;
