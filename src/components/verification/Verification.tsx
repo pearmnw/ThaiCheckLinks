@@ -416,19 +416,19 @@ const Verification = () => {
     currentPercent: Record<string, number>
   ): number | any => {
     try {
-      const maxScores= {
+      const maxScores: Record<string, number> = {
         gambling: 33,
         scam: 33,
         fake: 100,
         other: 33,
       };
-      const targetPercentages = {
+      const targetPercentages: Record<string, number> = {
         gambling: 17.5,
         scam: 17.5,
         fake: 10,
         other: 0,
       };
-      let adjustedScores = { gambling: 0, scam: 0, fake: 0, other: 0 };
+      let adjustedScores: Record<string, number> = { gambling: 0, scam: 0, fake: 0, other: 0 };
 
       for (const category in currentPercent) {
         const score = currentPercent[category];
