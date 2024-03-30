@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { categoryTypeMapping } from '@/lib/utils';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 
 export async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -56,9 +56,15 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
       }
 
       // Do not count "normal" or "other" Type
-      if (categoryName !== 'other') {
+      // if (categoryName !== 'other') {
+      //   userReportCount.sumUserReport += countReport;
+      // }
+
+      // Pear Fixed: Count All Report
+      if (categoryName != '') {
         userReportCount.sumUserReport += countReport;
       }
+
     }
 
     if (maxCategoryReport._count === 0) {

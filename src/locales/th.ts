@@ -21,7 +21,7 @@ export default {
     "text1": "ใส่บัญชีผู้ใช้",
     "text2": "ใส่รหัสผ่านของคุณ",
     "password": "รหัสผ่าน",
-    "signupmes": "หากยังไม่มีบัญชีผู้ใช้ คลิกที่นี้"
+    "signupmes": "หากยังไม่มีบัญชีผู้ใช้ คลิกที่นี่เพื่อ"
   },
 
   "signuppage": {
@@ -433,7 +433,7 @@ export default {
     "found-thai-scam-link": "ค้นพบในประวัติการรายงานเว็บไซต์ใน Thai.CheckLinks",
     "found-ai": "ค้นพบ AI ตรวจสอบเปอร์เซ็นต์ความเสี่ยง",
     "url-measure": "ความเสี่ยงของ URL วัดจาก URL Detection",
-    "found-other-database": "ค้นภพในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
+    "found-other-database": "ค้นพบในเว็บไซต์ตรวจสอบเว็บโกงอื่นๆ",
     "seemore": "ดูเพิ่มเติม",
     "click-here": "คลิกที่นี่หากต้องการรายงานเพิ่มเติม",
 

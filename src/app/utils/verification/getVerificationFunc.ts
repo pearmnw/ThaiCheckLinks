@@ -13,8 +13,19 @@ export const getVerificationByMetaWebsiteID = async (
       },
     });
     if (verificationInfo) {
-      updateCurrentPercent(verificationInfo.WebsiteID, currentPercent);
-      const checkMaxGambing = await checkPercent(
+
+      const checkOldPercentGambling = await checkPercent(verificationInfo.CGamblingPercentage, currentPercent.gambling);
+      const checkOldPercentScam = await checkPercent(verificationInfo.CScamPercentage, currentPercent.scam);
+      const checkOldPercentFake = await checkPercent(verificationInfo.CFakePercentage, currentPercent.fake);
+      const checkOldPercentOther = await checkPercent(verificationInfo.COtherPercentage, currentPercent.other);
+
+      if (checkOldPercentGambling == true || checkOldPercentScam == true || checkOldPercentFake == true || checkOldPercentOther == true) {
+        updateCurrentPercent(verificationInfo.WebsiteID, currentPercent);
+      } else {
+        console.log("Current Percent still the same");
+      }
+
+      const checkMaxGambling = await checkPercent(
         verificationInfo.MGamblingPercentage,
         currentPercent.gambling
       );
@@ -30,19 +41,24 @@ export const getVerificationByMetaWebsiteID = async (
         verificationInfo.MOtherPercentage,
         currentPercent.other
       );
-      if (checkMaxGambing) {
+
+      // console.log("checkMaxFake: " + checkMaxFake);
+      // console.log("checkMaxScam: " + checkMaxScam);
+      // console.log("checkMaxOthers: " + checkMaxOthers);
+      // console.log("checkMaxGambling: " + checkMaxGambling);
+      if (checkMaxGambling == true) {
         updateMaxGamblingPercent(
           verificationInfo.WebsiteID,
           currentPercent.gambling
         );
       }
-      if (checkMaxScam) {
+      if (checkMaxScam == true) {
         updateMaxScamPercent(verificationInfo.WebsiteID, currentPercent.scam);
       }
-      if (checkMaxFake) {
+      if (checkMaxFake == true) {
         updateMaxFakePercent(verificationInfo.WebsiteID, currentPercent.fake);
       }
-      if (checkMaxOthers) {
+      if (checkMaxOthers == true) {
         updateMaxOtherPercent(verificationInfo.WebsiteID, currentPercent.other);
       }
       console.log(verificationInfo);
@@ -59,10 +75,11 @@ export const getVerificationByMetaWebsiteID = async (
 
 export const checkPercent = async (maxPercent: any, currentPercent: any) => {
   try {
-    if (maxPercent && currentPercent) {
+    if (maxPercent >= 0 && currentPercent >= 0) {
       if (currentPercent > maxPercent) {
         return true;
       } else {
+        // console.log("Not update")
         return false;
       }
     } else {

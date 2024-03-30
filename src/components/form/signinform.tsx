@@ -160,7 +160,7 @@ const SignInForm = () => {
             </div>
             <button
               type="submit"
-              className="w-[24rem] h-12 px-6 py-3 bg-[#02016D] rounded-2xl justify-center items-center gap-1 inline-flex text-center text-white text-sm font-medium leading-tight hover: bg-[]"
+              className="w-[24rem] h-12 px-6 py-3 bg-[#02016D] hover:border-[#134BDE] hover:bg-[#134BDE] rounded-2xl justify-center items-center gap-1 inline-flex text-center text-white text-sm font-medium leading-tight hover: bg-[]"
             >
               {t("signin")}
             </button>

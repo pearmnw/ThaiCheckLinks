@@ -589,7 +589,7 @@ const SignUpForm = () => {
                         </div>
                         <TermOfUse />
                         {/* <!-- Modal footer --> */}
-                        <div className="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <div className="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                           <button
                             data-modal-hide="default-modal"
                             type="button"
@@ -597,7 +597,7 @@ const SignUpForm = () => {
                               event.preventDefault(); // This line prevents the default form submission
                               closeModalTOU();
                             }}
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[10px] text-lg px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                           >
                             {u("accept")}
                           </button>
@@ -670,7 +670,7 @@ const SignUpForm = () => {
                         </button>
                       </div>
                       <PrivacyPolicy />
-                      <div className="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                      <div className="flex items-center justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <button
                           data-modal-hide="default-modal"
                           type="button"
@@ -678,7 +678,7 @@ const SignUpForm = () => {
                             event.preventDefault(); // This line prevents the default form submission
                             closeModalPP();
                           }}
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-[10px] text-lg px-10 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
                           {u("accept")}
                         </button>
@@ -699,7 +699,7 @@ const SignUpForm = () => {
             <div className="mt-[-15px] pb-1">
               <button
                 type="submit"
-                className="w-[24rem] h-12 px-6 bg-[#02016D] hover: bg-[] rounded-2xl justify-center items-center gap-1 inline-flex text-center text-white text-sm font-medium leading-tight"
+                className="w-[24rem] h-12 px-6 bg-[#02016D] hover:border-[#134BDE] hover:bg-[#134BDE] rounded-2xl justify-center items-center gap-1 inline-flex text-center text-white text-sm font-medium leading-tight"
               >
                 {t("signup")}
               </button>

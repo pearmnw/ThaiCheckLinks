@@ -29,6 +29,7 @@ const RiskMeasurement = () => {
     }
   };
 
+  // อยากเปลี่ยนสีเกณฑ์
   const getColorReportCount = (score: number) => {
     if (score >= 0 && score <= 5) {
       return "#04CE00";
@@ -44,39 +45,8 @@ const RiskMeasurement = () => {
   };
 
   const getResultReportCount = () => {
-    if (
-      maxCategoryReport &&
-      maxCategoryReport._type !== "other" &&
-      maxCategoryReport._count &&
-      userReportCount.sumUserReport
-    ) {
-      return (
-        <div className="flex flex-col gap-1">
-          {/* Pear Fixed UI here too!! */}
-          <section className="flex items-end justify-center">
-            {userReportCount.sumUserReport}
-            <p className="text-4xl font-bold">{t("report-unit")}</p>
-          </section>
-          <p className="text-sm font-medium">
-            *{t("report-most")} "{t(maxCategoryReport._type)}"
-          </p>
-        </div>
-      );
-    } else if (
-      maxCategoryReport &&
-      !maxCategoryReport._count &&
-      !maxCategoryReport._type &&
-      !userReportCount.sumUserReport
-    ) {
-      return (
-        <p className="text-4xl" style={{ color: "#ccc" }}>
-          {t("NOT FOUND")}
-        </p>
-      );
-    } else if (
-      (maxCategoryReport._count && maxCategoryReport._type === "other") ||
-      riskScoreOverall !== 0
-    ) {
+    // Show All Report Type
+    if (maxCategoryReport.type != "" && userReportCount.sumUserReport > 0) {
       return (
         <div className="flex flex-col gap-1">
           {/* Pear Fixed UI here too!! */}
@@ -91,7 +61,7 @@ const RiskMeasurement = () => {
       );
     } else {
       return (
-        <p className="text-4xl" style={{ color: "#ccc" }}>
+        <p className="text-4xl" style={{ color: "#04CE00" }}>
           {t("NOT FOUND")}
         </p>
       );
