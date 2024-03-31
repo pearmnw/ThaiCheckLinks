@@ -768,7 +768,7 @@ export default {
     "alldefault": "All Defaults",
     "date": "Date/Time",
     "old": "Oldest Date",
-    "new": "Lastest Date",
+    "new": "Latest Date",
     "report": "Report Number",
     "high": "Highest Report",
     "low": "Lowest Report",
