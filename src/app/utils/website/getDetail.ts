@@ -48,7 +48,7 @@ export const GetMoreDetail = async (): Promise<WebsiteReport[]> => {
             BankAccountOwner: website.BankAccountOwner || "", // Default value for BankAccountOwner
             BankNumber: website.BankNumber || "",
             WebsiteReportedDetails: website.WebsiteReportedDetails || null, // Include WebsiteReportedDetails 
-            PhoneNumber: website.PhoneNumber || null,
+            PhoneNumber: website.PhoneNumber || "-",
         };
 
         // Fetch additional details for the report (e.g., WebCategoryName, BankName)

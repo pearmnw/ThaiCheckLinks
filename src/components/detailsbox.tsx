@@ -23,6 +23,7 @@ interface Detail {
   BankAccountOwner: string;
   BankNumber: string;
   WebsiteReportedDetails: string;
+  PhoneNumber: string;
 }
 //
 // const currentLocale = useCurrentLocale();
@@ -101,6 +102,7 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
         detail.BankName.search(new RegExp(searchTerm, "iu")) !== -1 ||
         detail.BankAccountOwner.search(new RegExp(searchTerm, "iu")) !== -1 ||
         detail.BankNumber.toString().includes(searchTerm) ||
+        detail.PhoneNumber.toString().includes(searchTerm) ||
         detail.UserName.search(new RegExp(searchTerm, "iu")) !== -1
     );
     setFilteredDetails(filtered as Detail[]);
@@ -410,6 +412,32 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
                         )}
                     </div>
                   </div>
+
+                  <div className="pt-2 flex">
+                    <div className="pl-2 font-semibold text-[24px]">
+                      {t("phone")} :{" "}
+                    </div>
+                    <div className="font-normal text-justify text-[22px] pl-2 mt-0.5">
+                      {`${item.PhoneNumber}`
+                        .split(new RegExp(`(${searchTerm})`, "gi"))
+                        .map((word, index) =>
+                          isNaN(parseInt(word)) &&
+                          word.toLowerCase() === searchTerm.toLowerCase() ? (
+                            <span
+                              key={index}
+                              style={{ backgroundColor: "#7F9BBC" }}
+                            >
+                              {word}
+                            </span>
+                          ) : (
+                            <span key={index}>{word}</span>
+                          )
+                        )}
+                    </div>
+                  </div>
+
+
+
                 </div>
               </div>
             </div>
