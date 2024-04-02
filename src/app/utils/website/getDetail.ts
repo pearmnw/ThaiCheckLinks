@@ -12,6 +12,7 @@ interface WebsiteReport {
     BankAccountOwner: string;
     BankNumber: string | null;
     WebsiteReportedDetails: string | null;
+    PhoneNumber: string | null;
 }
 
 export const GetMoreDetail = async (): Promise<WebsiteReport[]> => {
@@ -46,7 +47,8 @@ export const GetMoreDetail = async (): Promise<WebsiteReport[]> => {
             BankName: "-", // Default value for BankName
             BankAccountOwner: website.BankAccountOwner || "", // Default value for BankAccountOwner
             BankNumber: website.BankNumber || "",
-            WebsiteReportedDetails: website.WebsiteReportedDetails || null // Include WebsiteReportedDetails 
+            WebsiteReportedDetails: website.WebsiteReportedDetails || null, // Include WebsiteReportedDetails 
+            PhoneNumber: website.PhoneNumber || null,
         };
 
         // Fetch additional details for the report (e.g., WebCategoryName, BankName)
