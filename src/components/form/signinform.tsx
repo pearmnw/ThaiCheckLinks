@@ -67,6 +67,15 @@ const SignInForm = () => {
     }
   };
 
+  const enterSubmit = async (event: any) => {
+    event.preventDefault();
+    if (formInput.username == "" || formInput.password == "") {
+      toast.error(e("errnoinfosignin"));
+    } else {
+      handleSubmit(event);
+    }
+  };
+
   return (
     <>
       {isLoading && (
@@ -90,6 +99,12 @@ const SignInForm = () => {
                 value={formInput.username}
                 onChange={({ target }) => {
                   handleUserInput(target.name, target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    enterSubmit(e);
+                  }
                 }}
                 type="text"
                 placeholder={t("text1")}
@@ -121,6 +136,7 @@ const SignInForm = () => {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.preventDefault();
+                      enterSubmit(e);
                     }
                   }}
                   className="w-[24rem] h-12 focus:outline-none bg-transparent justify-start items-center inline-flex sm:text-sm sm:leading-6"
@@ -130,6 +146,12 @@ const SignInForm = () => {
                   onClick={(event) => {
                     event.preventDefault(); // This line prevents the default form submission
                     togglePasswordVisibility();
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      enterSubmit(e);
+                    }
                   }}
                 >
                   {showPassword ? (

@@ -9,6 +9,7 @@ const report = async () => {
   const t = await getScopedI18n("report");
   const session = await getServerSession(authOptions);
   console.log("welcome to report page");
+
   if (session?.user) {
     return (
       <>

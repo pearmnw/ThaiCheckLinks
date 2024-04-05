@@ -18,7 +18,7 @@ const SignUpForm = () => {
   const u = useScopedI18n("termofusepage");
   const router = useRouter();
   const prevpath =
-    typeof localStorage !== "undefined"
+    typeof localStorage !== "undefined" || localStorage !== "signin"
       ? localStorage.setItem("prevpath", "signup")
       : null;
   const [formInput, setFormInput] = useState({
@@ -96,7 +96,12 @@ const SignUpForm = () => {
       const emailpattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
       // Check if email match the pattern
-      if (!emailpattern.test(formInput.email)) {
+      if (
+        !emailpattern.test(formInput.email) ||
+        formInput.email.includes(".com.com") ||
+        formInput.email.includes("@@") ||
+        formInput.email.includes("..")
+      ) {
         console.log("wrong email");
         hasErrors = true;
         inputError.email = t("erremail");
@@ -108,8 +113,11 @@ const SignUpForm = () => {
     }
 
     if (formInput.phonenumber) {
-      // check if phone number is least than 10
-      if (formInput.phonenumber.length < 10) {
+      // check if phone number is least than 10 or more than 10
+      if (
+        formInput.phonenumber.length < 10 ||
+        formInput.phonenumber.length > 10
+      ) {
         hasErrors = true;
         console.log("wrong phonenum");
         inputError.phonenumber = t("errphone");
@@ -163,13 +171,6 @@ const SignUpForm = () => {
         successMsg: "",
       }));
     }
-
-    // setFormError(inputError);
-    // setFormInput((prevState) => ({
-    //   ...prevState,
-    //   successMsg: t("successmsg"),
-    // }));
-    // onSubmit();
 
     console.log("hasErrors:", hasErrors);
 
@@ -269,7 +270,7 @@ const SignUpForm = () => {
         </div>
       )}
       <div className={`${isLoading ? "opacity-20" : ""}`}>
-        <div className="m-0 text-start mx-auto w-full">
+        <div className="justify-center items-center h-screen m-0 text-start mx-auto w-full">
           <form onSubmit={validateFormInput}>
             {/* <div className=""> */}
             <div className="p-0 m-0">

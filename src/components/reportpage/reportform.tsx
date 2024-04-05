@@ -12,6 +12,7 @@ const ReportForm = ({
   verifySuccess,
 }: any) => {
   const t = useScopedI18n("report");
+  const u = useScopedI18n("signuppage");
   const router = useRouter();
   const userInfo = useSession();
 
@@ -25,6 +26,7 @@ const ReportForm = ({
     bankaccountowner: "",
     bank: "",
     bankaccnumber: "",
+    phonenumber: "",
     successMsg: "",
   });
 
@@ -35,6 +37,7 @@ const ReportForm = ({
     bankaccname: "",
     bankaccountowner: "",
     bankaccnumber: "",
+    phonenumber: "",
   });
 
   const [charCount, setCharCount] = useState(0);
@@ -53,98 +56,6 @@ const ReportForm = ({
       formInput.websitecategory !== "" && formInput.websitedetail !== ""
     );
   };
-
-  // const validateFormInput = (event: { preventDefault: () => void }) => {
-  //   event.preventDefault();
-  //   let hasErrors = false;
-  //   // Initialize an object to track input errors
-  //   let inputError = {
-  //     userID: "",
-  //     websiteurl: "",
-  //     websitecategory: "",
-  //     websitedetail: "",
-  //     bankaccname: "",
-  //     bankaccountowner: "",
-  //     bankaccnumber: "",
-  //   };
-
-  //   if (!url) {
-  //     setInputFilled(false);
-  //     setFormError({
-  //       ...inputError,
-  //       websiteurl: "Please provide the url",
-  //     });
-  //     hasErrors = true;
-  //   }
-
-  //   if (!formInput.websitecategory || formInput.websitecategory == "default") {
-  //     setInputFilled(false);
-  //     setFormError({
-  //       ...inputError,
-  //       websitecategory: t("webCatError"),
-  //     });
-  //     console.log(formError.websitecategory);
-  //     console.log("Category not provided");
-  //     hasErrors = true;
-  //   }
-
-  //   if (!formInput.websitedetail) {
-  //     setInputFilled(false);
-  //     console.log("Website details not provided");
-  //     setFormError({
-  //       ...inputError,
-  //       websitedetail: t("moredetailError"),
-  //     });
-  //     hasErrors = true;
-  //   }
-
-  //   if (formInput.websitedetail) {
-  //     const words = formInput.websitedetail.toLowerCase().split(/[\s\u200B]+/);
-
-  //     if (formInput.websitedetail.length <= 50) {
-  //       setInputFilled(false);
-  //       console.log("Website details not over than 50 words");
-  //       setFormError({
-  //         ...inputError,
-  //         websitedetail: t("moredetailError2"),
-  //       });
-  //       hasErrors = true;
-  //     }
-
-  //     // Create a frequency map for each word
-  //     const wordFrequencyMap: any = {};
-  //     words.forEach((word) => {
-  //       wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
-  //     });
-
-  //     // Check if any word is repeated more than three times
-  //     const hasRedundancy = Object.values(wordFrequencyMap).some(
-  //       (count: any) => count > 3
-  //     );
-
-  //     if (hasRedundancy) {
-  //       setInputFilled(false);
-  //       console.log("Website details have redundant words");
-  //       setFormError({
-  //         ...inputError,
-  //         websitedetail: t("moredetailError3"),
-  //       });
-  //       hasErrors = true;
-  //     }
-  //   }
-
-  //   if (!hasErrors) {
-  //     setInputFilled(false);
-  //     console.log("formInput:", formInput);
-  //     console.log("formError:", formError);
-  //     console.log(url);
-  //     setFormInput((prevState) => ({
-  //       ...prevState,
-  //       successMsg: "",
-  //     }));
-  //     onSubmit();
-  //   }
-  // };
 
   const validateFormInput = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -171,10 +82,11 @@ const ReportForm = ({
       bankaccname: "",
       bankaccountowner: "",
       bankaccnumber: "",
+      phonenumber: "",
     };
 
     if (!url) {
-      inputError.websiteurl = "Please provide the url";
+      inputError.websiteurl = t("urlError");
       hasErrors = true;
     }
 
@@ -193,25 +105,46 @@ const ReportForm = ({
         hasErrors = true;
       }
     }
+
+    if (formInput.phonenumber) {
+      const validationphone = validatePhoneNum(formInput.phonenumber);
+      if (validationphone) {
+        inputError.phonenumber = validationphone;
+        hasErrors = true;
+      }
+    }
     return inputError;
   };
 
   const validateWebsiteDetail = (detail: string) => {
     const words = detail.toLowerCase().split(/[\s\u200B]+/);
 
-    if (detail.length <= 50) {
+    // Fix Range of character is 10 to 500
+    if (detail.length < 10 || detail.length > 500) {
       return t("moredetailError2");
     }
 
-    const wordFrequencyMap: any = {};
-    words.forEach((word) => {
-      wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
-    });
+    // const wordFrequencyMap: any = {};
+    // words.forEach((word) => {
+    //   wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
+    // });
 
-    if (Object.values(wordFrequencyMap).some((count: any) => count > 3)) {
-      return t("moredetailError3");
+    // // ???? How To Fix OR No have this prevent
+    // if (Object.values(wordFrequencyMap).some((count: any) => count > 3)) {
+    //   return t("moredetailError3");
+    // }
+
+    return null;
+  };
+
+  const validatePhoneNum = (phonenumber: string) => {
+    if (phonenumber) {
+      // check if phone number is least than 10 or more than 10
+      if (phonenumber.length < 10 || phonenumber.length > 10) {
+        console.log("wrong phonenum");
+        return u("errphone");
+      }
     }
-
     return null;
   };
   //---------------------- END Refactor of validateFormInput ---------------------//
@@ -238,6 +171,7 @@ const ReportForm = ({
           BankID: formInput.bank,
           BankAccountOwner: formInput.bankaccountowner,
           BankNumber: formInput.bankaccnumber,
+          PhoneNumber: formInput.phonenumber,
           WebsiteReportedDetails: formInput.websitedetail,
           MetaWebsite: metaWebsite,
           CurrentPercent: currentPercent,
@@ -250,7 +184,8 @@ const ReportForm = ({
         router.push("/report/success");
       } else {
         console.log("Report Failed");
-        toast.error(data.message);
+        // toast.error(data.message);
+        console.log(data.message);
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -315,10 +250,25 @@ const ReportForm = ({
                     handleUserInput(target.name, target.value);
                     console.log("details:", formInput.websitedetail);
                   }}
+                  // TODO: Let receive the paste text [Still not work]
+                  onPaste={(event) => {
+                    event.preventDefault();
+                    // Get pastedText add with old text websitedetail
+                    const pastedText = (
+                      event.clipboardData || window.Clipboard
+                    ).getData("text");
+                    const newValue = formInput.websitedetail + pastedText;
+                    handleUserInput("websitedetail", newValue);
+                    // // Update inputFilled state after paste
+                    setInputFilled(
+                      formInput.websitecategory !== "" && pastedText !== ""
+                    );
+                  }}
                   required
                   className="w-full md:w-[25rem] h-[10rem] p-2 text-sm text-gray-900 bg-white bg-opacity-60 rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder={t("details")}
                 ></textarea>
+
                 <p className="text-[12px] font-[500] text-red-600">
                   {formError.websitedetail}
                 </p>
@@ -362,58 +312,91 @@ const ReportForm = ({
                 open ? "" : "hidden"
               } bg-[#CCD2DE] m-2 px-4 py-8 rounded-md items-center`}
             >
-              <div className="px-[1rem]">
-                <input
-                  id="bankaccountowner"
-                  name="bankaccountowner"
-                  value={formInput.bankaccountowner}
-                  onChange={({ target }) => {
-                    console.log("Selected value:", target.value);
-                    handleUserInput(target.name, target.value);
-                  }}
-                  className="block mx-auto w-[30rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder={t("banktext")}
-                />
-              </div>
-              <div className="px-[3rem]">
-                <div className="flex flex-col items-center pt-8 sm:flex-row">
-                  <select
-                    title="bank"
-                    id="bank"
-                    name="bank"
-                    value={formInput.bank}
-                    onChange={({ target }) => {
-                      console.log("Selected value:", target.value);
-                      handleUserInput(target.name, target.value);
-                    }}
-                    className="w-[8rem] h-8 pl-2 bg-white rounded-lg shadow font-normal text-neutral-500 m-auto
-  text-sm"
-                  >
-                    <option value="default">{t("bank")}</option>
-                    <option value="scb">{t("scb")}</option>
-                    <option value="kbtg">{t("kbtg")}</option>
-                    <option value="ktb">{t("ktb")}</option>
-                    <option value="ttb">{t("ttb")}</option>
-                    <option value="boa">{t("boa")}</option>
-                    <option value="lhb">{t("lhb")}</option>
-                    <option value="gsb">{t("gsb")}</option>
-                    {/* <option value="others">{t("bankothers")}</option> */}
-                  </select>
-
-                  <div className="w-full sm:pl-4">
+              <div className="w-full justify-center items-center">
+                <div className="flex justify-center items-center">
+                  <section className="flex">
+                    <p className="pr-2 text-[18px]">{t("bankacctxt")}</p>
                     <input
-                      id="bankaccnumber"
-                      name="bankaccnumber"
-                      value={formInput.bankaccnumber}
+                      id="bankaccountowner"
+                      name="bankaccountowner"
+                      value={formInput.bankaccountowner}
                       onChange={({ target }) => {
                         console.log("Selected value:", target.value);
                         handleUserInput(target.name, target.value);
                       }}
-                      className="block w-[24rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder={t("banknum")}
+                      className="block mx-auto w-[28rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder={t("banktext")}
                     />
+                  </section>
+                </div>
+                <div className="flex justify-center items-center pb-4">
+                  <div className="flex flex-col items-center pt-8 sm:flex-row">
+                    <section className="flex pl-6">
+                      <select
+                        title="bank"
+                        id="bank"
+                        name="bank"
+                        value={formInput.bank}
+                        onChange={({ target }) => {
+                          console.log("Selected value:", target.value);
+                          handleUserInput(target.name, target.value);
+                        }}
+                        className="w-[12rem] h-8 pl-1 bg-white rounded-lg shadow font-normal text-neutral-500 m-auto
+  text-sm"
+                      >
+                        <option value="default">{t("bank")}</option>
+                        <option value="scb">{t("scb")}</option>
+                        <option value="kbtg">{t("kbtg")}</option>
+                        <option value="ktb">{t("ktb")}</option>
+                        <option value="ttb">{t("ttb")}</option>
+                        <option value="boa">{t("boa")}</option>
+                        <option value="lhb">{t("lhb")}</option>
+                        <option value="gsb">{t("gsb")}</option>
+                        {/* <option value="others">{t("bankothers")}</option> */}
+                      </select>
+
+                      <div className="w-full sm:pl-4">
+                        <input
+                          id="bankaccnumber"
+                          name="bankaccnumber"
+                          value={formInput.bankaccnumber}
+                          onChange={({ target }) => {
+                            console.log("Selected value:", target.value);
+                            handleUserInput(target.name, target.value);
+                          }}
+                          className="block w-[24rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder={t("banknum")}
+                        />
+                      </div>
+                    </section>
                   </div>
                 </div>
+                <div className="flex justify-center items-center border-t-2 border-dashed border-white">
+                  <section>
+                    <p className="text-white text-[12px]">Or/And</p>
+                  </section>
+                </div>
+                <div className="flex px-[4rem] pt-4">
+                  <div className="flex justify-center items-center">
+                    <section className="flex">
+                      <p className="pr-2 text-[18px]">{t("phonenumtxt")}</p>
+                      <input
+                        id="phonenumber"
+                        name="phonenumber"
+                        value={formInput.phonenumber}
+                        onChange={({ target }) => {
+                          console.log("Selected value:", target.value);
+                          handleUserInput(target.name, target.value);
+                        }}
+                        className="block mx-auto w-[28rem] h-[2.5rem] p-2 text-sm text-gray-900 bg-white rounded-lg border border-neutral-200 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder={u("phntext")}
+                      />
+                    </section>
+                  </div>
+                </div>
+                <p className="px-[13rem] text-[12px] font-[500] text-red-600">
+                  {formError.phonenumber}
+                </p>
               </div>
             </div>
           </div>

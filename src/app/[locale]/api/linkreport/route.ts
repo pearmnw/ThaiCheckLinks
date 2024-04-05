@@ -21,7 +21,7 @@ export async function POST(req: Request) {
         const session = getServerSession(authOptions);
         const currUserSession = JSON.stringify(session);
         console.log(currUserSession);
-        let { UserID, WebsiteURL, WebsiteCategory, BankID, BankAccountOwner, BankNumber, WebsiteReportedDetails, MetaWebsite, CurrentPercent } = body
+        let { UserID, WebsiteURL, WebsiteCategory, BankID, BankAccountOwner, BankNumber, PhoneNumber, WebsiteReportedDetails, MetaWebsite, CurrentPercent } = body
         // TODO: SetCategoryID
         const webcatID = await setCategoryID(WebsiteCategory);
         console.log("userID: ", UserID);
@@ -108,7 +108,8 @@ export async function POST(req: Request) {
                     BankID,
                     BankAccountOwner,
                     BankNumber,
-                    WebsiteReportedDetails
+                    WebsiteReportedDetails,
+                    PhoneNumber
                 }
             });
             console.log(newReport);
@@ -116,24 +117,6 @@ export async function POST(req: Request) {
         }
         else {
             console.log("Cannot Create Report here!!")
-            // newReport = await db.websiteDetail.create({
-            //     data: {
-            //         UserID: parseInt(UserID), // Ensure UserID is converted to a number, set to undefined if NaN
-            //         WebCategoryID: Number(webcatID),
-            //         WebsiteURL,
-            //         BankID,
-            //         BankAccountOwner,
-            //         BankNumber,
-            //         WebsiteReportedDetails
-            //     }
-            // });
-            // return NextResponse.json(
-            //     {
-            //         websiteDetail: newReport,
-            //         message: t("reportsuccess"),
-            //     },
-            //     { status: 201 }
-            // );
             throw Error("Something go wrong")
         }
     } catch (error: any) {

@@ -94,7 +94,7 @@ const Verification = () => {
     status: true,
   });
 
-  const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
+  const [verifySuccess, setVerifySuccess] = useState<boolean>(true);
 
   const getVerifyResult = async () => {
     const formData = new FormData();
@@ -146,60 +146,155 @@ const Verification = () => {
 
         // TODO: Update Max Percent with Database (UNDONE!!!)
         if (currentPercent != null) {
-          if (VerificationInfo == null) {
-            setOverviewScore((prev: any) => {
-              return {
-                ...prev,
-                maxPercent: {
-                  maxOther: currentPercent.other,
-                  maxGambling: currentPercent.gambling,
-                  maxScam: currentPercent.scam,
-                  maxFake: currentPercent.fake,
-                },
-                currentPercent,
-                highestVerifyOverall,
-                maliciousUrlOverall,
-              };
-            });
+          if (
+            currentPercent.scam == 0 &&
+            currentPercent.fake == 0 &&
+            currentPercent.other == 0 &&
+            currentPercent.gambling == 0
+          ) {
+            toast.custom((t) => (
+              <div className="flex align-middle items-center justify-center w-full h-screen">
+                <div
+                  className={`${
+                    t.visible ? "animate-enter" : "animate-leave"
+                  } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+                >
+                  <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-full h-full">
+                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#ffcc00]">
+                      <svg
+                        fill="#ffffff"
+                        version="1.1"
+                        id="Capa_1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        width="70px"
+                        height="70px"
+                        viewBox="0 0 478.13 478.13"
+                        xmlSpace="preserve"
+                        stroke="#ffffff"
+                        strokeWidth="0.00478125"
+                      >
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+
+                        <g
+                          id="SVGRepo_tracerCarrier"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+
+                        <g id="SVGRepo_iconCarrier">
+                          {" "}
+                          <g>
+                            {" "}
+                            <g>
+                              {" "}
+                              <g>
+                                {" "}
+                                <circle
+                                  cx="239.904"
+                                  cy="314.721"
+                                  r="35.878"
+                                />{" "}
+                                <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z" />{" "}
+                                <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z" />{" "}
+                              </g>{" "}
+                            </g>{" "}
+                          </g>{" "}
+                        </g>
+                      </svg>
+                      <h3 className="pl-5 text-[35px] font-semibold text-[#ffffff] dark:text-white">
+                        {e("caution")}
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.preventDefault(); // This line prevents the default form submission
+                          toast.dismiss(t.id);
+                        }}
+                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-[10px] text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Close modal</span>
+                      </button>
+                    </div>
+                    <div className="p-4 md:p-5 text-justify space-y-4">
+                      <p className="text-xl text-center font-medium text-gray-900">
+                        {e("reporterrwebsiteinact")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ));
           } else {
-            setOverviewScore((prev: any) => {
+            if (VerificationInfo == null) {
+              setOverviewScore((prev: any) => {
+                return {
+                  ...prev,
+                  maxPercent: {
+                    maxOther: currentPercent.other,
+                    maxGambling: currentPercent.gambling,
+                    maxScam: currentPercent.scam,
+                    maxFake: currentPercent.fake,
+                  },
+                  currentPercent,
+                  highestVerifyOverall,
+                  maliciousUrlOverall,
+                };
+              });
+            } else {
+              setOverviewScore((prev: any) => {
+                return {
+                  ...prev,
+                  maxPercent: {
+                    maxOther: VerificationInfo.MOtherPercentage,
+                    maxGambling: VerificationInfo.MGamblingPercentage,
+                    maxScam: VerificationInfo.MScamPercentage,
+                    maxFake: VerificationInfo.MFakePercentage,
+                  },
+                  currentPercent,
+                  highestVerifyOverall,
+                  maliciousUrlOverall,
+                };
+              });
+            }
+            setCurrentPercent((prev: any) => {
               return {
                 ...prev,
-                maxPercent: {
-                  maxOther: VerificationInfo.MOtherPercentage,
-                  maxGambling: VerificationInfo.MGamblingPercentage,
-                  maxScam: VerificationInfo.MScamPercentage,
-                  maxFake: VerificationInfo.MFakePercentage,
-                },
-                currentPercent,
-                highestVerifyOverall,
-                maliciousUrlOverall,
+                fake: currentPercent.fake,
+                gambling: currentPercent.gambling,
+                other: currentPercent.other,
+                scam: currentPercent.scam,
               };
             });
+            setMetaWebsite((prev: any) => {
+              return {
+                ...prev,
+                url: meta_website.url,
+                title: meta_website.title,
+                description: meta_website.description,
+                keyword: meta_website.keyword,
+                detail: meta_website.detail,
+                status: true,
+              };
+            });
+            setVerifySuccess(true);
           }
-          setCurrentPercent((prev: any) => {
-            return {
-              ...prev,
-              fake: currentPercent.fake,
-              gambling: currentPercent.gambling,
-              other: currentPercent.other,
-              scam: currentPercent.scam,
-            };
-          });
-          setMetaWebsite((prev: any) => {
-            return {
-              ...prev,
-              url: meta_website.url,
-              title: meta_website.title,
-              description: meta_website.description,
-              keyword: meta_website.keyword,
-              detail: meta_website.detail,
-              status: true,
-            };
-          });
-          setVerifySuccess(true);
         } else {
-          toast.error(e("reporterrwebsiteinact"));
           if (VerificationInfo == null) {
             setOverviewScore((prev: any) => {
               return {
@@ -218,7 +313,8 @@ const Verification = () => {
                 },
               };
             });
-            setVerifySuccess(false);
+            // Still True because if the verification can not use the user still can report.
+            setVerifySuccess(true);
           } else {
             let highestVerifyOverallFromDB = getHighestVerifyScore(
               overviewScore.maxPercent
@@ -336,8 +432,18 @@ const Verification = () => {
 
   const checkURL = async () => {
     let hasError = false;
+
+    // URL Pattern will be change
     const urlPattern =
       /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
+    const urlDomain =
+      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gm;
+    const urlWithPathPattern =
+      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?\/[a-zA-Z0-9]{2,}/gm;
+
+    const urlWithSubdomainpattern =
+      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/gm;
+
     const inputError = {
       websiteurl: "",
     };
@@ -349,7 +455,12 @@ const Verification = () => {
         websiteurl: r("urlError"),
       });
     } else {
-      if (!urlPattern.test(url)) {
+      if (
+        !urlPattern.test(url) &&
+        !urlDomain.test(url) &&
+        !urlWithPathPattern.test(url) &&
+        !urlWithSubdomainpattern.test(url)
+      ) {
         hasError = true;
         setFormError({
           ...inputError,
@@ -361,7 +472,8 @@ const Verification = () => {
         url.includes("&nbsp;") ||
         url.includes("..") ||
         url.includes("[") ||
-        url.includes("]")
+        url.includes("]") ||
+        url.includes(".com.com")
       ) {
         hasError = true;
         setFormError({
@@ -378,6 +490,10 @@ const Verification = () => {
     return hasError;
   };
 
+  function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   const predictBtn = async () => {
     try {
       setIsLoading(true);
@@ -390,14 +506,15 @@ const Verification = () => {
         await getVerifyResult();
         setProgress(40);
 
-        await fetchWebsiteDetail();
         setProgress(60);
+        await fetchWebsiteDetail();
 
-        await getApi();
         setProgress(80);
+        await getApi();
 
-        setIsLoading(false);
         setProgress(100);
+        await delay(1000);
+        setIsLoading(false);
 
         setOverviewScore((prev: any) => {
           return { ...prev, isShow: true };
@@ -563,11 +680,12 @@ const Verification = () => {
               <API />
             </div>
           ) : (
-            <div className="mx-28 my-8 flex flex-row justify-center items-center gap-8 rounded-lg border-2 border-solid border-slate-600 py-4 h-screen">
-              <h1 className="text-5xl text-custom-black font-bold">
-                {t("No Result")}
-              </h1>
-            </div>
+            // <div className="mx-28 my-8 flex flex-row justify-center items-center gap-8 rounded-lg border-2 border-solid border-slate-600 py-4 h-screen">
+            //   <h1 className="text-5xl text-custom-black font-bold">
+            //     {t("No Result")}
+            //   </h1>
+            // </div>
+            <></>
           )}
         </div>
       </section>

@@ -66,7 +66,7 @@ export const authOptions: AuthOptions = {
                         };
                     }
                     else {
-                        throw new Error(t("errsigninpassword"))
+                        throw new Error(t("errsigninsystem"))
                     }
 
 

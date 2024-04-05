@@ -2,7 +2,6 @@
 import { useScopedI18n } from "@/locales/client";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import ReportLinkBar from "../searchbar/getreportlinkbar";
 import ReportForm from "./reportform";
 
@@ -80,9 +79,11 @@ const ReportContainer = () => {
       const axiosError = error as AxiosError;
       console.log(axiosError);
       if (axiosError.message === "Network Error") {
-        toast.error(e("errurl2"));
+        // toast.error(e("errurl2"));
+        console.log(e("errurl2"));
       } else {
-        toast.error(axiosError.message);
+        // toast.error(axiosError.message);
+        console.log(axiosError.message);
       }
     }
   };
@@ -93,6 +94,7 @@ const ReportContainer = () => {
 
   const checkURL = async () => {
     let hasError = false;
+    // URL pattern will be change T_T
     const urlPattern =
       /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
     const inputError = {
@@ -118,7 +120,8 @@ const ReportContainer = () => {
         url.includes("&nbsp;") ||
         url.includes("..") ||
         url.includes("[") ||
-        url.includes("]")
+        url.includes("]") ||
+        url.includes(".com.com")
       ) {
         hasError = true;
         setFormError({

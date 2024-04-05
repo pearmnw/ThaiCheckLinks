@@ -115,8 +115,7 @@ const NavBar = () => {
                 </p>
                 <button
                   onClick={() => {
-                    signOut({ redirect: false });
-                    router.push("/signin");
+                    signOut();
                   }}
                   className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52] hover:bg-[#144EE3]"
                 >
