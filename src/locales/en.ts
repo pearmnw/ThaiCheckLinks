@@ -802,7 +802,8 @@ export default {
     "seemore": "See More",
     "seeall": "See All",
     "seeless": "See Less",
-    "user": "User"
+    "user": "User",
+    "phone": "Phone Number"
   },
 
   "report": {
