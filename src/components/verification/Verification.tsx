@@ -14,6 +14,7 @@ import Report from "./Report";
 import {
   countStatus,
   defaultOverviewScore,
+  getDomainName,
   getHighestVerifyScore,
   getMaliciousScore,
   makeRequest,
@@ -22,6 +23,7 @@ import {
 import toast from "react-hot-toast";
 import LoaderBanner from "../loading/LoaderBanner";
 import ProgressBarLoader from "../loading/ProgressBarLoader";
+import { domainToASCII } from "url";
 
 export const VerificationContext = createContext<any>(null);
 
@@ -362,8 +364,9 @@ const Verification = () => {
 
   const getApi = async () => {
     try {
+      let domainName = getDomainName(url);
       const response_ip_quality = await fetch(
-        `/${currentLocale}/api/proxy?url=${url}`
+        `/${currentLocale}/api/proxy?url=${domainName}`
       );
 
       let urlWithHttp = makeRequest(url);

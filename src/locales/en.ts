@@ -818,7 +818,7 @@ export default {
     "typefield": "Categories",
     "moredetails": "How does this website risk*",
     "details": "Details (At Least 50 characters)",
-    "bankacc": "Crimer Bank Account or Phone number (Optional)",
+    "bankacc": "Criminals bank and Phone number information (Optional)",
     "bankacctxt": "Bank Account:",
     "banktext": "Bank Account Holder Name (Select 1 account if there are many)",
     "bankfield1": "Bank Account",

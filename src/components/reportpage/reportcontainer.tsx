@@ -94,9 +94,17 @@ const ReportContainer = () => {
 
   const checkURL = async () => {
     let hasError = false;
-    // URL pattern will be change T_T
+    // URL Pattern will be change
     const urlPattern =
       /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
+    const urlDomain =
+      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gm;
+    const urlWithPathPattern =
+      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?\/[a-zA-Z0-9]{2,}/gm;
+
+    const urlWithSubdomainpattern =
+      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/gm;
+
     const inputError = {
       websiteurl: "",
     };
@@ -108,7 +116,12 @@ const ReportContainer = () => {
         websiteurl: t("urlError"),
       });
     } else {
-      if (!urlPattern.test(url)) {
+      if (
+        !urlPattern.test(url) &&
+        !urlDomain.test(url) &&
+        !urlWithPathPattern.test(url) &&
+        !urlWithSubdomainpattern.test(url)
+      ) {
         hasError = true;
         setFormError({
           ...inputError,

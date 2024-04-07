@@ -124,16 +124,6 @@ const ReportForm = ({
       return t("moredetailError2");
     }
 
-    // const wordFrequencyMap: any = {};
-    // words.forEach((word) => {
-    //   wordFrequencyMap[word] = (wordFrequencyMap[word] || 0) + 1;
-    // });
-
-    // // ???? How To Fix OR No have this prevent
-    // if (Object.values(wordFrequencyMap).some((count: any) => count > 3)) {
-    //   return t("moredetailError3");
-    // }
-
     return null;
   };
 

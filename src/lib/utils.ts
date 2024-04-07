@@ -1,4 +1,3 @@
-import { useScopedI18n } from '@/locales/client';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
