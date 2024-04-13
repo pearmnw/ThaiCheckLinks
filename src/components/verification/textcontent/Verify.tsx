@@ -1,20 +1,9 @@
 'use client';
 import React from 'react';
-import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import CategoryCard from './CategoryCard';
-
-interface VerifyProps {
-  categories: {
-    label: string;
-    currentPercent: number;
-    maxPercent: number;
-    color: string;
-  }[];
-}
+import CategoryCard from './Score/CategoryCard';
+import { VerifyProps } from '@/lib/interface/verification/interface';
 
 const Verify: React.FC<VerifyProps> = ({ categories }) => {
-  const t = useScopedI18n('verificationpage');
-  const currentLocale = useCurrentLocale();
   return (
     <div className='flex justify-center items-center w-full'>
       {categories.map((category) => (
@@ -22,6 +11,6 @@ const Verify: React.FC<VerifyProps> = ({ categories }) => {
       ))}
     </div>
   );
-}
+};
 
-export default Verify
+export default Verify;

@@ -1,0 +1,43 @@
+input[type='radio'] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 2px solid #121B2A; /* Default border color */
+  outline: none;
+  cursor: pointer;
+  position: relative; /* Add relative positioning to the radio input */
+}
+
+input[type='radio']::before { /* Target the inner circle */
+  content: '';
+  display: block;
+  width: 0.7rem; /* Adjust the size of the inner circle */
+  height: 0.7rem; /* Adjust the size of the inner circle */
+  background-color: transparent; /* Default background color of the inner circle */
+  border-radius: 50%; /* Make it a circle */
+  position: absolute; /* Position the inner circle */
+  top: 50%; /* Position it vertically in the center */
+  left: 50%; /* Position it horizontally in the center */
+  transform: translate(-50%, -50%); /* Move it back by half its size */
+}
+
+input[type='radio']:checked::before { /* Change inner circle background color when checked */
+  background-color: #121B2A; /* Change background color when checked */
+}
+
+/* Custom overlay border styles */
+.overlay-container {
+  border: 1px solid #121B2A; /* Border color */
+  border-radius: 2px; /* Border radius */
+}
+
+.url-column {
+  max-width: 200px; /* Adjust the maximum width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+

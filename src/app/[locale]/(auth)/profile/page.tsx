@@ -1,5 +1,5 @@
 import ChangeInfoForm from "@/components/form/changeinfoform";
-import UnAuth from "@/components/reportpage/unauth";
+import UnAuthProfile from "@/components/profilepage/unAuthProfile";
 import { getServerSession } from "next-auth";
 import { getScopedI18n } from "../../../../locales/server";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
@@ -26,7 +26,7 @@ export default async function Profile() {
           {t("title")}
         </span>
       </div>
-      <UnAuth />
+      <UnAuthProfile />
     </>
   );
 }

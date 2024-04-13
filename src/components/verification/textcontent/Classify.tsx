@@ -1,65 +1,46 @@
 'use client';
 import { useCurrentLocale, useScopedI18n } from '@/locales/client';
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useContext } from 'react';
 import Header from './Header';
-import Button from './Button';
 import Verify from './Verify';
-import Url from './Url';
+import { ClassifyProps } from '@/lib/interface/verification/interface';
+import { VerificationContext } from '../Verification';
 
-interface ContentProps {
-  onPredict: MouseEventHandler<HTMLButtonElement>;
-  currentPercent: {
-    normal: number;
-    gambling: number;
-    scam: number;
-    fake: number;
-  };
-  maxPercent: {
-    normal: number;
-    gambling: number;
-    scam: number;
-    fake: number;
-  };
-  url: string;
-}
+const Classify = () => {
+  const t = useScopedI18n('verificationpage');
+  const { currentPercent, maxPercent } =
+    useContext(VerificationContext).overviewScore;
 
-const Classify: React.FC<ContentProps> = ({
-  onPredict,
-  currentPercent,
-  maxPercent,
-  url,
-}) => {
   const categories = [
     {
-      label: 'Gambling',
+      label: t('gambling-label'),
       currentPercent: currentPercent.gambling,
-      maxPercent: maxPercent.gambling,
+      maxPercent: maxPercent.maxGambling,
       color: 'text-red-600',
     },
     {
-      label: 'Scam',
+      label: t('scam-label'),
       currentPercent: currentPercent.scam,
-      maxPercent: maxPercent.scam,
+      maxPercent: maxPercent.maxScam,
       color: 'text-orange-400',
     },
     {
-      label: 'Fake',
+      label: t('fake-label'),
       currentPercent: currentPercent.fake,
-      maxPercent: maxPercent.fake,
+      maxPercent: maxPercent.maxFake,
       color: 'text-yellow-400',
     },
     {
-      label: 'Others',
-      currentPercent: currentPercent.normal,
-      maxPercent: maxPercent.normal,
+      label: t('other-label'),
+      currentPercent: currentPercent.other,
+      maxPercent: maxPercent.maxOther,
       color: 'text-green-600',
     },
   ];
 
   return (
-    <div className='flex flex-col gap-3 justify-center items-start py-8 px-8'>
+    <div className='flex flex-col gap-3 justify-center items-start'>
       <Header />
-      <Button onPredict={onPredict} />
       <Verify categories={categories} />
     </div>
   );

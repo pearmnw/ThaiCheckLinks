@@ -1,0 +1,249 @@
+// interface Website {
+    //     id: number;
+    //     websiteurl: string;
+    //     link: string;
+    //     webcategory: string;
+    //     reportnumber: string; 
+    //   }
+      
+    //   const allWebsites: Website[] = [
+    //     { id: 1, websiteurl: "Example Website 1", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 2, websiteurl: "Example Website 2", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 3, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 4, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 5, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 6, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 7, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" },
+    //     { id: 8, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 9, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 10, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 11, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 12, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 13, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 14, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 15, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 16, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 17, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 18, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 19, websiteurl: "Example Website 3", link: "More details" , webcategory: "Gambling", reportnumber: "100"},
+    //     { id: 20, websiteurl: "Example Website 3", link: "More details", webcategory: "Gambling", reportnumber: "100" }
+    //     // Add more mock data as needed
+    //   ];
+    //    // Slice the first 10 items to display initially
+    //   const mockWebsites: Website[] = showMore ? allWebsites : allWebsites.slice(0, 10);
+
+    //  ================ API filter ================
+    useEffect(() => {
+        const filteredWebsites = websites.filter((website: Website) => {
+            // Check if any specific sorting option is selected
+            if (selectedOptions.default === "alldefaults") {
+                // Set default sorting parameters
+                return true; // Show all
+            } else {
+                // Sort based on selected options
+                let sortingKey: keyof Website | undefined;
+                let sortOrder: "asc" | "desc" = "desc"; // Default sort order
+
+                switch (selectedOptions.default) {
+                    case "dateTime":
+                        sortingKey = "reporttime";
+                        sortOrder = selectedOptions.dateTime === "datenew" ? "desc" : "asc";
+                        break;
+                    case "category":
+                        sortingKey = "WebCategoryName";
+                        break;
+                    case "report":
+                        sortingKey = "reports";
+                        sortOrder = selectedOptions.report === "highreport" ? "desc" : "asc";
+                        break;
+                    default:
+                        break;
+                }
+
+                // Check if sortingKey is defined before accessing it
+                if (sortingKey && website.hasOwnProperty(sortingKey)) {
+                    // Sort websites based on sorting key and order
+                    // Adjust sorting logic according to sortingKey and sortOrder
+                    return true;
+                } else {
+                    // If sortingKey is not defined or website does not have that property, return false
+                    return false;
+                }
+            }
+        });
+        setFilteredWebsites(filteredWebsites);
+    }, [selectedOptions, websites]);
+
+
+
+
+
+
+    /////////////////// details page code
+
+    "use client";
+import SearchWordBar from "@/components/searchbar/searchwordbar";
+import { getScopedI18n } from "@/locales/server";
+// import { useEffect, useState } from "react";
+
+// interface Detail {
+//     UserName: string; 
+//     UserPictureURL: string; 
+//     WebsiteURL: string; 
+//     WebCategoryID: number;
+//     WebCategoryName: string; 
+//     reporttime: Date;
+//     BankID: string; 
+//     BankName: string; 
+//     BankAccountOwner: string; 
+//     BankNumber: string; 
+//     WebsiteReportedDetails: string; 
+// }
+
+export default async function Details() {
+  // const t = await getScopedI18n("detailpage");
+  // const [websites, setWebsites] = useState<Detail[]>([]);
+
+  // useEffect(() => {
+  //     const fetchData = async () => {
+  //         try {
+  //             const response = await fetch("api/homemoredetail", {
+  //                 method: "GET",
+  //                 headers: {
+  //                     "Content-Type": "application/json",
+  //                 },
+  //             });
+
+  //             if (!response.ok) {
+  //                 throw new Error('Failed to fetch data');
+  //             }
+
+  //             const data = await response.json();
+  //             console.log(data); // Check if data is fetched properly
+  //             setWebsites(data);
+  //         } catch (error) {
+  //             console.error('Error fetching data:', error);
+  //         }
+  //     };
+  //     fetchData();
+  // }, []);
+
+  // Placeholder for translation function
+  const t = (key: string) => key;
+
+  return (
+    <>
+      {/* TODO: Catagory selection, Search function, Details list component */}
+      <div className="text-center text-[48px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3]">
+        {t("title")}
+        <div className="flex justify-center text-center text-[30px] font-semibold text-transparent bg-clip-text bg-[#011E52]">
+          URL:
+          <div className="text-[30px] font-thin text-transparent bg-clip-text bg-[#011E52]">
+            {/* TODO: This text may change to variable for the data in database */}
+            &nbsp; https://linkly.com/Bn41aCOlnxj
+          </div>
+        </div>
+
+        <div className="flex pt-4 pb-6 justify-center text-center text-[30px] font-semibold text-transparent bg-clip-text bg-[#011E52]">
+          {t("category")}
+          {":"} &nbsp;
+          <div className=" flex space-x-3 justify-center items-center text-center text-[18px] font-medium text-transparent bg-clip-text bg-[#011E52]">
+            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
+              <span className="">
+                {t("gambling")}
+                {" 1K"}
+              </span>
+              <svg
+                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+            </button>
+
+            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
+              <span className="">
+                {t("scam")}
+                {" 10"}
+              </span>
+              <svg
+                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+            </button>
+
+            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
+              <span className="">
+                {t("fake")} {" 5"}
+              </span>
+              <svg
+                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+            </button>
+
+            <button className="bg-[#CCD2DE] text-[#011E52] py-2 px-4 rounded inline-flex items-center">
+              <span className="">
+                {t("other")} {" 2"}
+              </span>
+              <svg
+                className="ml-3 w-2 h-2 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <SearchWordBar />
+        {/* <DetailsBox />
+        <DetailsBox />
+        <DetailsBox /> */}
+        {/* Render your details using initialData */}
+        {/* {initialData.map((detail) => (
+          <DetailsBox key={detail.id} {...detail} />
+        ))} */}
+      </div>
+    </>
+  );
+}

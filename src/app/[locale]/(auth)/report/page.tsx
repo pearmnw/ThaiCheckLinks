@@ -1,13 +1,15 @@
-import ReportForm from "@/components/reportpage/reportform";
+import ReportContainer from "@/components/reportpage/reportcontainer";
 import UnAuth from "@/components/reportpage/unauth";
 import { getServerSession } from "next-auth";
+import React from "react";
 import { getScopedI18n } from "../../../../locales/server";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 
-export default async function report() {
+const report = async () => {
   const t = await getScopedI18n("report");
   const session = await getServerSession(authOptions);
   console.log("welcome to report page");
+
   if (session?.user) {
     return (
       <>
@@ -16,7 +18,10 @@ export default async function report() {
             {t("title")}
           </span>
         </div>
-        <ReportForm />
+        <div className="flex justify-center text-center text-[24px] font-light leading-normal text-transparent bg-clip-text bg-[#011E52] px-[10rem] pb-6 ">
+          {t("caption2")}
+        </div>
+        <ReportContainer />
       </>
     );
   }
@@ -30,4 +35,6 @@ export default async function report() {
       <UnAuth />
     </>
   );
-}
+};
+
+export default report;
