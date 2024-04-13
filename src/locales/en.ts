@@ -817,7 +817,7 @@ export default {
     "Category": "Categories of suspicious links*",
     "typefield": "Categories",
     "moredetails": "How does this website risk*",
-    "details": "Details (At Least 50 characters)",
+    "details": "Details (At Least 10 characters and not over 500 characters)",
     "bankacc": "Criminals bank and Phone number information (Optional)",
     "bankacctxt": "Bank Account:",
     "banktext": "Bank Account Holder Name (Select 1 account if there are many)",
@@ -857,6 +857,7 @@ export default {
 
   "profilepage": {
     "title": "My Profile",
+    "caption": "Sign in or sign up before viewing your profile information.",
     "username": "Username",
     "email": "Email",
     "phonenum": "Phone number (Optional)",

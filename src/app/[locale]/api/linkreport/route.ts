@@ -1,8 +1,8 @@
 // เราต้องทำอะไรบ้างในการจะเก็บ report 1 ครั้ง
 // - เช็ค URL with table WebsiteMeta (ต้องจัดformatURLที่ User ใส่เข้ามาด้วย)
 // - ถ้ามีก็ไม่ต้อง Create WebsiteMeta
-//   - แต่ check current percent กับ max percent แล้วเก็บเข้า Verification
-//   หมายเหตุ: เนื่องจากดาต้ายังไม่ครบถ้วนอาจจะมีในกรณีที่ยังไม่มี verification ด้วย ก็จะทำการ create verification
+//   - แต่ check current percent กับ max percent แล้ว update เข้า Verification
+//   หมายเหตุ: เนื่องจากดาต้ายังไม่ครบถ้วนอาจจะมีในกรณีที่ยังไม่มี verification ด้วย ก็จะทำการ create verification & userverifybox ด้วย
 // - ถ้าไม่มีต้องเก็บเข้าเว็บไซต์ Meta + verification ด้วย [ในกรณีที่ซักประเภท>70%]
 
 import { getWebsiteMetaByURL, setCategoryID, setURL } from "@/app/utils/report/getReportFunc";
@@ -96,6 +96,9 @@ export async function POST(req: Request) {
         }
         if (!BankNumber.length) {
             BankNumber = null;
+        }
+        if (!PhoneNumber.length) {
+            PhoneNumber = null;
         }
         let newReport;
         if (methodsucces) {

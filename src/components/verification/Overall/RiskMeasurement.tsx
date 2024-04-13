@@ -29,7 +29,6 @@ const RiskMeasurement = () => {
     }
   };
 
-  // อยากเปลี่ยนสีเกณฑ์
   const getColorReportCount = (score: number) => {
     if (score >= 0 && score <= 5) {
       return "#04CE00";

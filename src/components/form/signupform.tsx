@@ -18,7 +18,8 @@ const SignUpForm = () => {
   const u = useScopedI18n("termofusepage");
   const router = useRouter();
   const prevpath =
-    typeof localStorage !== "undefined" || localStorage !== "signin"
+    typeof localStorage !== "undefined" &&
+    localStorage.getItem("prevpath") !== "signin"
       ? localStorage.setItem("prevpath", "signup")
       : null;
   const [formInput, setFormInput] = useState({

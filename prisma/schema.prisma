@@ -27,7 +27,7 @@ model UserDetail {
 
 model UserVerifyBox {
   UserVerifyID       Int            @id @default(autoincrement())
-  WebsiteURL         String
+  WebsiteURL         String         @db.VarChar(256)
   WebsiteMetaTitle   String?
   WebsiteMetaDesc    String?
   WebsiteMetaKeyword String?

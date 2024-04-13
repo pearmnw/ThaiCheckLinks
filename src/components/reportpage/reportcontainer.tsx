@@ -117,7 +117,7 @@ const ReportContainer = () => {
       });
     } else {
       if (
-        !urlPattern.test(url) &&
+        // !urlPattern.test(url) &&
         !urlDomain.test(url) &&
         !urlWithPathPattern.test(url) &&
         !urlWithSubdomainpattern.test(url)
@@ -132,8 +132,8 @@ const ReportContainer = () => {
         url.includes("%20") ||
         url.includes("&nbsp;") ||
         url.includes("..") ||
-        url.includes("[") ||
-        url.includes("]") ||
+        // url.includes("[") ||
+        // url.includes("]") ||
         url.includes(".com.com")
       ) {
         hasError = true;
