@@ -105,7 +105,8 @@ const Verification = () => {
     axios.defaults.headers.common["Accept"] = "application/json";
 
     await axios
-      .post("https://nationally-helped-haddock.ngrok-free.app", formData)
+      // .post("https://nationally-helped-haddock.ngrok-free.app", formData)
+      .post("http://127.0.0.1:8000", formData)
       .then(async (res) => {
         // Display Data
         console.log(res.data);
@@ -137,15 +138,8 @@ const Verification = () => {
         const data = await resp.json();
         const { VerificationInfo } = data;
         console.log(data);
-        // // Custome Max Percent
-        // const maxPercent = {
-        //   maxOther: 80,
-        //   maxGambling: 10,
-        //   maxScam: 10,
-        //   maxFake: 44,
-        // };
 
-        // TODO: Update Max Percent with Database (UNDONE!!!)
+        // TODO: Update Max Percent with Database
         if (currentPercent != null) {
           if (
             currentPercent.scam == 0 &&
@@ -485,13 +479,11 @@ const Verification = () => {
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
       }
-
       // URLHause API Database
       if (!response_url_haus.ok) {
         throw new Error(`HTTP error! status: ${response_url_haus.status}`);
       }
       const data = await response_url_haus.json();
-
       if (data.query_status == "ok") {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
@@ -618,19 +610,19 @@ const Verification = () => {
     currentPercent: Record<string, number>
   ): number | any => {
     try {
-      const maxScores = {
+      const maxScores: any = {
         gambling: 33,
         scam: 33,
         fake: 100,
         other: 33,
       };
-      const targetPercentages = {
+      const targetPercentages: any = {
         gambling: 17.5,
         scam: 17.5,
         fake: 10,
         other: 0,
       };
-      let adjustedScores = { gambling: 0, scam: 0, fake: 0, other: 0 };
+      let adjustedScores: any = { gambling: 0, scam: 0, fake: 0, other: 0 };
 
       for (const category in currentPercent) {
         const score = currentPercent[category];
@@ -641,7 +633,7 @@ const Verification = () => {
       }
 
       const totalAdjustedPercentage = Object.values(adjustedScores).reduce(
-        (sum, value) => sum + value,
+        (sum: any, value: any) => sum + value,
         0
       );
 

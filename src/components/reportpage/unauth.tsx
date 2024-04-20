@@ -1,9 +1,14 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const UnAuth = () => {
   const t = useScopedI18n("report");
+  useEffect(() => {
+    // Set localStorage item when component mounts
+    localStorage.setItem("prevpath", "report");
+  }, []);
   return (
     <>
       <div className="flex justify-center text-center text-[24px] font-light leading-normal text-transparent bg-clip-text bg-[#011E52] px-[10rem] pb-6 ">

@@ -4,29 +4,32 @@ import { db } from "@/lib/db";
 
 export const setURL = async (url: any) => {
     try {
+        // This is the second verification for the URL
+        // https://example.com/path or http://example.com/path
         const urlPattern1 = /^(https:\/\/|http:\/\/)/;
-        const urlPattern2 = /^(https:\/\/www\.|http:\/\/www\.)/
-        const urlPattern3 = /^(www\.)/
-        if (url) {
-            if (url.match(urlPattern2) || url.match(urlPattern3)) {
-                const split1 = url.split("www.")
-                console.log(split1);
-                const split2 = split1[1].split("/");
-                console.log(split2);
-                return split2[0];
-            }
-            else if (url.match(urlPattern1)) {
-                const split1 = url.split("//")
-                console.log(split1);
-                const split2 = split1[1].split("/");
-                console.log(split2);
-                return split2[0];
-            }
-            else {
-                throw Error("This URL format not valid!!");
-            }
+        // https://www.example.com/path or http://www.example.com/path
+        const urlPattern2 = /^(https:\/\/www\.|http:\/\/www\.)/;
+        // www.example.com/path
+        const urlPattern3 = /^(www\.)/;
+        // example.com/path
+        const urlPattern4 = /^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\.[a-zA-Z0-9-]{2,})?(\/\S*)?$/;
+        if (!url) {
+            throw new Error("Please provide the URL");
+        }
+
+        if (url.match(urlPattern2) || url.match(urlPattern3)) {
+            const split1 = url.split("www.");
+            const split2 = split1[1].split("/");
+            return split2[0];
+        } else if (url.match(urlPattern1)) {
+            const split1 = url.split("//");
+            const split2 = split1[1].split("/");
+            return split2[0];
+        } else if (url.match(urlPattern4)) {
+            const split1 = url.split("/");
+            return split1[0];
         } else {
-            throw Error("Please provide the URL");
+            throw new Error("This URL format is not valid!!");
         }
     } catch (error) {
         return Promise.reject(error);
@@ -39,7 +42,6 @@ export const setCategoryID = async (WebsiteCategory: any) => {
         switch (WebsiteCategory) {
             case "default":
                 throw Error("Please provide the category of the website")
-            // return NextResponse.json({ WebsiteDetail: null, message: "Please provide the category of the website" }, { status: 409 });
             case "gambling":
                 WebCategoryID = 1;
                 break;
@@ -54,7 +56,6 @@ export const setCategoryID = async (WebsiteCategory: any) => {
                 break;
             default:
                 throw Error("Please provide the category of the website")
-            // return NextResponse.json({ WebsiteDetail: null, message: "Please provide the category of the website" }, { status: 409 });
         }
         return WebCategoryID;
     } catch (error) {
