@@ -102,30 +102,35 @@ const WebsiteTable = () => {
   };
 
   //==============Search==========
-  // useEffect(() => {
-  //   // Filter details based on search term
-  //   const filtered = websites.filter(
-  //     (websites) =>
-  //       websites.WebsiteURL.search(
-  //         new RegExp(`\\b${searchTerm.trim()}\\b`, "iu")
-  //       ) !== -1 ||
-  //       websites.WebCategoryName.search(new RegExp(searchTerm, "iu")) !== -1
-  //   );
-  //   setFilteredDetails(filtered as Website[]);
-  // }, [websites, searchTerm]);
+ 
   useEffect(() => {
     // Filter details based on search term
     const filtered = websites.filter((website) =>
       website.WebsiteURL.toLowerCase().includes(searchTerm.toLowerCase().trim())
     );
     setFilteredDetails(filtered);
-  }, [websites, searchTerm]);
+}, [websites, searchTerm]);
+
+
+
+
+
+
 
   //========================
+  
 
-  const handleSearch = (term: SetStateAction<string>) => {
+
+  const handleSearch = (term: any) => {
+    // Remove trailing slash
+    term = term.trim().replace(/\/+$/, '');
+    term = term.toLowerCase().trim();
     setSearchTerm(term);
   };
+
+
+  
+  
 
   // See more see less function
   const [showMore, setShowMore] = useState(false);
@@ -142,6 +147,7 @@ const WebsiteTable = () => {
       const urlMatches = website.WebsiteURL.includes(searchTerm);
       return urlMatches;
     });
+ 
 
     // Show all remaining websites if nextEnd equals or exceeds the total number of filtered websites
     if (nextEnd >= filteredWebsites.length) {
@@ -361,14 +367,28 @@ const WebsiteTable = () => {
             const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
             const cleanURL = website.WebsiteURL.trim().toLowerCase(); // Normalize URL
 
-            return cleanURL.includes(modifiedSearchTerm);
-          } else {
-            // If no searchTerm, show more websites without any filtering
-            return true;
-          }
-        })
-        .slice(0, displayRange.end);
+        return cleanURL.includes(modifiedSearchTerm);
+      } else {
+        // If no searchTerm, show more websites without any filtering
+        return true;
+      }
+    }).slice(0, displayRange.end);
 
+  // const displayedWebsites = showMore
+  // ? (searchTerm ? filteredWebsites.filter((website) => {
+  //       const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
+  //       const cleanURL = website.WebsiteURL.trim().toLowerCase().replace(/\/$/, ''); // Remove trailing '/'
+
+  //       return cleanURL.includes(modifiedSearchTerm);
+  //     }) : filteredWebsites)
+  // : filteredWebsites.filter((website) => {
+  //     const modifiedSearchTerm = searchTerm.trim().toLowerCase(); // Normalize search term
+  //     const cleanURL = website.WebsiteURL.trim().toLowerCase().replace(/\/$/, ''); // Remove trailing '/'
+
+  //     return searchTerm ? cleanURL.includes(modifiedSearchTerm) : true;
+  //   }).slice(0, displayRange.end);
+
+  
   ///==============
 
   return (
