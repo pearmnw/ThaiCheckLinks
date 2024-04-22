@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
-import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { useCurrentLocale, useScopedI18n } from '@/locales/client';
+import axios from 'axios';
+import { createContext, useEffect, useState } from 'react';
 
-import SearchBarMain from "../searchbar/searchbarmain";
-import API from "./API";
-import Classification from "./Classification";
-import Measurement from "./Measurement";
-import Overall from "./Overall";
-import Report from "./Report";
+import SearchBarMain from '../searchbar/searchbarmain';
+import API from './API';
+import Classification from './Classification';
+import Measurement from './Measurement';
+import Overall from './Overall';
+import Report from './Report';
 
 import {
   countStatus,
@@ -19,20 +19,20 @@ import {
   getMaliciousScore,
   makeRequest,
   scaleNumber,
-} from "@/lib/utils";
-import toast from "react-hot-toast";
-import LoaderBanner from "../loading/LoaderBanner";
-import ProgressBarLoader from "../loading/ProgressBarLoader";
+} from '@/lib/utils';
+import toast from 'react-hot-toast';
+import LoaderBanner from '../loading/LoaderBanner';
+import ProgressBarLoader from '../loading/ProgressBarLoader';
 
 export const VerificationContext = createContext<any>(null);
 
 const Verification = () => {
-  const t = useScopedI18n("verificationpage");
-  const r = useScopedI18n("report");
-  const e = useScopedI18n("errormessage");
+  const t = useScopedI18n('verificationpage');
+  const r = useScopedI18n('report');
+  const e = useScopedI18n('errormessage');
   const currentLocale = useCurrentLocale();
 
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [progress, setProgress] = useState(0);
 
@@ -49,11 +49,11 @@ const Verification = () => {
     },
     maxCategoryReport: {
       _count: 0,
-      _type: "",
+      _type: '',
     },
     highestVerifyOverall: {
       _count: 0,
-      _type: "",
+      _type: '',
     },
     currentPercent: {
       other: 0,
@@ -69,11 +69,11 @@ const Verification = () => {
     },
     hasAnotherDatabase: [
       {
-        name: "IPQuality",
+        name: 'IPQuality',
         status: null,
       },
       {
-        name: "URLHaus",
+        name: 'URLHaus',
         status: null,
       },
     ],
@@ -87,11 +87,11 @@ const Verification = () => {
   });
 
   const [metaWebsite, setMetaWebsite] = useState({
-    url: "",
-    title: "",
-    description: "",
-    keyword: "",
-    detail: "",
+    url: '',
+    title: '',
+    description: '',
+    keyword: '',
+    detail: '',
     status: true,
   });
 
@@ -99,14 +99,14 @@ const Verification = () => {
 
   const getVerifyResult = async () => {
     const formData = new FormData();
-    formData.append("url", url);
-    formData.append("path", "verification");
-    axios.defaults.headers.common["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Accept"] = "application/json";
+    formData.append('url', url);
+    formData.append('path', 'verification');
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
 
     await axios
       // .post("https://nationally-helped-haddock.ngrok-free.app", formData)
-      .post("http://127.0.0.1:8000", formData)
+      .post('http://127.0.0.1:8000', formData)
       .then(async (res) => {
         // Display Data
         console.log(res.data);
@@ -123,10 +123,10 @@ const Verification = () => {
           isRisk.measurement
         );
 
-        const resp = await fetch("api/verification", {
-          method: "POST",
+        const resp = await fetch('api/verification', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             WebsiteURL: url,
@@ -148,87 +148,87 @@ const Verification = () => {
             currentPercent.gambling == 0
           ) {
             toast.custom((t) => (
-              <div className="flex align-middle items-center justify-center w-full h-screen">
+              <div className='flex align-middle items-center justify-center w-full h-screen'>
                 <div
                   className={`${
-                    t.visible ? "animate-enter" : "animate-leave"
+                    t.visible ? 'animate-enter' : 'animate-leave'
                   } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
                 >
-                  <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-full h-full">
-                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#ffcc00]">
+                  <div className='relative bg-white rounded-lg shadow dark:bg-gray-700 w-full h-full'>
+                    <div className='flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#ffcc00]'>
                       <svg
-                        fill="#ffffff"
-                        version="1.1"
-                        id="Capa_1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                        width="70px"
-                        height="70px"
-                        viewBox="0 0 478.13 478.13"
-                        xmlSpace="preserve"
-                        stroke="#ffffff"
-                        strokeWidth="0.00478125"
+                        fill='#ffffff'
+                        version='1.1'
+                        id='Capa_1'
+                        xmlns='http://www.w3.org/2000/svg'
+                        xmlnsXlink='http://www.w3.org/1999/xlink'
+                        width='70px'
+                        height='70px'
+                        viewBox='0 0 478.13 478.13'
+                        xmlSpace='preserve'
+                        stroke='#ffffff'
+                        strokeWidth='0.00478125'
                       >
-                        <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                        <g id='SVGRepo_bgCarrier' strokeWidth='0' />
 
                         <g
-                          id="SVGRepo_tracerCarrier"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                          id='SVGRepo_tracerCarrier'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
                         />
 
-                        <g id="SVGRepo_iconCarrier">
-                          {" "}
+                        <g id='SVGRepo_iconCarrier'>
+                          {' '}
                           <g>
-                            {" "}
+                            {' '}
                             <g>
-                              {" "}
+                              {' '}
                               <g>
-                                {" "}
+                                {' '}
                                 <circle
-                                  cx="239.904"
-                                  cy="314.721"
-                                  r="35.878"
-                                />{" "}
-                                <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z" />{" "}
-                                <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z" />{" "}
-                              </g>{" "}
-                            </g>{" "}
-                          </g>{" "}
+                                  cx='239.904'
+                                  cy='314.721'
+                                  r='35.878'
+                                />{' '}
+                                <path d='M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z' />{' '}
+                                <path d='M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z' />{' '}
+                              </g>{' '}
+                            </g>{' '}
+                          </g>{' '}
                         </g>
                       </svg>
-                      <h3 className="pl-5 text-[35px] font-semibold text-[#ffffff] dark:text-white">
-                        {e("caution")}
+                      <h3 className='pl-5 text-[35px] font-semibold text-[#ffffff] dark:text-white'>
+                        {e('caution')}
                       </h3>
                       <button
-                        type="button"
+                        type='button'
                         onClick={(event) => {
                           event.preventDefault(); // This line prevents the default form submission
                           toast.dismiss(t.id);
                         }}
-                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-[10px] text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        className='text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-[10px] text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white'
                       >
                         <svg
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 14 14"
+                          className='w-5 h-5'
+                          aria-hidden='true'
+                          xmlns='http://www.w3.org/2000/svg'
+                          fill='none'
+                          viewBox='0 0 14 14'
                         >
                           <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                            stroke='currentColor'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth='2'
+                            d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6'
                           />
                         </svg>
-                        <span className="sr-only">Close modal</span>
+                        <span className='sr-only'>Close modal</span>
                       </button>
                     </div>
-                    <div className="p-4 md:p-5 text-justify space-y-4">
-                      <p className="text-xl text-center font-medium text-gray-900">
-                        {e("reporterrwebsiteinact")}
+                    <div className='p-4 md:p-5 text-justify space-y-4'>
+                      <p className='text-xl text-center font-medium text-gray-900'>
+                        {e('reporterrwebsiteinact')}
                       </p>
                     </div>
                   </div>
@@ -330,83 +330,83 @@ const Verification = () => {
         console.log(error);
         // toast.error(e("reporterrwebsiteinact"));
         toast.custom((t) => (
-          <div className="flex align-middle items-center justify-center w-full h-screen">
+          <div className='flex align-middle items-center justify-center w-full h-screen'>
             <div
               className={`${
-                t.visible ? "animate-enter" : "animate-leave"
+                t.visible ? 'animate-enter' : 'animate-leave'
               } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
             >
-              <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-full h-full">
-                <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#ffcc00]">
+              <div className='relative bg-white rounded-lg shadow dark:bg-gray-700 w-full h-full'>
+                <div className='flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#ffcc00]'>
                   <svg
-                    fill="#ffffff"
-                    version="1.1"
-                    id="Capa_1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    width="70px"
-                    height="70px"
-                    viewBox="0 0 478.13 478.13"
-                    xmlSpace="preserve"
-                    stroke="#ffffff"
-                    strokeWidth="0.00478125"
+                    fill='#ffffff'
+                    version='1.1'
+                    id='Capa_1'
+                    xmlns='http://www.w3.org/2000/svg'
+                    xmlnsXlink='http://www.w3.org/1999/xlink'
+                    width='70px'
+                    height='70px'
+                    viewBox='0 0 478.13 478.13'
+                    xmlSpace='preserve'
+                    stroke='#ffffff'
+                    strokeWidth='0.00478125'
                   >
-                    <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                    <g id='SVGRepo_bgCarrier' strokeWidth='0' />
 
                     <g
-                      id="SVGRepo_tracerCarrier"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      id='SVGRepo_tracerCarrier'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
                     />
 
-                    <g id="SVGRepo_iconCarrier">
-                      {" "}
+                    <g id='SVGRepo_iconCarrier'>
+                      {' '}
                       <g>
-                        {" "}
+                        {' '}
                         <g>
-                          {" "}
+                          {' '}
                           <g>
-                            {" "}
-                            <circle cx="239.904" cy="314.721" r="35.878" />{" "}
-                            <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z" />{" "}
-                            <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z" />{" "}
-                          </g>{" "}
-                        </g>{" "}
-                      </g>{" "}
+                            {' '}
+                            <circle cx='239.904' cy='314.721' r='35.878' />{' '}
+                            <path d='M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z' />{' '}
+                            <path d='M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z' />{' '}
+                          </g>{' '}
+                        </g>{' '}
+                      </g>{' '}
                     </g>
                   </svg>
-                  <h3 className="pl-5 text-[35px] font-semibold text-[#ffffff] dark:text-white">
-                    {e("caution")}
+                  <h3 className='pl-5 text-[35px] font-semibold text-[#ffffff] dark:text-white'>
+                    {e('caution')}
                   </h3>
                   <button
-                    type="button"
+                    type='button'
                     onClick={(event) => {
                       event.preventDefault(); // This line prevents the default form submission
                       toast.dismiss(t.id);
                     }}
-                    className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-[10px] text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    className='text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-[10px] text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white'
                   >
                     <svg
-                      className="w-5 h-5"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
+                      className='w-5 h-5'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 14 14'
                     >
                       <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        stroke='currentColor'
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6'
                       />
                     </svg>
-                    <span className="sr-only">Close modal</span>
+                    <span className='sr-only'>Close modal</span>
                   </button>
                 </div>
-                <div className="p-4 md:p-5 text-justify space-y-4">
-                  <p className="text-xl text-center font-medium text-gray-900">
-                    {e("reporterrwebsiteinact")}
+                <div className='p-4 md:p-5 text-justify space-y-4'>
+                  <p className='text-xl text-center font-medium text-gray-900'>
+                    {e('reporterrwebsiteinact')}
                   </p>
                 </div>
               </div>
@@ -454,9 +454,12 @@ const Verification = () => {
       // IPQuality API Database
       if (response_ip_quality.ok) {
         const data = await response_ip_quality.json();
+
+        console.log(data);
+
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "IPQuality"
+            db.name === 'IPQuality'
               ? {
                   ...db,
                   status:
@@ -464,8 +467,8 @@ const Verification = () => {
                     data.malware === true ||
                     data.phishing === true ||
                     data.suspicious === true
-                      ? t("FOUND")
-                      : t("NOT FOUND"),
+                      ? t('FOUND')
+                      : t('NOT FOUND'),
                 }
               : db
           );
@@ -474,7 +477,7 @@ const Verification = () => {
       } else {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "IPQuality" ? { ...db, status: t("NOT FOUND") } : db
+            db.name === 'IPQuality' ? { ...db, status: t('NOT FOUND') } : db
           );
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
@@ -484,17 +487,17 @@ const Verification = () => {
         throw new Error(`HTTP error! status: ${response_url_haus.status}`);
       }
       const data = await response_url_haus.json();
-      if (data.query_status == "ok") {
+      if (data.query_status == 'ok') {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "URLHaus" ? { ...db, status: t("FOUND") } : db
+            db.name === 'URLHaus' ? { ...db, status: t('FOUND') } : db
           );
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
       } else {
         setOverviewScore((prev: any) => {
           const updatedDatabases = prev.hasAnotherDatabase.map((db: any) =>
-            db.name === "URLHaus" ? { ...db, status: t("NOT FOUND") } : db
+            db.name === 'URLHaus' ? { ...db, status: t('NOT FOUND') } : db
           );
           return { ...prev, hasAnotherDatabase: updatedDatabases };
         });
@@ -505,7 +508,7 @@ const Verification = () => {
   };
 
   const [formError, setFormError] = useState({
-    websiteurl: "",
+    websiteurl: '',
   });
 
   const checkURL = async () => {
@@ -523,14 +526,14 @@ const Verification = () => {
       /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/gm;
 
     const inputError = {
-      websiteurl: "",
+      websiteurl: '',
     };
 
     if (!url) {
       hasError = true;
       setFormError({
         ...inputError,
-        websiteurl: r("urlError"),
+        websiteurl: r('urlError'),
       });
     } else {
       if (
@@ -542,26 +545,26 @@ const Verification = () => {
         hasError = true;
         setFormError({
           ...inputError,
-          websiteurl: r("urlError2"),
+          websiteurl: r('urlError2'),
         });
       } else if (
-        url.includes(" ") ||
-        url.includes("%20") ||
-        url.includes("&nbsp;") ||
-        url.includes("..") ||
+        url.includes(' ') ||
+        url.includes('%20') ||
+        url.includes('&nbsp;') ||
+        url.includes('..') ||
         // url.includes("[") ||
         // url.includes("]") ||
-        url.includes(".com.com")
+        url.includes('.com.com')
       ) {
         hasError = true;
         setFormError({
           ...inputError,
-          websiteurl: "URL contains invalid characters.",
+          websiteurl: 'URL contains invalid characters.',
         });
       } else {
         setFormError({
           ...inputError,
-          websiteurl: "",
+          websiteurl: '',
         });
       }
     }
@@ -637,8 +640,8 @@ const Verification = () => {
         0
       );
 
-      console.log("New Percentage Object", adjustedScores);
-      console.log("New Percentage of Overall Score:", totalAdjustedPercentage);
+      console.log('New Percentage Object', adjustedScores);
+      console.log('New Percentage of Overall Score:', totalAdjustedPercentage);
       return totalAdjustedPercentage;
     } catch (error) {
       console.error(`An error occurred: ${error}`);
@@ -659,12 +662,12 @@ const Verification = () => {
 
       let statusCount = await countStatus(hasAnotherDatabase);
       console.log(
-        "We here with sumUserReport: " + userReportCount.sumUserReport
+        'We here with sumUserReport: ' + userReportCount.sumUserReport
       );
 
       const reportScore = Math.min(25, userReportCount.sumUserReport);
       let verifyScore = 0;
-      if (highestVerifyOverall._type === "other") {
+      if (highestVerifyOverall._type === 'other') {
         verifyScore = newCriteria(currentPercent);
       } else {
         verifyScore = highestVerifyOverall._count;
@@ -680,7 +683,7 @@ const Verification = () => {
       const scaledReportScore = (reportScore - 0) * scaleReportFactor + 0;
 
       const scaledVerifyScore =
-        highestVerifyOverall._type !== "other"
+        highestVerifyOverall._type !== 'other'
           ? (verifyScore - 0) * scaledVerifyFactor + 0
           : verifyScore;
       const scaledUrlScore = (urlScore - 0) * scaledUrlFactor + 0;
@@ -691,11 +694,11 @@ const Verification = () => {
       );
 
       // Display the whole score
-      console.log("Report Score:", scaledReportScore);
-      console.log("Verify Score:", scaledVerifyScore);
-      console.log("Url Score:", scaledUrlScore);
-      console.log("API Score:", scaledApiScore);
-      console.log("Overall Risk Score:", riskScoreOverall);
+      console.log('Report Score:', scaledReportScore);
+      console.log('Verify Score:', scaledVerifyScore);
+      console.log('Url Score:', scaledUrlScore);
+      console.log('API Score:', scaledApiScore);
+      console.log('Overall Risk Score:', riskScoreOverall);
 
       setOverviewScore((prev: any) => {
         return {
@@ -709,7 +712,7 @@ const Verification = () => {
       getOverallScore();
     } else {
       const originalStyle = window.getComputedStyle(document.body).overflow;
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
 
       return () => (document.body.style.overflow = originalStyle);
     }
@@ -719,21 +722,21 @@ const Verification = () => {
     <VerificationContext.Provider value={{ overviewScore }}>
       <section>
         {isLoading && (
-          <div className="fixed flex flex-col items-center justify-center gap-12 z-50 h-screen w-full">
+          <div className='fixed flex flex-col items-center justify-center gap-12 z-50 h-screen w-full'>
             {/* <Loader /> */}
             <ProgressBarLoader progress={progress} />
             <LoaderBanner />
           </div>
         )}
 
-        <div className={`${isLoading ? "opacity-20" : ""}`}>
+        <div className={`${isLoading ? 'opacity-20' : ''}`}>
           <h1
             className={`relative bg-gradient-to-r from-[#144EE3] via-[#02006D] to-[#144EE3] bg-clip-text text-center text-[48px] font-extrabold text-transparent`}
           >
-            {t("title")}
+            {t('title')}
           </h1>
-          <h2 className="flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent ">
-            {t("caption")}
+          <h2 className='flex justify-center bg-[#011E52] bg-clip-text px-[10rem] pb-6 text-center text-[24px] font-light leading-normal text-transparent '>
+            {t('caption')}
           </h2>
           <SearchBarMain
             onPredict={predictBtn}
@@ -741,16 +744,17 @@ const Verification = () => {
             setUrl={setUrl}
             setOverview={setOverviewScore}
           />
-          <p className="text-[12px] font-[500] text-center text-red-600">
+          <p className='text-[12px] font-[500] text-center text-red-600'>
             {formError.websiteurl}
           </p>
           {overviewScore.isShow === true ? (
-            <div className="mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4">
+            <div className='mx-28 my-8 flex flex-col gap-8 rounded-lg border-2 border-solid border-slate-600 py-4'>
               <Overall
                 url={url}
                 metaWebsite={metaWebsite}
                 currentPercent={currentPercent}
                 verifySuccess={verifySuccess}
+                highestVerifyOverall={overviewScore.highestVerifyOverall}
               />
               <Report />
               <Classification />
