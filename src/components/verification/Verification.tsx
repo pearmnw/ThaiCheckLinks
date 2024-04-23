@@ -622,7 +622,7 @@ const Verification = () => {
       const targetPercentages: any = {
         gambling: 17.5,
         scam: 17.5,
-        fake: 10,
+        fake: 15,
         other: 0,
       };
       let adjustedScores: any = { gambling: 0, scam: 0, fake: 0, other: 0 };
