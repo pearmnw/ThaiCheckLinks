@@ -1,71 +1,69 @@
 export default {
-
-  "navbar": {
-    "reportweb": "Report Websites",
-    "verifyweb": "Check Website's Link",
-    "signin": "Sign In",
-    "signup": "Sign Up",
-    "signout": "Sign Out",
-    "TH": "Thai",
-    "EN": "English"
+  navbar: {
+    reportweb: 'Report Websites',
+    verifyweb: "Check Website's Link",
+    signin: 'Sign In',
+    signup: 'Sign Up',
+    signout: 'Sign Out',
+    TH: 'Thai',
+    EN: 'English',
   },
 
-  "signinpage": {
-    "signin": "Sign In",
-    "signup": "Sign Up",
-    "username": "Username",
-    "text1": "Enter your username",
-    "text2": "Enter your password at least 8 character with number",
-    "password": "Password",
-    "signupmes": "If you don't have a user account, click"
+  signinpage: {
+    signin: 'Sign In',
+    signup: 'Sign Up',
+    username: 'Username',
+    text1: 'Enter your username',
+    text2: 'Enter your password at least 8 character with number',
+    password: 'Password',
+    signupmes: "If you don't have a user account, click",
   },
 
-  "signuppage": {
-    "title": "Create Account",
-    "signup": "Sign Up",
-    "signin": "Sign In",
-    "have": "Already have an account?",
-    "username": "Username",
-    "usertext": "Enter your username",
-    "email": "Email",
-    "emtext": "Enter your Email (example@gmail.com)",
-    "phonenum": "Phone number (Optional)",
-    "phntext": "Enter your phone number Ex.(0897654321)",
-    "password": "Password",
-    "pwtext": "Enter your password at least 8 character with number",
-    "confirm": "Confirm Password",
-    "cftext": "Enter your confirm password",
-    "consent1": "Please read the",
-    "termofuse": "Terms of Use",
-    "and": "and",
-    "privacypolicy": "Privacy Policy",
-    "consent2": "to allow us to collect your data.",
-    "errconfirmpass": "Password and confirm password should be the same.",
-    "successmsg": "Information Validation Success.",
-    "erremail": "Please enter a correct Email Format.",
-    "errpw1": "Password must be at least 8 characters.",
-    "errpw2": "Password must contain at least one number.",
-    "errphone": "Please enter a correct phone number format.",
-    "errconsent": "Please read and consent to the terms.",
-    "warntext": "*Note* The username will be used to sign in and display when reports",
-    "errfield": "Please fill out this field",
-    "AItxt1": "(Optional) AI button to generate username",
-    "AItxt2": "Generater",
+  signuppage: {
+    title: 'Create Account',
+    signup: 'Sign Up',
+    signin: 'Sign In',
+    have: 'Already have an account?',
+    username: 'Username',
+    usertext: 'Enter your username',
+    email: 'Email',
+    emtext: 'Enter your Email (example@gmail.com)',
+    phonenum: 'Phone number (Optional)',
+    phntext: 'Enter your phone number Ex.(0897654321)',
+    password: 'Password',
+    pwtext: 'Enter your password at least 8 character with number',
+    confirm: 'Confirm Password',
+    cftext: 'Enter your confirm password',
+    consent1: 'Please read the',
+    termofuse: 'Terms of Use',
+    and: 'and',
+    privacypolicy: 'Privacy Policy',
+    consent2: 'to allow us to collect your data.',
+    errconfirmpass: 'Password and confirm password should be the same.',
+    successmsg: 'Information Validation Success.',
+    erremail: 'Please enter a correct Email Format.',
+    errpw1: 'Password must be at least 8 characters.',
+    errpw2: 'Password must contain at least one number.',
+    errphone: 'Please enter a correct phone number format.',
+    errconsent: 'Please read and consent to the terms.',
+    warntext:
+      '*Note* The username will be used to sign in and display when reports',
+    errfield: 'Please fill out this field',
+    AItxt1: '(Optional) AI button to generate username',
+    AItxt2: 'Generater',
   },
 
-
-  "termofusepage": {
-    "title": "Term of use",
-    "accept": "I accept",
+  termofusepage: {
+    title: 'Term of use',
+    accept: 'I accept',
     // General Terms
-    "generaltermtitle": "General Terms",
-    "generaltermtxt1":
-      ` By accessing Thai.CheckLinks, you confirm that
+    generaltermtitle: 'General Terms',
+    generaltermtxt1: ` By accessing Thai.CheckLinks, you confirm that
     you are in agreement with and bound by the terms of use contained
     in the Terms & Conditions outlined below. These terms apply to the
     entire website and any communication between you and Thai.CheckLinks.`,
 
-    "generaltermtxt2": ` Under no circumstances shall the Thai.CheckLinks team be liable for any
+    generaltermtxt2: ` Under no circumstances shall the Thai.CheckLinks team be liable for any
     direct, indirect, special, incidental, or consequential damages,
     including, but not limited to, loss of data or profit, arising out of
     the use, or the inability to use, the materials on this site, even if
@@ -74,65 +72,65 @@ export default {
     site results in the need for servicing, repair, or correction of
     equipment or data, you assume any costs thereof.`,
 
-    "generaltermtxt3": ` Thai.CheckLinks will not be responsible for any outcome that may occur
+    generaltermtxt3: ` Thai.CheckLinks will not be responsible for any outcome that may occur
     during the usage of our resources. We reserve the right to change
     prices and revise the resource usage policy at any moment.`,
     // License
-    "license": "License",
-    "licensetxt": `Thai.CheckLinks grants you a revocable, non-exclusive, non-transferable, 
+    license: 'License',
+    licensetxt: `Thai.CheckLinks grants you a revocable, non-exclusive, non-transferable, 
     limited license to download, install, and use the website strictly in accordance with the 
     terms of this Agreement.These Terms & Conditions are a contract between you and Thai.CheckLinks.`,
     // Definitions and key terms
-    "definition": "Definitions and key terms",
-    "deftxt1": "For this Terms & Conditions:",
-    "deftxt2": `Cookie: a small amount of data generated by a website and saved by
+    definition: 'Definitions and key terms',
+    deftxt1: 'For this Terms & Conditions:',
+    deftxt2: `Cookie: a small amount of data generated by a website and saved by
     your web browser. It is used to identify your browser, provide
     analytics, and remember information about you such as your language
     preference or login information.`,
-    "deftxt3": `Company: When this policy mentions “Company,” “we,” “us,” or “our,” it
+    deftxt3: `Company: When this policy mentions “Company,” “we,” “us,” or “our,” it
     refers to Thai.CheckLinks which is responsible for your information
     under this Privacy Policy.`,
-    "deftxt4": `Country: where Thai.CheckLinks or the owners/founders of Thai.CheckLinks
+    deftxt4: `Country: where Thai.CheckLinks or the owners/founders of Thai.CheckLinks
     are based, in this case, Thailand.`,
-    "deftxt5": `Customer: refers to the company, organization, or person that signs up
+    deftxt5: `Customer: refers to the company, organization, or person that signs up
     to use the Thai.CheckLinks Service to manage the relationships with your
     consumers or service users.`,
-    "deftxt6": `Device: any internet-connected device such as a phone, tablet,
+    deftxt6: `Device: any internet-connected device such as a phone, tablet,
     computer, or any other device that can be used to visit Thai.CheckLinks
     and use the services.`,
-    "deftxt7": `IP address: Every device connected to the Internet is assigned a
+    deftxt7: `IP address: Every device connected to the Internet is assigned a
     number known as an Internet protocol (IP) address. These numbers are
     usually assigned in geographic blocks. An IP address can often be used
     to identify the location from which a device is connecting to the
     Internet.`,
-    "deftxt8": `Personal Data: any information that directly, indirectly, or in
+    deftxt8: `Personal Data: any information that directly, indirectly, or in
     connection with other information — including a personal
     identification number — allows for the identification or
     identifiability of a natural person.`,
-    "deftxt9": `Service: refers to the service provided by Thai.CheckLinks as described
+    deftxt9: `Service: refers to the service provided by Thai.CheckLinks as described
     in the relative terms (if available) and on this platform.`,
-    "deftxt10": `Third-party service: refers to advertisers, contest sponsors,
+    deftxt10: `Third-party service: refers to advertisers, contest sponsors,
     promotional and marketing partners, and others who provide our content
     or whose products or services we think may interest you.`,
-    "deftxt11": `Website: Thai.CheckLinks’s site, which can be accessed via this URL:
+    deftxt11: `Website: Thai.CheckLinks’s site, which can be accessed via this URL:
     www.thaiscamlinks.com.`,
-    "deftxt12": `You: a person or entity that is registered with Thai.CheckLinks to use
+    deftxt12: `You: a person or entity that is registered with Thai.CheckLinks to use
     the Services.`,
 
     // Restrictions
-    "restrictions": "Restrictions",
-    "restxt1": "You agree not to, and you will not permit others to;",
-    "restxt2": `License, sell, rent, lease, assign, distribute, transmit, host,
+    restrictions: 'Restrictions',
+    restxt1: 'You agree not to, and you will not permit others to;',
+    restxt2: `License, sell, rent, lease, assign, distribute, transmit, host,
     outsource, disclose, or otherwise commercially exploit the service or
     make the platform available to any third party.`,
-    "restxt3": `Modify, make derivative works of, disassemble, decrypt, reverse
+    restxt3: `Modify, make derivative works of, disassemble, decrypt, reverse
     compile, or reverse engineer any part of the service.`,
-    "restxt4": `Modify, make derivative works of, disassemble, decrypt, reverse
+    restxt4: `Modify, make derivative works of, disassemble, decrypt, reverse
     compile, or reverse engineer any part of the service.`,
 
     // Suggest
-    "suggest": "Your Suggestions",
-    "sugtxt1": `Any feedback, comments, ideas, improvements, or
+    suggest: 'Your Suggestions',
+    sugtxt1: `Any feedback, comments, ideas, improvements, or
     suggestions (collectively, "Suggestions") provided by
     you to us with respect to the service shall remain the
     sole and exclusive property of us. We shall be free to
@@ -141,21 +139,21 @@ export default {
     credit or any compensation to you.`,
 
     // Consent
-    "consent": "Your Consent",
-    "contxt1": `We've updated our Terms & Conditions to provide you with
+    consent: 'Your Consent',
+    contxt1: `We've updated our Terms & Conditions to provide you with
     complete transparency into what is being set when you
     visit our site and how it's being used. By using our
     service, or registering an account, you hereby consent to our Terms & Conditions.`,
 
     // Modifications to Our Service
-    "mod": "Modifications to Our Service",
-    "modtxt1": `We reserve the right to modify, suspend, or discontinue, temporarily or
+    mod: 'Modifications to Our Service',
+    modtxt1: `We reserve the right to modify, suspend, or discontinue, temporarily or
     permanently, the service or any service to which it connects, with or
     without notice and without liability to you.`,
 
     // Updates to Our Service
-    "update": "Updates to Our Service",
-    "updatetxt": `We may from time to time provide enhancements or
+    update: 'Updates to Our Service',
+    updatetxt: `We may from time to time provide enhancements or
     improvements to the features/ functionality of the
     service, which may include patches, bug fixes, updates,
     upgrades, and other modifications ("Updates"). Updates
@@ -169,8 +167,8 @@ export default {
     subject to the terms and conditions of this Agreement.`,
 
     // Third-Party Services
-    "third": "Third-Party Services",
-    "thirdtxt1": `We may display, include, or make available third-party
+    third: 'Third-Party Services',
+    thirdtxt1: `We may display, include, or make available third-party
     content (including data, information, applications, and
     other products and services) or provide links to
     third-party websites or services ("Third-Party
@@ -187,8 +185,8 @@ export default {
     parties’ terms and conditions.`,
 
     // Links to Other Websites
-    "link": "Links to Other Websites",
-    "linktxt": `Our service may contain links to other websites that are
+    link: 'Links to Other Websites',
+    linktxt: `Our service may contain links to other websites that are
     not operated by Us. If You click on a third-party link,
     You will be directed to that third-party's site. We
     strongly advise You to review the Terms & Conditions of
@@ -197,8 +195,8 @@ export default {
     or practices of any third-party sites or services.`,
 
     // Cookies
-    "cookies": "Cookies",
-    "cookistxt": `We use "Cookies" to identify the areas of our website
+    cookies: 'Cookies',
+    cookistxt: `We use "Cookies" to identify the areas of our website
     that you have visited. A Cookie is a small piece of data
     stored on your computer or mobile device by your web
     browser. We use Cookies to enhance the performance and
@@ -215,8 +213,8 @@ export default {
     Cookies.`,
 
     // Changes To Our Terms & Conditions
-    "change": "Changes To Our Terms & Conditions",
-    "changetxt": `You acknowledge and agree that we may stop (permanently or temporarily)
+    change: 'Changes To Our Terms & Conditions',
+    changetxt: `You acknowledge and agree that we may stop (permanently or temporarily)
     providing the Service (or any features within the Service) to you or to
     users generally at our sole discretion, without prior notice to you. You
     may stop using the Service at any time. You do not need to specifically
@@ -228,8 +226,8 @@ export default {
     update the Terms & Conditions modification date below.`,
 
     // Term and Termination
-    "termter": "Term and Termination",
-    "termtertxt": `This Agreement shall remain in effect until terminated
+    termter: 'Term and Termination',
+    termtertxt: `This Agreement shall remain in effect until terminated
     by you or us. We may, in its sole discretion, at any
     time and for any or no reason, suspend or terminate this
     Agreement with or without prior notice. This Agreement
@@ -243,9 +241,9 @@ export default {
     this Agreement will not limit any of our rights or
     remedies at law or in equity in case of breach by you
     (during the term of this Agreement) of any of your
-    obligations under the present Agreement.` ,
+    obligations under the present Agreement.`,
 
-    "termtertxt2": `If you are a copyright owner or such owner's agent and
+    termtertxt2: `If you are a copyright owner or such owner's agent and
     believe any material from us constitutes an infringement
     on your copyright, please contact us setting forth the
     following information: (a) a physical or electronic
@@ -261,8 +259,8 @@ export default {
     authorized to act on behalf of the owner.`,
 
     // Indemnification
-    "indem": "Indemnification",
-    "indemtxt": `You agree to indemnify and hold us and our parents, 
+    indem: 'Indemnification',
+    indemtxt: `You agree to indemnify and hold us and our parents, 
     subsidiaries, affiliates, officers, employees, agents, partners, 
     and licensors (if any) harmless from any claim or demand, including 
     reasonable attorneys' fees, due to or arising out of your: 
@@ -270,8 +268,8 @@ export default {
     or regulation; or (c) violation of any right of a third party.`,
 
     // No Warranties
-    "nowan": "No Warranties",
-    "nowantxt": `The service is provided to you "AS IS" and "AS
+    nowan: 'No Warranties',
+    nowantxt: `The service is provided to you "AS IS" and "AS
     AVAILABLE" and with all faults and defects without
     warranty of any kind. To the maximum extent permitted
     under applicable law, we, on our own behalf and on
@@ -291,7 +289,7 @@ export default {
     without interruption, meet any performance or
     reliability standards or be error-free or that any
     errors or defects can or will be corrected.`,
-    "nowantxt2": `Without limiting the foregoing, neither we nor any
+    nowantxt2: `Without limiting the foregoing, neither we nor any
     provider makes any representation or warranty of any
     kind, express or implied: (i) as to the operation or
     availability of the service, or the information,
@@ -310,8 +308,8 @@ export default {
     apply to you.`,
 
     // Limitation of Liability
-    "limit": "Limitation of Liability",
-    "limittxt": `Notwithstanding any damages that you might incur, the entire liability
+    limit: 'Limitation of Liability',
+    limittxt: `Notwithstanding any damages that you might incur, the entire liability
     of us and any of our suppliers under any provision of this Agreement and
     your exclusive remedy for all of the foregoing shall be limited to the
     amount actually paid by you for the service. To the maximum extent
@@ -329,13 +327,13 @@ export default {
     damages, so the above limitation or exclusion may not apply to you.`,
 
     // Severability
-    "sever": "Severability",
-    "severtxt": `If any provision of this Agreement is held to be unenforceable or
+    sever: 'Severability',
+    severtxt: `If any provision of this Agreement is held to be unenforceable or
     invalid, such provision will be changed and interpreted to accomplish
     the objectives of such provision to the greatest extent possible under
     applicable law and the remaining provisions will continue in full force
     and effect.`,
-    "severtxt2": `This Agreement, together with the Privacy Policy and any other legal
+    severtxt2: `This Agreement, together with the Privacy Policy and any other legal
     notices published by us on the Services, shall constitute the entire
     agreement between you and us concerning the Services. If any provision
     of this Agreement is deemed invalid by a court of competent
@@ -350,14 +348,14 @@ export default {
     ACCRUES. OTHERWISE, SUCH CAUSE OF ACTION IS PERMANENTLY BARRED.`,
 
     // Waiver
-    "waiver": "Waiver",
-    "waivertxt": `Except as provided herein, the failure to exercise a
+    waiver: 'Waiver',
+    waivertxt: `Except as provided herein, the failure to exercise a
     right or to require the performance of an obligation
     under this Agreement shall not effect a party's ability
     to exercise such right or require such performance at
     any time thereafter nor shall be the waiver of a breach
     constitute waiver of any subsequent breach.`,
-    "waivertxt2": `No failure to exercise, and no delay in exercising, on the part of
+    waivertxt2: `No failure to exercise, and no delay in exercising, on the part of
     either party, any right or any power under this Agreement shall operate
     as a waiver of that right or power. Nor shall any single or partial
     exercise of any right or power under this Agreement preclude further
@@ -366,8 +364,8 @@ export default {
     terms, the terms of this Agreement shall govern.`,
 
     // Amendments to this Agreement
-    "amend": "Amendments to this Agreement",
-    "amendtxt": `We reserve the right, at its sole discretion, to modify
+    amend: 'Amendments to this Agreement',
+    amendtxt: `We reserve the right, at its sole discretion, to modify
     or replace this Agreement at any time. If a revision is
     material we will provide at least 30 days' notice prior
     to any new terms taking effect. What constitutes a
@@ -379,8 +377,8 @@ export default {
     service.`,
 
     // Entire Agreement
-    "entire": "Entire Agreement",
-    "entiretxt": `The Agreement constitutes the entire agreement between you and us
+    entire: 'Entire Agreement',
+    entiretxt: `The Agreement constitutes the entire agreement between you and us
     regarding your use of the service and supersedes all prior and
     contemporaneous written or oral agreements between you and us. You may
     be subject to additional terms and conditions that apply when you use or
@@ -388,8 +386,8 @@ export default {
     time of such use or purchase.`,
 
     // Updates to Our Terms
-    "uptoteam": "Updates to Our Terms",
-    "uptoteamtxt": `We may change our Service and policies, and we may need to make changes
+    uptoteam: 'Updates to Our Terms',
+    uptoteamtxt: `We may change our Service and policies, and we may need to make changes
     to these Terms so that they accurately reflect our Service and policies.
     Unless otherwise required by law, we will notify you (for example,
     through our Service) before we make change to these Terms and give you
@@ -399,8 +397,8 @@ export default {
     your account.`,
 
     // Intellectual Property
-    "intell": "Intellectual Property",
-    "intelltxt": `Our platform and its entire contents, features, and functionality
+    intell: 'Intellectual Property',
+    intelltxt: `Our platform and its entire contents, features, and functionality
     (including but not limited to all information, software, text, displays,
     images, video and audio, and the design, selection, and arrangement
     thereof), are owned by us, its licensors or other providers of such
@@ -413,8 +411,8 @@ export default {
     of the material is prohibited.`,
 
     // Agreement to Arbitrate
-    "agreement": "Agreement to Arbitrate",
-    "agreementtxt": `This section applies to any dispute EXCEPT IT DOESN'T
+    agreement: 'Agreement to Arbitrate',
+    agreementtxt: `This section applies to any dispute EXCEPT IT DOESN'T
     INCLUDE A DISPUTE RELATING TO CLAIMS FOR INJUNCTIVE OR
     EQUITABLE RELIEF REGARDING THE ENFORCEMENT OR VALIDITY
     OF YOUR OR’s INTELLECTUAL PROPERTY RIGHTS. The term
@@ -426,8 +424,8 @@ export default {
     possible meaning allowable under law.`,
 
     // Notice of Dispute
-    "notice": "Notice of Dispute",
-    "noticetxt": `In the event of a dispute, you or us must give the other
+    notice: 'Notice of Dispute',
+    noticetxt: `In the event of a dispute, you or us must give the other
     a Notice of Dispute, which is a written statement that
     sets forth the name, address, and contact information of
     the party giving it, the facts giving rise to the
@@ -441,8 +439,8 @@ export default {
     us may commence arbitration.`,
 
     // Binding Arbitration
-    "binding": "Binding Arbitration",
-    "bindingtxt": `If you and us don’t resolve any dispute by informal
+    binding: 'Binding Arbitration',
+    bindingtxt: `If you and us don’t resolve any dispute by informal
     negotiation, any other effort to resolve the dispute
     will be conducted exclusively by binding arbitration as
     described in this section. You are giving up the right
@@ -459,8 +457,8 @@ export default {
     party shall be borne by the non-prevailing party.`,
 
     // Submissions and Privacy
-    "submiss": "Submissions and Privacy",
-    "submisstxt": `In the event that you submit or post any ideas, creative suggestions,
+    submiss: 'Submissions and Privacy',
+    submisstxt: `In the event that you submit or post any ideas, creative suggestions,
     designs, photographs, information, advertisements, data, or proposals,
     including ideas for new or improved products, services, features,
     technologies, or promotions, you expressly agree that such submissions
@@ -473,8 +471,8 @@ export default {
     and marketing products and services using such ideas.`,
 
     // Typographical Errors
-    "typo": "Typographical Errors",
-    "typotxt": `In the event a product and/or service is listed at an incorrect price or
+    typo: 'Typographical Errors',
+    typotxt: `In the event a product and/or service is listed at an incorrect price or
     with incorrect information due to typographical error, we shall have the
     right to refuse or cancel any orders placed for the product and/ or
     service listed at the incorrect price. We shall have the right to refuse
@@ -485,8 +483,8 @@ export default {
     amount of the charge.`,
 
     // Miscellaneous
-    "miscel": "Miscellaneous",
-    "misceltxt": `If for any reason a court of competent jurisdiction finds any provision
+    miscel: 'Miscellaneous',
+    misceltxt: `If for any reason a court of competent jurisdiction finds any provision
     or portion of these Terms & Conditions to be unenforceable, the
     remainder of these Terms & Conditions will continue in full force and
     effect. Any waiver of any provision of these Terms & Conditions will be
@@ -508,8 +506,8 @@ export default {
     given any legal import.`,
 
     // Disclaimer
-    "disclaimer": "Disclaimer",
-    "disclaimertxt": `We are not responsible for any content, code, or any other imprecision.
+    disclaimer: 'Disclaimer',
+    disclaimertxt: `We are not responsible for any content, code, or any other imprecision.
     We do not provide warranties or guarantees. In no event shall we be
     liable for any special, direct, indirect, consequential, or incidental
     damages or any damages whatsoever, whether in an action of contract,
@@ -518,7 +516,7 @@ export default {
     make additions, deletions, or modifications to the contents of the
     Service at any time without prior notice.`,
 
-    "disclaimertxt2": `Our Service and its contents are provided "as is" and
+    disclaimertxt2: `Our Service and its contents are provided "as is" and
     "as available" without any warranty or representations
     of any kind, whether express or implied. We are a
     distributor and not a publisher of the content supplied
@@ -544,14 +542,14 @@ export default {
     uninterrupted, uncorrupted, timely, or error-free.`,
 
     // Contact Us
-    "contact": "Contact Us",
-    "contacttxt": "Don't hesitate to contact us if you have any questions.",
-    "contacttxt2": "Via Email: capcap241023@gmail.com"
+    contact: 'Contact Us',
+    contacttxt: "Don't hesitate to contact us if you have any questions.",
+    contacttxt2: 'Via Email: capcap241023@gmail.com',
   },
 
-  "privacypolicypage": {
-    "title": "Privacy Policy",
-    "privacytxt": `Thai.CheckLinks ("we," "our," or "us") is committed to
+  privacypolicypage: {
+    title: 'Privacy Policy',
+    privacytxt: `Thai.CheckLinks ("we," "our," or "us") is committed to
     protecting your privacy. This Privacy Policy explains how
     your personal information is collected, used, and
     disclosed by Thai.CheckLinks. This Privacy Policy applies to
@@ -563,33 +561,33 @@ export default {
     this Privacy Policy and our Terms of Service.`,
 
     // Definitions and key terms
-    "definition": "Definitions and key terms",
-    "deftxt": `To help explain things as clearly as possible in this Privacy Policy,
+    definition: 'Definitions and key terms',
+    deftxt: `To help explain things as clearly as possible in this Privacy Policy,
     every time any of these terms are referenced, are strictly defined as:`,
 
     // Topic1
-    "topic1": "What Information Do We Collect?",
-    "topic1txt": `We collect information from you when you visit our service, register, subscribe to our newsletter, respond to a survey, or
+    topic1: 'What Information Do We Collect?',
+    topic1txt: `We collect information from you when you visit our service, register, subscribe to our newsletter, respond to a survey, or
     fill out a form.`,
-    "topic1txt2": "Name / Username",
-    "topic1txt3": "Phone Numbers",
-    "topic1txt4": "Email Addresse",
-    "topic1txt5": "Password",
+    topic1txt2: 'Name / Username',
+    topic1txt3: 'Phone Numbers',
+    topic1txt4: 'Email Addresse',
+    topic1txt5: 'Password',
 
     // Topic2
-    "topic2": "How Do We Use The Information We Collect?",
-    "topic2txt": `Any of the information we collect from you may be used in one of the
+    topic2: 'How Do We Use The Information We Collect?',
+    topic2txt: `Any of the information we collect from you may be used in one of the
     following ways:`,
-    "topic2txt2": `To personalize your experience (your information helps us to better
+    topic2txt2: `To personalize your experience (your information helps us to better
       respond to your individual needs)`,
-    "topic2txt3": `To improve our service (we continually strive to improve our service
+    topic2txt3: `To improve our service (we continually strive to improve our service
       offerings based on the information and feedback we receive from you)`,
-    "topic2txt4": `To improve customer service (your information helps us to more
+    topic2txt4: `To improve customer service (your information helps us to more
       effectively respond to your customer service requests and support
       needs)`,
     // Topic3
-    "topic3": "Could my information be transferred to other countries?",
-    "topic3txt": `We are incorporated in Thailand. Information collected via our website,
+    topic3: 'Could my information be transferred to other countries?',
+    topic3txt: `We are incorporated in Thailand. Information collected via our website,
     through direct interactions with you, or from the use of our help
     services may be transferred from time to time to our offices or
     personnel, or to third parties, located throughout the world, and may be
@@ -600,8 +598,8 @@ export default {
     and hosting of such information.`,
 
     // Topic4
-    "topic4": "Is the information collected through our service secure?",
-    "topic4txt": `We take precautions to protect the security of your information. We have
+    topic4: 'Is the information collected through our service secure?',
+    topic4txt: `We take precautions to protect the security of your information. We have
     physical, electronic, and managerial procedures to help safeguard,
     prevent unauthorized access, maintain data security, and correctly use
     your information. However, neither people nor security systems are
@@ -614,12 +612,13 @@ export default {
     used to measure our compliance with that duty.`,
 
     // Topic5
-    "topic5": "Can I update or correct my information?",
-    "topic5txt": "Of course! You can be able to update your data via the profile page.",
+    topic5: 'Can I update or correct my information?',
+    topic5txt:
+      'Of course! You can be able to update your data via the profile page.',
 
     // Topic 6
-    "topic6": "How Long Do We Keep Your Information?",
-    "topic6txt": `We keep your information only so long as we need it to
+    topic6: 'How Long Do We Keep Your Information?',
+    topic6txt: `We keep your information only so long as we need it to
     provide service to you and fulfill the purposes described
     in this policy. This is also the case for anyone that we
     share your information with and who carries out services
@@ -630,19 +629,19 @@ export default {
     that we can't identify you.`,
 
     // Topic 7
-    "topic7": "Governing Law",
-    "topic7txt": `The laws of Thailand, excluding its conflicts of law rules, shall govern
+    topic7: 'Governing Law',
+    topic7txt: `The laws of Thailand, excluding its conflicts of law rules, shall govern
     this Agreement and your use of our service. Your use of our service may
     also be subject to other local, state, national, or international laws.`,
 
     // Topic 8
-    "topic8": "Your Consent",
-    "topic8txt": `By using our service, registering an account, you consent to this
+    topic8: 'Your Consent',
+    topic8txt: `By using our service, registering an account, you consent to this
     Privacy Policy.`,
 
     // Topic 9 Cookies
-    "topic9": "Cookies",
-    "topic9txt": `We use "Cookies" to identify the areas of our website that
+    topic9: 'Cookies',
+    topic9txt: `We use "Cookies" to identify the areas of our website that
     you have visited. A Cookie is a small piece of data stored
     on your computer or mobile device by your web browser. We
     use Cookies to personalize the Content that you see on our
@@ -653,8 +652,8 @@ export default {
     Information in Cookies.`,
 
     // Topic 10
-    "topic10": "Kids’ Privacy",
-    "topic10txt": `We do not address anyone under the age of 13. We do not knowingly
+    topic10: 'Kids’ Privacy',
+    topic10txt: `We do not address anyone under the age of 13. We do not knowingly
     collect personally identifiable information from anyone under the age of
     13. If You are a parent or guardian and You are aware that Your child
     has provided Us with Personal Data, please contact us. If We become
@@ -663,70 +662,71 @@ export default {
     that information from our servers.`,
 
     // Topic 11
-    "topic11": "Changes To Our Privacy Policy",
-    "topic11txt": `If we decide to change our privacy policy, we will post those changes on
+    topic11: 'Changes To Our Privacy Policy',
+    topic11txt: `If we decide to change our privacy policy, we will post those changes on
     this page, and/or update the Privacy Policy modification date below.`,
 
     // Topic 12
-    "topic12": "Tracking Technologies",
-    "topic12txt": "Cookies",
-    "topic12txt2": `We use Cookies to enhance the performance and functionality of our
+    topic12: 'Tracking Technologies',
+    topic12txt: 'Cookies',
+    topic12txt2: `We use Cookies to enhance the performance and functionality of our
     service but are non-essential to their use. However, without these
     cookies, certain functionality like videos may become unavailable or you
     would be required to enter your login details every time you visit our
     service as we would not be able to remember that you had logged in
     previously.`,
-    "topic12txt3": "Local Storage",
-    "topic12txt4": `Local Storage sometimes known as DOM storage, provides web apps with
+    topic12txt3: 'Local Storage',
+    topic12txt4: `Local Storage sometimes known as DOM storage, provides web apps with
     methods and protocols for storing client-side data. Web storage supports
     persistent data storage, similar to cookies but with a greatly enhanced
     capacity and no information stored in the HTTP request header.`,
-    "topic12txt5": "Sessions",
-    "topic12txt6": `uses "Sessions" to identify the areas of our website that
+    topic12txt5: 'Sessions',
+    topic12txt6: `uses "Sessions" to identify the areas of our website that
     you have visited. A Session is a small piece of data
     stored on your computer or mobile device by your web
     browser.`,
 
     // Topic 13
-    "topic13": "Information about the Personal Data Protection Act (PDPA) of Thailand",
-    "topic13txt": `We may be collecting and using information from you if you are in
+    topic13:
+      'Information about the Personal Data Protection Act (PDPA) of Thailand',
+    topic13txt: `We may be collecting and using information from you if you are in
     Thailand, and in this section of our Privacy Policy, we are going to
     explain exactly how and why this data is collected, and how we maintain
     this data under protection from being replicated or used in the wrong
     way.`,
 
     // Topic 14
-    "topic14": "What is PDPA?",
-    "topic14txt": `PDPA is a comprehensive privacy and data protection law in
+    topic14: 'What is PDPA?',
+    topic14txt: `PDPA is a comprehensive privacy and data protection law in
     Thailand that regulates how individuals' data is protected
     by companies and enhances the control that individuals
     have over their personal data.`,
 
     // Topic 15
-    "topic15": "What is personal data?",
-    "topic15txt": `Personal data, as defined by PDPA, refers to any information relating to
+    topic15: 'What is personal data?',
+    topic15txt: `Personal data, as defined by PDPA, refers to any information relating to
     an identifiable individual. PDPA covers a broad spectrum of information
     that could be used, either alone or in combination with other pieces of
     information, to identify a person. Examples include but are not limited
     to, name, contact details, financial information, biometric data, IP
     addresses, and more.`,
-    "topic15txt2": `The Data Protection Principles outlined in PDPA include requirements
+    topic15txt2: `The Data Protection Principles outlined in PDPA include requirements
     such as:`,
-    "topic15txt3": `Personal data collected must be processed in a fair, legal, and
+    topic15txt3: `Personal data collected must be processed in a fair, legal, and
     transparent way and should only be used in a way that a person would
     reasonably expect.`,
-    "topic15txt4": `Personal data should only be collected to fulfill a specific purpose,
+    topic15txt4: `Personal data should only be collected to fulfill a specific purpose,
     and it should only be used for that purpose. Organizations must
     specify why they need the personal data when they collect it.`,
-    "topic15txt5": `Personal data should be held no longer than necessary to fulfill its
+    topic15txt5: `Personal data should be held no longer than necessary to fulfill its
     purpose.`,
-    "topic15txt6": `Individuals covered by PDPA have the right to access their own personal
+    topic15txt6: `Individuals covered by PDPA have the right to access their own personal
     data. They can also request a copy of their data, and that their data be
     updated, deleted, restricted, or transferred to another organization.`,
 
     // Topic 16
-    "topic16": "Why is PDPA important?",
-    "topic16txt": `PDPA introduces new requirements regarding how companies
+    topic16: 'Why is PDPA important?',
+    topic16txt: `PDPA introduces new requirements regarding how companies
     should protect individuals’ personal data that they
     collect and process. It emphasizes compliance through
     increased enforcement and imposes penalties for breaches.
@@ -735,15 +735,15 @@ export default {
     place that go beyond the PDPA regulations.`,
 
     // Topic 17
-    "topic17": `Individual Data Subject's Rights - Data Access, Portability, and Deletion`,
-    "topic17txt": `We are committed to helping our customers meet the data subject rights
+    topic17: `Individual Data Subject's Rights - Data Access, Portability, and Deletion`,
+    topic17txt: `We are committed to helping our customers meet the data subject rights
     requirements of PDPA. Thai.CheckLinks.com processes or stores all personal
     data in fully vetted, PDPA-compliant vendors. We retain all conversation
     and personal data for up to 2024, unless your account is deleted. In
     such cases, we dispose of all data in accordance with our Terms of
     Service and Privacy Policy, but we will not hold it for longer than
     2025.`,
-    "topic17txt2": `We acknowledge the importance of providing individuals
+    topic17txt2: `We acknowledge the importance of providing individuals
     with the ability to access, update, retrieve, and remove
     personal data. We have designed our systems to be
     self-service from the start, ensuring that you have access
@@ -753,8 +753,8 @@ export default {
   },
 
   "homepage": {
-    "title": "Start Checking Website Links For Your Safety",
-    "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
+    "title": "Start Finding Website Links For Your Safety",
+    "caption": "Enter your link in the search box to check your website against the malicious website's history database.",
     "text": "Search URL link or category",
     "verify": "Verify",
     "rank": "Ranking fraudulent links",
@@ -784,7 +784,7 @@ export default {
   },
 
   "detailpage": {
-    "title": "Crime Wesite Details",
+    "title": "Malicious Wesite Details",
     "category": "Category",
     "gambling": "Gambling",
     "scam": "Scam",
@@ -807,14 +807,14 @@ export default {
   },
 
   "report": {
-    "title": "Start reporting suspicious website links",
+    "title": "Start reporting malicious website links",
     "caption": "Sign in or sign up before reporting information to ensure accuracy.",
     "signin": "Sign In",
     "signup": "Sign Up",
-    "caption2": "Reporting unlawful links here can help investigators find criminal websites",
+    "caption2": "Reporting malicious links here can help investigators find malicious websites",
     "placeholder": "Enter link eg. https://www.example.com ...",
     "searchbutt": "Confirm",
-    "Category": "Categories of suspicious links*",
+    "Category": "Categories of malicious links*",
     "typefield": "Categories",
     "moredetails": "How does this website risk*",
     "details": "Details (At Least 10 characters and not over 500 characters)",
@@ -849,31 +849,31 @@ export default {
   },
 
   "reportsuccess": {
-    "title": "Successfully reported suspicious website links",
-    "sub-title": "Thank you for reporting suspicious links here.",
-    "sub-title2": "We will continue to use criminal web investigations to help the public.",
+    "title": "Successfully reported website links",
+    "sub-title": "Thank you for reporting website links on our website.",
+    "sub-title2": "We will continue using the reported information for malicious website verification to help the public further.",
     "successmess": "Successful report"
   },
 
-  "profilepage": {
-    "title": "My Profile",
-    "caption": "Sign in or sign up before viewing your profile information.",
-    "username": "Username",
-    "email": "Email",
-    "phonenum": "Phone number (Optional)",
-    "password": "Password",
+  profilepage: {
+    title: 'My Profile',
+    caption: 'Sign in or sign up before viewing your profile information.',
+    username: 'Username',
+    email: 'Email',
+    phonenum: 'Phone number (Optional)',
+    password: 'Password',
   },
 
   "verificationpage": {
     "title": "Start Checking Website Links For Your Safety",
-    "caption": "Enter your link in the verification box to check your website and stage percentage of scammers against the criminal history database.",
+    "caption": "Enter your link in the verification box to check your website and evaluate the percentage of the cybercrime categories against the history database of the malicious website.",
     "url-detection-title": "URL Detection",
     "No Result": "No Result",
     "cannotclassify": `Insufficient Information`,
     "report": "Report",
 
     "overall-title": "Overview Of The Risks Of Website",
-    "overall-subtitle": "The Percentage Of Risk Of Being An suspicious Website Is Based On All Citeria",
+    "overall-subtitle": "The Percentage Of Risk Of Being An Malicious Website Is Based On All Citeria",
     "risk-value": "Risk value",
     "sum-percentage": "Total percentage",
     "low-score": "Low Risk",
@@ -888,90 +888,95 @@ export default {
     "seemore": "See More",
     "click-here": "Click here for addtional reports",
 
-    "analysis-title": "AI Analyzes Risk Percent",
-    "analysis-subtitle": "Highest Percentage Ever Examined",
-    "see-overview": "SEE THE OVERVIEW",
-    'update': 'current update',
-    'analysis-most': "Analyzed as a",
+    'analysis-title': 'AI Analyzes Risk Percent',
+    'analysis-subtitle': 'Highest Percentage Ever Examined',
+    'see-overview': 'SEE THE OVERVIEW',
+    update: 'current update',
+    'analysis-most': 'Analyzed as a',
 
     "report-title": "Verify The Database",
-    "report-subtitle": "Verify Against The User Reporting Database In Thai.ScamLinks",
+    "report-subtitle": "Verify Against The User Reporting Database In Thai.CheckLinks",
     "report-title-result": "Verification Result",
     "risk-title-count": "Risk rate based on number of reports",
 
-    "low-risk-count": "Low risk with 0-5 reports",
-    "moderate-risk-count": "Moderate risk with 6-10 reports",
-    "quite-high-risk-count": "Quite high risk with 11-15 reports",
-    "serious-risk-count": "Serious risk with 16+ reports",
+    'low-risk-count': 'Low risk with 0-5 reports',
+    'moderate-risk-count': 'Moderate risk with 6-10 reports',
+    'quite-high-risk-count': 'Quite high risk with 11-15 reports',
+    'serious-risk-count': 'Serious risk with 16+ reports',
 
-    "low-count": "Low Risk",
-    "quite-low-count": "Quite Low Risk",
-    "quite-high-count": "Quite High Risk",
-    "high-count": "Serious Risk",
+    'low-count': 'Low Risk',
+    'quite-low-count': 'Quite Low Risk',
+    'quite-high-count': 'Quite High Risk',
+    'high-count': 'Serious Risk',
 
-    "gambling-label": "Gambing",
-    "scam-label": "Scam",
-    "fake-label": "Fake",
-    "other-label": "Other",
-    "gambling": "gambling",
-    "scam": "scam",
-    "fake": "fake",
-    "other": "other",
+    'gambling-label': 'Gambing',
+    'scam-label': 'Scam',
+    'fake-label': 'Fake',
+    'other-label': 'Other',
+    gambling: 'gambling',
+    scam: 'scam',
+    fake: 'fake',
+    other: 'other',
 
     'report-found': 'FOUND IN DATABASE',
     'report-not-found': 'NOT FOUND IN DATABASE',
     'report-not-found2': 'FOUND BEING TYPE OTHER IN THE DATABASE',
 
-    'report-most': "Most reported as",
-    'report-unit': "People",
+    'report-most': 'Most reported as',
+    'report-unit': 'People',
 
-    "report-label-bar-plot": "Number of each type of reporting",
+    'report-label-bar-plot': 'Number of each type of reporting',
 
-    "measure-title": "Verify From URL Detection",
-    "measure-subtitle": "Check For Risks From URL Information",
-    "measure-risk-title": "Risk Score",
+    'measure-title': 'Verify From URL Detection',
+    'measure-subtitle': 'Check For Risks From URL Information',
+    'measure-risk-title': 'Risk Score',
 
-    "API-title": "Compare API With Other Cheat Checking Websites",
-    "API-subtitle": "Check The Website Againt A Database Of Other Verified Websites",
-    "API-website-col": "Cheating Web Checking Websites",
-    "API-inspection-result-col": "Inspection Results",
-    "FOUND": "FOUND",
-    "NOT FOUND": "NOT FOUND",
+    'API-title': 'Compare API With Other Cheat Checking Websites',
+    'API-subtitle':
+      'Check The Website Againt A Database Of Other Verified Websites',
+    'API-website-col': 'Cheating Web Checking Websites',
+    'API-inspection-result-col': 'Inspection Results',
+    FOUND: 'FOUND',
+    'NOT FOUND': 'NOT FOUND',
   },
 
-  "moredetailpage": {
-    "title": "Read More Website Details Here",
-    "risk-score": "Risk Score:",
-    "measurement": "Trust Score Measurement Criteria",
-    "websiteinsight-title": "Website Insights",
-    "API-title": "Compare API With Other Cheat Checking Websites",
-    "API-website-col": "Cheating Web Checking Websites",
-    "API-inspection-result-col": "Inspection Results",
-    "FOUND": "FOUND",
-    "NOT FOUND": "NOT FOUND",
-    "No Result": "No Result",
-    'positive': 'Positive',
-    'negative': 'Negative'
+  moredetailpage: {
+    title: 'Read More Website Details Here',
+    'risk-score': 'Risk Score:',
+    measurement: 'Trust Score Measurement Criteria',
+    'websiteinsight-title': 'Website Insights',
+    'API-title': 'Compare API With Other Cheat Checking Websites',
+    'API-website-col': 'Cheating Web Checking Websites',
+    'API-inspection-result-col': 'Inspection Results',
+    FOUND: 'FOUND',
+    'NOT FOUND': 'NOT FOUND',
+    'No Result': 'No Result',
+    positive: 'Positive',
+    negative: 'Negative',
   },
 
-  "errormessage": {
-    "errmessuserexist": "User with this username already exists",
-    "errmessemailexist": "User with this email already exists",
-    "errmessphoneexist": "User with this phone number already exists",
-    "errmesspassword": "You can not change your password with your old password",
-    "editnoinfo": "Require information for an update",
-    "editerrinfo": "Something Wrong with your information",
-    "editsuccess": "User information was edited successfully",
-    "usersuccess": "User information was created successfully",
-    "errsigninusername": "The provided username does not exist. Please sign up if you don't have an account.",
-    "errsigninpassword": "Invalid password",
-    "errnoinfosignin": "Please provide your username or password",
-    "errsigninsystem": "Please try to complete your login or password again.",
-    "signinsuccess": "Authentication successful",
-    "reporterrwebsiteinact": "This website may no longer be available. Therefore, the overall risk and AI Classify value cannot be displayed.",
-    "reportsuccess": "Report information was created successfully",
-    "errurl1": "This website is already inactive but user still can report this website",
-    "errurl2": "Please check the machine learning connection but the user still can report this website",
-    "caution": "Caution",
-  }
-}
+  errormessage: {
+    errmessuserexist: 'User with this username already exists',
+    errmessemailexist: 'User with this email already exists',
+    errmessphoneexist: 'User with this phone number already exists',
+    errmesspassword: 'You can not change your password with your old password',
+    editnoinfo: 'Require information for an update',
+    editerrinfo: 'Something Wrong with your information',
+    editsuccess: 'User information was edited successfully',
+    usersuccess: 'User information was created successfully',
+    errsigninusername:
+      "The provided username does not exist. Please sign up if you don't have an account.",
+    errsigninpassword: 'Invalid password',
+    errnoinfosignin: 'Please provide your username or password',
+    errsigninsystem: 'Please try to complete your login or password again.',
+    signinsuccess: 'Authentication successful',
+    reporterrwebsiteinact:
+      'This website may no longer be available. Therefore, the overall risk and AI Classify value cannot be displayed.',
+    reportsuccess: 'Report information was created successfully',
+    errurl1:
+      'This website is already inactive but user still can report this website',
+    errurl2:
+      'Please check the machine learning connection but the user still can report this website',
+    caution: 'Caution',
+  },
+};

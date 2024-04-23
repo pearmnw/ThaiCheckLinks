@@ -42,10 +42,6 @@ export const getVerificationByMetaWebsiteID = async (
         currentPercent.other
       );
 
-      // console.log("checkMaxFake: " + checkMaxFake);
-      // console.log("checkMaxScam: " + checkMaxScam);
-      // console.log("checkMaxOthers: " + checkMaxOthers);
-      // console.log("checkMaxGambling: " + checkMaxGambling);
       if (checkMaxGambling == true) {
         updateMaxGamblingPercent(
           verificationInfo.WebsiteID,

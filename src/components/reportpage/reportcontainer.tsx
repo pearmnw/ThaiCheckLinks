@@ -1,7 +1,7 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
 import axios, { AxiosError } from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReportLinkBar from "../searchbar/getreportlinkbar";
 import ReportForm from "./reportform";
 
@@ -9,6 +9,12 @@ const ReportContainer = () => {
   const [url, setUrl] = useState("");
   const t = useScopedI18n("report");
   const e = useScopedI18n("errormessage");
+
+  useEffect(() => {
+    // Set localStorage item when component mounts
+    localStorage.setItem("prevpath", "report");
+  }, []);
+
   const [currentPercent, setCurrentPercent] = useState({
     fake: 0,
     gambling: 0,
@@ -56,10 +62,11 @@ const ReportContainer = () => {
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["Accept"] = "application/json";
     try {
-      const resp = await axios.post(
-        "https://nationally-helped-haddock.ngrok-free.app",
-        formData
-      );
+      // const resp = await axios.post(
+      //   "https://nationally-helped-haddock.ngrok-free.app",
+      //   formData
+      // );
+      const resp = await axios.post("http://127.0.0.1:8000", formData);
       console.log(resp.data);
       // resp.data.classify !== null
       if (

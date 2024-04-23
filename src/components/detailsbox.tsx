@@ -47,6 +47,8 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
   const [clickedCategory, setClickedCategory] = useState("");
 
   useEffect(() => {
+    // set the previous path to redirect after signup and signin
+    localStorage.setItem("prevpath", "moredetail");
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -435,9 +437,6 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
                         )}
                     </div>
                   </div>
-
-
-
                 </div>
               </div>
             </div>
