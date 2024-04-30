@@ -909,7 +909,7 @@ export default {
     'quite-high-count': 'Quite High Risk',
     'high-count': 'Serious Risk',
 
-    'gambling-label': 'Gambing',
+    'gambling-label': 'Gambling',
     'scam-label': 'Scam',
     'fake-label': 'Fake',
     'other-label': 'Other',
