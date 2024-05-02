@@ -131,9 +131,6 @@ const DetailsBox: React.FC<DetailsBoxProps> = ({ websiteUrl }) => {
     return counts;
   };
 
-  // const handleCategoryClick = (category: SetStateAction<string>) => {
-  //   setClickedCategory(category === clickedCategory ? "" : category);
-  // };
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(
     new Set()
   );
