@@ -83,7 +83,6 @@ const ReportLinkBar = ({ onInputChange, onPredict }: any) => {
             {isLoading ? (
               <div>
                 <LoaderOnButt />
-                {/* <ProgressBar progress={progress} /> */}
               </div>
             ) : (
               <div className="justify-center text-[16px]">

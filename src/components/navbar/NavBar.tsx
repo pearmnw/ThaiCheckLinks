@@ -3,7 +3,7 @@
 import { useCurrentLocale, useScopedI18n } from "@/locales/client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import LocaleSwitcher from "./LocaleSwitcher";
 
@@ -12,23 +12,7 @@ const NavBar = () => {
   const t = useScopedI18n("navbar");
   const [header, setHeader] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const currentLocale = useCurrentLocale();
-  // const scrollHeader = () => {
-  //   if (window.scrollY >= 20) {
-  //     setHeader(true);
-  //   } else {
-  //     setHeader(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", scrollHeader);
-
-  //   return () => {
-  //     window.addEventListener("scroll", scrollHeader);
-  //   };
-  // }, []);
 
   const isNavReportItemActive = (path: any) => {
     return pathname === path; // Check if current path matches navigation item path
@@ -55,10 +39,6 @@ const NavBar = () => {
               Thai.CheckLinks
             </Link>
             <div className="flex items-center md:order-2 space-x-5">
-              {/* <Link
-                href="/report"
-                className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
-              > */}
               <Link
                 href="/report"
                 className={`${
@@ -71,7 +51,6 @@ const NavBar = () => {
               </Link>
               <Link
                 href="/verification"
-                // className="text-[24px] font-bold text-transparent bg-clip-text bg-[#011E52]"
                 className={`${
                   !isNavVeriItemActive(`/${currentLocale}/verification`)
                     ? "text-[24px] font-bold text-[#011E52] hover:text-[#144EE3]"
@@ -88,11 +67,6 @@ const NavBar = () => {
             {session?.user ? (
               <div className="flex">
                 <Link href="/profile">
-                  {/* <img
-                    className="w-[3rem] h-[3rem] rounded-full"
-                    src="/defaultprofileimg.png"
-                    alt="Rounded avatar"
-                  ></img> */}
                   <div className="relative w-10 h-10 overflow-hidden bg-[#011E52] rounded-full dark:bg-gray-600 hover:bg-gray-100">
                     <svg
                       className="absolute w-12 h-12 text-gray-400 -left-1"

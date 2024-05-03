@@ -75,7 +75,6 @@ export const checkPercent = async (maxPercent: any, currentPercent: any) => {
       if (currentPercent > maxPercent) {
         return true;
       } else {
-        // console.log("Not update")
         return false;
       }
     } else {
@@ -298,7 +297,6 @@ export const createUserVerifyBox = async (
 export const setCategoryIDForWebMeta = async (currentPercent: any) => {
   try {
     let WebCategoryID;
-    // ถ้า Fake กับ gambling or scam มีค่าเท่ากันเก็บอันไหน? ทำไม?
     const maxpercent = Math.max(
       Number(currentPercent.gambling),
       Number(currentPercent.scam),

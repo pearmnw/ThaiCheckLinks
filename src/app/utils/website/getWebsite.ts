@@ -30,7 +30,7 @@ export const GetWebsiteGroup = async (): Promise<FormattedWebsite[]> => {
     const websiteGroups: WebsiteGroup = websiteDetails.reduce((groups: WebsiteGroup, website) => {
         const parsedUrl = new URL(website.WebsiteURL);
         const websiteURL = `${parsedUrl.protocol}//${parsedUrl.hostname}`;
-    
+
         if (!groups[websiteURL]) {
             groups[websiteURL] = {
                 Protocol: parsedUrl.protocol,
@@ -44,30 +44,29 @@ export const GetWebsiteGroup = async (): Promise<FormattedWebsite[]> => {
                 latestReportDate: null
             };
         }
-    
+
         groups[websiteURL]._count.WebsiteID++;
-    
+
         if (website.WebCategoryID > groups[websiteURL].MaxCategoryID) {
             groups[websiteURL].MaxCategoryID = website.WebCategoryID;
         }
-    
+
         if (!groups[websiteURL].latestReportDate || website.WebsiteReportedDate > groups[websiteURL].latestReportDate!) {
             groups[websiteURL].latestReportDate = website.WebsiteReportedDate;
         }
-    
+
         return groups;
     }, {});
-    
-    
+
     const formattedWebsites: FormattedWebsite[] = Object.values(websiteGroups).map((websiteGroup, index) => {
         const { Protocol, Subdomain, SDL, TLD, MaxCategoryID, _count, latestReportDate } = websiteGroup;
-    
+
         // Construct the website URL based on the presence of subdomain and TLD
         let websiteURL = `${Protocol}//${Subdomain ? Subdomain + '.' : ''}${SDL}`;
         if (TLD) {
             websiteURL += `.${TLD}`;
         }
-    
+
         return {
             id: index + 1,
             WebsiteURL: websiteURL,
@@ -77,9 +76,6 @@ export const GetWebsiteGroup = async (): Promise<FormattedWebsite[]> => {
             reporttime: latestReportDate
         };
     });
-    
-    
-    
 
     // Sort formattedWebsites by the number of reports in descending order
     formattedWebsites.sort((a, b) => b.reports - a.reports);

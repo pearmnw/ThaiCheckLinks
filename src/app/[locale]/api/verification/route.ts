@@ -1,9 +1,10 @@
-// เราต้องทำอะไรบ้างในการจะเก็บ Verification 1 ครั้ง
-// - เช็ค URL with table WebsiteMeta (ต้องจัดformatURLที่ User ใส่เข้ามาด้วย)
-// - ถ้ามีก็ไม่ต้อง Create WebsiteMeta
-//   - แต่ check current percent กับ max percent แล้วเก็บเข้า Verification
-//   หมายเหตุ: เนื่องจากดาต้ายังไม่ครบถ้วนอาจจะมีในกรณีที่ยังไม่มี verification ด้วย ก็จะทำการ create verification
-// - ถ้าไม่มีต้องเก็บเข้าเว็บไซต์ Meta + UserVerifyBox + verification ด้วย [ในกรณีที่ซักประเภท>70%]
+// What do we have to do to store the verification information once?
+// - Check the URL with table WebsiteMeta (must format the URL that the User enters as well)
+// - If the URL existing in the database, we don't need to Create WebsiteMeta.
+// - but check current percent and max percent and update into Verification
+// - Otherwise, if URL desn't exist, we must save it to the Meta + verification website as well [in the case of > 70%]
+// Note: Because the data is not yet complete, there may be cases where there is no verification yet. 
+// We will create verification & userverifybox as well.
 
 import { getWebsiteMetaByURL, setURL } from '@/app/utils/report/getReportFunc';
 import {
@@ -28,9 +29,6 @@ export async function POST(req: Request) {
         let websiteMeta;
         let webVerification;
         let getVeriInfo;
-        // let createUserVeriBox;
-        let methodsucces: boolean = false;
-        let verificationInfo;
         if (websiteMetaArray != null) {
             // Result is an array, actually each link must be unique!!
             if (websiteMetaArray.length > 0) {
@@ -46,7 +44,6 @@ export async function POST(req: Request) {
                 if (webVerification) {
                     console.log('GetVerificationTable: ', webVerification);
                     getVeriInfo = webVerification;
-                    methodsucces = true;
                 }
                 else {
                     // TODO: Create UserVeriBox && Create Verification
@@ -60,7 +57,6 @@ export async function POST(req: Request) {
                             CurrentPercent,
                             createUserVeriBox.UserVerifyID
                         );
-                        methodsucces = true;
                         console.log(getVeriInfo);
                     }
                 }

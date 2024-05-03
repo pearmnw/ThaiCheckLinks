@@ -1,10 +1,9 @@
 "use client";
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
 import Link from "next/link";
 
 const Header = () => {
   const t = useScopedI18n("verificationpage");
-  const currentLocale = useCurrentLocale();
 
   return (
     <div className="flex flex-col justify-center items-start text-custom-black gap-5 w-full">

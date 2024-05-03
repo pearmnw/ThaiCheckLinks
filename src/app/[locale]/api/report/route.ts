@@ -55,12 +55,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
         userReportCount[categoryName] += countReport;
       }
 
-      // Do not count "normal" or "other" Type
-      // if (categoryName !== 'other') {
-      //   userReportCount.sumUserReport += countReport;
-      // }
-
-      // Pear Fixed: Count All Report
+      // Count All Report
       if (categoryName != '') {
         userReportCount.sumUserReport += countReport;
       }

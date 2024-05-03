@@ -21,6 +21,7 @@ const ReportContainer = () => {
     other: 0,
     scam: 0,
   });
+
   const [metaWebsite, setMetaWebsite] = useState({
     url: "",
     title: "",
@@ -29,11 +30,14 @@ const ReportContainer = () => {
     detail: "",
     status: true,
   });
+
   const [verifySuccess, setVerifySuccess] = useState<boolean>(false);
-  // Update
+
   const [isLinkBarChanging, setIsLinkBarChanging] = useState<boolean>(false);
+
   const [showReportForm, setShowReportForm] = useState<boolean>(false);
 
+  // function to set the URL, search bar, and undisplay the report form
   const handleInputChange = (value: any) => {
     setUrl(value);
     setIsLinkBarChanging(true);
@@ -54,6 +58,7 @@ const ReportContainer = () => {
     }));
   };
 
+  // function to get the verification data from the Machine Learning
   const getVerifyResult = async () => {
     const formData = new FormData();
     formData.append("url", url);
@@ -62,13 +67,9 @@ const ReportContainer = () => {
     axios.defaults.headers.common["Content-Type"] = "application/json";
     axios.defaults.headers.common["Accept"] = "application/json";
     try {
-      // const resp = await axios.post(
-      //   "https://nationally-helped-haddock.ngrok-free.app",
-      //   formData
-      // );
+      // Call API and get respond
       const resp = await axios.post("http://127.0.0.1:8000", formData);
       console.log(resp.data);
-      // resp.data.classify !== null
       if (
         resp.data.classify.fake == 0 &&
         resp.data.classify.scam == 0 &&
@@ -86,10 +87,8 @@ const ReportContainer = () => {
       const axiosError = error as AxiosError;
       console.log(axiosError);
       if (axiosError.message === "Network Error") {
-        // toast.error(e("errurl2"));
         console.log(e("errurl2"));
       } else {
-        // toast.error(axiosError.message);
         console.log(axiosError.message);
       }
     }
@@ -99,18 +98,11 @@ const ReportContainer = () => {
     websiteurl: "",
   });
 
+  // function to check the inputed URL and display the error
   const checkURL = async () => {
     let hasError = false;
-    // URL Pattern will be change
     const urlPattern =
       /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
-    const urlDomain =
-      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gm;
-    const urlWithPathPattern =
-      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?\/[a-zA-Z0-9]{2,}/gm;
-
-    const urlWithSubdomainpattern =
-      /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/gm;
 
     const inputError = {
       websiteurl: "",
@@ -123,12 +115,7 @@ const ReportContainer = () => {
         websiteurl: t("urlError"),
       });
     } else {
-      if (
-        // !urlPattern.test(url) &&
-        !urlDomain.test(url) &&
-        !urlWithPathPattern.test(url) &&
-        !urlWithSubdomainpattern.test(url)
-      ) {
+      if (!urlPattern.test(url)) {
         hasError = true;
         setFormError({
           ...inputError,
@@ -139,8 +126,6 @@ const ReportContainer = () => {
         url.includes("%20") ||
         url.includes("&nbsp;") ||
         url.includes("..") ||
-        // url.includes("[") ||
-        // url.includes("]") ||
         url.includes(".com.com")
       ) {
         hasError = true;
@@ -158,6 +143,7 @@ const ReportContainer = () => {
     return hasError;
   };
 
+  // Function to call checkURL(), getVerifyResult() and set the handleVerifySuccess()
   const predictFunc = async () => {
     try {
       const hasURLError = await checkURL();
@@ -193,15 +179,15 @@ const ReportContainer = () => {
       <p className="text-[12px] font-[500] text-center text-red-600">
         {formError.websiteurl}
       </p>
-      {showReportForm &&
-        !isLinkBarChanging && ( // Conditionally render ReportForm if it should be shown and ReportLinkBar is not changing
-          <ReportForm
-            url={url}
-            metaWebsite={metaWebsite}
-            currentPercent={currentPercent}
-            verifySuccess={verifySuccess}
-          />
-        )}
+      {showReportForm && !isLinkBarChanging && (
+        // Conditionally render ReportForm if it should be shown and ReportLinkBar is not changing
+        <ReportForm
+          url={url}
+          metaWebsite={metaWebsite}
+          currentPercent={currentPercent}
+          verifySuccess={verifySuccess}
+        />
+      )}
       :<></>
     </>
   );

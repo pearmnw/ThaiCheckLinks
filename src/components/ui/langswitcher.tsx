@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 const LangSwitch = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -11,9 +11,10 @@ const LangSwitch = () => {
 
   return (
     <>
-      <label className="flex cursor-pointer select-none items-center">
+      <div className="flex cursor-pointer select-none items-center">
         <div className="relative">
           <input
+            title="langswitcher"
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
@@ -54,7 +55,7 @@ const LangSwitch = () => {
             </span>
           </div>
         </div>
-      </label>
+      </div>
     </>
   );
 };

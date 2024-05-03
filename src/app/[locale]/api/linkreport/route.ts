@@ -1,9 +1,10 @@
-// เราต้องทำอะไรบ้างในการจะเก็บ report 1 ครั้ง
-// - เช็ค URL with table WebsiteMeta (ต้องจัดformatURLที่ User ใส่เข้ามาด้วย)
-// - ถ้ามีก็ไม่ต้อง Create WebsiteMeta
-//   - แต่ check current percent กับ max percent แล้ว update เข้า Verification
-//   หมายเหตุ: เนื่องจากดาต้ายังไม่ครบถ้วนอาจจะมีในกรณีที่ยังไม่มี verification ด้วย ก็จะทำการ create verification & userverifybox ด้วย
-// - ถ้าไม่มีต้องเก็บเข้าเว็บไซต์ Meta + verification ด้วย [ในกรณีที่ซักประเภท>70%]
+// What do we have to do to store the report information once?
+// - Check the URL with table WebsiteMeta (must format the URL that the User enters as well)
+// - If the URL existing in the database, we don't need to Create WebsiteMeta.
+// - but check current percent and max percent and update into Verification
+// - Otherwise, if URL desn't exist, we must save it to the Meta + verification website as well [in the case of > 70%]
+// Note: Because the data is not yet complete, there may be cases where there is no verification yet. 
+// We will create verification & userverifybox as well.
 
 import { getWebsiteMetaByURL, setCategoryID, setURL } from "@/app/utils/report/getReportFunc";
 import { createMetaWebsite, createUserVerifyBox, createVerification, getVerificationByMetaWebsiteID } from "@/app/utils/verification/getVerificationFunc";
@@ -67,7 +68,7 @@ export async function POST(req: Request) {
             }
         } else {
             console.log("Entry state 2: this url no have in database")
-            if (CurrentPercent.gambling >= 70 || CurrentPercent.scam >= 70 || CurrentPercent.fake >= 70) {
+            if (CurrentPercent.gambling > 70 || CurrentPercent.scam > 70 || CurrentPercent.fake > 70) {
                 const createUserVeriBox: any = await createUserVerifyBox(
                     MetaWebsite,
                     CurrentPercent

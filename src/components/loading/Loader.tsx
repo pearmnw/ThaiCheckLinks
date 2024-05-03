@@ -1,9 +1,6 @@
-import React from "react";
-
 const Loader = () => {
   return (
     <div>
-      {/* <div className="animate-spin-slow rounded-full h-32 w-32 border-t-2 border-b-2 border-primary"></div> */}
       <svg
         aria-hidden="true"
         className="h-32 w-32 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

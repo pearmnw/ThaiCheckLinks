@@ -48,7 +48,6 @@ const RiskMeasurement = () => {
     if (maxCategoryReport.type != "" && userReportCount.sumUserReport > 0) {
       return (
         <div className="flex flex-col gap-1">
-          {/* Pear Fixed UI here too!! */}
           <section className="flex items-end justify-center">
             {userReportCount.sumUserReport}
             <p className="text-4xl font-bold">{t("report-unit")}</p>
@@ -113,7 +112,6 @@ const RiskMeasurement = () => {
             </div>
             <div
               className="text-center text-5xl font-bold"
-              // Pear fixed this change Max to Sum
               style={{
                 color: getColorReportCount(userReportCount.sumUserReport),
               }}

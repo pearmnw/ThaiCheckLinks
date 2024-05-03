@@ -42,7 +42,6 @@ const LocaleSwitcher = () => {
           )}
           onClick={handleClickTh}
         >
-          {/* {t("TH")} */}
           ไทย
         </Button>
         <Button
@@ -61,7 +60,6 @@ const LocaleSwitcher = () => {
           )}
           onClick={handleClickEn}
         >
-          {/* {t("EN")} */}
           English
         </Button>
       </div>

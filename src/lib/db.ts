@@ -1,8 +1,5 @@
 import { PrismaClient } from '@prisma/client'
 
-// const prisma = new PrismaClient()
-
-// วิธีเพื่อกัน error ที่พบบ่อย
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined
 }

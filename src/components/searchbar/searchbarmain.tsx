@@ -1,6 +1,6 @@
 "use client";
 import { useScopedI18n } from "@/locales/client";
-import React, { useState } from "react";
+import React from "react";
 
 const SearchBarMain: React.FC<any> = ({
   onPredict,
@@ -9,7 +9,6 @@ const SearchBarMain: React.FC<any> = ({
   setOverview,
 }) => {
   const t = useScopedI18n("homepage");
-  const [open, setOpen] = useState(false);
 
   const handleInputChange = (e: any) => {
     setUrl(e.target.value.trim());

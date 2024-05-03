@@ -1,5 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -39,7 +39,6 @@ const ReportVisualization = () => {
       <h4 className="text-xl font-semibold">{t("report-label-bar-plot")}</h4>
       <div className="mt-10 flex flex-col justify-center items-center">
         <BarChart width={500} height={300} data={data}>
-          {/* <CartesianGrid strokeDasharray='3 3' /> */}
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
