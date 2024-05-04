@@ -1,18 +1,18 @@
-"use client";
-import { useScopedI18n } from "@/locales/client";
-import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
-import ReportLinkBar from "../searchbar/getreportlinkbar";
-import ReportForm from "./reportform";
+'use client';
+import { useScopedI18n } from '@/locales/client';
+import axios, { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+import ReportLinkBar from '../searchbar/getreportlinkbar';
+import ReportForm from './reportform';
 
 const ReportContainer = () => {
-  const [url, setUrl] = useState("");
-  const t = useScopedI18n("report");
-  const e = useScopedI18n("errormessage");
+  const [url, setUrl] = useState('');
+  const t = useScopedI18n('report');
+  const e = useScopedI18n('errormessage');
 
   useEffect(() => {
     // Set localStorage item when component mounts
-    localStorage.setItem("prevpath", "report");
+    localStorage.setItem('prevpath', 'report');
   }, []);
 
   const [currentPercent, setCurrentPercent] = useState({
@@ -23,11 +23,11 @@ const ReportContainer = () => {
   });
 
   const [metaWebsite, setMetaWebsite] = useState({
-    url: "",
-    title: "",
-    description: "",
-    keyword: "",
-    detail: "",
+    url: '',
+    title: '',
+    description: '',
+    keyword: '',
+    detail: '',
     status: true,
   });
 
@@ -61,14 +61,14 @@ const ReportContainer = () => {
   // function to get the verification data from the Machine Learning
   const getVerifyResult = async () => {
     const formData = new FormData();
-    formData.append("url", url);
-    formData.append("path", "report");
+    formData.append('url', url);
+    formData.append('path', 'report');
     console.log(url);
-    axios.defaults.headers.common["Content-Type"] = "application/json";
-    axios.defaults.headers.common["Accept"] = "application/json";
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
     try {
       // Call API and get respond
-      const resp = await axios.post("http://127.0.0.1:8000", formData);
+      const resp = await axios.post('http://127.0.0.1:8000', formData);
       console.log(resp.data);
       if (
         resp.data.classify.fake == 0 &&
@@ -77,7 +77,7 @@ const ReportContainer = () => {
         resp.data.classify.gambling == 0
       ) {
         throw {
-          message: e("errurl1"),
+          message: e('errurl1'),
         };
       } else {
         updateCurrentPercent(resp.data.classify);
@@ -86,8 +86,8 @@ const ReportContainer = () => {
     } catch (error: any) {
       const axiosError = error as AxiosError;
       console.log(axiosError);
-      if (axiosError.message === "Network Error") {
-        console.log(e("errurl2"));
+      if (axiosError.message === 'Network Error') {
+        console.log(e('errurl2'));
       } else {
         console.log(axiosError.message);
       }
@@ -95,7 +95,7 @@ const ReportContainer = () => {
   };
 
   const [formError, setFormError] = useState({
-    websiteurl: "",
+    websiteurl: '',
   });
 
   // function to check the inputed URL and display the error
@@ -105,38 +105,38 @@ const ReportContainer = () => {
       /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
 
     const inputError = {
-      websiteurl: "",
+      websiteurl: '',
     };
 
     if (!url) {
       hasError = true;
       setFormError({
         ...inputError,
-        websiteurl: t("urlError"),
+        websiteurl: t('urlError'),
       });
     } else {
       if (!urlPattern.test(url)) {
         hasError = true;
         setFormError({
           ...inputError,
-          websiteurl: t("urlError2"),
+          websiteurl: t('urlError2'),
         });
       } else if (
-        url.includes(" ") ||
-        url.includes("%20") ||
-        url.includes("&nbsp;") ||
-        url.includes("..") ||
-        url.includes(".com.com")
+        url.includes(' ') ||
+        url.includes('%20') ||
+        url.includes('&nbsp;') ||
+        url.includes('..') ||
+        url.includes('.com.com')
       ) {
         hasError = true;
         setFormError({
           ...inputError,
-          websiteurl: t("urlError3"),
+          websiteurl: t('urlError3'),
         });
       } else {
         setFormError({
           ...inputError,
-          websiteurl: "",
+          websiteurl: '',
         });
       }
     }
@@ -176,7 +176,7 @@ const ReportContainer = () => {
         onInputChange={handleInputChange}
         onPredict={predictFunc}
       />
-      <p className="text-[12px] font-[500] text-center text-red-600">
+      <p className='text-[12px] font-[500] text-center text-red-600'>
         {formError.websiteurl}
       </p>
       {showReportForm && !isLinkBarChanging && (
