@@ -96,7 +96,7 @@ cd ThaiCheckLinks
 Enter your PostgreSQL URL in `.env`
 
 ```sh
-DATABASE_URL="postgresql://postgres:pwd@localhost:5432/ThaiCheckLinks?schema=public"
+DATABASE_URL="postgresql://postgres:PASSWORD@localhost:PORTNUMBER/DATABASENAME?schema=public"
 ```
 
 ### 3. Install Dependencies
