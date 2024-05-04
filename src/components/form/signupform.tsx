@@ -11,18 +11,10 @@ import Loader from "../loading/Loader";
 import PrivacyPolicy from "./privacypolicy";
 import TermOfUse from "./termofuse";
 
-// Modal.setAppElement("#__next");
-
 const SignUpForm = () => {
   const t = useScopedI18n("signuppage");
   const u = useScopedI18n("termofusepage");
-  const e = useScopedI18n("errormessage");
   const router = useRouter();
-
-  // useEffect(() => {
-  //   // Set localStorage item when component mounts
-  //   localStorage.setItem("prevpath", "signup");
-  // }, []);
 
   const [formInput, setFormInput] = useState({
     username: "",
@@ -67,7 +59,6 @@ const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
-    // setShowPassword(!showPassword);
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
@@ -96,7 +87,7 @@ const SignUpForm = () => {
 
     if (formInput.email != "") {
       // Edit email pattern already
-      const emailpattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      const emailpattern = /^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/;
 
       // Check if email match the pattern
       if (
@@ -231,90 +222,6 @@ const SignUpForm = () => {
         setIsLoading(false);
         console.log("SignUp Failed");
         toast.error(data.message);
-        // toast.custom((t) => (
-        //   <div className="flex align-middle items-center justify-center w-full h-screen">
-        //     <div
-        //       className={`${
-        //         t.visible ? "animate-enter" : "animate-leave"
-        //       } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        //     >
-        //       <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-full h-full">
-        //         <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 bg-[#ff3300]">
-        //           <svg
-        //             fill="#ffffff"
-        //             version="1.1"
-        //             id="Capa_1"
-        //             xmlns="http://www.w3.org/2000/svg"
-        //             xmlnsXlink="http://www.w3.org/1999/xlink"
-        //             width="70px"
-        //             height="70px"
-        //             viewBox="0 0 478.13 478.13"
-        //             xmlSpace="preserve"
-        //             stroke="#ffffff"
-        //             strokeWidth="0.00478125"
-        //           >
-        //             <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-
-        //             <g
-        //               id="SVGRepo_tracerCarrier"
-        //               strokeLinecap="round"
-        //               strokeLinejoin="round"
-        //             />
-
-        //             <g id="SVGRepo_iconCarrier">
-        //               {" "}
-        //               <g>
-        //                 {" "}
-        //                 <g>
-        //                   {" "}
-        //                   <g>
-        //                     {" "}
-        //                     <circle cx="239.904" cy="314.721" r="35.878" />{" "}
-        //                     <path d="M256.657,127.525h-31.9c-10.557,0-19.125,8.645-19.125,19.125v101.975c0,10.48,8.645,19.125,19.125,19.125h31.9 c10.48,0,19.125-8.645,19.125-19.125V146.65C275.782,136.17,267.138,127.525,256.657,127.525z" />{" "}
-        //                     <path d="M239.062,0C106.947,0,0,106.947,0,239.062s106.947,239.062,239.062,239.062c132.115,0,239.062-106.947,239.062-239.062 S371.178,0,239.062,0z M239.292,409.734c-94.171,0-170.595-76.348-170.595-170.596c0-94.248,76.347-170.595,170.595-170.595 s170.595,76.347,170.595,170.595C409.887,333.387,333.464,409.734,239.292,409.734z" />{" "}
-        //                   </g>{" "}
-        //                 </g>{" "}
-        //               </g>{" "}
-        //             </g>
-        //           </svg>
-        //           <h3 className="pl-5 text-[35px] font-semibold text-[#ffffff] dark:text-white">
-        //             {e("caution")}
-        //           </h3>
-        //           <button
-        //             type="button"
-        //             onClick={(event) => {
-        //               event.preventDefault(); // This line prevents the default form submission
-        //               toast.dismiss(t.id);
-        //             }}
-        //             className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-[10px] text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-        //           >
-        //             <svg
-        //               className="w-5 h-5"
-        //               aria-hidden="true"
-        //               xmlns="http://www.w3.org/2000/svg"
-        //               fill="none"
-        //               viewBox="0 0 14 14"
-        //             >
-        //               <path
-        //                 stroke="currentColor"
-        //                 strokeLinecap="round"
-        //                 strokeLinejoin="round"
-        //                 strokeWidth="2"
-        //                 d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-        //               />
-        //             </svg>
-        //             <span className="sr-only">Close modal</span>
-        //           </button>
-        //         </div>
-        //         <div className="p-4 md:p-5 text-justify space-y-4">
-        //           <p className="text-xl text-center font-medium text-gray-900">
-        //             {data.message}
-        //           </p>
-        //         </div>
-        //       </div>
-        //     </div>
-        //   </div>
-        // ));
         setFormInput((prevState) => ({
           ...prevState,
           successMsg: "",
@@ -549,7 +456,6 @@ const SignUpForm = () => {
                     handleUserInput(target.name, target.value);
                   }}
                   name="confirmpassword"
-                  // type="password"
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder={t("cftext")}
                   required
@@ -612,7 +518,6 @@ const SignUpForm = () => {
                 <div className="pl-2 pr-4 text-[13px]">
                   {t("consent1")}
                   <button
-                    // onClick={openModalTOU}
                     onClick={(event) => {
                       event.preventDefault(); // This line prevents the default form submission
                       openModalTOU();
@@ -695,7 +600,6 @@ const SignUpForm = () => {
                   </Modal>
                   &nbsp;{t("and")}
                   <button
-                    // onClick={openModalPP}
                     onClick={(event) => {
                       event.preventDefault(); // This line prevents the default form submission
                       openModalPP();
@@ -731,7 +635,6 @@ const SignUpForm = () => {
                           {t("privacypolicy")}
                         </h3>
                         <button
-                          // onClick={closeModalPP}
                           onClick={(event) => {
                             event.preventDefault(); // This line prevents the default form submission
                             closeModalPP();
@@ -772,7 +675,6 @@ const SignUpForm = () => {
                         </button>
                       </div>
                     </div>
-                    <form>{/* Form fields and controls */}</form>
                   </Modal>
                   <div className="white-space">{t("consent2")}</div>
                 </div>

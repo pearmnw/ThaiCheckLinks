@@ -25,12 +25,7 @@ const UnAuth = () => {
           </p>
 
           <button className="text-[24px] font-bold text-transparent bg-clip-text bg-white hover:text-[#CCD2DE]">
-            <Link
-              href="/signup"
-              // className="text-[24px] font-bold text-transparent bg-clip-text bg-white"
-            >
-              {t("signup")}
-            </Link>
+            <Link href="/signup">{t("signup")}</Link>
           </button>
         </div>
       </div>

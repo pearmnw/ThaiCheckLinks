@@ -57,7 +57,7 @@ const TermOfUse = () => {
           <li>{t("restxt4")}</li>
         </ul>
       </p>
-      <p className="text-xl font-semibold text-gray-500 dark:text-gray-400 text-xl font-semibold">
+      <p className="text-xl font-semibold text-gray-500 dark:text-gray-400">
         {t("suggest")}
       </p>
       <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">

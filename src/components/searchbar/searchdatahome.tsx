@@ -1,5 +1,5 @@
 "use client";
-import { useCurrentLocale, useScopedI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
 import React, { useState } from "react";
 
 interface SearchWordBarProps {
@@ -8,7 +8,6 @@ interface SearchWordBarProps {
 
 const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
   const t = useScopedI18n("homepage");
-  const currentLocale = useCurrentLocale();
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -21,10 +20,6 @@ const SearchDataHome: React.FC<SearchWordBarProps> = ({ onSearch }) => {
       handleSearch();
     }
   };
-
-  function checkcurrlocale() {
-    console.log(currentLocale);
-  }
 
   return (
     <>

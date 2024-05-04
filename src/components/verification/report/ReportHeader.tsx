@@ -44,17 +44,6 @@ const ReportHeader = () => {
 
       <h3 className="text-4xl font-semibold text-custom-black w-full text-center my-8">
         {t("report-title-result")}:{" "}
-        {/* {maxCategoryReport._type !== "" ? (
-          <>
-            {maxCategoryReport._type === "other" ? (
-              <span style={{ color: "#04CE00" }}>{t("report-not-found2")}</span>
-            ) : (
-              <span style={{ color: "#B51A36" }}>{t("report-found")}</span>
-            )}
-          </>
-        ) : (
-          <span style={{ color: "#ccc" }}>{t("No Result")}</span>
-        )} */}
         {maxCategoryReport._count > 0 ? (
           <>
             {maxCategoryReport._type === "other" ? (

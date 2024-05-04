@@ -17,8 +17,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 //     UserLastLogin  DateTime        @db.Timestamptz(6)
 //     WebsiteDetail  WebsiteDetail[]
 //   }
-// const session = getServerSession(authOptions);
-
+// Update the user information
 export async function PUT(req: Request) {
     try {
         const t = await getScopedI18n("errormessage");
@@ -70,7 +69,6 @@ export async function PUT(req: Request) {
                 else {
                     updateresult = await updateUserEmail(CurrentUser, UserEmail);
                     console.log(updateresult);
-                    // return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
                 }
             }
 
@@ -85,8 +83,6 @@ export async function PUT(req: Request) {
                 else {
                     updateresult = await updateUserPhone(CurrentUser, UserPhone);
                     console.log(updateresult);
-                    // return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
-
                 }
             }
 
@@ -99,8 +95,6 @@ export async function PUT(req: Request) {
                     updateresult = await updatePassword(CurrentUser, UserPassword);
                     console.log(updateresult);
                 }
-
-                // return updateresult;
             }
 
             if (UserName) {
@@ -113,7 +107,6 @@ export async function PUT(req: Request) {
                 else {
                     updateresult = await updateUserName(CurrentUser, UserName);
                     console.log(updateresult);
-                    // return NextResponse.json({ UserDetail: updateresult, message: "User edit successfully" }, { status: 201 });
                 }
             }
 

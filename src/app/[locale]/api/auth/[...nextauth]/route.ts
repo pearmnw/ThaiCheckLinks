@@ -9,13 +9,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 async function signin(credentials: any) {
     try {
         const t = await getScopedI18n("errormessage");
-        // const emailpattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
         const usernamepattern = /^[a-zA-Z0-9]/;
-        // const phonenumpattern = /^[0-9]/;
-
         if (usernamepattern.test(credentials.username)) {
             const existingUserName = await db.userDetail.findFirst({
-                // where: { UserName: credentials.username },
                 where: { UserName: credentials.username },
             })
             console.log(existingUserName);
@@ -24,7 +20,6 @@ async function signin(credentials: any) {
             }
             const passwordMatch = await compare(credentials.password, existingUserName?.UserPassword);
             if (!passwordMatch) {
-                // return NextResponse.json({message: "Password not match" }, { status: 409 })
                 throw { status: 409, message: t("errsigninpassword") };
             }
             return existingUserName;
@@ -92,12 +87,7 @@ export const authOptions: AuthOptions = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    // console.log(req.method + req.url)
-    // console.log(res)
     return await NextAuth(req, res, authOptions)
 }
-
-// const handler = (authOptions);
-
 export { handler as GET, handler as POST };
 

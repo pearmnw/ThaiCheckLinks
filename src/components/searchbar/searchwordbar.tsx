@@ -17,10 +17,6 @@ const SearchWordBar: React.FC<SearchWordBarProps> = ({ onSearch }) => {
     onSearch(trimmedSearchTerm);
   };
 
-  function checkcurrlocale() {
-    console.log(currentLocale);
-  }
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch();
