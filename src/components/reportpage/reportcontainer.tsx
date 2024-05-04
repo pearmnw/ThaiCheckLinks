@@ -67,7 +67,14 @@ const ReportContainer = () => {
     axios.defaults.headers.common['Content-Type'] = 'application/json';
     axios.defaults.headers.common['Accept'] = 'application/json';
     try {
+<<<<<<< Updated upstream
       // Call API and get respond
+=======
+      // const resp = await axios.post(
+      //   "https://nationally-helped-haddock.ngrok-free.app",
+      //   formData
+      // );
+>>>>>>> Stashed changes
       const resp = await axios.post('http://127.0.0.1:8000', formData);
       console.log(resp.data);
       if (
@@ -87,6 +94,10 @@ const ReportContainer = () => {
       const axiosError = error as AxiosError;
       console.log(axiosError);
       if (axiosError.message === 'Network Error') {
+<<<<<<< Updated upstream
+=======
+        // toast.error(e("errurl2"));
+>>>>>>> Stashed changes
         console.log(e('errurl2'));
       } else {
         console.log(axiosError.message);
@@ -103,6 +114,16 @@ const ReportContainer = () => {
     let hasError = false;
     const urlPattern =
       /([https?]{3,9}:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/g;
+<<<<<<< Updated upstream
+=======
+    // const urlDomain =
+    //   /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?/gm;
+    // const urlWithPathPattern =
+    //   /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})(\.[a-zA-Z0-9]{2,})?\/[a-zA-Z0-9]{2,}/gm;
+
+    // const urlWithSubdomainpattern =
+    //   /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/gm;
+>>>>>>> Stashed changes
 
     const inputError = {
       websiteurl: '',
@@ -115,7 +136,16 @@ const ReportContainer = () => {
         websiteurl: t('urlError'),
       });
     } else {
+<<<<<<< Updated upstream
       if (!urlPattern.test(url)) {
+=======
+      if (
+        !urlPattern.test(url)
+        // !urlDomain.test(url) &&
+        // !urlWithPathPattern.test(url) &&
+        // !urlWithSubdomainpattern.test(url)
+      ) {
+>>>>>>> Stashed changes
         hasError = true;
         setFormError({
           ...inputError,
@@ -126,6 +156,11 @@ const ReportContainer = () => {
         url.includes('%20') ||
         url.includes('&nbsp;') ||
         url.includes('..') ||
+<<<<<<< Updated upstream
+=======
+        // url.includes("[") ||
+        // url.includes("]") ||
+>>>>>>> Stashed changes
         url.includes('.com.com')
       ) {
         hasError = true;
@@ -179,6 +214,7 @@ const ReportContainer = () => {
       <p className='text-[12px] font-[500] text-center text-red-600'>
         {formError.websiteurl}
       </p>
+<<<<<<< Updated upstream
       {showReportForm && !isLinkBarChanging && (
         // Conditionally render ReportForm if it should be shown and ReportLinkBar is not changing
         <ReportForm
@@ -189,6 +225,18 @@ const ReportContainer = () => {
         />
       )}
       :<></>
+=======
+      {showReportForm &&
+        !isLinkBarChanging && ( // Conditionally render ReportForm if it should be shown and ReportLinkBar is not changing
+          <ReportForm
+            url={url}
+            metaWebsite={metaWebsite}
+            currentPercent={currentPercent}
+            verifySuccess={verifySuccess}
+          />
+        )}
+      <></>
+>>>>>>> Stashed changes
     </>
   );
 };
